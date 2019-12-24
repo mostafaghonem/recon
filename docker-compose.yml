@@ -45,15 +45,3 @@ services:
       - SKN_db_data:/data/db
     ports:
       - '${MONGO_PORT}:27017'
-  docs:
-    build:
-      context: ./api
-      dockerfile: .docker/apidoc/Dockerfile
-    volumes:
-      - ./api/doc:/usr/share/nginx/html
-    environment:
-      - APIDOC_PORT
-    ports:
-      - '${APIDOC_PORT}:80'
-    networks:
-      - app-network

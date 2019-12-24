@@ -7,7 +7,7 @@ const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 
 const app = express();
-console.log(process.env.X);
+console.log(5);
 
 app.use(logger('dev'));
 app.use(express.json());
