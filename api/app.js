@@ -1,21 +1,17 @@
 const express = require('express');
-const path = require('path');
-const cookieParser = require('cookie-parser');
-const logger = require('morgan');
 
-const indexRouter = require('./routes/index');
-const usersRouter = require('./routes/users');
+const { logger } = require('./startup/logging');
 
 const app = express();
-console.log(5);
 
-app.use(logger('dev'));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+global.Promise = require('bluebird');
+global._ = require('lodash');
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
+global.logger = logger;
+
+require('./startup/db').connect();
+require('./startup/logging').handleErrors();
+require('./startup/middlewares')(app);
+require('./startup/routes')(app);
 
 module.exports = app;
