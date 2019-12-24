@@ -4,7 +4,7 @@
  * Module dependencies.
  */
 
-const debug = require('debug')('skn-server:server');
+// const debug = require('debug')('skn-server:server');
 const http = require('http');
 const app = require('../api/app');
 
@@ -77,7 +77,8 @@ const onError = error => {
 const onListening = () => {
   const addr = server.address();
   const bind = typeof addr === 'string' ? `pipe ${addr}` : `port ${addr.port}`;
-  debug(`Listening on ${bind}`);
+  // eslint-disable-next-line no-console
+  console.log(`Listening on ${bind}`);
 };
 
 server.listen(port);

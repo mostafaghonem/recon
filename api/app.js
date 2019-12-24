@@ -4,6 +4,11 @@ const { logger } = require('./startup/logging');
 
 const app = express();
 
+app.get('/', (req, res) => {
+  res.send('blaaaaaaaa');
+});
+
+require('dotenv').config({ path: `.env.${process.env.NODE_ENV}` });
 global.Promise = require('bluebird');
 global._ = require('lodash');
 
