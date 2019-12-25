@@ -8,7 +8,8 @@ app.get('/', (req, res) => {
   res.send('blaaaaaaaa');
 });
 
-require('dotenv').config({ path: `.env.${process.env.NODE_ENV}` });
+require('dotenv').config({ path: `${process.env.NODE_ENV}.env` });
+
 global.Promise = require('bluebird');
 global._ = require('lodash');
 

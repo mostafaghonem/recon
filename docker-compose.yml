@@ -1,4 +1,4 @@
-version: '3'
+version: "3.4"
 services:
   app:
     container_name: docker-node-mongo
@@ -7,22 +7,21 @@ services:
     volumes:
       - .:/api
     ports:
-      - '${PORT}:5000'
-    environment: 
-      - NODE_ENV=dev
-    links:
-      - mongo
+      - "${PORT}:${PORT}"
+    environment:
+      - NODE_ENV=docker
+      - PORT=${PORT}
+    depends_on:
+      - skndb
 
-  mongo:
-    container_name: mongo
+  skndb:
     image: mongo
-    container_name: 'SKN_mongo'
-    environment: 
+    environment:
       - MONGO_INITDB_DATABASE=${DB_NAME}
       - MONGO_INITDB_ROOT_USERNAME=${DB_USERNAME}
       - MONGO_INITDB_ROOT_PASSWORD=${DB_PASSWORD}
-    volumes: 
+    volumes:
       - ./init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
       - ./mongo-volume:/data/db
     ports:
-      - '${DB_PORT}:27017'
+      - "${DB_PORT}:27017"
