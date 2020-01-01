@@ -1,5 +1,9 @@
-const buildMakeExample = require('./Example');
+const buildMakeExampleEntity = require('./ExampleEntity');
+const models = require('../models');
 
-const makeExample = buildMakeExample({});
+const { makeEntity: ExampleEntity, readAllExamples } = buildMakeExampleEntity({
+  Model: models
+});
 
-module.exports = makeExample;
+module.exports.Entity = ExampleEntity;
+module.exports.readAll = readAllExamples;

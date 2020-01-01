@@ -12,6 +12,23 @@ const Example = new Schema(
       unique: true,
       required: true
     },
+    description: {
+      type: String,
+      minlength: 2,
+      maxlength: 200,
+      trim: true,
+      required: true
+    },
+    votesUp: {
+      type: Number,
+      min: 0,
+      default: 0
+    },
+    votesDown: {
+      type: Number,
+      min: 0,
+      default: 0
+    },
     isArchived: {
       type: Boolean,
       default: false

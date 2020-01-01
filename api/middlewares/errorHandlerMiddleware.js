@@ -1,7 +1,8 @@
-/* eslint-disable no-param-reassign */
-// TODO: review
+const _ = require('lodash');
+const mongooseValidationError = require('mongoose').Error.ValidationError;
 
 const createError = require('http-errors');
+const logger = require('../startup/logger');
 
 // catch 404 and forward to error handler
 module.exports.catch404Errors = (req, res, next) => {
@@ -9,37 +10,48 @@ module.exports.catch404Errors = (req, res, next) => {
 };
 
 // eslint-disable-next-line no-unused-vars
-module.exports.handleUnexpectedErrors = (err, req, res, _next) => {
-  err.code = +err.statusCode || +err.code || 500;
-  err.url = req.originalUrl;
-
+module.exports.handleUnexpectedErrors = (err, req, res, next) => {
   const error = err;
+  if (error instanceof mongooseValidationError) {
+    const validateError = [];
+    Object.keys(error.errors).forEach(key => {
+      validateError.push(error.errors[key].message);
+    });
+    error.message = validateError.join('. ');
+    error.status = 400;
+  }
 
-  // TODO: https://www.joyent.com/node-js/production/design/errors
+  if (error instanceof SyntaxError) {
+    error.message = 'Invalid JSON';
+    error.status = 400;
+  }
 
-  if (err.code < 100 || err.code >= 600) error.code = 500;
+  if (!error.status && !error.statusCode) {
+    error.status = 500;
+  }
+  const errorMessage =
+    error.name !== 'StatusCodeError'
+      ? error.message
+      : error.error.error.message;
+  const errorResponse = {
+    success: false,
+    message: error.status !== 500 ? errorMessage : 'Internal server error',
+    hideNotification: error.hideNotification
+  };
 
-  if (process.env.NODE_ENV === 'development')
-    // eslint-disable-next-line no-undef
-    logger.error(
-      JSON.stringify(
-        err,
-        [
-          'messageKey',
-          'message',
-          'stack',
-          'url',
-          'name',
-          'code',
-          'Symbol(message)'
-        ],
-        3
-      )
-    );
+  if (_.includes([401, 400, 403, 404, 406, 422], error.status))
+    logger.warn(errorMessage);
+  else {
+    // if development mode, console all error message
+    if (process.env.NODE_ENV === 'development') {
+      errorResponse.stackTrace = error.stack;
+    }
+    logger.error(error);
+  }
 
-  if (!(error.code >= 100 && error.code < 600)) error.code = 500;
+  // return the error
+  res.status(error.status);
+  res.json(errorResponse).end();
 
-  return res
-    .status(error.code)
-    .json({ error: err.message || 'Internal server error...' });
+  next();
 };

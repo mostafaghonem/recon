@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const logger = require('./logger');
 
 mongoose.Promise = Promise;
 
@@ -13,7 +14,6 @@ module.exports = {
       if (err) {
         throw err;
       }
-      // eslint-disable-next-line no-undef
       logger.info(`Connected to ${db}...`);
     });
 

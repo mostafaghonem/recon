@@ -1,10 +1,17 @@
+/**
+ * ! You should require any other external-use-cases or any dependency needed in any use-case here in index and inject it to the method wrapper
+ *
+ *
+ *
+ * ! if you need to throw Error use throw new ApplicationError() and will handle the rest in express catcher
+ */
+
 const makeListExample = require('./list-example');
-const model = require('../models');
 
-const listExample = makeListExample({ model });
+const listExample = makeListExample({ dependencies: 'example dependency lib' });
 
-const commentService = Object.freeze({
+const ExampleService = Object.freeze({
   listExample
 });
 
-module.exports = commentService;
+module.exports = ExampleService;

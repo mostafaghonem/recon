@@ -1,12 +1,12 @@
 const { listExample } = require('../use-cases');
-const makeGetExample = require('./get-example');
+const makeGetExamples = require('./get-examples');
 
-const getExample = makeGetExample({
+const getExampleList = makeGetExamples({
   listExample
 });
 
 const ExampleController = Object.freeze({
-  getExample
+  getExampleList
 });
 
 module.exports = ExampleController;

@@ -1,5 +1,4 @@
-const makeExampleModel = require('./exampleModel');
+const ExampleModel = require('./exampleModel');
 const ExampleScheme = require('../scheme');
 
-const commentsDb = makeExampleModel({ dbAccess: ExampleScheme });
-module.exports = commentsDb;
+module.exports = new ExampleModel({ DbAccess: ExampleScheme });

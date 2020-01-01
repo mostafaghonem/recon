@@ -1,5 +1,6 @@
+const logger = require('./logger');
+
 const handleException = (err, errType) => {
-  // eslint-disable-next-line no-undef
   logger.error(
     `Error Type: ${errType},\nError Name: ${err.name},\nError Message: ${err.message},\nError Stack: ${err.stack}`
   );
