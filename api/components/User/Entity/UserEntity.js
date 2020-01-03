@@ -1,10 +1,12 @@
-const bcryptjs = require('bcryptjs');
+
+// TODO: should be injected only
+const bcjs = require('bcryptjs');
 
 // this require only for auto-complete
 const models = require('../models');
 
 // Inject dependency !no-requires
-const buildEntity = ({ Model = models }) => {
+const buildEntity = ({ Model = models, bcryptjs = bcjs }) => {
   class Entity {
     async constructor(
       data = {
