@@ -1,12 +1,9 @@
-const { listExample } = require('../use-cases');
-const makeGetExamples = require('./get-examples');
+const makeUserRegisterCtrl = require('./user-register');
 
-const getExampleList = makeGetExamples({
-  listExample
+const registerUser = makeUserRegisterCtrl({});
+
+const userCtrl = Object.freeze({
+  registerUser
 });
 
-const ExampleController = Object.freeze({
-  getExampleList
-});
-
-module.exports = ExampleController;
+module.exports = userCtrl;

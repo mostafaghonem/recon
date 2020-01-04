@@ -1,14 +1,14 @@
-
 // TODO: should be injected only
 const bcjs = require('bcryptjs');
+const { ApplicationError: AppError } = require('../../../shared/errors');
 
 // this require only for auto-complete
-const models = require('../models');
+const Model = require('../models');
 
 // Inject dependency !no-requires
-const buildEntity = ({ Model = models, bcryptjs = bcjs }) => {
+const buildEntity = ({ bcrypt = bcjs, ApplicationError = AppError }) => {
   class Entity {
-    async constructor(
+    constructor(
       data = {
         id,
         fullName,
@@ -19,17 +19,32 @@ const buildEntity = ({ Model = models, bcryptjs = bcjs }) => {
         job: { type, description },
         government,
         image,
-        password
+        password,
+        isArchived,
+        createdAt,
+        updatedAt
       }
     ) {
+      this.mapObj(data);
+    }
+
+    /**
+     * @returns true if this entity exists and load data from db, false otherwise
+     * @memberof Entity
+     */
+    async loadDataFromDbById() {
+      if (!this.id)
+        throw new ApplicationError(
+          'There is no id to load data from',
+          500,
+          true
+        );
       const exists = await Model.getOneById({ id });
       // exists? this.mapObj(exists): this.mapObj(data);
       if (exists) {
         this.mapObj(exists);
-      } else {
-        this.mapObj(data);
-        this.hashPassword();
-      }
+        return true;
+      } else return false;
     }
 
     hashPassword() {
@@ -39,12 +54,31 @@ const buildEntity = ({ Model = models, bcryptjs = bcjs }) => {
     }
 
     comparePassword(password) {
-      return bcrypt.compareSync(password, this.password); // true
+      return bcrypt.compareSync(password, this.password);
     }
 
-    setPassword(newPassword) {}
+    setPassword(newPassword) {
+      this.password = newPassword;
+      this.hashPassword();
+    }
+
+    toJson() {
+      return {
+        id: this.id,
+        fullName: this.fullName,
+        phone: this.phone,
+        email: this.email,
+        bithDateTs: this.bithDateTs,
+        gender: this.gender,
+        job: { type: this.job.type, description: this.job.description },
+        government: this.government,
+        image: this.image,
+        password: this.password
+      };
+    }
 
     mapObj(dbObj) {
+      this.id = dbObj._id;
       this.fullName = dbObj.fullName;
       this.phone = dbObj.phone;
       this.verifyPhone = dbObj.verifyPhone;
@@ -52,8 +86,10 @@ const buildEntity = ({ Model = models, bcryptjs = bcjs }) => {
       this.verifyEmail = dbObj.verifyEmail;
       this.bithDateTs = dbObj.bithDateTs;
       this.gender = dbObj.gender;
-      this.job.type = dbObj.job.type;
-      this.job.description = dbObj.job.description;
+      this.job = {
+        type: dbObj.job.type,
+        description: dbObj.job.description
+      };
       this.government = dbObj.government;
       this.image = dbObj.image;
       this.password = dbObj.password;
@@ -66,6 +102,8 @@ const buildEntity = ({ Model = models, bcryptjs = bcjs }) => {
 
     update({}) {}
   }
+
+  return Entity;
 };
 
 module.exports = buildEntity;

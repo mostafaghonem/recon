@@ -1,9 +1,11 @@
-const buildMakeExampleEntity = require('./ExampleEntity');
-const models = require('../models');
+const bcjs = require('bcryptjs');
+const { ApplicationError } = require('../../../shared/errors');
 
-const { makeEntity: ExampleEntity, readAllExamples } = buildMakeExampleEntity({
-  Model: models
+const makeUserEntity = require('./UserEntity');
+
+const Entity = makeUserEntity({
+  bcryptjs: bcjs,
+  ApplicationError
 });
 
-module.exports.Entity = ExampleEntity;
-module.exports.readAll = readAllExamples;
+module.exports.UserEntity = Entity;

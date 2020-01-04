@@ -6,12 +6,12 @@
  * ! if you need to throw Error use throw new ApplicationError() and will handle the rest in express catcher
  */
 
-const makeListExample = require('./list-example');
+const makeRegisterUserUC = require('./register-user');
 
-const listExample = makeListExample({ dependencies: 'example dependency lib' });
+const registerUser = makeRegisterUserUC({});
 
-const ExampleService = Object.freeze({
-  listExample
+const userUseCases = Object.freeze({
+  registerUser
 });
 
-module.exports = ExampleService;
+module.exports = userUseCases;
