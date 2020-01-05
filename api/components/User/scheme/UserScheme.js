@@ -32,7 +32,7 @@ module.exports = ({ genderEnum, jobTypeEnum }) => {
         type: Boolean,
         default: false
       },
-      bithDateTs: {
+      birthDateTs: {
         type: Number,
         required: true
       },
