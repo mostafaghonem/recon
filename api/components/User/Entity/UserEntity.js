@@ -6,34 +6,28 @@ const { ApplicationError: AppError } = require('../../../shared/errors');
 const Model = require('../models');
 
 // Inject dependency !no-requires
-const buildEntity = ({ bcrypt = bcjs, ApplicationError = AppError }) => {
-  class Entity {
+const buildUserEntity = ({ bcrypt = bcjs, ApplicationError = AppError }) => {
+  class UserEntity {
     constructor(
       data = {
-        id,
-        fullName,
-        phone,
-        email,
-        bithDateTs,
-        gender,
-        job: { type, description },
-        government,
-        image,
-        password,
-        isArchived,
-        createdAt,
-        updatedAt
+        id: String,
+        fullName: String,
+        phone: String,
+        email: String,
+        birthDateTs: Number,
+        gender: String,
+        job: { type: String, description: String },
+        government: String,
+        image: String,
+        password: String,
+        isArchived: Boolean
       }
     ) {
       this.mapObj(data);
     }
 
-    /**
-     * @returns true if this entity exists and load data from db, false otherwise
-     * @memberof Entity
-     */
-    async loadDataFromDbById() {
-      if (!this.id)
+    static async loadDataFromDbById(id) {
+      if (!id)
         throw new ApplicationError(
           'There is no id to load data from',
           500,
@@ -42,9 +36,30 @@ const buildEntity = ({ bcrypt = bcjs, ApplicationError = AppError }) => {
       const exists = await Model.getOneById({ id });
       // exists? this.mapObj(exists): this.mapObj(data);
       if (exists) {
-        this.mapObj(exists);
-        return true;
-      } else return false;
+        return this.mapObj(exists);
+      }
+      return false;
+    }
+
+    static mapObj(dbObj) {
+      return new UserEntity({
+        id: dbObj._id,
+        fullName: dbObj.fullName,
+        phone: dbObj.phone,
+        verifyPhone: dbObj.verifyPhone,
+        email: dbObj.email,
+        verifyEmail: dbObj.verifyEmail,
+        birthDateTs: dbObj.birthDateTs,
+        gender: dbObj.gender,
+        job: {
+          type: dbObj.job.type,
+          description: dbObj.job.description
+        },
+        government: dbObj.government,
+        image: dbObj.image,
+        password: dbObj.password,
+        isArchived: dbObj.isArchived
+      });
     }
 
     hashPassword() {
@@ -68,7 +83,7 @@ const buildEntity = ({ bcrypt = bcjs, ApplicationError = AppError }) => {
         fullName: this.fullName,
         phone: this.phone,
         email: this.email,
-        bithDateTs: this.bithDateTs,
+        birthDateTs: this.birthDateTs,
         gender: this.gender,
         job: { type: this.job.type, description: this.job.description },
         government: this.government,
@@ -77,33 +92,20 @@ const buildEntity = ({ bcrypt = bcjs, ApplicationError = AppError }) => {
       };
     }
 
-    mapObj(dbObj) {
-      this.id = dbObj._id;
-      this.fullName = dbObj.fullName;
-      this.phone = dbObj.phone;
-      this.verifyPhone = dbObj.verifyPhone;
-      this.email = dbObj.email;
-      this.verifyEmail = dbObj.verifyEmail;
-      this.bithDateTs = dbObj.bithDateTs;
-      this.gender = dbObj.gender;
-      this.job = {
-        type: dbObj.job.type,
-        description: dbObj.job.description
-      };
-      this.government = dbObj.government;
-      this.image = dbObj.image;
-      this.password = dbObj.password;
-      this.isArchived = dbObj.isArchived;
-      this.createdAt = dbObj.createdAt;
-      this.updatedAt = dbObj.updatedAt;
+    save() {
+      const obj = { ...this.toJson() };
+      delete obj.id;
+      Model.createOne(obj);
     }
 
-    save() {}
-
-    update({}) {}
+    update() {
+      const obj = { ...this.toJson() };
+      delete obj.id;
+      Model.updateOneById(this.id, obj);
+    }
   }
 
-  return Entity;
+  return UserEntity;
 };
 
-module.exports = buildEntity;
+module.exports = buildUserEntity;
