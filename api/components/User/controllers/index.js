@@ -1,9 +1,7 @@
-const makeUserRegisterCtrl = require('./user-register');
-
-const registerUser = makeUserRegisterCtrl({});
+const { facebookAuthController } = require('./userController');
 
 const userCtrl = Object.freeze({
-  registerUser
+  facebookAuth: facebookAuthController
 });
 
 module.exports = userCtrl;

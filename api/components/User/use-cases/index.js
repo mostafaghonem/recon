@@ -5,13 +5,17 @@
  *
  * ! if you need to throw Error use throw new ApplicationError() and will handle the rest in express catcher
  */
+const passport = require('passport');
+const FacebookStrategy = require('passport-facebook').Strategy;
 
-const makeRegisterUserUC = require('./register-user');
+const facebookAuthService = require('./facebookAuthService');
 
-const registerUser = makeRegisterUserUC({});
-
+const facebookAuth = facebookAuthService({
+  passport,
+  FacebookStrategy
+});
 const userUseCases = Object.freeze({
-  registerUser
+  facebookAuth
 });
 
 module.exports = userUseCases;

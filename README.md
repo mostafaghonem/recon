@@ -17,6 +17,7 @@
             DB_NAME=SKN_db
             DB_USERNAME=username
             DB_PASSWORD=password
+            BASE_URL=http://localhost:5090/
     ```
 
     - **NOTE:** all these variables will only be consumed via `docker-compose.yml` file and will not affect the code.
@@ -36,7 +37,7 @@
             DB_NAME=SKN_db
             DB_USERNAME=username
             DB_PASSWORD=password
-
+            BASE_URL=dev_URL
             jwtPrivateKey=123
     ```
 

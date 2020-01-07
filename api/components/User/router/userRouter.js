@@ -8,11 +8,9 @@ const controllers = require('../controllers');
 
 // @route
 // @ GET api/users/register
-// !access  anynomouse
-router.get(
-  '/register',
-  [validateMiddleware(userRegisterValidation)],
-  controllers.registerUser
-);
+// !access  anonymous
+router.get('/facebook-auth', controllers.facebookAuth);
+
+router.get('/facebook-auth-back', controllers.facebookAuth);
 
 module.exports = router;
