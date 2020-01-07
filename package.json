@@ -23,6 +23,8 @@
     "lodash": "^4.17.15",
     "mongoose": "^5.8.3",
     "morgan": "~1.9.1",
+    "redis": "^2.8.0",
+    "util": "^0.12.1",
     "validation-helpers": "^1.1.1",
     "winston": "^3.2.1"
   },

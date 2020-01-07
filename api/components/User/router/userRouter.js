@@ -9,7 +9,7 @@ const controllers = require('../controllers');
 // @route
 // @ GET api/users/register
 // !access  anynomouse
-router.get(
+router.post(
   '/register',
   [validateMiddleware(userRegisterValidation)],
   controllers.registerUser

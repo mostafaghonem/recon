@@ -17,6 +17,7 @@
             DB_NAME=SKN_db
             DB_USERNAME=username
             DB_PASSWORD=password
+            REDIS_URL=redis://cache
     ```
 
     - **NOTE:** all these variables will only be consumed via `docker-compose.yml` file and will not affect the code.
@@ -36,6 +37,7 @@
             DB_NAME=SKN_db
             DB_USERNAME=username
             DB_PASSWORD=password
+            REDIS_URL=redis://cache
 
             jwtPrivateKey=123
     ```
@@ -69,10 +71,12 @@
             DB_NAME=SKN_db
             DB_USERNAME=username
             DB_PASSWORD=password
+            REDIS_URL=redis://localhost/
 
             jwtPrivateKey=123
     ```
 
+    - To work with redis you will need to run the compose(at least the redis service)
     - `PORT` is the port which app will be running on in **local/debug** mode **(this value can be changed as you want)**
     - `DB_HOST` is the name of the host of our db in **local/debug** mode.
     - `DB_PORT` is the port which we will use to connect to db via code.

@@ -9,6 +9,14 @@ module.exports = ({ GenericModel = _GenericModel }) => {
     //   super(DbAccess);
     // }
 
+    checkExistanceBy(data = { email: String, phone: String }) {
+      const orOp = Object.keys(data)
+        .filter(k => data[k])
+        .map(k => ({ [k]: data[k] }));
+
+      return this.exists({ filter: { $or: orOp } });
+    }
+
     anotherSpecificModelFunc() {
       return this.getAggregate([
         {
