@@ -23,7 +23,20 @@ const buildUserEntity = ({ bcrypt = bcjs, ApplicationError = AppError }) => {
         isArchived: Boolean
       }
     ) {
-      this.mapObj(data);
+      this.id = data.id || data._id || 'Not saved yet';
+      this.fullName = data.fullName || '';
+      this.phone = data.phone || '';
+      this.verifyPhone = data.verifyPhone || '';
+      this.email = data.email || '';
+      this.verifyEmail = data.verifyEmail || '';
+      this.birthDateTs = data.birthDateTs || '';
+      this.gender = data.gender || '';
+      this.job.type = data.job || ''.type;
+      this.job.description = data.job || ''.description;
+      this.government = data.government || '';
+      this.image = data.image || '';
+      this.password = data.password || '';
+      this.isArchived = data.isArchived || false;
     }
 
     static async loadDataFromDbById(id) {
@@ -36,30 +49,9 @@ const buildUserEntity = ({ bcrypt = bcjs, ApplicationError = AppError }) => {
       const exists = await Model.getOneById({ id });
       // exists? this.mapObj(exists): this.mapObj(data);
       if (exists) {
-        return this.mapObj(exists);
+        return new UserEntity(exists);
       }
-      return false;
-    }
-
-    static mapObj(dbObj) {
-      return new UserEntity({
-        id: dbObj._id,
-        fullName: dbObj.fullName,
-        phone: dbObj.phone,
-        verifyPhone: dbObj.verifyPhone,
-        email: dbObj.email,
-        verifyEmail: dbObj.verifyEmail,
-        birthDateTs: dbObj.birthDateTs,
-        gender: dbObj.gender,
-        job: {
-          type: dbObj.job.type,
-          description: dbObj.job.description
-        },
-        government: dbObj.government,
-        image: dbObj.image,
-        password: dbObj.password,
-        isArchived: dbObj.isArchived
-      });
+      return undefined;
     }
 
     hashPassword() {
@@ -93,7 +85,7 @@ const buildUserEntity = ({ bcrypt = bcjs, ApplicationError = AppError }) => {
     }
 
     save() {
-      const obj = { ...this.toJson() };
+      const obj = { ...this.toJson };
       delete obj.id;
       Model.createOne(obj);
     }
