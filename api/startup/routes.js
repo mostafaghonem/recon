@@ -1,8 +1,8 @@
 const ErrorHandler = require('../middlewares/errorHandlerMiddleware');
-const Example = require('../components/Example');
+const User = require('../components/User');
 
 module.exports = app => {
-  app.use('/api/example', Example.Router);
+  app.use('/api/users', User.Router);
 
   app.use(ErrorHandler.catch404Errors);
   app.use(ErrorHandler.handleUnexpectedErrors);

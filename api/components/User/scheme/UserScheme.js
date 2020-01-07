@@ -42,17 +42,20 @@ module.exports = ({ genderEnum, jobTypeEnum }) => {
         enum: genderEnum
       },
       job: {
-        type: new Schema({
-          type: {
-            type: String,
-            required: true,
-            enum: jobTypeEnum
+        type: new Schema(
+          {
+            type: {
+              type: String,
+              required: true,
+              enum: jobTypeEnum
+            },
+            description: {
+              type: String,
+              required: true
+            }
           },
-          description: {
-            type: String,
-            required: true
-          }
-        }),
+          { _id: false }
+        ),
         required: true
       },
       government: {

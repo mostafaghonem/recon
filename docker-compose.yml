@@ -1,5 +1,11 @@
-version: "3.4"
+version: '3.4'
 services:
+  redis:
+    image: redis
+    container_name: cache
+    ports:
+      - '6379:6379'
+
   app:
     container_name: docker-node-mongo
     restart: always
@@ -7,8 +13,9 @@ services:
     volumes:
       - .:/api
     ports:
-      - "${PORT}:${PORT}"
+      - '${PORT}:${PORT}'
     environment:
+      - REDIS_URL=${REDIS_URL}
       - NODE_ENV=docker
       - PORT=${PORT}
     depends_on:
@@ -24,4 +31,4 @@ services:
       - ./init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
       - ./mongo-volume:/data/db
     ports:
-      - "${DB_PORT}:27017"
+      - '${DB_PORT}:27017'

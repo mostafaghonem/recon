@@ -6,9 +6,17 @@
  * ! if you need to throw Error use throw new ApplicationError() and will handle the rest in express catcher
  */
 
+const redisClient = require('../../../shared/redis-client');
+const logger = require('../../../startup/logger');
+const { ApplicationError } = require('../../../shared/errors');
+
 const makeRegisterUserUC = require('./register-user');
 
-const registerUser = makeRegisterUserUC({});
+const registerUser = makeRegisterUserUC({
+  ApplicationError,
+  logger,
+  redis: redisClient
+});
 
 const userUseCases = Object.freeze({
   registerUser

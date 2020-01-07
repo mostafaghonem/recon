@@ -1,12 +1,23 @@
-const { Builder: __Builder } = require('validation-helpers');
+// const { Builder: __Builder } = require('validation-helpers');
+// const { defaultConstants } = require('../../../shared/constants');
 
-module.exports = ({ _, ValidatorHelper, Builder = __Builder }) => ({
-  query,
-  body
-}) => {
+// const _genderEnum = Object.values(defaultConstants.GENDER_TYPES);
+// const _jobTypeEnum = Object.values(defaultConstants.JOB_TYPES);
+
+module.exports = ({
+  _,
+  ValidatorHelper,
+  Builder,
+  genderEnum,
+  jobTypeEnum
+}) => ({ body }) => {
   const error = {};
 
   const scheme = {
+    image: {
+      value: body.image,
+      rules: new Builder().required().isURL().rules
+    },
     fullName: {
       value: body.fullName,
       rules: new Builder()
@@ -19,8 +30,54 @@ module.exports = ({ _, ValidatorHelper, Builder = __Builder }) => ({
       rules: new Builder()
         .required('يجب ادخال رقم الهاتف')
         .isMobile('رقم هاتف غير صالح').rules
+    },
+    email: {
+      value: body.email,
+      rules: new Builder()
+        .required('يجب ادخال بريد إليكتروني')
+        .isEmail('بريد إليكتروني غير صالح').rules
+    },
+    birthDateTs: {
+      value: body.birthDateTs,
+      rules: new Builder().required().isNumber().rules
+    },
+    gender: {
+      value: body.gender,
+      rules: new Builder().required().isMember(genderEnum).rules
+    },
+    'job.type': {
+      value: body.job ? body.job.type : '',
+      rules: new Builder().required().isMember(jobTypeEnum).rules
+    },
+    'job.description': {
+      value: body.job ? body.job.description : '',
+      rules: new Builder()
+        .required()
+        .minLength(5)
+        .maxLength(500).rules
+    },
+    government: {
+      value: body.government,
+      rules: new Builder()
+        .required()
+        .minLength(3)
+        .maxLength(100).rules
+    },
+    password: {
+      value: body.password,
+      rules: new Builder()
+        .required()
+        .minLength(5)
+        .maxLength(60).rules
+    },
+    code: {
+      value: body.code,
+      rules: new Builder()
+        .required()
+        .min(1000)
+        .max(9999).rules
     }
-    // TODO: Continue the validation
+    // TODO: Edit error messages
   };
 
   Object.keys(scheme).forEach(key => {
