@@ -1,4 +1,9 @@
-module.exports = ({ _, ValidatorHelper, Builder }) => ({ query, body }) => {
+const { Builder: __Builder } = require('validation-helpers');
+
+module.exports = ({ _, ValidatorHelper, Builder = __Builder }) => ({
+  query,
+  body
+}) => {
   const error = {};
 
   const scheme = {

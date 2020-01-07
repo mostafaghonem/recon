@@ -1,4 +1,5 @@
-const ExampleModel = require('./exampleModel');
-const ExampleScheme = require('../scheme');
+const makeUserModel = require('./UserModel');
 
-module.exports = new ExampleModel({ DbAccess: ExampleScheme });
+const GenericModel = require('../../shared/models/GenericModel');
+
+module.exports = makeUserModel(GenericModel);

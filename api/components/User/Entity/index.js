@@ -1,9 +1,17 @@
-const buildMakeExampleEntity = require('./ExampleEntity');
-const models = require('../models');
+const bcjs = require('bcryptjs');
 
-const { makeEntity: ExampleEntity, readAllExamples } = buildMakeExampleEntity({
-  Model: models
+const mongoose = require('mongoose');
+
+const ObjectId = mongoose.Types.ObjectId;
+
+const { ApplicationError } = require('../../../shared/errors');
+
+const makeUserEntity = require('./UserEntity');
+
+const Entity = makeUserEntity({
+  bcrypt: bcjs,
+  ApplicationError,
+  ObjectId
 });
 
-module.exports.Entity = ExampleEntity;
-module.exports.readAll = readAllExamples;
+module.exports.UserEntity = Entity;

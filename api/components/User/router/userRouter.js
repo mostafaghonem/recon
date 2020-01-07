@@ -1,5 +1,5 @@
 const express = require('express');
-const { makeUserRegisterValidation } = require('../validations');
+const { userRegisterValidation } = require('../validations');
 
 const router = express.Router();
 
@@ -7,13 +7,12 @@ const validateMiddleware = require('../../../middlewares/validateMiddleware');
 const controllers = require('../controllers');
 
 // @route
-// @ GET api/users/
-// @                 ?skip=1&limit=10
-// !access  normal-user
+// @ GET api/users/register
+// !access  anynomouse
 router.get(
-  '/example',
-  [validateMiddleware(makeUserRegisterValidation)],
-  controllers.getExampleList
+  '/register',
+  [validateMiddleware(userRegisterValidation)],
+  controllers.registerUser
 );
 
 module.exports = router;

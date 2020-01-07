@@ -1,35 +1,56 @@
-
 // TODO: should be injected only
 const bcjs = require('bcryptjs');
+const mongoose = require('mongoose');
+
+const __ObjectId = mongoose.Types.ObjectId;
+
+const { ApplicationError: AppError } = require('../../../shared/errors');
 
 // this require only for auto-complete
-const models = require('../models');
+const Model = require('../models');
 
 // Inject dependency !no-requires
-const buildEntity = ({ Model = models, bcryptjs = bcjs }) => {
-  class Entity {
-    async constructor(
+const buildUserEntity = ({
+  bcrypt = bcjs,
+  ApplicationError = AppError,
+  ObjectId = __ObjectId
+}) => {
+  class UserEntity {
+    static async loadEntityFromDbById(id) {
+      const exists = await Model.getOneById({ id });
+      if (exists) return new UserEntity(exists);
+      throw new ApplicationError('UserEntity not found', 404);
+    }
+
+    constructor(
       data = {
-        id,
-        fullName,
-        phone,
-        email,
-        bithDateTs,
-        gender,
-        job: { type, description },
-        government,
-        image,
-        password
+        fullName: String,
+        phone: String,
+        email: String,
+        birthDateTs: Number,
+        gender: String,
+        job: { type: String, description: String },
+        government: String,
+        image: String
       }
     ) {
-      const exists = await Model.getOneById({ id });
-      // exists? this.mapObj(exists): this.mapObj(data);
-      if (exists) {
-        this.mapObj(exists);
-      } else {
-        this.mapObj(data);
-        this.hashPassword();
+      this.id = data.id || data._id || new ObjectId();
+      this.fullName = data.fullName || '';
+      this.phone = data.phone || '';
+      this.verifyPhone = data.verifyPhone || false;
+      this.email = data.email || '';
+      this.verifyEmail = data.verifyEmail || false;
+      this.birthDateTs = data.birthDateTs || '';
+      this.gender = data.gender || '';
+      if (data.job) {
+        this.job = {
+          type: data.job.type || '',
+          description: data.job.description || ''
+        };
       }
+      this.government = data.government || '';
+      this.image = data.image || '';
+      this.isArchived = data.isArchived || false;
     }
 
     hashPassword() {
@@ -39,33 +60,61 @@ const buildEntity = ({ Model = models, bcryptjs = bcjs }) => {
     }
 
     comparePassword(password) {
-      return bcrypt.compareSync(password, this.password); // true
+      return bcrypt.compareSync(password, this.password);
     }
 
-    setPassword(newPassword) {}
-
-    mapObj(dbObj) {
-      this.fullName = dbObj.fullName;
-      this.phone = dbObj.phone;
-      this.verifyPhone = dbObj.verifyPhone;
-      this.email = dbObj.email;
-      this.verifyEmail = dbObj.verifyEmail;
-      this.bithDateTs = dbObj.bithDateTs;
-      this.gender = dbObj.gender;
-      this.job.type = dbObj.job.type;
-      this.job.description = dbObj.job.description;
-      this.government = dbObj.government;
-      this.image = dbObj.image;
-      this.password = dbObj.password;
-      this.isArchived = dbObj.isArchived;
-      this.createdAt = dbObj.createdAt;
-      this.updatedAt = dbObj.updatedAt;
+    setPassword(newPassword) {
+      this.password = newPassword;
+      this.hashPassword();
     }
 
-    save() {}
+    async save() {
+      await Model.upsertOneById({
+        id: this.id,
+        update: this.mapToDb()
+      });
+    }
 
-    update({}) {}
+    // used by other services
+    toJson() {
+      if (this.isArchived)
+        throw new ApplicationError('UserEntity not found', 404);
+
+      return {
+        id: this.id,
+        fullName: this.fullName,
+        phone: this.phone,
+        verifyPhone: this.verifyPhone,
+        email: this.email,
+        verifyEmail: this.verifyEmail,
+        birthDateTs: this.birthDateTs,
+        gender: this.gender,
+        job: { type: this.job.type, description: this.job.description },
+        government: this.government,
+        image: this.image
+      };
+    }
+
+    // ! need to be private
+    mapToDb() {
+      return {
+        fullName: this.fullName,
+        phone: this.phone,
+        verifyPhone: this.verifyPhone,
+        email: this.email,
+        verifyEmail: this.verifyEmail,
+        birthDateTs: this.birthDateTs,
+        gender: this.gender,
+        job: { type: this.job.type, description: this.job.description },
+        government: this.government,
+        image: this.image,
+        password: this.password,
+        isArchived: this.isArchived
+      };
+    }
   }
+
+  return UserEntity;
 };
 
-module.exports = buildEntity;
+module.exports = buildUserEntity;
