@@ -5,9 +5,9 @@ const _GenericModel = require('../../shared/models/GenericModel');
 
 module.exports = ({ GenericModel = _GenericModel }) => {
   class UserModel extends GenericModel {
-    constructor({ DbAccess = scheme }) {
-      super({ DbAccess });
-    }
+    // constructor(DbAccess = scheme) {
+    //   super(DbAccess);
+    // }
 
     anotherSpecificModelFunc() {
       return this.getAggregate([
@@ -17,5 +17,5 @@ module.exports = ({ GenericModel = _GenericModel }) => {
       ]);
     }
   }
-  return new UserModel({ DbAccess: scheme });
+  return new UserModel(scheme);
 };

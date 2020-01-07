@@ -1,5 +1,5 @@
 module.exports = class GenericModel {
-  constructor({ DbAccess }) {
+  constructor(DbAccess) {
     this.DbAccess = DbAccess;
   }
 
@@ -12,7 +12,7 @@ module.exports = class GenericModel {
   }
 
   createOne({ document }) {
-    return this.DbAccess.create(document).toObject();
+    return this.DbAccess.create(document);
   }
 
   getMany({ query, select, sort = { _id: 1 }, skip = 0, limit = 10000000000 }) {
@@ -29,6 +29,14 @@ module.exports = class GenericModel {
 
   count({ filter }) {
     return this.DbAccess.countDocuments(filter);
+  }
+
+  upsertOneById({ id, update }) {
+    return this.DbAccess.findByIdAndUpdate(id, update, {
+      upsert: true,
+      runValidators: true,
+      new: true
+    }).lean();
   }
 
   updateOneById({ id, update }) {

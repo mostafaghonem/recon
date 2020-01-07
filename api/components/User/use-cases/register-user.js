@@ -6,7 +6,7 @@ const { UserEntity } = require('../Entity');
 // const Model = require('../models');
 
 // should have no implementation for any specific orm
+// eslint-disable-next-line no-empty-pattern
 module.exports = ({}) => async ({}) => {
-  const e = new UserEntity();
-  e.loadDataFromDbById();
+  // e.loadDataFromDbById();
 };
