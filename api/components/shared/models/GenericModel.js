@@ -3,19 +3,31 @@ module.exports = class GenericModel {
     this.DbAccess = DbAccess;
   }
 
-  getOne({ query, select }) {
+  getOne(params = { query: {}, select: '' }) {
+    const { query, select } = params;
     return this.DbAccess.findOne(query, select).lean();
   }
 
-  getOneById({ id, select }) {
+  getOneById(params = { id: undefined, select: '' }) {
+    const { id, select } = params;
     return this.DbAccess.findById(id, select).lean();
   }
 
-  createOne({ document }) {
+  createOne(params = { document: {} }) {
+    const { document } = params;
     return this.DbAccess.create(document);
   }
 
-  getMany({ query, select, sort = { _id: 1 }, skip = 0, limit = 10000000000 }) {
+  getMany(
+    params = {
+      query: {},
+      select: '',
+      sort: { _id: 1 },
+      skip: 0,
+      limit: 10000000000
+    }
+  ) {
+    const { limit, query, select, skip, sort } = params;
     return this.DbAccess.find(query, select)
       .sort(sort)
       .skip(skip)
@@ -23,15 +35,18 @@ module.exports = class GenericModel {
       .lean();
   }
 
-  exists({ filter }) {
+  exists(params = { filter: {} }) {
+    const { filter } = params;
     return this.DbAccess.exists(filter);
   }
 
-  count({ filter }) {
+  count(params = { filter: {} }) {
+    const { filter } = params;
     return this.DbAccess.countDocuments(filter);
   }
 
-  upsertOneById({ id, update }) {
+  upsertOneById(params = { id: undefined, update: {} }) {
+    const { id, update } = params;
     return this.DbAccess.findByIdAndUpdate(id, update, {
       upsert: true,
       runValidators: true,
@@ -39,44 +54,52 @@ module.exports = class GenericModel {
     }).lean();
   }
 
-  updateOneById({ id, update }) {
+  updateOneById(params = { id: undefined, update: {} }) {
+    const { id, update } = params;
     return this.DbAccess.findByIdAndUpdate(id, update, {
       runValidators: true,
       new: true
     }).lean();
   }
 
-  updateOneByFilter({ filter, update }) {
+  updateOneByFilter(params = { filter: {}, update: {} }) {
+    const { filter, update } = params;
     return this.DbAccess.findOneAndUpdate(filter, update, {
       runValidators: true,
       new: true
     }).lean();
   }
 
-  updateManyByFilter({ filter, update }) {
+  updateManyByFilter(params = { filter: {}, update: {} }) {
+    const { filter, update } = params;
     return this.DbAccess.updateMany(filter, update, {
       runValidators: true,
       new: true
     }).lean();
   }
 
-  deleteOneById({ id }) {
+  deleteOneById(params = { id: {} }) {
+    const { id } = params;
     return this.DbAccess.findByIdAndDelete(id).lean();
   }
 
-  deleteOneByFilter({ filter }) {
+  deleteOneByFilter(params = { filter: {} }) {
+    const { filter } = params;
     return this.DbAccess.findOneAndDelete(filter).lean();
   }
 
-  deleteManyByFilter({ filter }) {
+  deleteManyByFilter(params = { filter: {} }) {
+    const { filter } = params;
     return this.DbAccess.deleteMany(filter).lean();
   }
 
-  bulkWrite({ queries }) {
+  bulkWrite(params = { queries: [] }) {
+    const { queries } = params;
     return this.DbAccess.bulkWrite(queries);
   }
 
-  getAggregate({ arrayOfFilter }) {
+  getAggregate(params = { arrayOfFilter: [] }) {
+    const { arrayOfFilter } = params;
     return this.DbAccess.aggregate(arrayOfFilter);
   }
 };

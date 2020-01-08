@@ -31,6 +31,7 @@ module.exports = ({ redis, ApplicationError, logger }) => async ({
 
   if (isDuplicate) throw new ApplicationError('Duplicate email or phone', 400);
 
+  // TODO: facebookId need to be stored
   const newUser = new UserEntity({
     image,
     fullName,
