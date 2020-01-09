@@ -63,6 +63,10 @@ const buildUserEntity = ({
       return bcrypt.compareSync(password, this.password);
     }
 
+    compareLoginPassword(loginPassword, userPassword) {
+      return bcrypt.compareSync(loginPassword, userPassword);
+    }
+
     setPassword(newPassword) {
       this.password = newPassword;
       this.hashPassword();

@@ -1,5 +1,8 @@
 const express = require('express');
-const { userRegisterValidation } = require('../validations');
+const {
+  userRegisterValidation,
+  userLoginValidation
+} = require('../validations');
 
 const router = express.Router();
 
@@ -13,6 +16,15 @@ router.post(
   '/register',
   [validateMiddleware(userRegisterValidation)],
   controllers.registerUser
+);
+
+// @route
+// @ POST api/users/login
+// !access  anynomouse
+router.post(
+  '/login',
+  [validateMiddleware(userLoginValidation)],
+  controllers.loginUser
 );
 
 module.exports = router;
