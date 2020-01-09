@@ -11,6 +11,7 @@ const logger = require('../../../startup/logger');
 const { ApplicationError } = require('../../../shared/errors');
 
 const makeRegisterUserUC = require('./register-user');
+const makeLoginUser = require('./login-user');
 
 const registerUser = makeRegisterUserUC({
   ApplicationError,
@@ -18,8 +19,14 @@ const registerUser = makeRegisterUserUC({
   redis: redisClient
 });
 
+const loginUser = makeLoginUser({
+  ApplicationError,
+  logger
+});
+
 const userUseCases = Object.freeze({
-  registerUser
+  registerUser,
+  loginUser
 });
 
 module.exports = userUseCases;
