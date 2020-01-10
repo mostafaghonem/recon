@@ -1,23 +1,28 @@
-const { facebookAuth } = require('../use-cases');
+const {
+  facebookAuth,
+  facebookLoginService,
+  faceBookData
+} = require('../use-cases');
 
-exports.facebookAuthController = async (req, res, next) => {
-  try {
-    return facebookAuth.authenticate('facebook');
+exports.facebookAuthController = facebookAuth.authenticate('facebook');
 
-    // return res.status(200).json({ body: result });
-  } catch (e) {
-    return next(e);
+exports.facebookAuthBackController = [
+  facebookAuth.authenticate('facebook', { failureRedirect: '/login' }),
+  (req, res) => {
+    const facebookId = req.user.facebookId;
+    const token = facebookLoginService(facebookId);
+    if (!token) {
+      // set cookie with facebookId and redirect to register
+    } else {
+      // set cookie with token and redirect to home
+    }
+    return res.status(200).json(token);
   }
-};
+];
 
-exports.facebookAuthBackController = async (req, res, next) => {
-  try {
-    console.log(req.query.code);
-    return res;
-    // req.query.code // need to deserialize this code and retrieve user id and get its data from db
-    // then redirect to register form if his data not complete or redirect to home page with adding token
-    // return res.status(200).json({ body: result });
-  } catch (e) {
-    return next(e);
-  }
+exports.facebookUserData = (req, res) => {
+  const facebookId = req.body.facebookId;
+  const user = facebookLoginService(facebookId);
+
+  return res.status(200).json(user);
 };

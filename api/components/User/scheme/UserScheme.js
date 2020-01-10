@@ -71,7 +71,7 @@ module.exports = ({ genderEnum, jobTypeEnum }) => {
         required: true
       },
       tempVerificationCode: String,
-
+      facebookId: String,
       isArchived: {
         type: Boolean,
         default: false

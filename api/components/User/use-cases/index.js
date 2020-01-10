@@ -14,7 +14,9 @@ const { ApplicationError } = require('../../../shared/errors');
 
 const makeRegisterUserUC = require('./register-user');
 const makeLoginUser = require('./login-user');
-const facebookAuthService = require('./facebookAuthService');
+const makeFacebookAuthService = require('./facebookAuthService');
+const makeFacebookLogin = require('./facebookLogin');
+const { UserEntity } = require('../Entity');
 
 const registerUser = makeRegisterUserUC({
   ApplicationError,
@@ -23,18 +25,28 @@ const registerUser = makeRegisterUserUC({
 });
 
 const loginUser = makeLoginUser({
+  UserEntity,
   ApplicationError,
   logger
 });
 
-const facebookAuth = facebookAuthService({
+const facebookAuth = makeFacebookAuthService({
   passport,
-  FacebookStrategy
+  FacebookStrategy,
+  redis: redisClient
+})();
+
+const { faceBookData, facebookLoginService } = makeFacebookLogin({
+  redis: redisClient,
+  UserEntity
 });
-const userUseCases = Object.freeze({
+
+const userUseCases = {
   registerUser,
   loginUser,
-  facebookAuth
-});
+  facebookAuth,
+  faceBookData,
+  facebookLoginService
+};
 
 module.exports = userUseCases;

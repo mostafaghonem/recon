@@ -11,6 +11,7 @@ module.exports.catch404Errors = (req, res, next) => {
 
 // eslint-disable-next-line no-unused-vars
 module.exports.handleUnexpectedErrors = (err, req, res, next) => {
+  console.log(err);
   const error = err;
   if (error instanceof mongooseValidationError) {
     const validateError = [];
