@@ -33,7 +33,7 @@ const facebookAuth = facebookAuthService({
 });
 const userUseCases = Object.freeze({
   registerUser,
-  loginUser
+  loginUser,
   facebookAuth
 });
 

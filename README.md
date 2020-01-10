@@ -40,7 +40,6 @@
             DB_PASSWORD=password
             BASE_URL=dev_URL
             REDIS_URL=redis://cache
-
             jwtPrivateKey=123
     ```
 
