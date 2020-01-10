@@ -22,7 +22,7 @@ exports.facebookAuthBackController = [
 
 exports.facebookUserData = (req, res) => {
   const facebookId = req.body.facebookId;
-  const user = facebookLoginService(facebookId);
+  const user = faceBookData(facebookId);
 
   return res.status(200).json(user);
 };
