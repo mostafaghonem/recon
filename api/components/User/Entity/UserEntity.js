@@ -1,7 +1,9 @@
 // TODO: should be injected only
 const bcjs = require('bcryptjs');
 const mongoose = require('mongoose');
+const jsonwebtoken = require('jsonwebtoken');
 
+const _jwt = Promise.promisifyAll(jsonwebtoken);
 const __ObjectId = mongoose.Types.ObjectId;
 
 const { ApplicationError: AppError } = require('../../../shared/errors');
@@ -10,16 +12,34 @@ const { ApplicationError: AppError } = require('../../../shared/errors');
 const Model = require('../models');
 
 // Inject dependency !no-requires
-const buildUserEntity = ({
-  bcrypt = bcjs,
-  ApplicationError = AppError,
-  ObjectId = __ObjectId
-}) => {
+const buildUserEntity = (
+  obj = {
+    bcrypt: bcjs,
+    ApplicationError: AppError,
+    ObjectId: __ObjectId,
+    jwt: _jwt
+  }
+) => {
+  const { bcrypt, ApplicationError, ObjectId } = obj;
   class UserEntity {
     static async loadEntityFromDbById(id) {
       const exists = await Model.getOneById({ id });
       if (exists) return new UserEntity(exists);
-      throw new ApplicationError('UserEntity not found', 404);
+      return undefined;
+    }
+
+    static async loadEntityFromDbByFacebookId(facebookId) {
+      const exists = await Model.getOne({ query: { facebookId } });
+      if (exists) return new UserEntity(exists);
+      return undefined;
+    }
+
+    static async loadEntityFromDbByPhone(phone) {
+      const exists = await Model.getOne({
+        query: { phone, verifyPhone: true }
+      });
+      if (exists) return new UserEntity(exists);
+      return undefined;
     }
 
     constructor(
@@ -31,9 +51,11 @@ const buildUserEntity = ({
         gender: String,
         job: { type: String, description: String },
         government: String,
-        image: String
+        image: String,
+        facebookId: String
       }
     ) {
+      this.facebookId = data.facebookId || '';
       this.id = data.id || data._id || new ObjectId();
       this.fullName = data.fullName || '';
       this.phone = data.phone || '';
@@ -61,10 +83,6 @@ const buildUserEntity = ({
 
     comparePassword(password) {
       return bcrypt.compareSync(password, this.password);
-    }
-
-    compareLoginPassword(loginPassword, userPassword) {
-      return bcrypt.compareSync(loginPassword, userPassword);
     }
 
     setPassword(newPassword) {
@@ -115,6 +133,18 @@ const buildUserEntity = ({
         password: this.password,
         isArchived: this.isArchived
       };
+    }
+
+    generateToken() {
+      const jwtPrivateKey = process.env.jwtPrivateKey || '';
+
+      return jwt.sign(
+        {
+          id: this._id,
+          exp: Math.floor(new Date().getTime() / 1000) + 7 * 24 * 60 * 60 * 30 // Note: in seconds!
+        },
+        jwtPrivateKey
+      );
     }
   }
 

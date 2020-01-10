@@ -30,6 +30,8 @@ router.post(
 // !access  anonymous
 router.get('/facebook-auth', controllers.facebookAuth);
 
-router.get('/facebook-auth-back', controllers.facebookAuth);
+router.get('/facebook-auth-back', controllers.facebookAuthBack);
+
+router.get('/facebook-user-data', controllers.getFacebookUserData);
 
 module.exports = router;

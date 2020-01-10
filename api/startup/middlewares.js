@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const fs = require('fs');
 const passport = require('passport');
+const session = require('express-session');
 
 module.exports = app => {
   const accessLogStream = fs.createWriteStream('logs/access.log', {
@@ -17,8 +18,23 @@ module.exports = app => {
       { stream: accessLogStream }
     )
   );
+  // adding pass port config
+  app.use(
+    session({
+      secret: 's3cr3t',
+      resave: true,
+      saveUninitialized: true
+    })
+  );
   app.use(passport.initialize());
   app.use(passport.session());
+  passport.serializeUser((user, done) => {
+    done(null, user);
+  });
+  passport.deserializeUser((user, done) => {
+    done(null, user);
+  });
+  // end adding pass port config
   // app.use(express.static('uploads'));
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({ extended: true }));

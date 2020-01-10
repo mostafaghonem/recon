@@ -40,7 +40,7 @@
             DB_NAME=SKN_db
             DB_USERNAME=username
             DB_PASSWORD=password
-            BASE_URL=dev_URL
+            BASE_URL=https://localhost:5050
             REDIS_URL=redis://cache
             jwtPrivateKey=123
             CERT_PATH=server.cert
