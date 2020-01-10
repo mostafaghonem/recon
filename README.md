@@ -19,6 +19,8 @@
             DB_PASSWORD=password
             BASE_URL=https://localhost:5090/
             REDIS_URL=redis://cache
+            CERT_PATH=server.cert
+            KEY_PATH=server.key
     ```
 
     - **NOTE:** all these variables will only be consumed via `docker-compose.yml` file and will not affect the code.
@@ -41,6 +43,8 @@
             BASE_URL=dev_URL
             REDIS_URL=redis://cache
             jwtPrivateKey=123
+            CERT_PATH=server.cert
+            KEY_PATH=server.key
     ```
 
     - `DB_HOST` is the name of the host of our db in docker environment.
@@ -75,6 +79,8 @@
             REDIS_URL=redis://localhost/
             BASE_URL=https://localhost:5090/
             jwtPrivateKey=123
+            CERT_PATH=server.cert
+            KEY_PATH=server.key
     ```
 
     - To work with redis you will need to run the compose(at least the redis service)
