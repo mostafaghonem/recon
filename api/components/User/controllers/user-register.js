@@ -1,12 +1,10 @@
 const { registerUser } = require('../use-cases');
 
-// eslint-disable-next-line no-empty-pattern
-module.exports = ({}) => {
-  return async (req, res, next) => {
+module.exports = () => {
+  return async ({ req, res, next }) => {
     try {
-      await registerUser({ ...req.body });
-
-      return res.status(200).json({ body: 'User created successfully!' });
+      const result = await registerUser({ ...req.body });
+      return res.status(200).json({ body: result });
     } catch (e) {
       return next(e);
     }

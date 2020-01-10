@@ -3,6 +3,7 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const fs = require('fs');
+const passport = require('passport');
 
 module.exports = app => {
   const accessLogStream = fs.createWriteStream('logs/access.log', {
@@ -16,6 +17,8 @@ module.exports = app => {
       { stream: accessLogStream }
     )
   );
+  app.use(passport.initialize());
+  app.use(passport.session());
   // app.use(express.static('uploads'));
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({ extended: true }));
