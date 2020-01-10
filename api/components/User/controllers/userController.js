@@ -10,7 +10,7 @@ exports.facebookAuthController = async (req, res, next) => {
   }
 };
 
-exports.facebookAuthController = async (req, res, next) => {
+exports.facebookAuthBackController = async (req, res, next) => {
   try {
     console.log(req.query.code);
     return res;

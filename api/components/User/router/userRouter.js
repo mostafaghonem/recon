@@ -11,7 +11,7 @@ const controllers = require('../controllers');
 
 // @route
 // @ GET api/users/register
-// !access  anynomouse
+// !access  anonymous
 router.post(
   '/register',
   [validateMiddleware(userRegisterValidation)],
@@ -20,7 +20,7 @@ router.post(
 
 // @route
 // @ POST api/users/login
-// !access  anynomouse
+// !access  anonymous
 router.post(
   '/login',
   [validateMiddleware(userLoginValidation)],
@@ -29,7 +29,6 @@ router.post(
 
 // !access  anonymous
 router.get('/facebook-auth', controllers.facebookAuth);
-
 
 router.get('/facebook-auth-back', controllers.facebookAuth);
 

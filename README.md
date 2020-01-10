@@ -17,7 +17,7 @@
             DB_NAME=SKN_db
             DB_USERNAME=username
             DB_PASSWORD=password
-            BASE_URL=http://localhost:5090/
+            BASE_URL=https://localhost:5090/
             REDIS_URL=redis://cache
     ```
 
@@ -74,7 +74,7 @@
             DB_USERNAME=username
             DB_PASSWORD=password
             REDIS_URL=redis://localhost/
-
+            BASE_URL=https://localhost:5090/
             jwtPrivateKey=123
     ```
 

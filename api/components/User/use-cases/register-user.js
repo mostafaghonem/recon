@@ -27,7 +27,7 @@ module.exports = ({ redis, ApplicationError, logger }) => async ({
 
   if (code !== candidateCode) throw new ApplicationError('Invalid code', 400);
 
-  const isDuplicate = await Models.checkExistanceBy({ email, phone });
+  const isDuplicate = await Models.checkExistenceBy({ email, phone });
 
   if (isDuplicate) throw new ApplicationError('Duplicate email or phone', 400);
 
