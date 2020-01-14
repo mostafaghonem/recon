@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 //! only require Entity/model
-const { UserEntity: _UserEntity } = require('../Entity');
+const { UserEntity } = require('../Entity');
 
 /**
  * @description check user login data and return login token if user is exist and verified
@@ -10,11 +10,11 @@ const { UserEntity: _UserEntity } = require('../Entity');
  */
 
 // should have no implementation for any specific orm
-module.exports = ({
-  UserEntity = _UserEntity,
-  ApplicationError,
-  logger
-}) => async ({ phone, password, agent }) => {
+module.exports = ({ ApplicationError, logger }) => async ({
+  phone,
+  password,
+  agent
+}) => {
   const user = await UserEntity.loadEntityFromDbByPhone(phone);
   if (user) {
     const checkPassword = user.comparePassword(password);

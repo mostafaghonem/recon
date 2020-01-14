@@ -24,6 +24,7 @@
     ```
 
     - **NOTE:** all these variables will only be consumed via `docker-compose.yml` file and will not affect the code.
+    - `BASE_URL` is the url which our node app is running
     - `PORT` is the port which app will be running on via `docker-compose up` **(this value can be changed as you want)**
     - `DB_PORT` is the port will be exposed to your `localhost` incase you want to connect to db vai any tool _eg. no sql booster_ **(this value can be changed as you want)**
     - Other variables is straight forward to conclude.
@@ -47,6 +48,7 @@
             KEY_PATH=server.key
     ```
 
+    - `BASE_URL` is the url which our node app is running
     - `DB_HOST` is the name of the host of our db in docker environment.
     - `DB_PORT` is the port which we will use to connect to db via code.
       - **NOTE** This port value should be _27017_ cuz we are connecting to the image(skndb) itself not the mapping port in our host(localhost)
@@ -85,6 +87,7 @@
 
     - To work with redis you will need to run the compose(at least the redis service)
     - `PORT` is the port which app will be running on in **local/debug** mode **(this value can be changed as you want)**
+    - `BASE_URL` is the url which our node app is running
     - `DB_HOST` is the name of the host of our db in **local/debug** mode.
     - `DB_PORT` is the port which we will use to connect to db via code.
       - **NOTE** This port value should be same as `DB_PORT` in `.env` file cuz we are connecting to the db which is running on the image(skndb).

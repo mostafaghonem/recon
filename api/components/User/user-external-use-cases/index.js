@@ -6,7 +6,7 @@
  * ! if you need to throw Error use throw new ApplicationError() and will handle the rest in express catcher
  */
 
-const makeExternalExample = require('./external-example');
+const makeExternalExample = require('./external-user-example');
 
 const exampleExternal = makeExternalExample({
   dependencies: 'example dependency lib'

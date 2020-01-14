@@ -2,6 +2,7 @@
 const bcjs = require('bcryptjs');
 const mongoose = require('mongoose');
 const jsonwebtoken = require('jsonwebtoken');
+const Promise = require('bluebird');
 
 const _jwt = Promise.promisifyAll(jsonwebtoken);
 const __ObjectId = mongoose.Types.ObjectId;
@@ -20,7 +21,7 @@ const buildUserEntity = (
     jwt: _jwt
   }
 ) => {
-  const { bcrypt, ApplicationError, ObjectId } = obj;
+  const { bcrypt, ApplicationError, ObjectId, jwt } = obj;
   class UserEntity {
     static async loadEntityFromDbById(id) {
       const exists = await Model.getOneById({ id });
@@ -51,8 +52,7 @@ const buildUserEntity = (
         gender: String,
         job: { type: String, description: String },
         government: String,
-        image: String,
-        facebookId: String
+        image: String
       }
     ) {
       this.facebookId = data.facebookId || '';

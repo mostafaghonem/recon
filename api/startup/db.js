@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const Promise = require('bluebird');
 const logger = require('./logger');
 
 mongoose.Promise = Promise;

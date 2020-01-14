@@ -1,12 +1,13 @@
-// const { UserEntity } = require('../Entity');
+// ! we can depend on entity
+const { UserEntity } = require('../Entity');
 
-const { UserEntity: UserEntity_ } = require('../Entity');
 const redisClient_ = require('../../../shared/redis-client');
 
-module.exports = ({ redis = redisClient_, UserEntity = UserEntity_ }) => {
+module.exports = ({ redis = redisClient_ }) => {
   const loginService = async facebookId => {
     const user = await UserEntity.loadEntityFromDbByFacebookId(facebookId);
     if (!user) {
+      // @REVIEW == too long time
       await redis.setexAsync(user.id, 20 * 60, user.toJson());
       return null;
     }

@@ -17,10 +17,6 @@ module.exports = ({ GenericModel = _GenericModel }) => {
       return this.exists({ filter: { $or: orOp } });
     }
 
-    getUserByPhone(query = {}, select = '') {
-      return this.getOne({ query, select });
-    }
-
     anotherSpecificModelFunc() {
       return this.getAggregate([
         {

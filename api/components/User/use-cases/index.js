@@ -16,7 +16,6 @@ const makeRegisterUserUC = require('./register-user');
 const makeLoginUser = require('./login-user');
 const makeFacebookAuthService = require('./facebookAuthService');
 const makeFacebookLogin = require('./facebookLogin');
-const { UserEntity } = require('../Entity');
 
 const registerUser = makeRegisterUserUC({
   ApplicationError,
@@ -25,7 +24,6 @@ const registerUser = makeRegisterUserUC({
 });
 
 const loginUser = makeLoginUser({
-  UserEntity,
   ApplicationError,
   logger
 });
@@ -37,8 +35,7 @@ const facebookAuth = makeFacebookAuthService({
 })();
 
 const { faceBookData, facebookLoginService } = makeFacebookLogin({
-  redis: redisClient,
-  UserEntity
+  redis: redisClient
 });
 
 const userUseCases = {

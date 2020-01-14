@@ -1,4 +1,5 @@
 const jsonwebtoken = require('jsonwebtoken');
+const Promise = require('bluebird');
 
 const jwt = Promise.promisifyAll(jsonwebtoken);
 
