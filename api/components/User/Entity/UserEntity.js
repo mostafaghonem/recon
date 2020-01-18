@@ -35,6 +35,12 @@ const buildUserEntity = (
       return undefined;
     }
 
+    static async loadEntityFromDbByGoogleId(googleId) {
+      const exists = await Model.getOne({ query: { googleId } });
+      if (exists) return new UserEntity(exists);
+      return undefined;
+    }
+
     static async loadEntityFromDbByPhone(phone) {
       const exists = await Model.getOne({
         query: { phone, verifyPhone: true }

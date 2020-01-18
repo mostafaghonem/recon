@@ -1,15 +1,12 @@
-<<<<<<< HEAD
 const {
   googleAuth,
   facebookAuth,
   facebookLoginService,
   googleLoginGetter,
   googleLoginSetter,
+  loginService,
   faceBookData
 } = require('../use-cases');
-=======
-const { facebookAuth, loginService, faceBookData } = require('../use-cases');
->>>>>>> b6091cbf802c6988268b46983b0c50470494a639
 
 exports.facebookAuthController = facebookAuth.authenticate('facebook');
 
@@ -30,13 +27,21 @@ exports.facebookAuthBackController = [
 
 exports.googleAuthCallback = [
   googleAuth.authenticate('google', { failureRedirect: '/login' }),
-  (req, res) => {
+  async (req, res) => {
     const { id } = req.user;
-    googleLoginSetter(id);
-    return res.status(200).json(req.user);
+
+    let token = await googleLoginSetter(id);
+    if (!token) {
+      return res.redirect(
+        process.env.FRONT_END_URL + `regeistration?googleId=${id}`
+      );
+    }
+    console.log(token);
+    // need to set cookie then redirect to home
+
+    return res.status(200).json(token);
   }
 ];
-
 
 exports.facebookUserData = async (req, res) => {
   const facebookId = req.params.facebookId;
