@@ -69,6 +69,11 @@ const buildUserEntity = (
           type: data.job.type || '',
           description: data.job.description || ''
         };
+      } else {
+        this.job = {
+          type: '',
+          description: ''
+        };
       }
       this.government = data.government || '';
       this.image = data.image || '';
@@ -99,9 +104,6 @@ const buildUserEntity = (
 
     // used by other services
     toJson() {
-      if (this.isArchived)
-        throw new ApplicationError('UserEntity not found', 404);
-
       return {
         id: this.id,
         fullName: this.fullName,
@@ -113,7 +115,8 @@ const buildUserEntity = (
         gender: this.gender,
         job: { type: this.job.type, description: this.job.description },
         government: this.government,
-        image: this.image
+        image: this.image,
+        facebookId: this.facebookId
       };
     }
 

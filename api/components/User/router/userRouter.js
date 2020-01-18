@@ -32,7 +32,7 @@ router.get('/facebook-auth', controllers.facebookAuth);
 
 router.get('/facebook-auth-back', controllers.facebookAuthBack);
 
-router.get('/facebook-user-data', controllers.getFacebookUserData);
+router.get('/facebook-user-data/:facebookId', controllers.getFacebookUserData);
 
 // GET /auth/google
 //   Use passport.authenticate() as route middleware to authenticate the

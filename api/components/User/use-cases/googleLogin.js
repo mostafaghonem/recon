@@ -4,24 +4,22 @@ const { UserEntity } = require('../Entity');
 const redisClient_ = require('../../../shared/redis-client');
 
 module.exports = ({ redis = redisClient_ }) => {
-  const loginService = async _user => {
-    const user = await UserEntity.loadEntityFromDbByFacebookId(
-      _user.facebookId
-    );
+  const googleLoginSetter = async googleId => {
+    const user = await UserEntity.loadEntityFromDbByGoogleId(googleId);
     if (!user) {
       // @REVIEW == too long time
-      await redis.setexAsync(_user.id, 20 * 60, JSON.stringify(_user));
+      await redis.setexAsync(user.id, 20 * 60, user.toJson());
       return null;
     }
     const token = user.generateToken();
     return token;
   };
-  const faceBookData = async facebookId => {
-    const user = await redis.getAsync(facebookId);
+  const googleLoginGetter = async googleId => {
+    const user = await redis.getAsync(googleId);
     if (!user) {
       return null;
     }
-    return JSON.parse(user);
+    return user;
   };
-  return { loginService, faceBookData };
+  return { googleLoginGetter, googleLoginSetter };
 };

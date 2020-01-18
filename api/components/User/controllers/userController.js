@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 const {
   googleAuth,
   facebookAuth,
@@ -6,19 +7,23 @@ const {
   googleLoginSetter,
   faceBookData
 } = require('../use-cases');
+=======
+const { facebookAuth, loginService, faceBookData } = require('../use-cases');
+>>>>>>> b6091cbf802c6988268b46983b0c50470494a639
 
 exports.facebookAuthController = facebookAuth.authenticate('facebook');
 
 exports.facebookAuthBackController = [
   facebookAuth.authenticate('facebook', { failureRedirect: '/login' }),
-  (req, res) => {
-    const facebookId = req.user.facebookId;
-    const token = facebookLoginService(facebookId);
+  async (req, res) => {
+    const user = req.user;
+    const token = await loginService(user);
     if (!token) {
-      // set cookie with facebookId and redirect to register
-    } else {
-      // set cookie with token and redirect to home
+      return res.redirect(`/registration?facebookId=${user.id}`);
     }
+    console.log(token);
+    // need to set cookie then redirect to home
+
     return res.status(200).json(token);
   }
 ];
@@ -32,10 +37,11 @@ exports.googleAuthCallback = [
   }
 ];
 
-exports.facebookUserData = (req, res) => {
-  const facebookId = req.body.facebookId;
-  const user = faceBookData(facebookId);
 
+exports.facebookUserData = async (req, res) => {
+  const facebookId = req.params.facebookId;
+  const user = await faceBookData(facebookId);
+  console.log(user);
   return res.status(200).json(user);
 };
 

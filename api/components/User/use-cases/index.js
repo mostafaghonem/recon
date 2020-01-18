@@ -38,6 +38,7 @@ const facebookAuth = makeFacebookAuthService({
   redis: redisClient
 })();
 
+<<<<<<< HEAD
 const googleAuth = makeGoogleAuthService({
   passport,
   GoogleStrategy,
@@ -45,6 +46,9 @@ const googleAuth = makeGoogleAuthService({
 })();
 
 const { faceBookData, facebookLoginService } = makeFacebookLogin({
+=======
+const { faceBookData, loginService } = makeFacebookLogin({
+>>>>>>> b6091cbf802c6988268b46983b0c50470494a639
   redis: redisClient
 });
 
@@ -60,7 +64,7 @@ const userUseCases = {
   googleLoginSetter,
   facebookAuth,
   faceBookData,
-  facebookLoginService
+  loginService
 };
 
 module.exports = userUseCases;
