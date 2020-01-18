@@ -32,6 +32,6 @@ router.get('/facebook-auth', controllers.facebookAuth);
 
 router.get('/facebook-auth-back', controllers.facebookAuthBack);
 
-router.get('/facebook-user-data', controllers.getFacebookUserData);
+router.get('/facebook-user-data/:facebookId', controllers.getFacebookUserData);
 
 module.exports = router;

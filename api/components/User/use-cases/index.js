@@ -34,7 +34,7 @@ const facebookAuth = makeFacebookAuthService({
   redis: redisClient
 })();
 
-const { faceBookData, facebookLoginService } = makeFacebookLogin({
+const { faceBookData, loginService } = makeFacebookLogin({
   redis: redisClient
 });
 
@@ -43,7 +43,7 @@ const userUseCases = {
   loginUser,
   facebookAuth,
   faceBookData,
-  facebookLoginService
+  loginService
 };
 
 module.exports = userUseCases;
