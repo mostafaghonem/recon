@@ -3,15 +3,18 @@ const makeUserLoginCtrl = require('./user-login');
 const {
   facebookAuthController,
   facebookAuthBackController,
-  facebookUserData
+  facebookUserData,
+  googleAuthController
 } = require('./userController');
 
+// ->
 const registerUser = makeUserRegisterCtrl({});
 const loginUser = makeUserLoginCtrl({});
 
 const userCtrl = Object.freeze({
   registerUser,
   loginUser,
+  googleAuthController,
   facebookAuth: facebookAuthController,
   facebookAuthBack: facebookAuthBackController,
   getFacebookUserData: facebookUserData

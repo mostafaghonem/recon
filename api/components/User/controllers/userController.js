@@ -1,4 +1,5 @@
 const {
+  googleAuth,
   facebookAuth,
   facebookLoginService,
   faceBookData
@@ -26,3 +27,12 @@ exports.facebookUserData = (req, res) => {
 
   return res.status(200).json(user);
 };
+
+// Login with gmail section
+
+exports.googleAuthController = googleAuth.authenticate('google', {
+  scope: [
+    'https://www.googleapis.com/auth/userinfo.email',
+    'https://www.googleapis.com/auth/userinfo.profile'
+  ]
+});

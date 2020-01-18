@@ -15,6 +15,8 @@ const { ApplicationError } = require('../../../shared/errors');
 const makeRegisterUserUC = require('./register-user');
 const makeLoginUser = require('./login-user');
 const makeFacebookAuthService = require('./facebookAuthService');
+const makeGoogleAuthService = require('./googleAuthService');
+
 const makeFacebookLogin = require('./facebookLogin');
 
 const registerUser = makeRegisterUserUC({
@@ -34,12 +36,19 @@ const facebookAuth = makeFacebookAuthService({
   redis: redisClient
 })();
 
+const googleAuth = makeGoogleAuthService({
+  passport,
+  FacebookStrategy,
+  redis: redisClient
+})();
+
 const { faceBookData, facebookLoginService } = makeFacebookLogin({
   redis: redisClient
 });
 
 const userUseCases = {
   registerUser,
+  googleAuth,
   loginUser,
   facebookAuth,
   faceBookData,
