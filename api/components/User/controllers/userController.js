@@ -2,6 +2,8 @@ const {
   googleAuth,
   facebookAuth,
   facebookLoginService,
+  googleLoginGetter,
+  googleLoginSetter,
   faceBookData
 } = require('../use-cases');
 
@@ -18,6 +20,15 @@ exports.facebookAuthBackController = [
       // set cookie with token and redirect to home
     }
     return res.status(200).json(token);
+  }
+];
+
+exports.googleAuthCallback = [
+  googleAuth.authenticate('google', { failureRedirect: '/login' }),
+  (req, res) => {
+    const { id } = req.user;
+    googleLoginSetter(id);
+    return res.status(200).json(req.user);
   }
 ];
 

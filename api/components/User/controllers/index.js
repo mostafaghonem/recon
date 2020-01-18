@@ -4,6 +4,7 @@ const {
   facebookAuthController,
   facebookAuthBackController,
   facebookUserData,
+  googleAuthCallback,
   googleAuthController
 } = require('./userController');
 
@@ -15,6 +16,7 @@ const userCtrl = Object.freeze({
   registerUser,
   loginUser,
   googleAuthController,
+  googleAuthCallback,
   facebookAuth: facebookAuthController,
   facebookAuthBack: facebookAuthBackController,
   getFacebookUserData: facebookUserData

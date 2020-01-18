@@ -46,11 +46,6 @@ router.get('/google', controllers.googleAuthController);
 //   request.  If authentication fails, the user will be redirected back to the
 //   login page.  Otherwise, the primary route function function will be called,
 //   which, in this example, will redirect the user to the home page.
-// router.get(
-//   "/google/callback",
-//   passport.authenticate("google", { failureRedirect: "/login" }),
-//   userController.handelGoogleLogin,
-//   controller.handelRegistration
-// );
+router.get('/google/callback', controllers.googleAuthCallback);
 
 module.exports = router;
