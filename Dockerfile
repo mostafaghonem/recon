@@ -10,5 +10,4 @@ COPY . .
 
 RUN npm install -g nodemon
 
-
-CMD nodemon bin/wwww
+CMD [ "nodemon", "bin/www" ]
