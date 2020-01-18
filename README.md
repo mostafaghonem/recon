@@ -9,18 +9,19 @@
   - `nano .env` and paste the following variables
 
     ```env
-            # will be used by only in docker file to inject variables in docker-compose.yml
+        # will be used by only in docker file to inject variables in docker-compose.yml
+        # port will set by docker only
+        PORT=5050
+        DB_PORT=5090
+        DB_NAME=SKN_db
+        DB_USERNAME=username
+        DB_PASSWORD=password
 
-            # port will set by docker only
-            PORT=5050
-            DB_PORT=5090
-            DB_NAME=SKN_db
-            DB_USERNAME=username
-            DB_PASSWORD=password
-            BASE_URL=https://localhost:5090/
-            REDIS_URL=redis://cache
-            CERT_PATH=server.cert
-            KEY_PATH=server.key
+        BASE_URL=https://localhost:5090/
+        CERT_PATH=server.cert
+        KEY_PATH=server.key
+
+        REDIS_PASS=skn_dev_redis
     ```
 
     - **NOTE:** all these variables will only be consumed via `docker-compose.yml` file and will not affect the code.
@@ -41,9 +42,13 @@
             DB_NAME=SKN_db
             DB_USERNAME=username
             DB_PASSWORD=password
-            BASE_URL=https://localhost:5050
-            REDIS_URL=redis://cache
             jwtPrivateKey=123
+
+            REDIS_PASS=skn_dev_redis
+            # should be the redis container name
+            REDIS_HOST=cache
+
+            BASE_URL=https://localhost:5050
             CERT_PATH=server.cert
             KEY_PATH=server.key
     ```
@@ -69,8 +74,8 @@
     ```env
            # will be used in code in local and debug environment
 
-            PORT=6060
-            DB_HOST=localhost
+          PORT=6060
+          DB_HOST=localhost
 
             # should be exactly as DB_PORT in .env when running on docker db
             #                but if we want to connect to local mongo host should be 27017
@@ -78,9 +83,12 @@
             DB_NAME=SKN_db
             DB_USERNAME=username
             DB_PASSWORD=password
-            REDIS_URL=redis://localhost/
-            BASE_URL=https://localhost:5090/
             jwtPrivateKey=123
+
+            REDIS_PASS=skn_dev_redis
+            REDIS_HOST=localhost
+
+            BASE_URL=https://localhost:5090/
             CERT_PATH=server.cert
             KEY_PATH=server.key
     ```
