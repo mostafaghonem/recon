@@ -1,5 +1,9 @@
+const makeSmsService = require('./sms');
+
+const smsService = makeSmsService({});
+
 const Services = {
-  smsService: new (require('./sms'))()
+  smsService
 };
 
 module.exports = Services;
