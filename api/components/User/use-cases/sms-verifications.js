@@ -9,7 +9,7 @@ module.exports = ({
   logger,
   smsService
 }) => async phone => {
-  const checkExistence = null; //await redis.getAsync(phone);
+  const checkExistence = await redis.getAsync(phone);
   if (!checkExistence) {
     const verificationCode = getRandomCode(1000, 9999);
     await redis.setexAsync(phone, 5 * 60, verificationCode);
