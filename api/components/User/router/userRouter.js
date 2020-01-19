@@ -1,7 +1,8 @@
 const express = require('express');
 const {
   userRegisterValidation,
-  userLoginValidation
+  userLoginValidation,
+  phoneVerificationValidation
 } = require('../validations');
 
 const router = express.Router();
@@ -25,6 +26,15 @@ router.post(
   '/login',
   [validateMiddleware(userLoginValidation)],
   controllers.loginUser
+);
+
+// @route
+// @ POST api/users/phone/verify
+// !access  anonymous
+router.post(
+  '/phone/verify',
+  [validateMiddleware(phoneVerificationValidation)],
+  controllers.verifyPhone
 );
 
 // !access  anonymous
