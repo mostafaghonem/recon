@@ -61,6 +61,7 @@ const buildUserEntity = (
       this.phone = data.phone || '';
       this.verifyPhone = data.verifyPhone || false;
       this.email = data.email || '';
+      this.password = data.password || '';
       this.verifyEmail = data.verifyEmail || false;
       this.birthDateTs = data.birthDateTs || '';
       this.gender = data.gender || '';

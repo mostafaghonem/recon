@@ -11,16 +11,25 @@ const FacebookStrategy = require('passport-facebook').Strategy;
 const redisClient = require('../../../shared/redis-client');
 const logger = require('../../../startup/logger');
 const { ApplicationError } = require('../../../shared/errors');
+const smsService = require('../../../shared/services').smsService;
 
 const makeRegisterUserUC = require('./register-user');
 const makeLoginUser = require('./login-user');
 const makeFacebookAuthService = require('./facebookAuthService');
 const makeFacebookLogin = require('./facebookLogin');
+const makeSmsVerifications = require('./sms-verifications');
 
 const registerUser = makeRegisterUserUC({
   ApplicationError,
   logger,
   redis: redisClient
+});
+
+const verifyPhone = makeSmsVerifications({
+  ApplicationError,
+  logger,
+  redis: redisClient,
+  smsService
 });
 
 const loginUser = makeLoginUser({
@@ -43,7 +52,8 @@ const userUseCases = {
   loginUser,
   facebookAuth,
   faceBookData,
-  facebookLoginService
+  facebookLoginService,
+  verifyPhone
 };
 
 module.exports = userUseCases;
