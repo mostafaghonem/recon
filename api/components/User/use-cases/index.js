@@ -20,6 +20,7 @@ const makeFacebookAuthService = require('./facebookAuthService');
 const makeFacebookLogin = require('./facebookLogin');
 const makeSmsVerifications = require('./sms-verifications');
 const makeforgetPassword = require('./forget-password');
+const makeConfirmForgetPassword = require('./confirm-forget-password');
 
 const registerUser = makeRegisterUserUC({
   ApplicationError,
@@ -39,6 +40,12 @@ const forgetPassword = makeforgetPassword({
   logger,
   redis: redisClient,
   smsService
+});
+
+const confirmForgetPassword = makeConfirmForgetPassword({
+  ApplicationError,
+  logger,
+  redis: redisClient
 });
 
 const loginUser = makeLoginUser({
@@ -63,7 +70,8 @@ const userUseCases = {
   faceBookData,
   facebookLoginService,
   verifyPhone,
-  forgetPassword
+  forgetPassword,
+  confirmForgetPassword
 };
 
 module.exports = userUseCases;
