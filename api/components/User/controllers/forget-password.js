@@ -1,9 +1,9 @@
-const { verifyPhone } = require('../use-cases');
+const { forgetPassword } = require('../use-cases');
 
 module.exports = () => {
   return async (req, res, next) => {
     try {
-      await verifyPhone(req.body.phone);
+      await forgetPassword({ ...req.body });
 
       return res.status(200).json({
         message: 'Verification Code Sent successfully!'

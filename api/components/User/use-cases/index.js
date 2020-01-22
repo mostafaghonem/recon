@@ -12,12 +12,14 @@ const redisClient = require('../../../shared/redis-client');
 const logger = require('../../../startup/logger');
 const { ApplicationError } = require('../../../shared/errors');
 const smsService = require('../../../shared/services').smsService;
+const emailService = require('../../../shared/services').emailService;
 
 const makeRegisterUserUC = require('./register-user');
 const makeLoginUser = require('./login-user');
 const makeFacebookAuthService = require('./facebookAuthService');
 const makeFacebookLogin = require('./facebookLogin');
 const makeSmsVerifications = require('./sms-verifications');
+const makeforgetPassword = require('./forget-password');
 
 const registerUser = makeRegisterUserUC({
   ApplicationError,
@@ -26,6 +28,13 @@ const registerUser = makeRegisterUserUC({
 });
 
 const verifyPhone = makeSmsVerifications({
+  ApplicationError,
+  logger,
+  redis: redisClient,
+  smsService
+});
+
+const forgetPassword = makeforgetPassword({
   ApplicationError,
   logger,
   redis: redisClient,
@@ -53,7 +62,8 @@ const userUseCases = {
   facebookAuth,
   faceBookData,
   facebookLoginService,
-  verifyPhone
+  verifyPhone,
+  forgetPassword
 };
 
 module.exports = userUseCases;
