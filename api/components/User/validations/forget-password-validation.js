@@ -7,6 +7,12 @@ module.exports = ({ _, Builder, ValidatorHelper }) => ({ body }) => {
       rules: new Builder()
         .required('يجب ادخال رقم الهاتف')
         .isMobile('رقم هاتف غير صالح').rules
+    },
+    formattedNumber: {
+      value: body.formattedNumber,
+      rules: new Builder()
+        .required('يجب ادخال رقم الهاتف')
+        .isMobile('رقم هاتف غير صالح').rules
     }
   };
 
@@ -16,7 +22,13 @@ module.exports = ({ _, Builder, ValidatorHelper }) => ({ body }) => {
     if (!isValid) {
       error[key] = errors;
     }
-    if (key === 'phone' && ele.value && !String(ele.value).startsWith('+201'))
+    if (key === 'phone' && ele.value && !String(ele.value).startsWith('01'))
+      error[key] = ['رقم هاتف غير صالح'];
+    if (
+      key === 'formattedNumber' &&
+      ele.value &&
+      !String(ele.value).startsWith('+201')
+    )
       error[key] = ['رقم هاتف غير صالح'];
   });
 

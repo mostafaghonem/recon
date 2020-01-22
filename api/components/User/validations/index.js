@@ -9,6 +9,7 @@ const jobTypeEnum = Object.values(defaultConstants.JOB_TYPES);
 const makeUserRegisterValidation = require('./user-register-validation');
 const makeUserLoginValidation = require('./user-login-validation');
 const makeUserPhoneVerificationValidation = require('./phone-verification-validation');
+const makeForgetPasswordValidation = require('./forget-password-validation');
 
 module.exports.userRegisterValidation = makeUserRegisterValidation({
   _,
@@ -19,6 +20,12 @@ module.exports.userRegisterValidation = makeUserRegisterValidation({
 });
 
 module.exports.userLoginValidation = makeUserLoginValidation({
+  _,
+  Builder,
+  ValidatorHelper
+});
+
+module.exports.forgetPasswordValidation = makeForgetPasswordValidation({
   _,
   Builder,
   ValidatorHelper
