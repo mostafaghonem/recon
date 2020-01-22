@@ -10,6 +10,7 @@ const makeUserRegisterValidation = require('./user-register-validation');
 const makeUserLoginValidation = require('./user-login-validation');
 const makeUserPhoneVerificationValidation = require('./phone-verification-validation');
 const makeForgetPasswordValidation = require('./forget-password-validation');
+const makeConfirmForgetPasswordValidation = require('./confirm-forget-password-validation');
 
 module.exports.userRegisterValidation = makeUserRegisterValidation({
   _,
@@ -30,6 +31,14 @@ module.exports.forgetPasswordValidation = makeForgetPasswordValidation({
   Builder,
   ValidatorHelper
 });
+
+module.exports.confirmForgetPasswordValidation = makeConfirmForgetPasswordValidation(
+  {
+    _,
+    Builder,
+    ValidatorHelper
+  }
+);
 
 module.exports.phoneVerificationValidation = makeUserPhoneVerificationValidation(
   {
