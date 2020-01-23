@@ -11,6 +11,7 @@ const makeUserLoginValidation = require('./user-login-validation');
 const makeUserPhoneVerificationValidation = require('./phone-verification-validation');
 const makeForgetPasswordValidation = require('./forget-password-validation');
 const makeConfirmForgetPasswordValidation = require('./confirm-forget-password-validation');
+const makeChangePasswordValidation = require('./change-password');
 
 module.exports.userRegisterValidation = makeUserRegisterValidation({
   _,
@@ -39,6 +40,12 @@ module.exports.confirmForgetPasswordValidation = makeConfirmForgetPasswordValida
     ValidatorHelper
   }
 );
+
+module.exports.changePasswordValidation = makeChangePasswordValidation({
+  _,
+  Builder,
+  ValidatorHelper
+});
 
 module.exports.phoneVerificationValidation = makeUserPhoneVerificationValidation(
   {
