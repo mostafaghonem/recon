@@ -3,6 +3,7 @@ const makeUserLoginCtrl = require('./user-login');
 const makePhoneVerification = require('./sms-verification');
 const makeForgetPassword = require('./forget-password');
 const makeConfirmForgetPassword = require('./confirm-forget-password');
+const makeChangePassword = require('./change-password');
 const {
   facebookAuthController,
   facebookAuthBackController,
@@ -14,6 +15,7 @@ const loginUser = makeUserLoginCtrl({});
 const verifyPhone = makePhoneVerification({});
 const forgetPassword = makeForgetPassword({});
 const confirnForgetPassword = makeConfirmForgetPassword({});
+const changePassword = makeChangePassword({});
 
 const userCtrl = Object.freeze({
   registerUser,
@@ -21,6 +23,7 @@ const userCtrl = Object.freeze({
   verifyPhone,
   forgetPassword,
   confirnForgetPassword,
+  changePassword,
   facebookAuth: facebookAuthController,
   facebookAuthBack: facebookAuthBackController,
   getFacebookUserData: facebookUserData
