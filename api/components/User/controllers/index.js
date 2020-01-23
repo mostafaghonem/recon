@@ -7,9 +7,12 @@ const makeChangePassword = require('./change-password');
 const {
   facebookAuthController,
   facebookAuthBackController,
-  facebookUserData
+  facebookUserData,
+  googleAuthCallback,
+  googleAuthController
 } = require('./userController');
 
+// ->
 const registerUser = makeUserRegisterCtrl({});
 const loginUser = makeUserLoginCtrl({});
 const verifyPhone = makePhoneVerification({});
@@ -24,6 +27,8 @@ const userCtrl = Object.freeze({
   forgetPassword,
   confirnForgetPassword,
   changePassword,
+  googleAuthController,
+  googleAuthCallback,
   facebookAuth: facebookAuthController,
   facebookAuthBack: facebookAuthBackController,
   getFacebookUserData: facebookUserData

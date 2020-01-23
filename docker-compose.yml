@@ -20,8 +20,6 @@ services:
       - REDIS_URL=${REDIS_URL}
       - NODE_ENV=docker
       - PORT=${PORT}
-      - CERT_PATH
-      - KEY_PATH
     depends_on:
       - skndb
 
