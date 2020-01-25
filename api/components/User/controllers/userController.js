@@ -1,8 +1,6 @@
 const {
   googleAuth,
   facebookAuth,
-  facebookLoginService,
-  googleLoginGetter,
   googleLoginSetter,
   loginService,
   faceBookData
@@ -10,15 +8,23 @@ const {
 
 exports.facebookAuthController = facebookAuth.authenticate('facebook');
 
+exports.facebookUserData = async (req, res) => {
+  const facebookId = req.params.facebookId;
+  const user = await faceBookData(facebookId);
+  return res.status(200).json(user);
+};
+
 exports.facebookAuthBackController = [
-  facebookAuth.authenticate('facebook', { failureRedirect: '/login' }),
+  facebookAuth.authenticate('facebook', {
+    failureRedirect: '/login',
+    scope: ['email']
+  }),
   async (req, res) => {
     const user = req.user;
     const token = await loginService(user);
     if (!token) {
-      return res.redirect(`/registration?facebookId=${user.id}`);
+      return res.redirect(`/registration?faceId=${user.id}`);
     }
-    console.log(token);
     // need to set cookie then redirect to home
 
     return res.status(200).json(token);
@@ -42,13 +48,6 @@ exports.googleAuthCallback = [
     return res.status(200).json(token);
   }
 ];
-
-exports.facebookUserData = async (req, res) => {
-  const facebookId = req.params.facebookId;
-  const user = await faceBookData(facebookId);
-  console.log(user);
-  return res.status(200).json(user);
-};
 
 // Login with gmail section
 
