@@ -12,5 +12,10 @@ module.exports = {
   JOB_TYPES: {
     STUDENT: 'student',
     EMPLOYEE: 'employee'
+  },
+  SMS: {
+    USERNAME: 'skn@epusheg.com',
+    PASSWORD: '2020skn',
+    ID: 'SKN'
   }
 };

@@ -18,11 +18,7 @@ module.exports = ({ redis, ApplicationError, logger }) => async ({
   password,
   code: candidateCode
 }) => {
-  // ! must-be-deleted
-  await redis.setexAsync(phone, 5 * 60, candidateCode);
-
   const code = await redis.getAsync(phone);
-
   logger.info(`the otp is => ${code}`);
 
   if (code !== candidateCode) throw new ApplicationError('Invalid code', 400);

@@ -1,7 +1,11 @@
 const express = require('express');
 const {
   userRegisterValidation,
-  userLoginValidation
+  userLoginValidation,
+  phoneVerificationValidation,
+  forgetPasswordValidation,
+  confirmForgetPasswordValidation,
+  changePasswordValidation
 } = require('../validations');
 
 const router = express.Router();
@@ -25,6 +29,33 @@ router.post(
   '/login',
   [validateMiddleware(userLoginValidation)],
   controllers.loginUser
+);
+
+// @route
+// @ POST api/users/phone/verify
+// !access  anonymous
+router.post(
+  '/phone/verify',
+  [validateMiddleware(phoneVerificationValidation)],
+  controllers.verifyPhone
+);
+
+router.post(
+  '/password/forget',
+  [validateMiddleware(forgetPasswordValidation)],
+  controllers.forgetPassword
+);
+
+router.post(
+  '/password/confirmForget',
+  [validateMiddleware(confirmForgetPasswordValidation)],
+  controllers.confirnForgetPassword
+);
+
+router.put(
+  '/password/change',
+  [validateMiddleware(changePasswordValidation)],
+  controllers.changePassword
 );
 
 // !access  anonymous

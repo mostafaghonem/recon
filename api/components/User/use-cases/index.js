@@ -12,6 +12,8 @@ const GoogleStrategy = require('passport-google-oauth').Strategy;
 const redisClient = require('../../../shared/redis-client');
 const logger = require('../../../startup/logger');
 const { ApplicationError } = require('../../../shared/errors');
+const smsService = require('../../../shared/services').smsService;
+const emailService = require('../../../shared/services').emailService;
 
 const makeRegisterUserUC = require('./register-user');
 const makeLoginUser = require('./login-user');
@@ -19,12 +21,41 @@ const makeFacebookAuthService = require('./googleAuthService');
 const makeGoogleAuthService = require('./facebookAuthService');
 
 const makeFacebookLogin = require('./facebookLogin');
+const makeSmsVerifications = require('./sms-verifications');
+const makeforgetPassword = require('./forget-password');
+const makeConfirmForgetPassword = require('./confirm-forget-password');
+const makeChangePassword = require('./change-password');
 const makeGoogleLogin = require('./googleLogin');
 
 const registerUser = makeRegisterUserUC({
   ApplicationError,
   logger,
   redis: redisClient
+});
+
+const verifyPhone = makeSmsVerifications({
+  ApplicationError,
+  logger,
+  redis: redisClient,
+  smsService
+});
+
+const forgetPassword = makeforgetPassword({
+  ApplicationError,
+  logger,
+  redis: redisClient,
+  smsService
+});
+
+const confirmForgetPassword = makeConfirmForgetPassword({
+  ApplicationError,
+  logger,
+  redis: redisClient
+});
+
+const changePassword = makeChangePassword({
+  ApplicationError,
+  logger
 });
 
 const loginUser = makeLoginUser({
@@ -44,7 +75,7 @@ const googleAuth = makeGoogleAuthService({
   redis: redisClient
 })();
 
-const { faceBookData, loginService } = makeFacebookLogin({
+const { faceBookData, facebookLoginService } = makeFacebookLogin({
   redis: redisClient
 });
 
@@ -60,7 +91,11 @@ const userUseCases = {
   googleLoginSetter,
   facebookAuth,
   faceBookData,
-  loginService
+  facebookLoginService,
+  verifyPhone,
+  forgetPassword,
+  confirmForgetPassword,
+  changePassword
 };
 
 module.exports = userUseCases;

@@ -1,7 +1,7 @@
 const { registerUser } = require('../use-cases');
 
 module.exports = () => {
-  return async ({ req, res, next }) => {
+  return async (req, res, next) => {
     try {
       await registerUser({ ...req.body });
 
