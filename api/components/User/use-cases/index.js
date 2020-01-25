@@ -75,7 +75,7 @@ const googleAuth = makeGoogleAuthService({
   redis: redisClient
 })();
 
-const { faceBookData, facebookLoginService } = makeFacebookLogin({
+const { faceBookData, loginService } = makeFacebookLogin({
   redis: redisClient
 });
 
@@ -91,7 +91,7 @@ const userUseCases = {
   googleLoginSetter,
   facebookAuth,
   faceBookData,
-  facebookLoginService,
+  loginService,
   verifyPhone,
   forgetPassword,
   confirmForgetPassword,
