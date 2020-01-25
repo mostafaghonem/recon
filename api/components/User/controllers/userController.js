@@ -26,8 +26,7 @@ exports.facebookAuthBackController = [
       return res.redirect(`/registration?faceId=${user.id}`);
     }
     // need to set cookie then redirect to home
-
-    return res.status(200).json(token);
+    return res.redirect(`/registration?token=${token}`);
   }
 ];
 
