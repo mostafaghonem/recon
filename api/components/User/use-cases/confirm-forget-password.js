@@ -11,7 +11,7 @@ module.exports = ({ redis, ApplicationError, logger }) => async ({
 }) => {
   const checkUser = await Models.checkExistenceBy({ phone });
   if (checkUser) {
-    const checkExistence = await redis.getAsync(phone + '-RecoveryCode');
+    const checkExistence = await redis.getAsync(`${phone}-RecoveryCode`);
     if (checkExistence) {
       if (Number(checkExistence) !== Number(code))
         throw new ApplicationError('Invalid Verfification Code', 400);

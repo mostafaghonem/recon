@@ -21,6 +21,7 @@ const buildUserEntity = (
     jwt: _jwt
   }
 ) => {
+  // eslint-disable-next-line no-unused-vars
   const { bcrypt, ApplicationError, ObjectId, jwt } = obj;
   class UserEntity {
     static async loadEntityFromDbById(id) {
@@ -43,7 +44,7 @@ const buildUserEntity = (
 
     static async loadEntityFromDbByPhone(phone) {
       const exists = await Model.getOne({
-        query: { phone, verifyPhone: true }
+        query: { phone }
       });
       if (exists) return new UserEntity(exists);
       return undefined;
@@ -62,10 +63,10 @@ const buildUserEntity = (
       }
     ) {
       this.facebookId = data.facebookId || '';
+      this.googleId = data.googleId || '';
       this.id = data.id || data._id || new ObjectId();
       this.fullName = data.fullName || '';
       this.phone = data.phone || '';
-      this.verifyPhone = data.verifyPhone || false;
       this.email = data.email || '';
       this.password = data.password || '';
       this.verifyEmail = data.verifyEmail || false;
@@ -115,7 +116,6 @@ const buildUserEntity = (
         id: this.id,
         fullName: this.fullName,
         phone: this.phone,
-        verifyPhone: this.verifyPhone,
         email: this.email,
         verifyEmail: this.verifyEmail,
         birthDateTs: this.birthDateTs,
@@ -132,7 +132,6 @@ const buildUserEntity = (
       return {
         fullName: this.fullName,
         phone: this.phone,
-        verifyPhone: this.verifyPhone,
         email: this.email,
         verifyEmail: this.verifyEmail,
         birthDateTs: this.birthDateTs,

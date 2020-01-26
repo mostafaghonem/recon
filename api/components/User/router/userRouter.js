@@ -79,4 +79,6 @@ router.get('/google', controllers.googleAuthController);
 //   which, in this example, will redirect the user to the home page.
 router.get('/google/callback', controllers.googleAuthCallback);
 
+router.get('/google-user-data/:googleId', controllers.getGoogleUserData);
+
 module.exports = router;

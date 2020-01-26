@@ -1,1 +1,1 @@
-{ "ignore": ["esLogs/*", "dummyIdsForLogging.json"] }
+{ "ignore": ["esLogs/*", "dummyIdsForLogging.json", "public/"] }

@@ -51,10 +51,7 @@ module.exports = ({
     },
     'job.description': {
       value: body.job ? body.job.description : '',
-      rules: new Builder()
-        .required()
-        .minLength(5)
-        .maxLength(500).rules
+      rules: new Builder().minLength(5).maxLength(500).rules
     },
     government: {
       value: body.government,
@@ -86,5 +83,7 @@ module.exports = ({
     if (!isValid) error[key] = errors;
   });
 
-  return { error: _.isEmpty(error) ? undefined : error };
+  return {
+    error: _.isEmpty(error) ? undefined : error
+  };
 };

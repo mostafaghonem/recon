@@ -14,6 +14,13 @@ module.exports = ({ _, Builder, ValidatorHelper }) => ({ body }) => {
         .required()
         .minLength(5)
         .maxLength(60).rules
+    },
+    code: {
+      value: body.code,
+      rules: new Builder()
+        .required()
+        .min(1000)
+        .max(9999).rules
     }
   };
 

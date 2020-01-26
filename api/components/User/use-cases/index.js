@@ -13,7 +13,7 @@ const redisClient = require('../../../shared/redis-client');
 const logger = require('../../../startup/logger');
 const { ApplicationError } = require('../../../shared/errors');
 const smsService = require('../../../shared/services').smsService;
-const emailService = require('../../../shared/services').emailService;
+// const emailService = require('../../../shared/services').emailService;
 
 const makeRegisterUserUC = require('./register-user');
 const makeLoginUser = require('./login-user');
@@ -55,7 +55,8 @@ const confirmForgetPassword = makeConfirmForgetPassword({
 
 const changePassword = makeChangePassword({
   ApplicationError,
-  logger
+  logger,
+  redis: redisClient
 });
 
 const loginUser = makeLoginUser({

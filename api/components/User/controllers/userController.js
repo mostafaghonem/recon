@@ -3,7 +3,8 @@ const {
   facebookAuth,
   googleLoginSetter,
   loginService,
-  faceBookData
+  faceBookData,
+  googleLoginGetter
 } = require('../use-cases');
 
 exports.facebookAuthController = facebookAuth.authenticate('facebook');
@@ -11,6 +12,12 @@ exports.facebookAuthController = facebookAuth.authenticate('facebook');
 exports.facebookUserData = async (req, res) => {
   const facebookId = req.params.facebookId;
   const user = await faceBookData(facebookId);
+  return res.status(200).json(user);
+};
+
+exports.googleUserData = async (req, res) => {
+  const googleId = req.params.googleId;
+  const user = await googleLoginGetter(googleId);
   return res.status(200).json(user);
 };
 
@@ -33,18 +40,16 @@ exports.facebookAuthBackController = [
 exports.googleAuthCallback = [
   googleAuth.authenticate('google', { failureRedirect: '/login' }),
   async (req, res) => {
-    const { id } = req.user;
+    const user = req.user;
 
-    let token = await googleLoginSetter(id);
+    let token = await googleLoginSetter(user);
+
+    console.log('user token afterr logging with google', token);
     if (!token) {
-      return res.redirect(
-        process.env.FRONT_END_URL + `regeistration?googleId=${id}`
-      );
+      return res.redirect(`/registration?googleId=${user.id}`);
     }
-    console.log(token);
     // need to set cookie then redirect to home
-
-    return res.status(200).json(token);
+    return res.redirect(`/registration?token=${token}`);
   }
 ];
 

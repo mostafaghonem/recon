@@ -11,7 +11,8 @@ module.exports = {
   },
   JOB_TYPES: {
     STUDENT: 'student',
-    EMPLOYEE: 'employee'
+    EMPLOYEE: 'employee',
+    RENTER: 'renter'
   },
   SMS: {
     USERNAME: 'skn@epusheg.com',
