@@ -5,12 +5,7 @@ function getRandomCode(min, max) {
 }
 
 // should have no implementation for any specific orm
-module.exports = ({
-  redis,
-  ApplicationError,
-  logger,
-  smsService
-}) => async ({
+module.exports = ({ redis, ApplicationError, logger, smsService }) => async ({
   phone,
   formattedNumber
 }) => {

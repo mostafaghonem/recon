@@ -10,10 +10,14 @@ module.exports = ({
   smsService
 }) => async phone => {
   const userPhone = String(phone).replace('+2', '');
-  const checkExistence = await redis.getAsync(userPhone);
+  const checkExistence = await redis.getAsync(`${userPhone}-register-user`);
   if (!checkExistence) {
     const verificationCode = getRandomCode(1000, 9999);
-    await redis.setexAsync(userPhone, 5 * 60, verificationCode);
+    await redis.setexAsync(
+      `${userPhone}-register-user`,
+      5 * 60,
+      verificationCode
+    );
     const message = `Your SKN Phone Verification Number is ${verificationCode}`;
     const sendSms = await smsService(phone, message, 'e');
     if (!sendSms)

@@ -1,9 +1,5 @@
 const Models = require('../models');
 
-function getRandomCode(min, max) {
-  return Math.floor(Math.random() * (max - min) + min);
-}
-
 // should have no implementation for any specific orm
 module.exports = ({ redis, ApplicationError, logger }) => async ({
   phone,

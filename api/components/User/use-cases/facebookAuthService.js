@@ -1,13 +1,7 @@
-const _passport = require('passport');
-const _FacebookStrategy = require('passport-facebook').Strategy;
-
 // ! we can depend on entity
 const { UserEntity } = require('../Entity');
 
-module.exports = ({
-  passport = _passport,
-  FacebookStrategy = _FacebookStrategy
-}) => () => {
+module.exports = ({ passport, FacebookStrategy }) => () => {
   const fun = passport.use(
     // @REVIEW == store in env and update documentation
     new FacebookStrategy(

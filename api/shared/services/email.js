@@ -1,15 +1,16 @@
 const nodemailer = require('nodemailer');
-const constants = require('../constants/defaults');
+
 const transporter = nodemailer.createTransport({
+  // TODO: need to be reviseted
   host: 'localhost',
   port: 1025,
-  auth: false /*{
+  auth: false /* {
     user: 'project.1',
     pass: 'secret.1'
-}*/
+} */
 });
 
-module.exports = ({}) => async (
+module.exports = () => async (
   to = [],
   subject = '',
   message = '',
@@ -17,8 +18,9 @@ module.exports = ({}) => async (
   attachments = [],
   list = {}
 ) => {
+  // eslint-disable-next-line no-param-reassign
   to = to.join(', ') || '';
-  let mailOptions = {
+  const mailOptions = {
     from: '"SKN" <skn@gmail.com>',
     to,
     subject,
@@ -28,7 +30,7 @@ module.exports = ({}) => async (
     list
   };
 
-  transporter.sendMail(mailOptions, function(error, info) {
+  transporter.sendMail(mailOptions, error => {
     if (error) {
       // console.log('sendmail' + error);
       // return error.message;

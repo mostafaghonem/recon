@@ -1,13 +1,7 @@
-const _passport = require('passport');
-const _GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
-
 // ! we can depend on entity
-const { UserEntity } = require('../Entity');
+// const { UserEntity } = require('../Entity');
 
-module.exports = ({
-  passport = _passport,
-  GoogleStrategy = _GoogleStrategy
-}) => () => {
+module.exports = ({ passport, GoogleStrategy }) => () => {
   const fun = passport.use(
     new GoogleStrategy(
       {
@@ -18,9 +12,9 @@ module.exports = ({
         clientSecret:
           'ymUc09wHHKeZWC6aB9iEZK9S' || process.env.GOOGLE_CONSUMER_SECRET,
         // 'iOW-Bgc6HUDm0AzYy4jciJac' || process.env.GOOGLE_CONSUMER_SECRET,
-        callbackURL: process.env.BASE_URL + '/api/users/google/callback'
+        callbackURL: `${process.env.BASE_URL}/api/users/google/callback`
       },
-      function(token, tokenSecret, profile, done) {
+      (token, tokenSecret, profile, done) => {
         done(null, profile);
       }
     )

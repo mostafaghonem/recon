@@ -20,7 +20,7 @@ module.exports = ({ redis, ApplicationError, logger }) => async ({
   googleId,
   code: candidateCode
 }) => {
-  const code = await redis.getAsync(phone);
+  const code = await redis.getAsync(`${phone}-register-user`);
   logger.info(`the otp is => ${code}`);
 
   if (code !== candidateCode) throw new ApplicationError('Invalid code', 400);

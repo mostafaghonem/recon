@@ -1,22 +1,25 @@
 // ! we can depend on entity
 const { UserEntity } = require('../Entity');
 
-const redisClient_ = require('../../../shared/redis-client');
-
-module.exports = ({ redis = redisClient_ }) => {
+module.exports = ({ redis }) => {
   const googleLoginSetter = async _user => {
     const user = await UserEntity.loadEntityFromDbByGoogleId(_user.id);
     if (!user) {
-      // @REVIEW == too long time
+      // eslint-disable-next-line no-param-reassign
       _user.fullName = _user.displayName;
-      await redis.setexAsync(_user.id, 20 * 60, JSON.stringify(_user));
+      // @REVIEW == too long time
+      await redis.setexAsync(
+        `${_user.id}-google-data`,
+        20 * 60,
+        JSON.stringify(_user)
+      );
       return null;
     }
     const token = user.generateToken();
     return token;
   };
   const googleLoginGetter = async googleId => {
-    const user = await redis.getAsync(googleId);
+    const user = await redis.getAsync(`${googleId}-google-data`);
     if (!user) {
       return null;
     }
