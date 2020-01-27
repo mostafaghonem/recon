@@ -21,6 +21,7 @@ const buildUserEntity = (
     jwt: _jwt
   }
 ) => {
+  // eslint-disable-next-line no-unused-vars
   const { bcrypt, ApplicationError, ObjectId, jwt } = obj;
   class UserEntity {
     static async loadEntityFromDbById(id) {
@@ -35,9 +36,15 @@ const buildUserEntity = (
       return undefined;
     }
 
+    static async loadEntityFromDbByGoogleId(googleId) {
+      const exists = await Model.getOne({ query: { googleId } });
+      if (exists) return new UserEntity(exists);
+      return undefined;
+    }
+
     static async loadEntityFromDbByPhone(phone) {
       const exists = await Model.getOne({
-        query: { phone, verifyPhone: true }
+        query: { phone }
       });
       if (exists) return new UserEntity(exists);
       return undefined;
@@ -56,11 +63,12 @@ const buildUserEntity = (
       }
     ) {
       this.facebookId = data.facebookId || '';
+      this.googleId = data.googleId || '';
       this.id = data.id || data._id || new ObjectId();
       this.fullName = data.fullName || '';
       this.phone = data.phone || '';
-      this.verifyPhone = data.verifyPhone || false;
       this.email = data.email || '';
+      this.password = data.password || '';
       this.verifyEmail = data.verifyEmail || false;
       this.birthDateTs = data.birthDateTs || '';
       this.gender = data.gender || '';
@@ -68,6 +76,11 @@ const buildUserEntity = (
         this.job = {
           type: data.job.type || '',
           description: data.job.description || ''
+        };
+      } else {
+        this.job = {
+          type: '',
+          description: ''
         };
       }
       this.government = data.government || '';
@@ -99,30 +112,10 @@ const buildUserEntity = (
 
     // used by other services
     toJson() {
-      if (this.isArchived)
-        throw new ApplicationError('UserEntity not found', 404);
-
       return {
         id: this.id,
         fullName: this.fullName,
         phone: this.phone,
-        verifyPhone: this.verifyPhone,
-        email: this.email,
-        verifyEmail: this.verifyEmail,
-        birthDateTs: this.birthDateTs,
-        gender: this.gender,
-        job: { type: this.job.type, description: this.job.description },
-        government: this.government,
-        image: this.image
-      };
-    }
-
-    // ! need to be private
-    mapToDb() {
-      return {
-        fullName: this.fullName,
-        phone: this.phone,
-        verifyPhone: this.verifyPhone,
         email: this.email,
         verifyEmail: this.verifyEmail,
         birthDateTs: this.birthDateTs,
@@ -130,7 +123,25 @@ const buildUserEntity = (
         job: { type: this.job.type, description: this.job.description },
         government: this.government,
         image: this.image,
+        facebookId: this.facebookId
+      };
+    }
+
+    // ! need to be private
+    mapToDb() {
+      return {
+        facebookId: this.facebookId,
+        googleId: this.googleId,
+        fullName: this.fullName,
+        phone: this.phone,
+        email: this.email,
         password: this.password,
+        verifyEmail: this.verifyEmail,
+        birthDateTs: this.birthDateTs,
+        gender: this.gender,
+        job: { type: this.job.type, description: this.job.description },
+        government: this.government,
+        image: this.image,
         isArchived: this.isArchived
       };
     }

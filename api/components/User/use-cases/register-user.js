@@ -16,13 +16,11 @@ module.exports = ({ redis, ApplicationError, logger }) => async ({
   job = { type: String, description: String },
   government,
   password,
+  facebookId,
+  googleId,
   code: candidateCode
 }) => {
-  // ! must-be-deleted
-  await redis.setexAsync(phone, 5 * 60, candidateCode);
-
-  const code = await redis.getAsync(phone);
-
+  const code = await redis.getAsync(`${phone}-register-user`);
   logger.info(`the otp is => ${code}`);
 
   if (code !== candidateCode) throw new ApplicationError('Invalid code', 400);
@@ -31,7 +29,6 @@ module.exports = ({ redis, ApplicationError, logger }) => async ({
 
   if (isDuplicate) throw new ApplicationError('Duplicate email or phone', 400);
 
-  // TODO: facebookId need to be stored
   const newUser = new UserEntity({
     image,
     fullName,
@@ -40,12 +37,10 @@ module.exports = ({ redis, ApplicationError, logger }) => async ({
     birthDateTs,
     gender,
     job: { type: job.type, description: job.description },
-    government
+    government,
+    facebookId,
+    googleId
   });
-
-  // TODO: should be a function
-  // @INQ: does we need verifyPhone (no need for it as we don't register if it's not)
-  newUser.verifyPhone = true;
 
   newUser.setPassword(password);
 
