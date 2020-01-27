@@ -6,8 +6,10 @@ module.exports = ({ passport, FacebookStrategy }) => () => {
     // @REVIEW == store in env and update documentation
     new FacebookStrategy(
       {
-        clientID: '775340076293966',
-        clientSecret: '3b0be9c79d15fcdf68fbe4561d38e2b2',
+        clientID: process.env.FACEBOOK_CLIENT_ID || '775340076293966',
+        clientSecret:
+          process.env.FACEBOOK_CLIENT_SECRET ||
+          '3b0be9c79d15fcdf68fbe4561d38e2b2',
         callbackURL: `${process.env.BASE_URL}/api/users/facebook-auth-back`,
         profileFields: ['id', 'emails', 'name', 'picture.type(large)', 'gender']
       },

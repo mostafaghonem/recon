@@ -20,6 +20,8 @@
         BASE_URL=https://localhost:5090/
         CERT_PATH=server.cert
         KEY_PATH=server.key
+        FACEBOOK_CLIENT_ID=775340076293966,
+        FACEBOOK_CLIENT_SECRET=3b0be9c79d15fcdf68fbe4561d38e2b2,
 
         REDIS_PASS=skn_dev_redis
     ```
@@ -44,6 +46,9 @@
             DB_PASSWORD=password
             jwtPrivateKey=123
 
+    ```
+
+
             REDIS_PASS=skn_dev_redis
             # should be the redis container name
             REDIS_HOST=cache
@@ -51,6 +56,8 @@
             BASE_URL=https://localhost:5050
             CERT_PATH=server.cert
             KEY_PATH=server.key
+            FACEBOOK_CLIENT_ID=775340076293966,
+            FACEBOOK_CLIENT_SECRET=3b0be9c79d15fcdf68fbe4561d38e2b2,
     ```
 
     - `BASE_URL` is the url which our node app is running
@@ -91,6 +98,8 @@
             BASE_URL=https://localhost:5090/
             CERT_PATH=server.cert
             KEY_PATH=server.key
+            FACEBOOK_CLIENT_ID=775340076293966,
+            FACEBOOK_CLIENT_SECRET=3b0be9c79d15fcdf68fbe4561d38e2b2,
     ```
 
     - To work with redis you will need to run the compose(at least the redis service)
