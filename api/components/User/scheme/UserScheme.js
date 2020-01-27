@@ -18,10 +18,6 @@ module.exports = ({ genderEnum, jobTypeEnum }) => {
         trim: true,
         required: true
       },
-      verifyPhone: {
-        type: Boolean,
-        default: false
-      },
       email: {
         type: String,
         unique: true,
@@ -50,11 +46,12 @@ module.exports = ({ genderEnum, jobTypeEnum }) => {
               enum: jobTypeEnum
             },
             description: {
-              type: String,
-              required: true
+              type: String
             }
           },
-          { _id: false }
+          {
+            _id: false
+          }
         ),
         required: true
       },
@@ -72,6 +69,7 @@ module.exports = ({ genderEnum, jobTypeEnum }) => {
       },
       tempVerificationCode: String,
       facebookId: String,
+      googleId: String,
       isArchived: {
         type: Boolean,
         default: false
