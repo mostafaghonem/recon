@@ -12,7 +12,7 @@ module.exports = ({ passport, GoogleStrategy }) => () => {
           '432022420515-s0poe8o2o66slora6066hncpsr5tk328.apps.googleusercontent.com',
         clientSecret:
           process.env.GOOGLE_CONSUMER_SECRET || 'ymUc09wHHKeZWC6aB9iEZK9S',
-        callbackURL: `${process.env.BASE_URL}/api/users/google/callback`
+        callbackURL: `${process.env.BASE_URL}api/users/google/callback`
       },
       (token, tokenSecret, profile, done) => {
         done(null, profile);
