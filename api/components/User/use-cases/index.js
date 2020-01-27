@@ -5,7 +5,7 @@
  */
 const passport = require('passport');
 const FacebookStrategy = require('passport-facebook').Strategy;
-const GoogleStrategy = require('passport-google-oauth').Strategy;
+const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 
 const redisClient = require('../../../shared/redis-client');
 const logger = require('../../../startup/logger');
@@ -15,8 +15,8 @@ const smsService = require('../../../shared/services').smsService;
 
 const makeRegisterUserUC = require('./register-user');
 const makeLoginUser = require('./login-user');
-const makeFacebookAuthService = require('./googleAuthService');
-const makeGoogleAuthService = require('./facebookAuthService');
+const makeGoogleAuthService = require('./googleAuthService');
+const makeFaceBookAuthService = require('./facebookAuthService');
 
 const makeFacebookLogin = require('./facebookLogin');
 const makeSmsVerifications = require('./sms-verifications');
@@ -62,16 +62,14 @@ const loginUser = makeLoginUser({
   logger
 });
 
-const facebookAuth = makeFacebookAuthService({
+const facebookAuth = makeFaceBookAuthService({
   passport,
-  FacebookStrategy,
-  redis: redisClient
+  FacebookStrategy
 })();
 
 const googleAuth = makeGoogleAuthService({
   passport,
-  GoogleStrategy,
-  redis: redisClient
+  GoogleStrategy
 })();
 
 const { faceBookData, loginService } = makeFacebookLogin({

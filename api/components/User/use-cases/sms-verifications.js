@@ -1,3 +1,5 @@
+const Models = require('../models');
+
 function getRandomCode(min, max) {
   return Math.floor(Math.random() * (max - min) + min);
 }
@@ -10,6 +12,10 @@ module.exports = ({
   smsService
 }) => async phone => {
   const userPhone = String(phone).replace('+2', '');
+  const isDuplicate = await Models.checkExistenceBy({ phone: userPhone });
+
+  if (isDuplicate) throw new ApplicationError('هذا الرقم موجود بالفعل', 400);
+
   const checkExistence = await redis.getAsync(`${userPhone}-register-user`);
   if (!checkExistence) {
     const verificationCode = getRandomCode(1000, 9999);

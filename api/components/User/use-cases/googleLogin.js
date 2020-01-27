@@ -7,6 +7,8 @@ module.exports = ({ redis }) => {
     if (!user) {
       // eslint-disable-next-line no-param-reassign
       _user.fullName = _user.displayName;
+      // eslint-disable-next-line no-param-reassign
+      _user.googleId = _user.id;
       // @REVIEW == too long time
       await redis.setexAsync(
         `${_user.id}-google-data`,

@@ -130,16 +130,18 @@ const buildUserEntity = (
     // ! need to be private
     mapToDb() {
       return {
+        facebookId: this.facebookId,
+        googleId: this.googleId,
         fullName: this.fullName,
         phone: this.phone,
         email: this.email,
+        password: this.password,
         verifyEmail: this.verifyEmail,
         birthDateTs: this.birthDateTs,
         gender: this.gender,
         job: { type: this.job.type, description: this.job.description },
         government: this.government,
         image: this.image,
-        password: this.password,
         isArchived: this.isArchived
       };
     }
