@@ -23,6 +23,10 @@ const makeSmsVerifications = require('./sms-verifications');
 const makeforgetPassword = require('./forget-password');
 const makeConfirmForgetPassword = require('./confirm-forget-password');
 const makeChangePassword = require('./change-password');
+const makeGetUserProfile = require('./get-profile');
+const makeUpdateUserProfile = require('./update-profile');
+const makeUpdateUserPhone = require('./update-phone');
+const makePhoneUpdateVerification = require('./phone-update-verifiction');
 const makeGoogleLogin = require('./googleLogin');
 
 const registerUser = makeRegisterUserUC({
@@ -55,6 +59,29 @@ const changePassword = makeChangePassword({
   ApplicationError,
   logger,
   redis: redisClient
+});
+
+const getUserProfile = makeGetUserProfile({
+  ApplicationError,
+  logger
+});
+
+const updateUserProfile = makeUpdateUserProfile({
+  ApplicationError,
+  logger
+});
+
+const updateUserPhone = makeUpdateUserPhone({
+  ApplicationError,
+  logger,
+  redis: redisClient
+});
+
+const phoneUpdateVerification = makePhoneUpdateVerification({
+  ApplicationError,
+  logger,
+  redis: redisClient,
+  smsService
 });
 
 const loginUser = makeLoginUser({
@@ -92,6 +119,10 @@ const userUseCases = {
   verifyPhone,
   forgetPassword,
   confirmForgetPassword,
+  getUserProfile,
+  updateUserProfile,
+  phoneUpdateVerification,
+  updateUserPhone,
   changePassword
 };
 

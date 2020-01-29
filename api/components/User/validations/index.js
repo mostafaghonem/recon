@@ -12,6 +12,8 @@ const makeUserPhoneVerificationValidation = require('./phone-verification-valida
 const makeForgetPasswordValidation = require('./forget-password-validation');
 const makeConfirmForgetPasswordValidation = require('./confirm-forget-password-validation');
 const makeChangePasswordValidation = require('./change-password');
+const makeUpdateProfileValidation = require('./update-profile');
+const makeUpdatePhoneValidation = require('./update-phone');
 
 module.exports.userRegisterValidation = makeUserRegisterValidation({
   _,
@@ -54,3 +56,17 @@ module.exports.phoneVerificationValidation = makeUserPhoneVerificationValidation
     ValidatorHelper
   }
 );
+
+module.exports.updateProfile = makeUpdateProfileValidation({
+  _,
+  Builder,
+  ValidatorHelper,
+  genderEnum,
+  jobTypeEnum
+});
+
+module.exports.updatePhone = makeUpdatePhoneValidation({
+  _,
+  Builder,
+  ValidatorHelper
+});

@@ -1,19 +1,17 @@
 const logger = require('../startup/logger');
 
-module.exports = permissions => (req, res, next) => {
-  if (!permissions) {
-    logger.error('missing permission ya traaab');
-    return res.status(555).json({ message: 'missing permission ya traaab' });
+module.exports = permission => (req, res, next) => {
+  if (!permission) {
+    logger.error('missing permission');
+    return res.status(555).json({ message: 'missing permission' });
   }
 
   const { originalUrl } = req;
-
-  if (!permissions.some(perm => req.user.permissions.includes(perm))) {
+  if (permission !== req.user.permission) {
     logger.error(`access denied! ${originalUrl}`);
     return res
       .status(403)
       .json({ message: 'unAuthorized to access this api ' });
   }
-
   return next();
 };

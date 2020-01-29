@@ -3,6 +3,8 @@
 
 // const _genderEnum = Object.values(defaultConstants.GENDER_TYPES);
 // const _jobTypeEnum = Object.values(defaultConstants.JOB_TYPES);
+const { Builder, ValidatorHelper } = require('validation-helpers');
+const _ = require('lodash');
 
 module.exports = ({
   _,
@@ -12,7 +14,6 @@ module.exports = ({
   jobTypeEnum
 }) => ({ body }) => {
   const error = {};
-
   const scheme = {
     image: {
       value: body.image,
@@ -24,12 +25,6 @@ module.exports = ({
         .required('يجب ادخال الاسم بالكامل')
         .minLength(2, 'يجب ان يكون الاسم 2 احرف علي الاقل')
         .maxLength(50, 'يجب ان يكون الاسم 50 حرف كحد اقصي').rules
-    },
-    phone: {
-      value: body.phone,
-      rules: new Builder()
-        .required('يجب ادخال رقم الهاتف')
-        .isMobile('رقم هاتف غير صالح').rules
     },
     email: {
       value: body.email,
@@ -60,22 +55,24 @@ module.exports = ({
         .minLength(3)
         .maxLength(100).rules
     },
-    password: {
-      value: body.password,
-      rules: new Builder()
-        .required()
-        .minLength(5)
-        .maxLength(60).rules
+    identificationImages: {
+      value: body.identificationImages,
+      rules: new Builder().required().isArray().rules
     },
     code: {
       value: body.code,
-      rules: new Builder()
-        .required()
-        .min(1000)
-        .max(9999).rules
+      rules: new Builder().min(1000).max(9999).rules
     }
     // TODO: Edit error messages
   };
+  if (body.identificationImages) {
+    body.identificationImages.forEach((url, index) => {
+      scheme[`body.identificationImages.${index}`] = {
+        value: url,
+        rules: new Builder().isURL('Should be a valid URL').rules
+      };
+    });
+  }
 
   Object.keys(scheme).forEach(key => {
     const ele = scheme[key];

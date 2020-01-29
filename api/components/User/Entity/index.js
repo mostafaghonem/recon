@@ -2,7 +2,6 @@ const bcjs = require('bcryptjs');
 const jsonwebtoken = require('jsonwebtoken');
 const mongoose = require('mongoose');
 const Promise = require('bluebird');
-
 const ObjectId = mongoose.Types.ObjectId;
 
 const jwt = Promise.promisifyAll(jsonwebtoken);
