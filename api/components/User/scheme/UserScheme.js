@@ -73,6 +73,10 @@ module.exports = ({ genderEnum, jobTypeEnum }) => {
       isArchived: {
         type: Boolean,
         default: false
+      },
+      identificationImages: [String],
+      identificationStatus: {
+        type: Boolean
       }
     },
     {

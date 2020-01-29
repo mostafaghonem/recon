@@ -5,10 +5,16 @@ const {
   phoneVerificationValidation,
   forgetPasswordValidation,
   confirmForgetPasswordValidation,
-  changePasswordValidation
+  changePasswordValidation,
+  updateProfile,
+  updatePhone
 } = require('../validations');
 
 const router = express.Router();
+
+const authenticateMiddleware = require('../../../middlewares/authenticateMiddleware');
+const authorizeMiddleware = require('../../../middlewares/authorizeMiddleware');
+const { PERMISSIONS } = require('../../../shared/constants/defaults');
 
 const validateMiddleware = require('../../../middlewares/validateMiddleware');
 const controllers = require('../controllers');
@@ -38,6 +44,32 @@ router.post(
   '/phone/verify',
   [validateMiddleware(phoneVerificationValidation)],
   controllers.verifyPhone
+);
+
+// @route
+// @ POST api/users/phone/verify
+// !access  anonymous
+router.post(
+  '/phone/edit/verify',
+  [
+    validateMiddleware(phoneVerificationValidation),
+    authenticateMiddleware,
+    authorizeMiddleware(PERMISSIONS.USER)
+  ],
+  controllers.phoneUpdateVerification
+);
+
+// @route
+// @ POST api/users/phone/edit
+// !access  anonymous
+router.put(
+  '/phone/edit',
+  [
+    validateMiddleware(updatePhone),
+    authenticateMiddleware,
+    authorizeMiddleware(PERMISSIONS.USER)
+  ],
+  controllers.updatePhone
 );
 
 router.post(
@@ -80,5 +112,27 @@ router.get('/google', controllers.googleAuthController);
 router.get('/google/callback', controllers.googleAuthCallback);
 
 router.get('/google-user-data/:googleId', controllers.getGoogleUserData);
+
+// @route
+// @ POST api/users/profile/view
+// !access  anonymous
+router.get(
+  '/profile/view',
+  [authenticateMiddleware, authorizeMiddleware(PERMISSIONS.USER)],
+  controllers.getUserProfile
+);
+
+// @route
+// @ POST api/users/profile/edit
+// !access  anonymous
+router.put(
+  '/profile/edit',
+  [
+    validateMiddleware(updateProfile),
+    authenticateMiddleware,
+    authorizeMiddleware(PERMISSIONS.USER)
+  ],
+  controllers.updateUserProfile
+);
 
 module.exports = router;

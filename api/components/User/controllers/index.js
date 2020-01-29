@@ -4,6 +4,10 @@ const makePhoneVerification = require('./sms-verification');
 const makeForgetPassword = require('./forget-password');
 const makeConfirmForgetPassword = require('./confirm-forget-password');
 const makeChangePassword = require('./change-password');
+const makeGetUserProfile = require('./get-profile');
+const makeUpdateUserProfile = require('./update-profile');
+const makeUpdatePhone = require('./update-phone');
+const makePhoneUpdateVerification = require('./phone-update-verification');
 const {
   facebookAuthController,
   facebookAuthBackController,
@@ -20,14 +24,22 @@ const verifyPhone = makePhoneVerification({});
 const forgetPassword = makeForgetPassword({});
 const confirnForgetPassword = makeConfirmForgetPassword({});
 const changePassword = makeChangePassword({});
+const getUserProfile = makeGetUserProfile({});
+const updateUserProfile = makeUpdateUserProfile({});
+const updatePhone = makeUpdatePhone({});
+const phoneUpdateVerification = makePhoneUpdateVerification({});
 
 const userCtrl = Object.freeze({
   registerUser,
   loginUser,
   verifyPhone,
   forgetPassword,
+  updatePhone,
   confirnForgetPassword,
   changePassword,
+  getUserProfile,
+  updateUserProfile,
+  phoneUpdateVerification,
   googleAuthController,
   googleAuthCallback,
   getGoogleUserData: googleUserData,

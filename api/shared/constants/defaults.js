@@ -3,7 +3,9 @@ module.exports = {
     LIMIT: 20
   },
   PERMISSIONS: {
-    ADMIN: 'ADMIN'
+    ADMIN: 'admin',
+    USER: 'user',
+    SALES: 'sales'
   },
   GENDER_TYPES: {
     MALE: 'male',
