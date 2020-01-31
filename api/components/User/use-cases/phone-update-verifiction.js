@@ -14,7 +14,8 @@ module.exports = ({ redis, ApplicationError, logger, smsService }) => async (
   if (user) {
     const userPhone = String(phone).replace('+2', '');
     const query = {
-      phone: userPhone
+      phone: userPhone,
+      isArchived: false
     };
     const isDuplicate = await model.getOne({ query, select });
 

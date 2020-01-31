@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const { Schema } = mongoose;
 
-module.exports = ({ genderEnum, jobTypeEnum }) => {
+module.exports = ({ genderEnum, jobTypeEnum, permissions }) => {
   const User = new Schema(
     {
       fullName: {
@@ -67,6 +67,10 @@ module.exports = ({ genderEnum, jobTypeEnum }) => {
         type: String,
         required: true
       },
+      address: {
+        type: String,
+        default: ''
+      },
       tempVerificationCode: String,
       facebookId: String,
       googleId: String,
@@ -77,7 +81,13 @@ module.exports = ({ genderEnum, jobTypeEnum }) => {
       identificationImages: [String],
       identificationStatus: {
         type: Boolean
-      }
+      },
+      permissions: [
+        {
+          type: String,
+          enum: permissions
+        }
+      ]
     },
     {
       timestamps: true,

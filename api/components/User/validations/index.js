@@ -1,5 +1,8 @@
 const { Builder, ValidatorHelper } = require('validation-helpers');
 const _ = require('lodash');
+const mongoose = require('mongoose');
+
+const { ObjectId } = mongoose.Types;
 
 const { defaultConstants } = require('../../../shared/constants');
 
@@ -14,6 +17,7 @@ const makeConfirmForgetPasswordValidation = require('./confirm-forget-password-v
 const makeChangePasswordValidation = require('./change-password');
 const makeUpdateProfileValidation = require('./update-profile');
 const makeUpdatePhoneValidation = require('./update-phone');
+const makeGetHouseOwnerInfoValidation = require('./houseOwner-info');
 
 module.exports.userRegisterValidation = makeUserRegisterValidation({
   _,
@@ -69,4 +73,11 @@ module.exports.updatePhone = makeUpdatePhoneValidation({
   _,
   Builder,
   ValidatorHelper
+});
+
+module.exports.getHouseOwnerInfo = makeGetHouseOwnerInfoValidation({
+  _,
+  Builder,
+  ValidatorHelper,
+  ObjectId
 });

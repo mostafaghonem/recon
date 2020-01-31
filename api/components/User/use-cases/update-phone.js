@@ -9,7 +9,8 @@ module.exports = ({ ApplicationError, logger, redis }) => async (
   const user = await model.getOneById({ id: userId, select });
   if (user) {
     const query = {
-      phone: updatedProfile.phone
+      phone: updatedProfile.phone,
+      isArchived: false
     };
     const isDuplicate = await model.getOne({ query, select });
     if (isDuplicate && String(isDuplicate._id) !== String(user._id))

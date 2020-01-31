@@ -11,10 +11,13 @@ const redisClient = require('../../../shared/redis-client');
 const logger = require('../../../startup/logger');
 const { ApplicationError } = require('../../../shared/errors');
 const smsService = require('../../../shared/services').smsService;
+const { addIdentityRequests } = require('../../identityRequests/use-cases');
+const { PERMISSIONS } = require('../../../shared/constants/defaults');
 // const emailService = require('../../../shared/services').emailService;
 
 const makeRegisterUserUC = require('./register-user');
 const makeLoginUser = require('./login-user');
+const makeUpdateIdentification = require('./update-identification');
 const makeGoogleAuthService = require('./googleAuthService');
 const makeFaceBookAuthService = require('./facebookAuthService');
 
@@ -27,6 +30,7 @@ const makeGetUserProfile = require('./get-profile');
 const makeUpdateUserProfile = require('./update-profile');
 const makeUpdateUserPhone = require('./update-phone');
 const makePhoneUpdateVerification = require('./phone-update-verifiction');
+const makeGetHouseOwnerInfo = require('./houseOwner-info');
 const makeGoogleLogin = require('./googleLogin');
 
 const registerUser = makeRegisterUserUC({
@@ -66,15 +70,27 @@ const getUserProfile = makeGetUserProfile({
   logger
 });
 
+const getHouseOwnerInfo = makeGetHouseOwnerInfo({
+  ApplicationError,
+  logger,
+  PERMISSIONS
+});
+
 const updateUserProfile = makeUpdateUserProfile({
   ApplicationError,
-  logger
+  logger,
+  addIdentityRequests
 });
 
 const updateUserPhone = makeUpdateUserPhone({
   ApplicationError,
   logger,
   redis: redisClient
+});
+
+const updateIdentification = makeUpdateIdentification({
+  ApplicationError,
+  logger
 });
 
 const phoneUpdateVerification = makePhoneUpdateVerification({
@@ -120,9 +136,11 @@ const userUseCases = {
   forgetPassword,
   confirmForgetPassword,
   getUserProfile,
+  getHouseOwnerInfo,
   updateUserProfile,
   phoneUpdateVerification,
   updateUserPhone,
+  updateIdentification,
   changePassword
 };
 

@@ -9,7 +9,6 @@ module.exports = () => {
         message: 'Verification Code Sent successfully!'
       });
     } catch (e) {
-      console.log(e);
       return next(e);
     }
   };

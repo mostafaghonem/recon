@@ -8,6 +8,8 @@ const makeGetUserProfile = require('./get-profile');
 const makeUpdateUserProfile = require('./update-profile');
 const makeUpdatePhone = require('./update-phone');
 const makePhoneUpdateVerification = require('./phone-update-verification');
+const makeGetHouseOwnerInfo = require('./houseOwner-info');
+const makeGetHouseOwnerInfoWithCi = require('./houseOwner-info-with-ci');
 const {
   facebookAuthController,
   facebookAuthBackController,
@@ -28,6 +30,8 @@ const getUserProfile = makeGetUserProfile({});
 const updateUserProfile = makeUpdateUserProfile({});
 const updatePhone = makeUpdatePhone({});
 const phoneUpdateVerification = makePhoneUpdateVerification({});
+const getHouseOwnerInfo = makeGetHouseOwnerInfo({});
+const getHouseOwnerInfoWithCi = makeGetHouseOwnerInfoWithCi({});
 
 const userCtrl = Object.freeze({
   registerUser,
@@ -40,6 +44,8 @@ const userCtrl = Object.freeze({
   getUserProfile,
   updateUserProfile,
   phoneUpdateVerification,
+  getHouseOwnerInfo,
+  getHouseOwnerInfoWithCi,
   googleAuthController,
   googleAuthCallback,
   getGoogleUserData: googleUserData,

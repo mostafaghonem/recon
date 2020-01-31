@@ -23,7 +23,7 @@ module.exports = ({ redis, ApplicationError, logger }) => async ({
   const code = await redis.getAsync(`${phone}-register-user`);
   logger.info(`the otp is => ${code}`);
 
-  if (code !== candidateCode) throw new ApplicationError('Invalid code', 400);
+  // if (code !== candidateCode) throw new ApplicationError('Invalid code', 400);
 
   const isDuplicate = await Models.checkExistenceBy({ email, phone });
 
