@@ -24,11 +24,17 @@ module.exports = class GenericModel {
       select: '',
       sort: { _id: 1 },
       skip: 0,
-      limit: 10000000000
+      limit: 10000000000,
+      populate: {
+        path: '',
+        match: {},
+        select: ''
+      }
     }
   ) {
-    const { limit, query, select, skip, sort } = params;
+    const { limit, query, select, skip, sort, populate } = params;
     return this.DbAccess.find(query, select)
+      .populate(populate)
       .sort(sort)
       .skip(skip)
       .limit(limit)

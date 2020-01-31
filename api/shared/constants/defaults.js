@@ -3,9 +3,10 @@ module.exports = {
     LIMIT: 20
   },
   PERMISSIONS: {
-    ADMIN: 'admin',
-    USER: 'user',
-    SALES: 'sales'
+    RENTER: 'renter',
+    HOUSE_OWNER: 'houseOwner',
+    SALES: 'sales',
+    ADMIN: 'admin'
   },
   GENDER_TYPES: {
     MALE: 'male',
@@ -15,6 +16,15 @@ module.exports = {
     STUDENT: 'student',
     EMPLOYEE: 'employee',
     RENTER: 'renter'
+  },
+  REQUEST_STATUS: {
+    PENDING: 'pending',
+    ACCEPTED: 'accepted',
+    REJECTED: 'rejected'
+  },
+  REQUEST_RESPONSE: {
+    ACCEPTED: 'accepted',
+    REJECTED: 'rejected'
   },
   SMS: {
     USERNAME: 'skn@epusheg.com',
