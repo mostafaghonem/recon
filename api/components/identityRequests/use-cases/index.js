@@ -1,6 +1,6 @@
 const logger = require('../../../startup/logger');
 //TODO need to remove it from here and find a solution to put it in index.js
-const { updateIdentification } = require('../../User/use-cases');
+const { updateIdentification } = require('../../User/user-external-use-cases');
 const { ApplicationError } = require('../../../shared/errors');
 
 const makeAddIdentityRequests = require('./add-identity-requests');

@@ -11,6 +11,7 @@ module.exports = () => {
         success: true
       });
     } catch (e) {
+      console.log(e);
       return next(e);
     }
   };
