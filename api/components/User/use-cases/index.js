@@ -13,7 +13,7 @@ const { ApplicationError } = require('../../../shared/errors');
 const smsService = require('../../../shared/services').smsService;
 const {
   addIdentityRequests
-} = require('../../identityRequests/indentityRequests-external-use-cases');
+} = require('../../identityRequests/identityRequests-external-use-cases');
 const { PERMISSIONS } = require('../../../shared/constants/defaults');
 // const emailService = require('../../../shared/services').emailService;
 

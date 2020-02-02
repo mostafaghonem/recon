@@ -1,4 +1,4 @@
-const makeUserModel = require('./indentityRequestsModel');
+const makeUserModel = require('./identityRequestsModel');
 
 const GenericModel = require('../../shared/models/GenericModel');
 

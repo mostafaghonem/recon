@@ -1,1 +1,1 @@
-exports.indentityRequests = () => {};
+exports.identityRequests = () => {};

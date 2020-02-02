@@ -23,7 +23,7 @@ router.get(
     authenticateMiddleware,
     authorizeMiddleware([PERMISSIONS.ADMIN])
   ],
-  controllers.getIndentityRequests
+  controllers.getIdentityRequests
 );
 
 // @route
@@ -36,7 +36,7 @@ router.put(
     authenticateMiddleware,
     authorizeMiddleware([PERMISSIONS.RENTER])
   ],
-  controllers.updateIndentityRequests
+  controllers.updateIdentityRequests
 );
 
 module.exports = router;

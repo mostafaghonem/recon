@@ -2,18 +2,18 @@ const { defaultConstants } = require('../../../shared/constants');
 
 const pagination = Object.values(defaultConstants.PAGINATION);
 
-const makeAddIndentityRequests = require('./add-indentity-requests');
-const makeGetIndentityRequests = require('./get-indentity-requests');
-const makeUpdateIndentityRequests = require('./update-indentity-requests');
+const makeAddIdentityRequests = require('./add-identity-requests');
+const makeGetIdentityRequests = require('./get-identity-requests');
+const makeUpdateIdentityRequests = require('./update-identity-requests');
 
-const addIndentityRequests = makeAddIndentityRequests({});
-const getIndentityRequests = makeGetIndentityRequests({ pagination });
-const updateIndentityRequests = makeUpdateIndentityRequests({});
+const addIdentityRequests = makeAddIdentityRequests({});
+const getIdentityRequests = makeGetIdentityRequests({ pagination });
+const updateIdentityRequests = makeUpdateIdentityRequests({});
 
 const userCtrl = Object.freeze({
-  addIndentityRequests,
-  getIndentityRequests,
-  updateIndentityRequests
+  addIdentityRequests,
+  getIdentityRequests,
+  updateIdentityRequests
 });
 
 module.exports = userCtrl;

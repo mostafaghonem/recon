@@ -1,3 +1,3 @@
-const userRouter = require('./router/indentityRequestsRouter');
+const userRouter = require('./router/identityRequestsRouter');
 
 module.exports.Router = userRouter;

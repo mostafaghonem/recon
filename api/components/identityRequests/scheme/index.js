@@ -1,6 +1,6 @@
-const makeUserScheme = require('./indentityRequestsScheme');
+const makeIdentityRequestsScheme = require('./identityRequestsScheme');
 const { defaultConstants } = require('../../../shared/constants');
 
 const requestStatus = Object.values(defaultConstants.REQUEST_STATUS);
 
-module.exports = makeUserScheme({ requestStatus });
+module.exports = makeIdentityRequestsScheme({ requestStatus });
