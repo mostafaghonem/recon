@@ -5,15 +5,18 @@
  *
  * ! if you need to throw Error use throw new ApplicationError() and will handle the rest in express catcher
  */
+const logger = require('../../../startup/logger');
+const { ApplicationError } = require('../../../shared/errors');
 
-const makeExternalExample = require('./external-user-example');
+const makeUpdateIdentification = require('./update-identification');
 
-const exampleExternal = makeExternalExample({
-  dependencies: 'example dependency lib'
+const updateIdentification = makeUpdateIdentification({
+  ApplicationError,
+  logger
 });
 
-const ExampleExternalService = Object.freeze({
-  exampleExternal
+const UsersExternalService = Object.freeze({
+  updateIdentification
 });
 
-module.exports = ExampleExternalService;
+module.exports = UsersExternalService;

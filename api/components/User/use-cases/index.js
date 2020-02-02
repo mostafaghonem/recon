@@ -11,7 +11,9 @@ const redisClient = require('../../../shared/redis-client');
 const logger = require('../../../startup/logger');
 const { ApplicationError } = require('../../../shared/errors');
 const smsService = require('../../../shared/services').smsService;
-const { addIdentityRequests } = require('../../identityRequests/use-cases');
+const {
+  addIdentityRequests
+} = require('../../identityRequests/indentityRequests-external-use-cases');
 const { PERMISSIONS } = require('../../../shared/constants/defaults');
 // const emailService = require('../../../shared/services').emailService;
 

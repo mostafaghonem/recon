@@ -34,7 +34,7 @@ router.put(
   [
     validateMiddleware(updateIdentityRequests),
     authenticateMiddleware,
-    authorizeMiddleware([PERMISSIONS.ADMIN])
+    authorizeMiddleware([PERMISSIONS.RENTER])
   ],
   controllers.updateIndentityRequests
 );

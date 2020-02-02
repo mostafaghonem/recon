@@ -5,15 +5,19 @@
  *
  * ! if you need to throw Error use throw new ApplicationError() and will handle the rest in express catcher
  */
+const logger = require('../../../startup/logger');
+//TODO need to remove it from here and find a solution to put it in index.js
+const { ApplicationError } = require('../../../shared/errors');
 
-const makeExternalExample = require('./external-indentityRequests-example');
+const makeAddIdentityRequests = require('./add-identity-requests');
 
-const exampleExternal = makeExternalExample({
-  dependencies: 'example dependency lib'
+const addIdentityRequests = makeAddIdentityRequests({
+  ApplicationError,
+  logger
 });
 
-const ExampleExternalService = Object.freeze({
-  exampleExternal
+const IdentityRequestsExternalService = Object.freeze({
+  addIdentityRequests
 });
 
-module.exports = ExampleExternalService;
+module.exports = IdentityRequestsExternalService;
