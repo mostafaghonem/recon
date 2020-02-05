@@ -11,6 +11,9 @@ const foodServices = Object.values(defaultConstants.FOODSERVICES);
 const toiletTypes = Object.values(defaultConstants.TOILET_TYPES);
 const roomsTypes = Object.values(defaultConstants.ROOMS_TYPES);
 const pricePer = Object.values(defaultConstants.PRICE_PER);
+const requestStatus = Object.values(defaultConstants.REQUEST_STATUS);
+const pendingStatus = require('../../../shared/constants/defaults')
+  .REQUEST_STATUS;
 
 module.exports = makeHostelsScheme({
   freeServices,
@@ -20,5 +23,7 @@ module.exports = makeHostelsScheme({
   foodServices,
   toiletTypes,
   roomsTypes,
-  pricePer
+  pricePer,
+  requestStatus,
+  pendingStatus: pendingStatus.PENDING
 });

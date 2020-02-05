@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 
 const { Schema } = mongoose;
+const { ObjectId } = mongoose.Types;
 
 module.exports = ({
   freeServices,
@@ -10,7 +11,9 @@ module.exports = ({
   foodServices,
   toiletTypes,
   roomsTypes,
-  pricePer
+  pricePer,
+  requestStatus,
+  pendingStatus
 }) => {
   const hostel = new Schema(
     {
@@ -48,6 +51,10 @@ module.exports = ({
       image: {
         type: String,
         required: true
+      },
+      userId: {
+        type: ObjectId,
+        ref: 'User'
       },
       address: {
         type: new Schema(
@@ -129,6 +136,7 @@ module.exports = ({
             type: String,
             required: true
           },
+          images: [String],
           numberOfPersons: {
             type: Number,
             required: true
@@ -143,7 +151,7 @@ module.exports = ({
             required: true,
             default: roomsTypes
           },
-          totalPlaces: {
+          totalRooms: {
             type: Number,
             required: true
           },
@@ -151,7 +159,7 @@ module.exports = ({
             type: Number,
             required: true
           },
-          totalAvailablePlaces: {
+          totalAvailableRooms: {
             type: Number,
             required: true
           },
@@ -196,6 +204,42 @@ module.exports = ({
           }
         })
       ],
+      rates: [
+        new Schema(
+          {
+            userId: {
+              type: ObjectId,
+              ref: 'User'
+            },
+            rate: {
+              type: Number,
+              default: 0
+            }
+          },
+          { _id: false }
+        )
+      ],
+      totalRate: {
+        type: Number,
+        default: 0
+      },
+      totalUsersRated: {
+        type: Number,
+        default: 0
+      },
+      status: {
+        type: String,
+        enum: requestStatus,
+        default: pendingStatus
+      },
+      note: {
+        type: String,
+        default: ''
+      },
+      totalRevenue: {
+        type: Number,
+        default: 0
+      },
       isArchived: {
         type: Boolean,
         default: false
