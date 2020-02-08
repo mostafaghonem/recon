@@ -30,5 +30,14 @@ module.exports = {
     USERNAME: 'skn@epusheg.com',
     PASSWORD: '2020skn',
     ID: 'SKN'
+  },
+  UnitReservationState: {
+    SEND: 'send',
+    ACCEPT_BY_ADMIN: 'accept_by_admin',
+    ACCEPT_BY_OWNER: 'accept_by_owner',
+    PENDING: 'pending',
+    PAYED: 'payed',
+    RECEIVED: 'received',
+    REFUSED: 'refused'
   }
 };
