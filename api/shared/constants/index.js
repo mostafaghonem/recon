@@ -1,8 +1,9 @@
-const { PERMISSIONS, PAGINATION } = require('./defaults');
+const { PERMISSIONS, PAGINATION, UnitReservationState } = require('./defaults');
 const defaultConstants = require('./defaults');
 
 module.exports = {
   PERMISSIONS,
   PAGINATION,
-  defaultConstants
+  defaultConstants,
+  UnitReservationState
 };
