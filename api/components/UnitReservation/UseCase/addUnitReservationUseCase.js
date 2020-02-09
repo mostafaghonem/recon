@@ -1,4 +1,5 @@
 // const UnitReservationModel = require('../Models/UnitReservationModel');
+const Model = require('../Models');
 
 /**
     1 - getting un-available times over single unit
@@ -13,9 +14,38 @@
  */
 
 module.exports = (/* but your inject here */) => {
-  const returnAllUnAvailableTimesForUnit = async () => {};
+  /**
+    Here you should return array of times like [{from:--, to:--}]
+    from should be smaller than to and from should be less than current time
+   */
+  const returnAllUnAvailableTimesForUnit = async unitId => {
+    const result = await Model.gettingUnAvailableTime(unitId);
+    if (result) {
+      return { result };
+    }
+    return { error: { message: 'error from database', statusCode: 500 } };
+  };
+  /**
+   you need to check if this monthly of with day
+   if this monthly you need to cal amount of 
+   */
   const returnAllCostForUnit = async (/* unitId, from, to */) => {};
-  const addingRequestToUnit = async (/* unitData */) => {};
+
+  /* here need to get all the unit 
+    - with the same id and
+    - have intersect with coming one and  
+    - with state payed or received
+    if length of coming list larger than 0 return un-valid unit 
+    else added it with state send 
+  */
+  const addingRequestToUnit = async (unitId, comingOne) => {
+    const checkValid = await Model.checkAddingNewReservation(unitId, comingOne);
+    if (checkValid && comingOne.from < comingOne.to) {
+      const result = await Model.createOne(comingOne);
+      return { result };
+    }
+    return { error: { message: 'not valid time', statusCode: 401 } };
+  };
 
   return {
     returnAllUnAvailableTimesForUnit,

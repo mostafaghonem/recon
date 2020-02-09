@@ -8,7 +8,7 @@ const Model = require('../Models/index');
 
 // Inject dependency !no-requires
 const buildUserEntity = () => {
-  class UserEntity {
+  class UnitReservation {
     constructor(
       renter = '',
       owner = '',
@@ -31,7 +31,7 @@ const buildUserEntity = () => {
 
     static async loadEntityFromDbById(id) {
       const exists = await Model.getOneById({ id });
-      if (exists) return new UserEntity({ ...exists });
+      if (exists) return new UnitReservation({ ...exists });
       return undefined;
     }
 
@@ -53,16 +53,36 @@ const buildUserEntity = () => {
     // 1 - getting all request intersect with the same request
     async gettingIntersectAndUpdateState(filter, newState) {
       const newFilter = {
-        ...filter,
         ...{
+          unit: this.unit,
           from: { $lte: this.from },
           to: { $gte: this.to }
-        }
+        },
+        ...filter
       };
-      Model.updateManyByFilter({
+      const ret = await Model.updateManyByFilter({
         filter: newFilter,
         update: { state: newState }
       });
+      return ret;
+    }
+
+    async gettingIntersectWithFilter(filter) {
+      const newFilter = {
+        ...{
+          unit: this.unit,
+          from: { $lte: this.from },
+          to: { $gte: this.to }
+        },
+        ...filter
+      };
+      let ret = await Model.getMany({
+        filter: newFilter
+      });
+      ret = ret.forEach(request => {
+        return new UnitReservation(request);
+      });
+      return ret;
     }
 
     async updateState() {
@@ -76,7 +96,7 @@ const buildUserEntity = () => {
     }
   }
 
-  return UserEntity;
+  return UnitReservation;
 };
 
 module.exports = buildUserEntity;
