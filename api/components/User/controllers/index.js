@@ -10,6 +10,7 @@ const makeUpdatePhone = require('./update-phone');
 const makePhoneUpdateVerification = require('./phone-update-verification');
 const makeGetHouseOwnerInfo = require('./houseOwner-info');
 const makeGetHouseOwnerInfoWithCi = require('./houseOwner-info-with-ci');
+const makeGetUploadedHostels = require('./get-uploaded-hostels');
 const {
   facebookAuthController,
   facebookAuthBackController,
@@ -18,6 +19,10 @@ const {
   googleAuthController,
   googleUserData
 } = require('./userController');
+
+const { defaultConstants } = require('../../../shared/constants');
+
+const pagination = Object.values(defaultConstants.PAGINATION);
 
 // ->
 const registerUser = makeUserRegisterCtrl({});
@@ -32,6 +37,7 @@ const updatePhone = makeUpdatePhone({});
 const phoneUpdateVerification = makePhoneUpdateVerification({});
 const getHouseOwnerInfo = makeGetHouseOwnerInfo({});
 const getHouseOwnerInfoWithCi = makeGetHouseOwnerInfoWithCi({});
+const getUploadedHostels = makeGetUploadedHostels({ pagination });
 
 const userCtrl = Object.freeze({
   registerUser,
@@ -46,6 +52,7 @@ const userCtrl = Object.freeze({
   phoneUpdateVerification,
   getHouseOwnerInfo,
   getHouseOwnerInfoWithCi,
+  getUploadedHostels,
   googleAuthController,
   googleAuthCallback,
   getGoogleUserData: googleUserData,

@@ -29,12 +29,26 @@ module.exports = class GenericModel {
         path: '',
         match: {},
         select: ''
+      },
+      anotherPopulate: {
+        path: '',
+        match: {},
+        select: ''
       }
     }
   ) {
-    const { limit, query, select, skip, sort, populate } = params;
+    const {
+      limit,
+      query,
+      select,
+      skip,
+      sort,
+      populate,
+      anotherPopulate
+    } = params;
     return this.DbAccess.find(query, select)
       .populate(populate)
+      .populate(anotherPopulate)
       .sort(sort)
       .skip(skip)
       .limit(limit)

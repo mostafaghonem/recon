@@ -1,5 +1,11 @@
 const express = require('express');
-const {} = require('../validations');
+const {
+  addHostelValidation,
+  addHostelRoomsValidation,
+  hideHostelValidation,
+  unhideHostelValidation,
+  deleteHostelValidation
+} = require('../validations');
 
 const router = express.Router();
 
@@ -11,21 +17,56 @@ const validateMiddleware = require('../../../middlewares/validateMiddleware');
 const controllers = require('../controllers');
 
 // @route
-// @ GET api/users/register
-// !access  anonymous
-router.post('/register', [validateMiddleware()], controllers.registerUser);
-
-// @route
 // @ GET api/users/profile/view
 // !access  anonymous
-router.get(
-  '/profile/view',
+router.post(
+  '/',
   [
-    validateMiddleware(),
+    validateMiddleware(addHostelValidation),
     authenticateMiddleware,
-    authorizeMiddleware([PERMISSIONS.RENTER, PERMISSIONS.HOUSE_OWNER])
+    authorizeMiddleware([PERMISSIONS.HOUSE_OWNER])
   ],
-  controllers.registerUser
+  controllers.addHostel
+);
+
+router.post(
+  '/rooms',
+  [
+    validateMiddleware(addHostelRoomsValidation),
+    authenticateMiddleware,
+    authorizeMiddleware([PERMISSIONS.HOUSE_OWNER])
+  ],
+  controllers.addHostelRooms
+);
+
+router.put(
+  '/hide/:id',
+  [
+    validateMiddleware(hideHostelValidation),
+    authenticateMiddleware,
+    authorizeMiddleware([PERMISSIONS.HOUSE_OWNER])
+  ],
+  controllers.hideHostel
+);
+
+router.put(
+  '/unhide/:id',
+  [
+    validateMiddleware(unhideHostelValidation),
+    authenticateMiddleware,
+    authorizeMiddleware([PERMISSIONS.HOUSE_OWNER])
+  ],
+  controllers.unhideHostel
+);
+
+router.delete(
+  '/:id',
+  [
+    validateMiddleware(deleteHostelValidation),
+    authenticateMiddleware,
+    authorizeMiddleware([PERMISSIONS.HOUSE_OWNER])
+  ],
+  controllers.deleteHostel
 );
 
 module.exports = router;

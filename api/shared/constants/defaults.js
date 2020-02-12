@@ -129,7 +129,11 @@ module.exports = {
     TRIPLE: 'triple'
   },
   PRICE_PER: {
-    MONTH: 'month',
-    YEAR: 'year'
+    DAY: 'day',
+    MONTH: 'month'
+  },
+  CURRENCIES: {
+    LE: 'le',
+    USD: 'usd'
   }
 };

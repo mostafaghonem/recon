@@ -14,6 +14,7 @@ const smsService = require('../../../shared/services').smsService;
 const {
   addIdentityRequests
 } = require('../../identityRequests/identityRequests-external-use-cases');
+const { getUserHostels } = require('../../hostels/hostels-external-use-cases');
 const { PERMISSIONS } = require('../../../shared/constants/defaults');
 // const emailService = require('../../../shared/services').emailService;
 
@@ -33,6 +34,7 @@ const makeUpdateUserProfile = require('./update-profile');
 const makeUpdateUserPhone = require('./update-phone');
 const makePhoneUpdateVerification = require('./phone-update-verifiction');
 const makeGetHouseOwnerInfo = require('./houseOwner-info');
+const makeGetUploadedHostels = require('./get-uploaded-hostels');
 const makeGoogleLogin = require('./googleLogin');
 
 const registerUser = makeRegisterUserUC({
@@ -76,6 +78,12 @@ const getHouseOwnerInfo = makeGetHouseOwnerInfo({
   ApplicationError,
   logger,
   PERMISSIONS
+});
+
+const getUploadedHostels = makeGetUploadedHostels({
+  ApplicationError,
+  logger,
+  getUserHostels
 });
 
 const updateUserProfile = makeUpdateUserProfile({
@@ -140,6 +148,7 @@ const userUseCases = {
   getUserProfile,
   getHouseOwnerInfo,
   updateUserProfile,
+  getUploadedHostels,
   phoneUpdateVerification,
   updateUserPhone,
   updateIdentification,

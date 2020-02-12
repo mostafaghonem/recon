@@ -8,6 +8,7 @@ const { defaultConstants } = require('../../../shared/constants');
 
 const genderEnum = Object.values(defaultConstants.GENDER_TYPES);
 const jobTypeEnum = Object.values(defaultConstants.JOB_TYPES);
+const requestStatus = Object.values(defaultConstants.REQUEST_STATUS);
 
 const makeUserRegisterValidation = require('./user-register-validation');
 const makeUserLoginValidation = require('./user-login-validation');
@@ -18,6 +19,7 @@ const makeChangePasswordValidation = require('./change-password');
 const makeUpdateProfileValidation = require('./update-profile');
 const makeUpdatePhoneValidation = require('./update-phone');
 const makeGetHouseOwnerInfoValidation = require('./houseOwner-info');
+const makeGetUploadedHostelsValidation = require('./get-uploaded-hostels');
 
 module.exports.userRegisterValidation = makeUserRegisterValidation({
   _,
@@ -80,4 +82,12 @@ module.exports.getHouseOwnerInfo = makeGetHouseOwnerInfoValidation({
   Builder,
   ValidatorHelper,
   ObjectId
+});
+
+module.exports.getUploadedHostels = makeGetUploadedHostelsValidation({
+  _,
+  Builder,
+  ValidatorHelper,
+  ObjectId,
+  requestStatus
 });

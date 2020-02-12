@@ -6,27 +6,48 @@
 
 const logger = require('../../../startup/logger');
 const { ApplicationError } = require('../../../shared/errors');
-const { PERMISSIONS } = require('../../../shared/constants/defaults');
-// const emailService = require('../../../shared/services').emailService;
 
-const makeLoginUser = require('./login-user');
+const makeAddHostel = require('./add-hostel');
+const makeAddHostelRooms = require('./add-hostel-rooms');
+const makeHideHostel = require('./hide-hostel');
+const makeUnhideHostel = require('./unhide-hostel');
+const makeDeleteHostel = require('./delete-hostel');
+const {
+  addUploadedHostelsRequests
+} = require('../../uploadedHostelsRequests/uploadedHostelsRequests-external-use-cases');
 
-const makeUpdateUserProfile = require('./update-profile');
-
-const updateUserProfile = makeUpdateUserProfile({
+const addHostel = makeAddHostel({
   ApplicationError,
   logger,
-  addIdentityRequests
+  addUploadedHostelsRequests
 });
 
-const loginUser = makeLoginUser({
+const hideHostel = makeHideHostel({
+  ApplicationError,
+  logger
+});
+
+const unhideHostel = makeUnhideHostel({
+  ApplicationError,
+  logger
+});
+
+const addHostelRooms = makeAddHostelRooms({
+  ApplicationError,
+  logger
+});
+
+const deleteHostel = makeDeleteHostel({
   ApplicationError,
   logger
 });
 
 const hostelsUseCases = {
-  loginUser,
-  updateUserProfile
+  addHostel,
+  addHostelRooms,
+  hideHostel,
+  unhideHostel,
+  deleteHostel
 };
 
 module.exports = hostelsUseCases;

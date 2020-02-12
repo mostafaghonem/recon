@@ -12,11 +12,16 @@ module.exports = ({
   toiletTypes,
   roomsTypes,
   pricePer,
+  currencies,
   requestStatus,
   pendingStatus
 }) => {
   const hostel = new Schema(
     {
+      userId: {
+        type: ObjectId,
+        ref: 'User'
+      },
       name: {
         type: String,
         minlength: 2,
@@ -26,19 +31,16 @@ module.exports = ({
       },
       phone: {
         type: String,
-        unique: true,
         trim: true,
         required: true
       },
       email: {
         type: String,
-        unique: true,
         trim: true,
         required: true
       },
       managerEmail: {
         type: String,
-        unique: true,
         trim: true,
         required: true
       },
@@ -52,9 +54,10 @@ module.exports = ({
         type: String,
         required: true
       },
-      userId: {
-        type: ObjectId,
-        ref: 'User'
+      currency: {
+        type: String,
+        enum: currencies,
+        required: true
       },
       address: {
         type: new Schema(
@@ -80,7 +83,7 @@ module.exports = ({
               required: true
             },
             apartmentNumber: {
-              type: String,
+              type: Number,
               required: true
             },
             floorNumber: {
@@ -149,7 +152,7 @@ module.exports = ({
           Type: {
             type: String,
             required: true,
-            default: roomsTypes
+            enum: roomsTypes
           },
           totalRooms: {
             type: Number,
@@ -164,40 +167,14 @@ module.exports = ({
             required: true
           },
           pricePerPerson: {
-            type: new Schema(
-              {
-                price: {
-                  type: Number,
-                  required: true
-                },
-                per: {
-                  type: String,
-                  required: true,
-                  enum: pricePer
-                }
-              },
-              {
-                _id: false
-              }
-            ),
+            type: Number,
             required: true
           },
-          availability: [
-            new Schema({
-              totalNumber: {
-                type: Number,
-                required: true
-              },
-              busyFrom: {
-                type: Date,
-                required: true
-              },
-              busyTo: {
-                type: Date,
-                required: true
-              }
-            })
-          ],
+          pricePer: {
+            type: String,
+            required: true,
+            enum: pricePer
+          },
           isArchived: {
             type: Boolean,
             default: false
@@ -236,9 +213,17 @@ module.exports = ({
         type: String,
         default: ''
       },
+      totalOnlineBooking: {
+        type: Number,
+        default: 0
+      },
       totalRevenue: {
         type: Number,
         default: 0
+      },
+      isHidden: {
+        type: Boolean,
+        default: false
       },
       isArchived: {
         type: Boolean,

@@ -83,7 +83,7 @@ module.exports = ({
     if (!isValid) error[key] = errors;
     if (
       key === 'job.description' &&
-      ele.value == '' &&
+      ele.value === '' &&
       body.job &&
       body.job.type &&
       body.job.type !== 'renter'

@@ -8,15 +8,22 @@
 const logger = require('../../../startup/logger');
 const { ApplicationError } = require('../../../shared/errors');
 
-const makeUpdateIdentification = require('./update-identification');
+const makeGetUserHostels = require('./get-user-hostels');
+const makeUpdateHostelStatus = require('./update-hostel-status');
 
-const updateIdentification = makeUpdateIdentification({
+const getUserHostels = makeGetUserHostels({
+  ApplicationError,
+  logger
+});
+
+const updateHostelStatus = makeUpdateHostelStatus({
   ApplicationError,
   logger
 });
 
 const HostelsExternalService = Object.freeze({
-  updateIdentification
+  getUserHostels,
+  updateHostelStatus
 });
 
 module.exports = HostelsExternalService;

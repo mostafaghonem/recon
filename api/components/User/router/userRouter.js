@@ -8,7 +8,8 @@ const {
   changePasswordValidation,
   updateProfile,
   updatePhone,
-  getHouseOwnerInfo
+  getHouseOwnerInfo,
+  getUploadedHostels
 } = require('../validations');
 
 const router = express.Router();
@@ -163,6 +164,19 @@ router.get(
     authorizeMiddleware([PERMISSIONS.RENTER, PERMISSIONS.ADMIN])
   ],
   controllers.getHouseOwnerInfoWithCi
+);
+
+// @route
+// @ GET api/users/uploaded/hostels
+// !access  anonymous
+router.get(
+  '/uploaded/hostels',
+  [
+    validateMiddleware(getUploadedHostels),
+    authenticateMiddleware,
+    authorizeMiddleware([PERMISSIONS.HOUSE_OWNER])
+  ],
+  controllers.getUploadedHostels
 );
 
 module.exports = router;
