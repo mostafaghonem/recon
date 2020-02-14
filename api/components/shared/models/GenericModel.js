@@ -98,6 +98,14 @@ module.exports = class GenericModel {
     }).lean();
   }
 
+  update(params = { filter: {}, update: {} }) {
+    const { filter, update } = params;
+    return this.DbAccess.update(filter, update, {
+      runValidators: true,
+      new: true
+    }).lean();
+  }
+
   deleteOneById(params = { id: {} }) {
     const { id } = params;
     return this.DbAccess.findByIdAndDelete(id).lean();

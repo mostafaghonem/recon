@@ -100,7 +100,7 @@ module.exports = ({
     const ele = scheme[key];
     const { errors, isValid } = ValidatorHelper(ele.value, ele.rules);
     if (!isValid) error[key] = errors;
-    if (key === 'hostelId' && key.value && !ObjectId.isValid(ele.value))
+    if (key === 'hostelId' && ele.value && !ObjectId.isValid(ele.value))
       error[key] = ['hostelId should be a valid ObjectId'];
   });
 

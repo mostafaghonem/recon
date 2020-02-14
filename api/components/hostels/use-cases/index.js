@@ -6,12 +6,18 @@
 
 const logger = require('../../../startup/logger');
 const { ApplicationError } = require('../../../shared/errors');
+const { REQUEST_RESPONSE } = require('../../../shared/constants/defaults');
 
 const makeAddHostel = require('./add-hostel');
 const makeAddHostelRooms = require('./add-hostel-rooms');
 const makeHideHostel = require('./hide-hostel');
 const makeUnhideHostel = require('./unhide-hostel');
 const makeDeleteHostel = require('./delete-hostel');
+const makeGetHostels = require('./get-hostels');
+const makeEditHostel = require('./edit-hostel');
+const makeEditHostelAvailability = require('./edit-hostel-availability');
+const makeGetHostel = require('./get-hostel');
+const makeRateHostel = require('./rate-hostel');
 const {
   addUploadedHostelsRequests
 } = require('../../uploadedHostelsRequests/uploadedHostelsRequests-external-use-cases');
@@ -42,12 +48,43 @@ const deleteHostel = makeDeleteHostel({
   logger
 });
 
+const getHostels = makeGetHostels({
+  ApplicationError,
+  logger,
+  accepted: REQUEST_RESPONSE.ACCEPTED
+});
+
+const editHostel = makeEditHostel({
+  ApplicationError,
+  logger
+});
+
+const editHostelAvailability = makeEditHostelAvailability({
+  ApplicationError,
+  logger
+});
+
+const getHostel = makeGetHostel({
+  ApplicationError,
+  logger
+});
+
+const rateHostel = makeRateHostel({
+  ApplicationError,
+  logger
+});
+
 const hostelsUseCases = {
   addHostel,
   addHostelRooms,
   hideHostel,
   unhideHostel,
-  deleteHostel
+  deleteHostel,
+  getHostels,
+  editHostel,
+  editHostelAvailability,
+  getHostel,
+  rateHostel
 };
 
 module.exports = hostelsUseCases;

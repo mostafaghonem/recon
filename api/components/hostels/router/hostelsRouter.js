@@ -4,7 +4,12 @@ const {
   addHostelRoomsValidation,
   hideHostelValidation,
   unhideHostelValidation,
-  deleteHostelValidation
+  deleteHostelValidation,
+  getHostels,
+  getHostel,
+  editHostel,
+  editHostelAvailability,
+  rateHostel
 } = require('../validations');
 
 const router = express.Router();
@@ -67,6 +72,36 @@ router.delete(
     authorizeMiddleware([PERMISSIONS.HOUSE_OWNER])
   ],
   controllers.deleteHostel
+);
+
+router.get(
+  '/',
+  [
+    validateMiddleware(getHostels),
+    authenticateMiddleware,
+    authorizeMiddleware([PERMISSIONS.RENTER])
+  ],
+  controllers.getHostels
+);
+
+router.get(
+  '/:id',
+  [
+    validateMiddleware(getHostel),
+    authenticateMiddleware,
+    authorizeMiddleware([PERMISSIONS.RENTER])
+  ],
+  controllers.getHostel
+);
+
+router.post(
+  '/rate',
+  [
+    validateMiddleware(rateHostel),
+    authenticateMiddleware,
+    authorizeMiddleware([PERMISSIONS.RENTER])
+  ],
+  controllers.ratehostel
 );
 
 module.exports = router;

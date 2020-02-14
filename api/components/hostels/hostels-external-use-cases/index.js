@@ -10,6 +10,7 @@ const { ApplicationError } = require('../../../shared/errors');
 
 const makeGetUserHostels = require('./get-user-hostels');
 const makeUpdateHostelStatus = require('./update-hostel-status');
+const makeGetHouseOwnerHostel = require('./get-houseOwner-hostel');
 
 const getUserHostels = makeGetUserHostels({
   ApplicationError,
@@ -21,9 +22,15 @@ const updateHostelStatus = makeUpdateHostelStatus({
   logger
 });
 
+const getHouseOwnerHostel = makeGetHouseOwnerHostel({
+  ApplicationError,
+  logger
+});
+
 const HostelsExternalService = Object.freeze({
   getUserHostels,
-  updateHostelStatus
+  updateHostelStatus,
+  getHouseOwnerHostel
 });
 
 module.exports = HostelsExternalService;

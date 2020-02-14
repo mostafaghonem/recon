@@ -20,6 +20,7 @@ const makeUpdateProfileValidation = require('./update-profile');
 const makeUpdatePhoneValidation = require('./update-phone');
 const makeGetHouseOwnerInfoValidation = require('./houseOwner-info');
 const makeGetUploadedHostelsValidation = require('./get-uploaded-hostels');
+const makeGetUploadedHostelDetailsValidation = require('./get-uploaded-hostel-details');
 
 module.exports.userRegisterValidation = makeUserRegisterValidation({
   _,
@@ -91,3 +92,12 @@ module.exports.getUploadedHostels = makeGetUploadedHostelsValidation({
   ObjectId,
   requestStatus
 });
+
+module.exports.getUploadedHostelDetails = makeGetUploadedHostelDetailsValidation(
+  {
+    _,
+    Builder,
+    ValidatorHelper,
+    ObjectId
+  }
+);
