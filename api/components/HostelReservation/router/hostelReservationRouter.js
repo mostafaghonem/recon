@@ -1,6 +1,7 @@
 const express = require('express');
 
-const { Working } = require('../validations');
+const { Working, reserveValidations } = require('../validations');
+const authenticateMiddleware = require('../../../middlewares/authenticateMiddleware');
 
 const router = express.Router();
 
@@ -10,6 +11,19 @@ const controllers = require('../controllers');
 // @route
 // @ GET api/hostel-reservation
 // !access  anonymous
-router.get('/', [validateMiddleware(Working)], controllers.Working);
+router.get(
+  '/',
+  [authenticateMiddleware, validateMiddleware(Working)],
+  controllers.Working
+);
+
+// @route
+// @ GET api/hostel-reservation
+// !access  anonymous
+router.post(
+  '/',
+  [authenticateMiddleware, validateMiddleware(reserveValidations)],
+  controllers.reserve
+);
 
 module.exports = router;

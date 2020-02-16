@@ -32,6 +32,21 @@ const buildHostelReservationEntity = ({ ObjectId }) => {
         update: this.updateObj
       });
     }
+
+    TO_JSON() {
+      return {
+        id: this.id,
+        renterId: this.renterId,
+        hostelId: this.hostelId,
+        fromts: this.fromts,
+        tots: this.tots,
+        totalPrice: this.totalPrice,
+        shouldPayPrice: this.shouldPayPrice,
+        reserveDatets: this.reserveDatets,
+        totalReservedCount: this.totalReservedCount,
+        rooms: this.rooms
+      };
+    }
   }
 
   return HostelReservation;
@@ -51,7 +66,7 @@ const hostelReservationSchema = {
   totalReservedCount: Number,
   rooms: [
     {
-      roomId: String,
+      groupId: String,
       roomType: String,
       roomName: String,
       pricePerRoom: Number,

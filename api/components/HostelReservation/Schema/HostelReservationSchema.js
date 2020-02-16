@@ -52,7 +52,7 @@ module.exports = (
         type: [
           new Schema(
             {
-              roomId: {
+              groupId: {
                 type: ObjectId,
                 required: true
               },

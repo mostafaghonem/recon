@@ -8,22 +8,15 @@
 const logger = require('../../../startup/logger');
 const { ApplicationError } = require('../../../shared/errors');
 
-const makeGetReservedRoomsByHotel = require('./get-reserved-rooms-by-hotel');
-const makeGetReservedRoomCountByHotel = require('./get-reserved-rooms-by-hotel');
+const makeGetReservedRoomCountByHotel = require('./get-reserved-room-count-by-hotel');
 
-const getReservedRoomsByHotel = makeGetReservedRoomsByHotel({
-  ApplicationError,
-  logger
-});
-
-const getReservedRoomCountByHotel = makeGetReservedRoomCountByHotel({
+const getReservedRoomCountByHotels = makeGetReservedRoomCountByHotel({
   ApplicationError,
   logger
 });
 
 const HostelReservationExternals = Object.freeze({
-  getReservedRoomsByHotel,
-  getReservedRoomCountByHotel
+  getReservedRoomCountByHotels
 });
 
 module.exports = HostelReservationExternals;
