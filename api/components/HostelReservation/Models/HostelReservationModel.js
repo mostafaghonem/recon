@@ -59,6 +59,10 @@ module.exports = ({ GenericModel = _GenericModel }) => {
                 {
                   fromts: { $lte: endDatets },
                   tots: { $gte: endDatets }
+                },
+                {
+                  fromts: { $gte: startDatets },
+                  tots: { $lte: endDatets }
                 }
               ]
             }
