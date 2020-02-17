@@ -39,5 +39,11 @@ module.exports = {
     PAYED: 'payed',
     RECEIVED: 'received',
     REFUSED: 'refused'
+  },
+  UnitState: {
+    SEND: 'send',
+    ACCEPT_BY_ADMIN: 'accept_by_admin',
+    PENDING_UPDATE: 'pending_update',
+    REFUSED: 'refused'
   }
 };
