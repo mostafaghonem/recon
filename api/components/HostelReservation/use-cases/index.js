@@ -10,7 +10,7 @@ module.exports.ReserveUC = makeReserveUC({
   logger,
   redis: redisClient,
   uuid,
-  calculateReservationCost: async ({
+  checkAndCalculateReservationCost: async ({
     renterId,
     hostelId,
     fromts,
@@ -19,7 +19,7 @@ module.exports.ReserveUC = makeReserveUC({
     rooms
   }) => {
     logger.info(
-      `calculateReservationCost called with args ${JSON.stringify(
+      `checkAndCalculateReservationCost called with args ${JSON.stringify(
         {
           renterId,
           hostelId,

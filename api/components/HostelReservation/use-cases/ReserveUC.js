@@ -10,7 +10,7 @@ module.exports = ({
   redis,
   ApplicationError,
   logger,
-  calculateReservationCost,
+  checkAndCalculateReservationCost,
   uuid,
   processPayment
 }) => async ({
@@ -25,7 +25,7 @@ module.exports = ({
   reserveDatets = new Date().getTime()
 }) => {
   // ! we must use this service to make sure that shouldPayPrice is correct
-  const reservationCost = await calculateReservationCost({
+  const reservationCost = await checkAndCalculateReservationCost({
     renterId,
     hostelId,
     fromts,
