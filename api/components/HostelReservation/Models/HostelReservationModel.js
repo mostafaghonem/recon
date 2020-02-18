@@ -3,6 +3,44 @@ const _GenericModel = require('../../shared/models/GenericModel');
 
 module.exports = ({ GenericModel = _GenericModel }) => {
   class HostelReservationModel extends GenericModel {
+    async getReservationsWithStatusForUsers(users, status, skip, limit) {
+      let query;
+      const nowts = new Date().getTime();
+
+      switch (status) {
+        case 'active':
+          query = {
+            fromts: { $lte: nowts },
+            tots: { $gte: nowts }
+          };
+          break;
+        case 'waiting':
+          query = {
+            fromts: { $gt: nowts }
+          };
+          break;
+        case 'done':
+          query = {
+            tots: { $lte: nowts }
+          };
+          break;
+
+        default:
+          query = {};
+          break;
+      }
+      if (users) {
+        query = { ...query, renterId: { $in: users } };
+      }
+      // ! .lean() doesn't work with select
+      const dbRet = await this.getMany({ skip: +skip, limit, query });
+      return dbRet.map(r => ({
+        ...r,
+        renterId: r.renterId.toString(),
+        hostelId: r.hostelId.toString()
+      }));
+    }
+
     getReservationsForHostelByDateRange(
       data = {
         hostelId: String,

@@ -1,6 +1,6 @@
 const express = require('express');
 
-const { Working, reserveValidations } = require('../validations');
+const { adminViewValidation, reserveValidations } = require('../validations');
 const authenticateMiddleware = require('../../../middlewares/authenticateMiddleware');
 
 const router = express.Router();
@@ -10,16 +10,16 @@ const controllers = require('../controllers');
 
 // @route
 // @ GET api/hostel-reservation
-// !access  anonymous
+// !access  ADMIN
 router.get(
-  '/',
-  [authenticateMiddleware, validateMiddleware(Working)],
-  controllers.Working
+  '/admin-view',
+  [authenticateMiddleware, validateMiddleware(adminViewValidation)],
+  controllers.adminView
 );
 
 // @route
-// @ GET api/hostel-reservation
-// !access  anonymous
+// @ POST api/hostel-reservation
+// !access  renter
 router.post(
   '/',
   [authenticateMiddleware, validateMiddleware(reserveValidations)],
