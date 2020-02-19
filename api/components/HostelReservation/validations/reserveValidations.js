@@ -3,6 +3,9 @@ const { Builder: ___, ValidatorHelper: __ } = require('validation-helpers');
 module.exports = ({ _, Builder = ___, ValidatorHelper = __ }) => ({ body }) => {
   const error = {};
 
+  const start = new Date();
+  start.setHours(0, 0, 0, 0);
+
   const scheme = {
     hostelId: {
       value: body.hostelId,
@@ -13,7 +16,7 @@ module.exports = ({ _, Builder = ___, ValidatorHelper = __ }) => ({ body }) => {
       rules: new Builder()
         .required()
         .isNumber()
-        .min(86399900).rules
+        .min(start.getTime() - 1).rules
     },
     tots: {
       value: body.tots,

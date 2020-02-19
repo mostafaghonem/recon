@@ -5,6 +5,7 @@ const { ApplicationError } = require('../../../shared/errors');
 
 const makeReserveUC = require('./ReserveUC');
 const makeAdminViewUC = require('./AdminViewUC');
+const makeRenterViewUC = require('./RenterViewUC');
 const makeHostelViewUC = require('./HostelViewUC');
 const {
   checkAndCalculateReservationCost,
@@ -23,6 +24,13 @@ module.exports.ReserveUC = makeReserveUC({
 });
 
 module.exports.AdminViewUC = makeAdminViewUC({
+  ApplicationError,
+  logger,
+  getRenterDataWithPhoneSearch,
+  getHostelsDataFromIds
+});
+
+module.exports.RenterViewUC = makeRenterViewUC({
   ApplicationError,
   logger,
   getRenterDataWithPhoneSearch,
