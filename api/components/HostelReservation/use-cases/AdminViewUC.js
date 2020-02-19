@@ -10,10 +10,13 @@ module.exports = ({
   logger,
   getHostelsDataFromIds,
   getRenterDataWithPhoneSearch
-}) => async ({ phone, status, skip = 0, limit = 20 }) => {
+}) => async ({ phone, status, skip: _skip = 0, limit: _limit = 20 }) => {
   let userDataMap;
   let hostelsDataMap;
   let reservationDb;
+
+  const skip = +_skip;
+  const limit = +_limit;
 
   // ! phone search approach
   if (phone) {
@@ -25,7 +28,7 @@ module.exports = ({
       Object.keys(userDataMap),
       status,
       skip,
-      limit
+      limit + 1
     );
 
     // # get the unique hostelIds and renterIds from the data returned from db
@@ -41,11 +44,10 @@ module.exports = ({
   // ! reservation first approach
   else {
     // # get the reservations by pagination
-    reservationDb = await Models.getReservationsWithStatusForUsers(
-      null,
+    reservationDb = await Models.getReservationsWithStatus(
       status,
       skip,
-      limit
+      limit + 1
     );
 
     // # get the unique hostelIds and renterIds from the data returned from db
@@ -79,5 +81,19 @@ module.exports = ({
 
   logger.info(`Getting hostelReservation report on adminView`);
 
-  return reservationDb;
+  let nextSkip = 0;
+
+  const hasNext = reservationDb.length === limit + 1;
+
+  if (hasNext) {
+    reservationDb = reservationDb.slice(0, limit);
+    nextSkip = skip + limit;
+  }
+
+  return {
+    result: reservationDb,
+    nextSkip,
+    hasNext,
+    resultLength: reservationDb.length
+  };
 };

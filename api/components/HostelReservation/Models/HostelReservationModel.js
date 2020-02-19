@@ -1,39 +1,70 @@
 const HostelReservationSchema = require('../Schema');
 const _GenericModel = require('../../shared/models/GenericModel');
 
+const getQueryFromStatus = status => {
+  let query;
+  const nowts = new Date().getTime();
+
+  switch (status) {
+    case 'active':
+      query = {
+        fromts: { $lte: nowts },
+        tots: { $gte: nowts }
+      };
+      break;
+    case 'waiting':
+      query = {
+        fromts: { $gt: nowts }
+      };
+      break;
+    case 'done':
+      query = {
+        tots: { $lte: nowts }
+      };
+      break;
+
+    default:
+      query = {};
+      break;
+  }
+
+  return query;
+};
+
 module.exports = ({ GenericModel = _GenericModel }) => {
   class HostelReservationModel extends GenericModel {
-    async getReservationsWithStatusForUsers(users, status, skip, limit) {
-      let query;
-      const nowts = new Date().getTime();
+    async getReservationsWithStatus(status, skip, limit) {
+      const query = getQueryFromStatus(status);
+      return this.getManyWithMapping(skip, limit, query);
+    }
 
-      switch (status) {
-        case 'active':
-          query = {
-            fromts: { $lte: nowts },
-            tots: { $gte: nowts }
-          };
-          break;
-        case 'waiting':
-          query = {
-            fromts: { $gt: nowts }
-          };
-          break;
-        case 'done':
-          query = {
-            tots: { $lte: nowts }
-          };
-          break;
+    async getHostelReservationsWithStatus(hostelId, status, skip, limit) {
+      let query = getQueryFromStatus(status);
+      query = { ...query, hostelId };
+      return this.getManyWithMapping(skip, limit, query);
+    }
 
-        default:
-          query = {};
-          break;
-      }
-      if (users) {
-        query = { ...query, renterId: { $in: users } };
-      }
+    getReservationsWithStatusForUsers(users, status, skip, limit) {
+      let query = getQueryFromStatus(status);
+      query = { ...query, renterId: { $in: users } };
+      return this.getManyWithMapping(skip, limit, query);
+    }
+
+    getHostelReservationsWithStatusForUsers(
+      hostelId,
+      users,
+      status,
+      skip,
+      limit
+    ) {
+      let query = getQueryFromStatus(status);
+      query = { ...query, renterId: { $in: users }, hostelId };
+      return this.getManyWithMapping(skip, limit, query);
+    }
+
+    async getManyWithMapping(skip, limit, query) {
       // ! .lean() doesn't work with select
-      const dbRet = await this.getMany({ skip: +skip, limit, query });
+      const dbRet = await this.getMany({ skip, limit, query });
       return dbRet.map(r => ({
         ...r,
         renterId: r.renterId.toString(),

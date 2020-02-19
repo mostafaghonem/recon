@@ -18,7 +18,11 @@ module.exports = ({ _, Builder = ___, ValidatorHelper = __ }) => ({
     },
     skip: {
       value: query.skip,
-      rules: new Builder().isNumber().rules
+      rules: new Builder().isNumber().min(0).rules
+    },
+    limit: {
+      value: query.limit,
+      rules: new Builder().isNumber().min(1).rules
     }
   };
 
