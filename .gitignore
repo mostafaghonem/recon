@@ -5,3 +5,4 @@ mongo-volume/
 
 package-lock.json
 *.env
+tmp.json

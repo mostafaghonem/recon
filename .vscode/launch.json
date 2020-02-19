@@ -7,11 +7,20 @@
     {
       "type": "node",
       "request": "launch",
-      "name": "Launch Program",
-      "skipFiles": ["<node_internals>/**"],
+      "name": "nodemon",
+      "runtimeExecutable": "nodemon",
       "program": "${workspaceFolder}/bin/www",
-      "env": { "NODE_ENV": "local", "PORT": "7070" },
-      "outputCapture": "std"
+      "restart": true,
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen",
+      "env": {
+        "NODE_ENV": "local",
+        "PORT": "7070"
+      },
+      "outputCapture": "std",
+      "skipFiles": [
+        "<node_internals>/**"
+      ]
     }
   ]
 }
