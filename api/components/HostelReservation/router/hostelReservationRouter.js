@@ -1,6 +1,10 @@
 const express = require('express');
 
-const { adminViewValidation, reserveValidations } = require('../validations');
+const {
+  hostelViewValidation,
+  adminViewValidation,
+  reserveValidations
+} = require('../validations');
 const authenticateMiddleware = require('../../../middlewares/authenticateMiddleware');
 
 const router = express.Router();
@@ -15,6 +19,15 @@ router.get(
   '/admin-view',
   [authenticateMiddleware, validateMiddleware(adminViewValidation)],
   controllers.adminView
+);
+
+// @route
+// @ GET api/hostel-reservation
+// !access  HOUSE_OWNER
+router.get(
+  '/hostel-view',
+  [authenticateMiddleware, validateMiddleware(hostelViewValidation)],
+  controllers.hostelView
 );
 
 // @route
