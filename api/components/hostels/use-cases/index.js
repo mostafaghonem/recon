@@ -8,6 +8,9 @@ const logger = require('../../../startup/logger');
 const { ApplicationError } = require('../../../shared/errors');
 const { REQUEST_RESPONSE } = require('../../../shared/constants/defaults');
 const { ROOMS_STATUS } = require('../../../shared/constants/defaults');
+const {
+  getReservedRoomCountByHotels
+} = require('../../HostelReservation/hostel-reservation-external-use-cases');
 
 const makeAddHostel = require('./add-hostel');
 const makeAddHostelRooms = require('./add-hostel-rooms');
@@ -53,6 +56,7 @@ const deleteHostel = makeDeleteHostel({
 const getHostels = makeGetHostels({
   ApplicationError,
   logger,
+  getReservedRoomCountByHotels,
   accepted: REQUEST_RESPONSE.ACCEPTED
 });
 
@@ -69,6 +73,7 @@ const editHostelRooms = makeEditHostelRooms({
 const editHostelAvailability = makeEditHostelAvailability({
   ApplicationError,
   logger,
+  getReservedRoomCountByHotels,
   roomsStatus: ROOMS_STATUS
 });
 
