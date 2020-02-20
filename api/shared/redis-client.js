@@ -10,6 +10,7 @@ const client = redis.createClient({
 module.exports = {
   ...client,
   getAsync: promisify(client.get).bind(client),
-  setexAsync: promisify(client.setex).bind(client)
+  setexAsync: promisify(client.setex).bind(client),
+  deleteAsync: promisify(client.DEL).bind(client)
   // keysAsync: promisify(client.keys).bind(client)
 };

@@ -31,7 +31,10 @@ const makeFacebookLogin = require('./facebookLogin');
 const makeSmsVerifications = require('./sms-verifications');
 const makeforgetPassword = require('./forget-password');
 const makeConfirmForgetPassword = require('./confirm-forget-password');
+const makeConfirmUpdatePassword = require('./confirm-update-password');
 const makeChangePassword = require('./change-password');
+const makeUpdatePasswordCode = require('./update-password-code');
+const makeUpdateUserPassword = require('./update-user-password');
 const makeGetUserProfile = require('./get-profile');
 const makeUpdateUserProfile = require('./update-profile');
 const makeUpdateUserPhone = require('./update-phone');
@@ -67,7 +70,26 @@ const confirmForgetPassword = makeConfirmForgetPassword({
   redis: redisClient
 });
 
+const confirmUpdatePassword = makeConfirmUpdatePassword({
+  ApplicationError,
+  logger,
+  redis: redisClient
+});
+
 const changePassword = makeChangePassword({
+  ApplicationError,
+  logger,
+  redis: redisClient
+});
+
+const updatePasswordCode = makeUpdatePasswordCode({
+  ApplicationError,
+  logger,
+  redis: redisClient,
+  smsService
+});
+
+const updateUserPassword = makeUpdateUserPassword({
   ApplicationError,
   logger,
   redis: redisClient
@@ -155,6 +177,7 @@ const userUseCases = {
   verifyPhone,
   forgetPassword,
   confirmForgetPassword,
+  confirmUpdatePassword,
   getUserProfile,
   getHouseOwnerInfo,
   updateUserProfile,
@@ -163,7 +186,9 @@ const userUseCases = {
   phoneUpdateVerification,
   updateUserPhone,
   updateIdentification,
-  changePassword
+  changePassword,
+  updatePasswordCode,
+  updateUserPassword
 };
 
 module.exports = userUseCases;

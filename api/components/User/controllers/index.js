@@ -3,7 +3,10 @@ const makeUserLoginCtrl = require('./user-login');
 const makePhoneVerification = require('./sms-verification');
 const makeForgetPassword = require('./forget-password');
 const makeConfirmForgetPassword = require('./confirm-forget-password');
+const makeConfirmUpdatePassword = require('./confirm-update-password');
 const makeChangePassword = require('./change-password');
+const makeUpdateUserPassword = require('./update-user-password');
+const makeUpdatePasswordCode = require('./update-password-code');
 const makeGetUserProfile = require('./get-profile');
 const makeUpdateUserProfile = require('./update-profile');
 const makeUpdatePhone = require('./update-phone');
@@ -30,8 +33,11 @@ const registerUser = makeUserRegisterCtrl({});
 const loginUser = makeUserLoginCtrl({});
 const verifyPhone = makePhoneVerification({});
 const forgetPassword = makeForgetPassword({});
-const confirnForgetPassword = makeConfirmForgetPassword({});
+const confirmForgetPassword = makeConfirmForgetPassword({});
+const confirmUpdatePassword = makeConfirmUpdatePassword({});
 const changePassword = makeChangePassword({});
+const updatePasswordCode = makeUpdatePasswordCode({});
+const updateUserPassword = makeUpdateUserPassword({});
 const getUserProfile = makeGetUserProfile({});
 const updateUserProfile = makeUpdateUserProfile({});
 const updatePhone = makeUpdatePhone({});
@@ -47,8 +53,11 @@ const userCtrl = Object.freeze({
   verifyPhone,
   forgetPassword,
   updatePhone,
-  confirnForgetPassword,
+  confirmForgetPassword,
+  confirmUpdatePassword,
   changePassword,
+  updatePasswordCode,
+  updateUserPassword,
   getUserProfile,
   updateUserProfile,
   phoneUpdateVerification,

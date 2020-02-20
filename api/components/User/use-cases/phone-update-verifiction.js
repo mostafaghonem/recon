@@ -21,6 +21,8 @@ module.exports = ({ redis, ApplicationError, logger, smsService }) => async (
 
     if (isDuplicate && String(isDuplicate._id) !== String(user._id))
       throw new ApplicationError('هذا الرقم موجود بالفعل', 400);
+    else if (isDuplicate && String(isDuplicate._id) === String(user._id))
+      throw new ApplicationError('انت لا تحتاج لتفعيل هذا الرقم', 400);
 
     const checkExistence = await redis.getAsync(`${userPhone}-phone-update`);
     if (!checkExistence) {

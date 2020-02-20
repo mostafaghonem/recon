@@ -4,15 +4,46 @@ const model = require('../models');
 
 // should have no implementation for any specific orm
 
-module.exports = ({ ApplicationError, logger }) => async id => {
-  const filter = { _id: id, isArchived: false };
+module.exports = ({ ApplicationError, logger }) => async ({
+  userId,
+  hostelId,
+  name,
+  phone,
+  email,
+  managerEmail,
+  description,
+  image,
+  currency,
+  address,
+  freeServices,
+  generalServices,
+  hostelServices,
+  entertainmentServices,
+  foodServices
+}) => {
+  const filter = { _id: hostelId, userId, isArchived: false };
   const checkExistence = await model.exists({ filter });
   if (!checkExistence)
     throw new ApplicationError('.نأسف ، لا يمكننا العثور على هذا الفندق', 403);
   const update = {
-    isHidden: true
+    name,
+    phone,
+    email,
+    managerEmail,
+    description,
+    image,
+    currency,
+    address,
+    freeServices,
+    generalServices,
+    hostelServices,
+    entertainmentServices,
+    foodServices
   };
-  await model.updateOneById({ id, update });
+  await model.updateOneById({
+    id: hostelId,
+    update
+  });
 
-  logger.info(`${id} Hostel is hidden now`);
+  logger.info(`${hostelId} Hostel updated Successfully`);
 };

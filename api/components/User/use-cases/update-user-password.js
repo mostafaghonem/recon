@@ -1,23 +1,37 @@
 //! only require Entity/model
 const { UserEntity } = require('../Entity');
+const Models = require('../models');
 
 // should have no implementation for any specific orm
 module.exports = ({ ApplicationError, logger, redis }) => async ({
-  phone,
+  userId,
   password,
   code
 }) => {
-  const user = await UserEntity.loadEntityFromDbByPhone(phone);
+  const query = {
+    _id: userId,
+    isArchived: false
+  };
+  const select = 'phone';
+  const checkUser = await Models.getOne({
+    query,
+    select
+  });
+  const user = await UserEntity.loadEntityFromDbById(userId);
   if (user) {
-    const checkExistence = await redis.getAsync(`${phone}-RecoveryCode`);
+    const checkExistence = await redis.getAsync(
+      `${checkUser.phone}-changePassword`
+    );
     if (checkExistence) {
       if (Number(checkExistence) !== Number(code))
         throw new ApplicationError('Invalid Verfification Code', 400);
       user.setPassword(password);
       await user.save();
-      await redis.deleteAsync(`${phone}-RecoveryCode`);
+      await redis.deleteAsync(`${checkUser.phone}-changePassword`);
 
-      logger.info(`"${phone}" just changed his password successfully`);
+      logger.info(
+        `"${checkUser.phone}" just changed his password successfully`
+      );
     } else
       throw new ApplicationError(
         'You should get Verification Code first or again',

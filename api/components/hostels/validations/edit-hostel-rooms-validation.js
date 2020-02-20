@@ -16,6 +16,10 @@ module.exports = ({
       value: body.hostelId,
       rules: new Builder().required().rules
     },
+    groupId: {
+      value: body.groupId,
+      rules: new Builder().required().rules
+    },
     name: {
       value: body.name,
       rules: new Builder()
@@ -102,6 +106,8 @@ module.exports = ({
     if (!isValid) error[key] = errors;
     if (key === 'hostelId' && ele.value && !ObjectId.isValid(ele.value))
       error[key] = ['hostelId should be a valid ObjectId'];
+    if (key === 'groupId' && ele.value && !ObjectId.isValid(ele.value))
+      error[key] = ['groupId should be a valid ObjectId'];
   });
 
   return {

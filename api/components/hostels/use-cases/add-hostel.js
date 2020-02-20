@@ -66,4 +66,5 @@ module.exports = ({
       6
     )}`
   );
+  return newHostel.id;
 };

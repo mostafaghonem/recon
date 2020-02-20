@@ -4,12 +4,12 @@ const model = require('../models');
 
 // should have no implementation for any specific orm
 
-module.exports = ({ ApplicationError, logger }) => async ({
+module.exports = ({ ApplicationError, logger, accepted }) => async ({
   userId,
   hostelId,
   rate
 }) => {
-  const query = { _id: hostelId, isArchived: false };
+  const query = { _id: hostelId, status: accepted, isArchived: false };
   const select = 'totalRate totalUsersRated rates';
   const checkExistence = await model.getOne({ query, select });
   if (!checkExistence)

@@ -9,6 +9,7 @@ const makeUnhideHostelCtrl = require('./unhide-hostel');
 const makeDeleteHostelCtrl = require('./delete-hostel');
 const makeGetHostelsCtrl = require('./get-hostels');
 const makeEditHostelCtrl = require('./edit-hostel');
+const makeEditHostelRoomsCtrl = require('./edit-hostel-rooms');
 const makeEditHostelAvailabilityCtrl = require('./edit-hostel-availability');
 const makeGetHostelCtrl = require('./get-hostel');
 const makeRateHostelCtrl = require('./rate-hostel');
@@ -20,6 +21,7 @@ const unhideHostel = makeUnhideHostelCtrl({});
 const deleteHostel = makeDeleteHostelCtrl({});
 const getHostels = makeGetHostelsCtrl({ pagination });
 const editHostel = makeEditHostelCtrl({});
+const editHostelRooms = makeEditHostelRoomsCtrl({});
 const editHostelAvailability = makeEditHostelAvailabilityCtrl({});
 const getHostel = makeGetHostelCtrl({});
 const ratehostel = makeRateHostelCtrl({});
@@ -34,7 +36,8 @@ const hostelsCtrl = Object.freeze({
   editHostel,
   editHostelAvailability,
   getHostel,
-  ratehostel
+  ratehostel,
+  editHostelRooms
 });
 
 module.exports = hostelsCtrl;

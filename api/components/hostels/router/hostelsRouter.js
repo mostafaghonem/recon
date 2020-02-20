@@ -8,6 +8,7 @@ const {
   getHostels,
   getHostel,
   editHostel,
+  editHostelRooms,
   editHostelAvailability,
   rateHostel
 } = require('../validations');
@@ -102,6 +103,36 @@ router.post(
     authorizeMiddleware([PERMISSIONS.RENTER])
   ],
   controllers.ratehostel
+);
+
+router.put(
+  '/',
+  [
+    validateMiddleware(editHostel),
+    authenticateMiddleware,
+    authorizeMiddleware([PERMISSIONS.HOUSE_OWNER, PERMISSIONS.ADMIN])
+  ],
+  controllers.editHostel
+);
+
+router.put(
+  '/availability',
+  [
+    validateMiddleware(editHostelAvailability),
+    authenticateMiddleware,
+    authorizeMiddleware([PERMISSIONS.HOUSE_OWNER, PERMISSIONS.ADMIN])
+  ],
+  controllers.editHostelAvailability
+);
+
+router.put(
+  '/rooms',
+  [
+    validateMiddleware(editHostelRooms),
+    authenticateMiddleware,
+    authorizeMiddleware([PERMISSIONS.HOUSE_OWNER, PERMISSIONS.ADMIN])
+  ],
+  controllers.editHostelRooms
 );
 
 module.exports = router;

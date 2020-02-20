@@ -78,7 +78,7 @@ module.exports = {
     CARD_PHONES: 'card_phones',
     COTS_AVAILABLE: 'cots_available',
     ELEVATOR: 'elevator',
-    BAR: '',
+    BAR: 'bar',
     BICYCLE_PARKING: 'bicycle_parking',
     EXPRESS_CHECK_IN_OUT: 'express_check_in_out',
     FREE_CITY_TOUR: 'free_city_tour',
@@ -135,5 +135,9 @@ module.exports = {
   CURRENCIES: {
     LE: 'le',
     USD: 'usd'
+  },
+  ROOMS_STATUS: {
+    AVAILABLE: 'available',
+    BOOKED: 'booked'
   }
 };

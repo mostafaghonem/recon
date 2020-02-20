@@ -11,6 +11,7 @@ const makeUnhideHostelValidation = require('./unhide-hostel-validation');
 const makeDeleteHostelValidation = require('./delete-hostel-validation');
 const makeGetHostelsValidation = require('./get-hostels-validation');
 const makeEditHostelValidation = require('./edit-hostel-validation');
+const makeEditHostelRoomsValidation = require('./edit-hostel-rooms-validation');
 const makeEditHostelAvailabilityValidation = require('./edit-hostel-availability-validation');
 const makeGetHostelValidation = require('./get-hostel-validation');
 const makeRateHostelValidation = require('./rate-hostel-validation');
@@ -26,6 +27,7 @@ const entertainmentServices = Object.values(
 const foodServices = Object.values(defaultConstants.FOODSERVICES);
 const toiletTypes = Object.values(defaultConstants.TOILET_TYPES);
 const roomsTypes = Object.values(defaultConstants.ROOMS_TYPES);
+const roomsStatus = Object.values(defaultConstants.ROOMS_STATUS);
 const pricePer = Object.values(defaultConstants.PRICE_PER);
 const currencies = Object.values(defaultConstants.CURRENCIES);
 
@@ -89,14 +91,31 @@ module.exports.editHostel = makeEditHostelValidation({
   _,
   Builder,
   ValidatorHelper,
-  ObjectId
+  ObjectId,
+  currencies,
+  freeServices,
+  generalServices,
+  hostelServices,
+  entertainmentServices,
+  foodServices
+});
+
+module.exports.editHostelRooms = makeEditHostelRoomsValidation({
+  _,
+  Builder,
+  ValidatorHelper,
+  ObjectId,
+  toiletTypes,
+  roomsTypes,
+  pricePer
 });
 
 module.exports.editHostelAvailability = makeEditHostelAvailabilityValidation({
   _,
   Builder,
   ValidatorHelper,
-  ObjectId
+  ObjectId,
+  roomsStatus
 });
 
 module.exports.getHostel = makeGetHostelValidation({

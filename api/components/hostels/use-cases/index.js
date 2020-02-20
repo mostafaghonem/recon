@@ -7,6 +7,7 @@
 const logger = require('../../../startup/logger');
 const { ApplicationError } = require('../../../shared/errors');
 const { REQUEST_RESPONSE } = require('../../../shared/constants/defaults');
+const { ROOMS_STATUS } = require('../../../shared/constants/defaults');
 
 const makeAddHostel = require('./add-hostel');
 const makeAddHostelRooms = require('./add-hostel-rooms');
@@ -15,6 +16,7 @@ const makeUnhideHostel = require('./unhide-hostel');
 const makeDeleteHostel = require('./delete-hostel');
 const makeGetHostels = require('./get-hostels');
 const makeEditHostel = require('./edit-hostel');
+const makeEditHostelRooms = require('./edit-hostel-rooms');
 const makeEditHostelAvailability = require('./edit-hostel-availability');
 const makeGetHostel = require('./get-hostel');
 const makeRateHostel = require('./rate-hostel');
@@ -59,19 +61,27 @@ const editHostel = makeEditHostel({
   logger
 });
 
-const editHostelAvailability = makeEditHostelAvailability({
+const editHostelRooms = makeEditHostelRooms({
   ApplicationError,
   logger
+});
+
+const editHostelAvailability = makeEditHostelAvailability({
+  ApplicationError,
+  logger,
+  roomsStatus: ROOMS_STATUS
 });
 
 const getHostel = makeGetHostel({
   ApplicationError,
-  logger
+  logger,
+  accepted: REQUEST_RESPONSE.ACCEPTED
 });
 
 const rateHostel = makeRateHostel({
   ApplicationError,
-  logger
+  logger,
+  accepted: REQUEST_RESPONSE.ACCEPTED
 });
 
 const hostelsUseCases = {
@@ -82,6 +92,7 @@ const hostelsUseCases = {
   deleteHostel,
   getHostels,
   editHostel,
+  editHostelRooms,
   editHostelAvailability,
   getHostel,
   rateHostel

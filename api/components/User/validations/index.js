@@ -15,7 +15,9 @@ const makeUserLoginValidation = require('./user-login-validation');
 const makeUserPhoneVerificationValidation = require('./phone-verification-validation');
 const makeForgetPasswordValidation = require('./forget-password-validation');
 const makeConfirmForgetPasswordValidation = require('./confirm-forget-password-validation');
+const makeConfirmUpdatePasswordValidation = require('./confirm-update-password-validation');
 const makeChangePasswordValidation = require('./change-password');
+const makeUpdateUserPasswordValidation = require('./update-user-password');
 const makeUpdateProfileValidation = require('./update-profile');
 const makeUpdatePhoneValidation = require('./update-phone');
 const makeGetHouseOwnerInfoValidation = require('./houseOwner-info');
@@ -57,6 +59,20 @@ module.exports.changePasswordValidation = makeChangePasswordValidation({
 });
 
 module.exports.phoneVerificationValidation = makeUserPhoneVerificationValidation(
+  {
+    _,
+    Builder,
+    ValidatorHelper
+  }
+);
+
+module.exports.updateUserPasswordValidation = makeUpdateUserPasswordValidation({
+  _,
+  Builder,
+  ValidatorHelper
+});
+
+module.exports.confirmUpdatePasswordValidation = makeConfirmUpdatePasswordValidation(
   {
     _,
     Builder,
