@@ -88,6 +88,15 @@ module.exports = ({
 
   await newReservation.save();
 
+  redis.publish(
+    'hostel-reservation-complete-payment',
+    JSON.stringify({
+      hostelId: newReservation.hostelId,
+      totalOnlineBooking: 1,
+      totalRevenue: newReservation.shouldPayPrice
+    })
+  );
+
   // ! call Farid method after saving the reservation
 
   logger.info(
