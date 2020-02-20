@@ -4,13 +4,12 @@ const model = require('../models');
 
 // should have no implementation for any specific orm
 
-module.exports = ({ ApplicationError, logger, roomsStatus }) => async ({
-  userId,
-  hostelId,
-  groupId,
-  totalRooms,
-  status
-}) => {
+module.exports = ({
+  ApplicationError,
+  logger,
+  getReservedRoomCountByHotels,
+  roomsStatus
+}) => async ({ userId, hostelId, groupId, totalRooms, status }) => {
   const query = {
     _id: hostelId,
     userId,
