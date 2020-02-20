@@ -9,7 +9,8 @@ const { ApplicationError } = require('../../../shared/errors');
 const { REQUEST_RESPONSE } = require('../../../shared/constants/defaults');
 const { ROOMS_STATUS } = require('../../../shared/constants/defaults');
 const {
-  getReservedRoomCountByHotels
+  getReservedRoomCountByHotels,
+  isGroupBusyInDateTs
 } = require('../../HostelReservation/hostel-reservation-external-use-cases');
 
 const makeAddHostel = require('./add-hostel');
@@ -73,7 +74,7 @@ const editHostelRooms = makeEditHostelRooms({
 const editHostelAvailability = makeEditHostelAvailability({
   ApplicationError,
   logger,
-  getReservedRoomCountByHotels,
+  isGroupBusyInDateTs,
   roomsStatus: ROOMS_STATUS
 });
 
