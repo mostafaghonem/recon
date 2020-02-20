@@ -7,7 +7,7 @@ const model = require('../models');
 module.exports = ({
   ApplicationError,
   logger,
-  getReservedRoomCountByHotels,
+  isGroupBusyInDateTs,
   roomsStatus
 }) => async ({ userId, hostelId, groupId, totalRooms, status }) => {
   const query = {
@@ -24,8 +24,19 @@ module.exports = ({
       403
     );
 
-  // TODO call gamal service
-  const totalOnlineBookedRooms = 1;
+  let totalOnlineBookedRooms = 0;
+  const checkOnlineBookings = await isGroupBusyInDateTs(
+    [hostelId],
+    [groupId],
+    new Date().getTime()
+  );
+  if (checkOnlineBookings[0]) {
+    const checkGroup = checkOnlineBookings.filter(
+      group => String(group._id) === String(groupId)
+    );
+    if (checkGroup[0])
+      totalOnlineBookedRooms = Number(checkGroup[0].totalReservedCount) || 0;
+  }
   let totalAvailableRooms = 0;
   let allowedRoomsCount = 0;
   if (status === roomsStatus.AVAILABLE) {
