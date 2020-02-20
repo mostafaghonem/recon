@@ -121,7 +121,6 @@ module.exports = ({ GenericModel = _GenericModel }) => {
       });
     }
 
-    // ! This will return the groupId multiple times if it has multiple reservations with different periods in the period specified
     getReservationDetailsForHostelsByDateRangeAgg(
       data = {
         hostelsId: String,
