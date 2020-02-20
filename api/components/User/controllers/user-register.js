@@ -5,7 +5,7 @@ module.exports = () => {
     try {
       await registerUser({ ...req.body });
 
-      return res.status(200).json({ body: 'User created successfully!' });
+      return res.status(200).json({ message: 'User created successfully!' });
     } catch (e) {
       return next(e);
     }

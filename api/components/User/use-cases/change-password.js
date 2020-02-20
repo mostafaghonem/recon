@@ -15,6 +15,8 @@ module.exports = ({ ApplicationError, logger, redis }) => async ({
         throw new ApplicationError('Invalid Verfification Code', 400);
       user.setPassword(password);
       await user.save();
+      await redis.deleteAsync(`${phone}-RecoveryCode`);
+
       logger.info(`"${phone}" just changed his password successfully`);
     } else
       throw new ApplicationError(

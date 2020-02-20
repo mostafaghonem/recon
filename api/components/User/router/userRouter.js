@@ -5,10 +5,14 @@ const {
   phoneVerificationValidation,
   forgetPasswordValidation,
   confirmForgetPasswordValidation,
+  confirmUpdatePasswordValidation,
   changePasswordValidation,
+  updateUserPasswordValidation,
   updateProfile,
   updatePhone,
-  getHouseOwnerInfo
+  getHouseOwnerInfo,
+  getUploadedHostels,
+  getUploadedHostelDetails
 } = require('../validations');
 
 const router = express.Router();
@@ -73,22 +77,50 @@ router.put(
   controllers.updatePhone
 );
 
+// reset password
 router.post(
   '/password/forget',
   [validateMiddleware(forgetPasswordValidation)],
   controllers.forgetPassword
 );
-
 router.post(
   '/password/confirmForget',
   [validateMiddleware(confirmForgetPasswordValidation)],
-  controllers.confirnForgetPassword
+  controllers.confirmForgetPassword
 );
-
 router.put(
   '/password/change',
   [validateMiddleware(changePasswordValidation)],
   controllers.changePassword
+);
+
+// change password
+
+router.get(
+  '/password/edit/code',
+  [
+    authenticateMiddleware,
+    authorizeMiddleware([PERMISSIONS.RENTER, PERMISSIONS.HOUSE_OWNER])
+  ],
+  controllers.updatePasswordCode
+);
+router.post(
+  '/password/edit/confirmCode',
+  [
+    validateMiddleware(confirmUpdatePasswordValidation),
+    authenticateMiddleware,
+    authorizeMiddleware([PERMISSIONS.RENTER, PERMISSIONS.HOUSE_OWNER])
+  ],
+  controllers.confirmUpdatePassword
+);
+router.put(
+  '/password',
+  [
+    validateMiddleware(updateUserPasswordValidation),
+    authenticateMiddleware,
+    authorizeMiddleware([PERMISSIONS.RENTER, PERMISSIONS.HOUSE_OWNER])
+  ],
+  controllers.updateUserPassword
 );
 
 // !access  anonymous
@@ -118,7 +150,7 @@ router.get('/google-user-data/:googleId', controllers.getGoogleUserData);
 // @ GET api/users/profile/view
 // !access  anonymous
 router.get(
-  '/profile/view',
+  '/profile',
   [
     authenticateMiddleware,
     authorizeMiddleware([PERMISSIONS.RENTER, PERMISSIONS.HOUSE_OWNER])
@@ -130,7 +162,7 @@ router.get(
 // @ PUT api/users/profile/edit
 // !access  anonymous
 router.put(
-  '/profile/edit',
+  '/profile',
   [
     validateMiddleware(updateProfile),
     authenticateMiddleware,
@@ -163,6 +195,32 @@ router.get(
     authorizeMiddleware([PERMISSIONS.RENTER, PERMISSIONS.ADMIN])
   ],
   controllers.getHouseOwnerInfoWithCi
+);
+
+// @route
+// @ GET api/users/uploaded/hostels
+// !access  anonymous
+router.get(
+  '/uploaded/hostels',
+  [
+    validateMiddleware(getUploadedHostels),
+    authenticateMiddleware,
+    authorizeMiddleware([PERMISSIONS.HOUSE_OWNER])
+  ],
+  controllers.getUploadedHostels
+);
+
+// @route
+// @ GET api/users/uploaded/hostels
+// !access  anonymous
+router.get(
+  '/uploaded/hostel/:id',
+  [
+    validateMiddleware(getUploadedHostelDetails),
+    authenticateMiddleware,
+    authorizeMiddleware([PERMISSIONS.HOUSE_OWNER])
+  ],
+  controllers.getUploadedHostelDetails
 );
 
 module.exports = router;

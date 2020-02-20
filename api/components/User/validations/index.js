@@ -8,16 +8,21 @@ const { defaultConstants } = require('../../../shared/constants');
 
 const genderEnum = Object.values(defaultConstants.GENDER_TYPES);
 const jobTypeEnum = Object.values(defaultConstants.JOB_TYPES);
+const requestStatus = Object.values(defaultConstants.REQUEST_STATUS);
 
 const makeUserRegisterValidation = require('./user-register-validation');
 const makeUserLoginValidation = require('./user-login-validation');
 const makeUserPhoneVerificationValidation = require('./phone-verification-validation');
 const makeForgetPasswordValidation = require('./forget-password-validation');
 const makeConfirmForgetPasswordValidation = require('./confirm-forget-password-validation');
+const makeConfirmUpdatePasswordValidation = require('./confirm-update-password-validation');
 const makeChangePasswordValidation = require('./change-password');
+const makeUpdateUserPasswordValidation = require('./update-user-password');
 const makeUpdateProfileValidation = require('./update-profile');
 const makeUpdatePhoneValidation = require('./update-phone');
 const makeGetHouseOwnerInfoValidation = require('./houseOwner-info');
+const makeGetUploadedHostelsValidation = require('./get-uploaded-hostels');
+const makeGetUploadedHostelDetailsValidation = require('./get-uploaded-hostel-details');
 
 module.exports.userRegisterValidation = makeUserRegisterValidation({
   _,
@@ -61,6 +66,20 @@ module.exports.phoneVerificationValidation = makeUserPhoneVerificationValidation
   }
 );
 
+module.exports.updateUserPasswordValidation = makeUpdateUserPasswordValidation({
+  _,
+  Builder,
+  ValidatorHelper
+});
+
+module.exports.confirmUpdatePasswordValidation = makeConfirmUpdatePasswordValidation(
+  {
+    _,
+    Builder,
+    ValidatorHelper
+  }
+);
+
 module.exports.updateProfile = makeUpdateProfileValidation({
   _,
   Builder,
@@ -81,3 +100,20 @@ module.exports.getHouseOwnerInfo = makeGetHouseOwnerInfoValidation({
   ValidatorHelper,
   ObjectId
 });
+
+module.exports.getUploadedHostels = makeGetUploadedHostelsValidation({
+  _,
+  Builder,
+  ValidatorHelper,
+  ObjectId,
+  requestStatus
+});
+
+module.exports.getUploadedHostelDetails = makeGetUploadedHostelDetailsValidation(
+  {
+    _,
+    Builder,
+    ValidatorHelper,
+    ObjectId
+  }
+);

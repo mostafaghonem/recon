@@ -14,6 +14,10 @@ const smsService = require('../../../shared/services').smsService;
 const {
   addIdentityRequests
 } = require('../../identityRequests/identityRequests-external-use-cases');
+const {
+  getUserHostels,
+  getHouseOwnerHostel
+} = require('../../hostels/hostels-external-use-cases');
 const { PERMISSIONS } = require('../../../shared/constants/defaults');
 // const emailService = require('../../../shared/services').emailService;
 
@@ -27,12 +31,17 @@ const makeFacebookLogin = require('./facebookLogin');
 const makeSmsVerifications = require('./sms-verifications');
 const makeforgetPassword = require('./forget-password');
 const makeConfirmForgetPassword = require('./confirm-forget-password');
+const makeConfirmUpdatePassword = require('./confirm-update-password');
 const makeChangePassword = require('./change-password');
+const makeUpdatePasswordCode = require('./update-password-code');
+const makeUpdateUserPassword = require('./update-user-password');
 const makeGetUserProfile = require('./get-profile');
 const makeUpdateUserProfile = require('./update-profile');
 const makeUpdateUserPhone = require('./update-phone');
 const makePhoneUpdateVerification = require('./phone-update-verifiction');
 const makeGetHouseOwnerInfo = require('./houseOwner-info');
+const makeGetUploadedHostels = require('./get-uploaded-hostels');
+const makeGetUploadedHostelDetails = require('./get-uploaded-hostel-details');
 const makeGoogleLogin = require('./googleLogin');
 
 const registerUser = makeRegisterUserUC({
@@ -61,7 +70,26 @@ const confirmForgetPassword = makeConfirmForgetPassword({
   redis: redisClient
 });
 
+const confirmUpdatePassword = makeConfirmUpdatePassword({
+  ApplicationError,
+  logger,
+  redis: redisClient
+});
+
 const changePassword = makeChangePassword({
+  ApplicationError,
+  logger,
+  redis: redisClient
+});
+
+const updatePasswordCode = makeUpdatePasswordCode({
+  ApplicationError,
+  logger,
+  redis: redisClient,
+  smsService
+});
+
+const updateUserPassword = makeUpdateUserPassword({
   ApplicationError,
   logger,
   redis: redisClient
@@ -76,6 +104,18 @@ const getHouseOwnerInfo = makeGetHouseOwnerInfo({
   ApplicationError,
   logger,
   PERMISSIONS
+});
+
+const getUploadedHostels = makeGetUploadedHostels({
+  ApplicationError,
+  logger,
+  getUserHostels
+});
+
+const getUploadedHostelDetails = makeGetUploadedHostelDetails({
+  ApplicationError,
+  logger,
+  getHouseOwnerHostel
 });
 
 const updateUserProfile = makeUpdateUserProfile({
@@ -137,13 +177,18 @@ const userUseCases = {
   verifyPhone,
   forgetPassword,
   confirmForgetPassword,
+  confirmUpdatePassword,
   getUserProfile,
   getHouseOwnerInfo,
   updateUserProfile,
+  getUploadedHostels,
+  getUploadedHostelDetails,
   phoneUpdateVerification,
   updateUserPhone,
   updateIdentification,
-  changePassword
+  changePassword,
+  updatePasswordCode,
+  updateUserPassword
 };
 
 module.exports = userUseCases;
