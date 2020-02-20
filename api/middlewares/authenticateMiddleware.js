@@ -4,12 +4,10 @@ const Promise = require('bluebird');
 const jwt = Promise.promisifyAll(jsonwebtoken);
 
 const isAuthenticated = async (req, res, next) => {
-  // @TODO: [SOOTYAI-774] remove String(req.headers.referer).split('access_token=')[1]; and check access_token in updateCourseProgress
   const token =
-    req.body.access_token ||
-    req.query.access_token ||
-    req.headers.access_token ||
-    String(req.headers.referer).split('access_token=')[1];
+    req.body['access-token'] ||
+    req.query['access-token'] ||
+    req.headers['access-token'];
   if (token) {
     try {
       const decoded = await jwt.verify(token, process.env.jwtPrivateKey);
