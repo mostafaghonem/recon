@@ -72,36 +72,52 @@ module.exports = ({ GenericModel = _GenericModel }) => {
       }));
     }
 
-    getReservationsForHostelByDateRange(
+    isGroupBusyInDate(
       data = {
-        hostelId: String,
-        startDatets: Number,
-        endDatets: Number
+        hostelIds: [String],
+        groupIds: [String],
+        datets: Number
       }
     ) {
-      const { hostelId, startDatets, endDatets } = data;
+      const { hostelIds, groupIds, datets } = data;
 
-      return this.getMany({
-        query: {
-          hostelId,
-          $or: [
-            {
-              fromts: { $gte: startDatets },
-              tots: { $lte: startDatets }
-            },
-            {
-              fromts: { $gte: endDatets },
-              tots: { $lte: endDatets }
+      return this.getAggregate({
+        arrayOfFilter: [
+          {
+            $match: {
+              hostelId: {
+                $in: hostelIds
+              },
+              'rooms.groupId': {
+                $in: groupIds
+              },
+              fromts: { $lte: datets },
+              tots: { $gte: datets }
             }
-          ]
-        },
-        select: {
-          'rooms.groupId': 1,
-          'rooms.roomType': 1,
-          hostelId: 1,
-          fromts: 1,
-          tots: 1
-        }
+          },
+          {
+            $project: {
+              'rooms.groupId': 1,
+              // 'rooms.roomName': 1,
+              'rooms.totalReservedCount': 1
+            }
+          },
+          { $unwind: '$rooms' },
+          {
+            $match: {
+              'rooms.groupId': {
+                $in: groupIds
+              }
+            }
+          },
+          {
+            $group: {
+              _id: '$rooms.groupId',
+              // name: { $first: '$rooms.roomName' },
+              totalReservedCount: { $sum: '$rooms.totalReservedCount' }
+            }
+          }
+        ]
       });
     }
 
@@ -141,9 +157,7 @@ module.exports = ({ GenericModel = _GenericModel }) => {
               'rooms.groupId': 1,
               'rooms.roomType': 1,
               'rooms.totalReservedCount': 1,
-              hostelId: 1,
-              fromts: 1,
-              tots: 1
+              hostelId: 1
             }
           },
           { $unwind: '$rooms' },
@@ -151,22 +165,18 @@ module.exports = ({ GenericModel = _GenericModel }) => {
             $group: {
               _id: {
                 hostelId: '$hostelId',
-                groupId: '$rooms.groupId',
-                roomType: '$rooms.roomType',
-                fromts: '$fromts',
-                tots: '$tots'
+                groupId: '$rooms.groupId'
               },
-              totalReservedCount: { $sum: '$rooms.totalReservedCount' }
+              roomType: { $first: '$rooms.roomType' },
+              totalReservedCount: { $max: '$rooms.totalReservedCount' }
             }
           },
           {
             $project: {
               hostelId: '$_id.hostelId',
               groupId: '$_id.groupId',
-              roomType: '$_id.roomType',
-              totalReservedCount: 1,
-              fromts: '$_id.fromts',
-              tots: '$_id.tots'
+              roomType: '$roomType',
+              totalReservedCount: 1
             }
           },
           {
@@ -178,9 +188,7 @@ module.exports = ({ GenericModel = _GenericModel }) => {
                 $push: {
                   groupId: '$groupId',
                   roomType: '$roomType',
-                  totalReservedCount: '$totalReservedCount',
-                  fromts: '$fromts',
-                  tots: '$tots'
+                  totalReservedCount: '$totalReservedCount'
                 }
               }
             }
