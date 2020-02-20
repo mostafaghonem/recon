@@ -79,7 +79,7 @@ module.exports = (
     }
   );
 
-  model.index({ hostelId: 1, fromts: 1, tots: 1 }, { unique: true });
+  model.index({ hostelId: 1, fromts: 1, tots: 1 });
 
   return mongoose.model('HostelReservation', model);
 };
