@@ -5,6 +5,7 @@
  *
  * ! if you need to throw Error use throw new ApplicationError() and will handle the rest in express catcher
  */
+const redis = require('redis');
 const logger = require('../../../startup/logger');
 // const { ApplicationError } = require('../../../shared/errors');
 const redisClient = require('../../../shared/redis-client');
@@ -46,6 +47,7 @@ const isGroupBusyInDateTs = makeIsGroupBusyInDateTs({});
 const completePayment = makeCompletePayment({
   logger,
   redis: redisClient,
+  publisher: redis,
   updateHostelBookingData
 });
 
