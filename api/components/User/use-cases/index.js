@@ -11,10 +11,19 @@ const redisClient = require('../../../shared/redis-client');
 const logger = require('../../../startup/logger');
 const { ApplicationError } = require('../../../shared/errors');
 const smsService = require('../../../shared/services').smsService;
+const {
+  addIdentityRequests
+} = require('../../identityRequests/identityRequests-external-use-cases');
+const {
+  getUserHostels,
+  getHouseOwnerHostel
+} = require('../../hostels/hostels-external-use-cases');
+const { PERMISSIONS } = require('../../../shared/constants/defaults');
 // const emailService = require('../../../shared/services').emailService;
 
 const makeRegisterUserUC = require('./register-user');
 const makeLoginUser = require('./login-user');
+const makeUpdateIdentification = require('./update-identification');
 const makeGoogleAuthService = require('./googleAuthService');
 const makeFaceBookAuthService = require('./facebookAuthService');
 
@@ -22,7 +31,17 @@ const makeFacebookLogin = require('./facebookLogin');
 const makeSmsVerifications = require('./sms-verifications');
 const makeforgetPassword = require('./forget-password');
 const makeConfirmForgetPassword = require('./confirm-forget-password');
+const makeConfirmUpdatePassword = require('./confirm-update-password');
 const makeChangePassword = require('./change-password');
+const makeUpdatePasswordCode = require('./update-password-code');
+const makeUpdateUserPassword = require('./update-user-password');
+const makeGetUserProfile = require('./get-profile');
+const makeUpdateUserProfile = require('./update-profile');
+const makeUpdateUserPhone = require('./update-phone');
+const makePhoneUpdateVerification = require('./phone-update-verifiction');
+const makeGetHouseOwnerInfo = require('./houseOwner-info');
+const makeGetUploadedHostels = require('./get-uploaded-hostels');
+const makeGetUploadedHostelDetails = require('./get-uploaded-hostel-details');
 const makeGoogleLogin = require('./googleLogin');
 
 const registerUser = makeRegisterUserUC({
@@ -51,10 +70,76 @@ const confirmForgetPassword = makeConfirmForgetPassword({
   redis: redisClient
 });
 
+const confirmUpdatePassword = makeConfirmUpdatePassword({
+  ApplicationError,
+  logger,
+  redis: redisClient
+});
+
 const changePassword = makeChangePassword({
   ApplicationError,
   logger,
   redis: redisClient
+});
+
+const updatePasswordCode = makeUpdatePasswordCode({
+  ApplicationError,
+  logger,
+  redis: redisClient,
+  smsService
+});
+
+const updateUserPassword = makeUpdateUserPassword({
+  ApplicationError,
+  logger,
+  redis: redisClient
+});
+
+const getUserProfile = makeGetUserProfile({
+  ApplicationError,
+  logger
+});
+
+const getHouseOwnerInfo = makeGetHouseOwnerInfo({
+  ApplicationError,
+  logger,
+  PERMISSIONS
+});
+
+const getUploadedHostels = makeGetUploadedHostels({
+  ApplicationError,
+  logger,
+  getUserHostels
+});
+
+const getUploadedHostelDetails = makeGetUploadedHostelDetails({
+  ApplicationError,
+  logger,
+  getHouseOwnerHostel
+});
+
+const updateUserProfile = makeUpdateUserProfile({
+  ApplicationError,
+  logger,
+  addIdentityRequests
+});
+
+const updateUserPhone = makeUpdateUserPhone({
+  ApplicationError,
+  logger,
+  redis: redisClient
+});
+
+const updateIdentification = makeUpdateIdentification({
+  ApplicationError,
+  logger
+});
+
+const phoneUpdateVerification = makePhoneUpdateVerification({
+  ApplicationError,
+  logger,
+  redis: redisClient,
+  smsService
 });
 
 const loginUser = makeLoginUser({
@@ -92,7 +177,18 @@ const userUseCases = {
   verifyPhone,
   forgetPassword,
   confirmForgetPassword,
-  changePassword
+  confirmUpdatePassword,
+  getUserProfile,
+  getHouseOwnerInfo,
+  updateUserProfile,
+  getUploadedHostels,
+  getUploadedHostelDetails,
+  phoneUpdateVerification,
+  updateUserPhone,
+  updateIdentification,
+  changePassword,
+  updatePasswordCode,
+  updateUserPassword
 };
 
 module.exports = userUseCases;

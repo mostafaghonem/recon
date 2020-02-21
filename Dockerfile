@@ -1,5 +1,7 @@
 FROM node:10
 
+RUN npm install -g nodemon
+
 WORKDIR /api
 
 COPY package*.json ./
@@ -7,7 +9,5 @@ COPY package*.json ./
 RUN npm install
 
 COPY . .
-
-RUN npm install -g nodemon
 
 CMD [ "nodemon", "bin/www" ]

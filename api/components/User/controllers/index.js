@@ -3,7 +3,18 @@ const makeUserLoginCtrl = require('./user-login');
 const makePhoneVerification = require('./sms-verification');
 const makeForgetPassword = require('./forget-password');
 const makeConfirmForgetPassword = require('./confirm-forget-password');
+const makeConfirmUpdatePassword = require('./confirm-update-password');
 const makeChangePassword = require('./change-password');
+const makeUpdateUserPassword = require('./update-user-password');
+const makeUpdatePasswordCode = require('./update-password-code');
+const makeGetUserProfile = require('./get-profile');
+const makeUpdateUserProfile = require('./update-profile');
+const makeUpdatePhone = require('./update-phone');
+const makePhoneUpdateVerification = require('./phone-update-verification');
+const makeGetHouseOwnerInfo = require('./houseOwner-info');
+const makeGetHouseOwnerInfoWithCi = require('./houseOwner-info-with-ci');
+const makeGetUploadedHostels = require('./get-uploaded-hostels');
+const makeGetUploadedHostelDetails = require('./get-uploaded-hostel-details');
 const {
   facebookAuthController,
   facebookAuthBackController,
@@ -13,21 +24,47 @@ const {
   googleUserData
 } = require('./userController');
 
+const { defaultConstants } = require('../../../shared/constants');
+
+const pagination = Object.values(defaultConstants.PAGINATION);
+
 // ->
 const registerUser = makeUserRegisterCtrl({});
 const loginUser = makeUserLoginCtrl({});
 const verifyPhone = makePhoneVerification({});
 const forgetPassword = makeForgetPassword({});
-const confirnForgetPassword = makeConfirmForgetPassword({});
+const confirmForgetPassword = makeConfirmForgetPassword({});
+const confirmUpdatePassword = makeConfirmUpdatePassword({});
 const changePassword = makeChangePassword({});
+const updatePasswordCode = makeUpdatePasswordCode({});
+const updateUserPassword = makeUpdateUserPassword({});
+const getUserProfile = makeGetUserProfile({});
+const updateUserProfile = makeUpdateUserProfile({});
+const updatePhone = makeUpdatePhone({});
+const phoneUpdateVerification = makePhoneUpdateVerification({});
+const getHouseOwnerInfo = makeGetHouseOwnerInfo({});
+const getHouseOwnerInfoWithCi = makeGetHouseOwnerInfoWithCi({});
+const getUploadedHostels = makeGetUploadedHostels({ pagination });
+const getUploadedHostelDetails = makeGetUploadedHostelDetails({});
 
 const userCtrl = Object.freeze({
   registerUser,
   loginUser,
   verifyPhone,
   forgetPassword,
-  confirnForgetPassword,
+  updatePhone,
+  confirmForgetPassword,
+  confirmUpdatePassword,
   changePassword,
+  updatePasswordCode,
+  updateUserPassword,
+  getUserProfile,
+  updateUserProfile,
+  phoneUpdateVerification,
+  getHouseOwnerInfo,
+  getHouseOwnerInfoWithCi,
+  getUploadedHostels,
+  getUploadedHostelDetails,
   googleAuthController,
   googleAuthCallback,
   getGoogleUserData: googleUserData,

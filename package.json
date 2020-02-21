@@ -4,12 +4,13 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
-    "local": "export NODE_ENV=local && nodemon ./bin/www",
+    "local": "set NODE_ENV=local && nodemon ./bin/www",
     "kill-all": "pkill node",
     "kill-5000": "sudo kill -9 `sudo lsof -t -i:5000`",
     "kill-3000": "sudo kill -9 `sudo lsof -t -i:3000`"
   },
   "dependencies": {
+    "aws-sdk": "^2.623.0",
     "axios": "^0.19.1",
     "bcryptjs": "^2.4.3",
     "bluebird": "^3.7.2",
@@ -23,6 +24,7 @@
     "http-errors": "^1.7.3",
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.15",
+    "mime-types": "^2.1.26",
     "mongoose": "^5.8.3",
     "morgan": "~1.9.1",
     "nodemailer": "^6.4.2",
@@ -31,6 +33,7 @@
     "passport-google-oauth": "^2.0.0",
     "redis": "^2.8.0",
     "util": "^0.12.1",
+    "uuid": "^3.4.0",
     "validation-helpers": "^1.1.1",
     "winston": "^3.2.1"
   },

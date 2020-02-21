@@ -24,11 +24,31 @@ module.exports = class GenericModel {
       select: '',
       sort: { _id: 1 },
       skip: 0,
-      limit: 10000000000
+      limit: 10000000000,
+      populate: {
+        path: '',
+        match: {},
+        select: ''
+      },
+      anotherPopulate: {
+        path: '',
+        match: {},
+        select: ''
+      }
     }
   ) {
-    const { limit, query, select, skip, sort } = params;
+    const {
+      limit,
+      query,
+      select,
+      skip,
+      sort,
+      populate,
+      anotherPopulate
+    } = params;
     return this.DbAccess.find(query, select)
+      .populate(populate)
+      .populate(anotherPopulate)
       .sort(sort)
       .skip(skip)
       .limit(limit)
@@ -73,6 +93,14 @@ module.exports = class GenericModel {
   updateManyByFilter(params = { filter: {}, update: {} }) {
     const { filter, update } = params;
     return this.DbAccess.updateMany(filter, update, {
+      runValidators: true,
+      new: true
+    }).lean();
+  }
+
+  update(params = { filter: {}, update: {} }) {
+    const { filter, update } = params;
+    return this.DbAccess.update(filter, update, {
       runValidators: true,
       new: true
     }).lean();

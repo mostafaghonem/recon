@@ -34,8 +34,8 @@ module.exports = ({
     email: {
       value: body.email,
       rules: new Builder()
-        .required('يجب ادخال بريد إليكتروني')
-        .isEmail('بريد إليكتروني غير صالح').rules
+        .required('يجب ادخال البريد الإلكتروني')
+        .isEmail('بريد إلكتروني غير صالح').rules
     },
     birthDateTs: {
       value: body.birthDateTs,
@@ -81,6 +81,16 @@ module.exports = ({
     const ele = scheme[key];
     const { errors, isValid } = ValidatorHelper(ele.value, ele.rules);
     if (!isValid) error[key] = errors;
+    if (
+      key === 'job.description' &&
+      ele.value === '' &&
+      body.job &&
+      body.job.type &&
+      body.job.type !== 'renter'
+    ) {
+      error[key] = ['يجب إدخال اسم الشركة'];
+      if (body.job.type === 'student') error[key] = ['يجب إدخال اسم الكلية'];
+    }
   });
 
   return {

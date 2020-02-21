@@ -43,8 +43,6 @@ exports.googleAuthCallback = [
     const user = req.user;
 
     let token = await googleLoginSetter(user);
-
-    console.log('user token afterr logging with google', token);
     if (!token) {
       return res.redirect(`/registration?googleId=${user.id}`);
     }

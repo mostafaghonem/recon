@@ -3,6 +3,7 @@ const bcjs = require('bcryptjs');
 const mongoose = require('mongoose');
 const jsonwebtoken = require('jsonwebtoken');
 const Promise = require('bluebird');
+const { PERMISSIONS } = require('../../../shared/constants/defaults');
 
 const _jwt = Promise.promisifyAll(jsonwebtoken);
 const __ObjectId = mongoose.Types.ObjectId;
@@ -18,11 +19,12 @@ const buildUserEntity = (
     bcrypt: bcjs,
     ApplicationError: AppError,
     ObjectId: __ObjectId,
-    jwt: _jwt
+    jwt: _jwt,
+    _
   }
 ) => {
   // eslint-disable-next-line no-unused-vars
-  const { bcrypt, ApplicationError, ObjectId, jwt } = obj;
+  const { bcrypt, ApplicationError, ObjectId, jwt, _ } = obj;
   class UserEntity {
     static async loadEntityFromDbById(id) {
       const exists = await Model.getOneById({ id });
@@ -59,7 +61,8 @@ const buildUserEntity = (
         gender: String,
         job: { type: String, description: String },
         government: String,
-        image: String
+        image: String,
+        permissions: Array
       }
     ) {
       this.facebookId = data.facebookId || '';
@@ -85,6 +88,12 @@ const buildUserEntity = (
       }
       this.government = data.government || '';
       this.image = data.image || '';
+      this.identificationImages = data.identificationImages || [];
+      this.identificationStatus = data.identificationStatus || false;
+      let userPermissions = [PERMISSIONS.RENTER];
+      if (data.permissions && _.isArray(data.permissions))
+        userPermissions = data.permissions;
+      this.permissions = userPermissions;
       this.isArchived = data.isArchived || false;
     }
 
@@ -123,7 +132,9 @@ const buildUserEntity = (
         job: { type: this.job.type, description: this.job.description },
         government: this.government,
         image: this.image,
-        facebookId: this.facebookId
+        facebookId: this.facebookId,
+        identificationImages: this.identificationImages,
+        identificationStatus: this.identificationStatus
       };
     }
 
@@ -142,17 +153,23 @@ const buildUserEntity = (
         job: { type: this.job.type, description: this.job.description },
         government: this.government,
         image: this.image,
+        identificationImages: this.identificationImages,
+        identificationStatus: this.identificationStatus,
+        permissions: this.permissions || [PERMISSIONS.RENTER],
         isArchived: this.isArchived
       };
     }
 
     generateToken() {
       const jwtPrivateKey = process.env.jwtPrivateKey || '';
-
+      let permissions = [PERMISSIONS.RENTER];
+      if (this.permissions && _.isArray(this.permissions))
+        permissions = this.permissions;
       return jwt.sign(
         {
-          id: this._id,
-          exp: Math.floor(new Date().getTime() / 1000) + 7 * 24 * 60 * 60 * 30 // Note: in seconds!
+          id: this.id,
+          exp: Math.floor(new Date().getTime() / 1000) + 7 * 24 * 60 * 60 * 30, // Note: in seconds!
+          permissions: permissions
         },
         jwtPrivateKey
       );

@@ -2,10 +2,16 @@ const logger = require('../startup/logger');
 
 module.exports = permissions => (req, res, next) => {
   if (!permissions) {
-    logger.error('missing permission ya traaab');
-    return res.status(555).json({ message: 'missing permission ya traaab' });
+    logger.error('missing permission in constants file');
+    return res.status(555).json({ message: 'missing permission' });
   }
 
+  if (!req.user.permissions) {
+    logger.error('missing permission in user token');
+    return res.status(555).json({
+      message: 'missing permission, try to log out and log in again'
+    });
+  }
   const { originalUrl } = req;
 
   if (!permissions.some(perm => req.user.permissions.includes(perm))) {
