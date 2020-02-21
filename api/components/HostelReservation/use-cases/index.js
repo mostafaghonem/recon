@@ -1,4 +1,5 @@
 const uuid = require('uuid').v4;
+const redis = require('redis');
 const redisClient = require('../../../shared/redis-client');
 const logger = require('../../../startup/logger');
 const { ApplicationError } = require('../../../shared/errors');
@@ -18,6 +19,7 @@ module.exports.ReserveUC = makeReserveUC({
   ApplicationError,
   logger,
   redis: redisClient,
+  publisher: redis,
   uuid,
   checkAndCalculateReservationCost,
   processPayment

@@ -2,11 +2,13 @@
 const { HostelReservationEntity } = require('../Entity');
 
 // eslint-disable-next-line no-unused-vars
-module.exports = ({
-  redis,
-  logger,
-  updateHostelBookingData
-}) => async paymentId => {
+module.exports = ({ redis, logger, publisher }) => async paymentId => {
+  const publisherClient = publisher.createClient({
+    no_ready_check: true,
+    host: process.env.REDIS_HOST,
+    auth_pass: process.env.REDIS_PASS
+  });
+
   let reservationCachedData = await redis.getAsync(`${paymentId}-paymentId`);
 
   reservationCachedData = JSON.parse(reservationCachedData);
@@ -26,12 +28,16 @@ module.exports = ({
 
   await newReservation.save();
 
-  // ! Should I send totalPrice or shouldPayPrice and 1 or totalReservedCount
-  updateHostelBookingData(
-    newReservation.hostelId,
-    newReservation.totalPrice,
-    1
+  publisherClient.publish(
+    'hostel-reservation-complete-payment',
+    JSON.stringify({
+      hostelId: newReservation.hostelId,
+      totalOnlineBooking: 1,
+      totalRevenue: newReservation.shouldPayPrice
+    })
   );
+
+  publisherClient.quit();
 
   logger.info(
     `new Hostel reservation is completed${JSON.stringify(
