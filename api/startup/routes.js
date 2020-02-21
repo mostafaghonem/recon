@@ -6,9 +6,11 @@ const identityRequests = require('../components/identityRequests');
 const hostels = require('../components/hostels');
 const uploadedHostelsRequests = require('../components/uploadedHostelsRequests');
 const HostelReservation = require('../components/HostelReservation');
+const uploader = require('../components/uploader');
 
 module.exports = app => {
   app.use('/', express.static(path.join(__dirname, '../../public')));
+  app.use('/api/uploader', uploader.Router);
   app.use('/api/users', User.Router);
   app.use('/api/identityRequests', identityRequests.Router);
   app.use('/api/hostels', hostels.Router);
