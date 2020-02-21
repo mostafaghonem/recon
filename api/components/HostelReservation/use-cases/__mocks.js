@@ -33,8 +33,8 @@ const getHostelsDataFromIds = async idArray => {
       hostelId: idArray[0],
       name: 'Honey moon Hotel',
       image: 'valid image url',
-      rate: 'Number from 1 to 5',
-      rateCount: 'Number of distinct user rates',
+      rate: 3.5,
+      rateCount: 324,
       phone: '01550178854',
       address: {
         government: 'Damietta',

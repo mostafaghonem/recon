@@ -3,7 +3,7 @@ const _GenericModel = require('../../shared/models/GenericModel');
 
 const getQueryFromStatus = status => {
   let query;
-  const nowts = new Date().getTime();
+  const nowts = new Date().setHours(0, 0, 0, 0);
 
   switch (status) {
     case 'active':
