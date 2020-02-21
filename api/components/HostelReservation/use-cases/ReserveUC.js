@@ -9,6 +9,7 @@ const { HostelReservationEntity } = require('../Entity');
 module.exports = ({
   redis,
   ApplicationError,
+  publisher,
   logger,
   checkAndCalculateReservationCost,
   uuid,
@@ -24,6 +25,12 @@ module.exports = ({
   rooms,
   reserveDatets = new Date().getTime()
 }) => {
+  const publisherClient = publisher.createClient({
+    no_ready_check: true,
+    host: process.env.REDIS_HOST,
+    auth_pass: process.env.REDIS_PASS
+  });
+
   // ! we must use this service to make sure that shouldPayPrice is correct
   const reservationCost = await checkAndCalculateReservationCost({
     renterId,
@@ -88,7 +95,7 @@ module.exports = ({
 
   await newReservation.save();
 
-  redis.publish(
+  publisherClient.publish(
     'hostel-reservation-complete-payment',
     JSON.stringify({
       hostelId: newReservation.hostelId,
@@ -96,6 +103,8 @@ module.exports = ({
       totalRevenue: newReservation.shouldPayPrice
     })
   );
+
+  publisherClient.quit();
 
   // ! call Farid method after saving the reservation
 

@@ -2,7 +2,13 @@
 const { HostelReservationEntity } = require('../Entity');
 
 // eslint-disable-next-line no-unused-vars
-module.exports = ({ redis, logger }) => async paymentId => {
+module.exports = ({ redis, logger, publisher }) => async paymentId => {
+  const publisherClient = publisher.createClient({
+    no_ready_check: true,
+    host: process.env.REDIS_HOST,
+    auth_pass: process.env.REDIS_PASS
+  });
+
   let reservationCachedData = await redis.getAsync(`${paymentId}-paymentId`);
 
   reservationCachedData = JSON.parse(reservationCachedData);
@@ -22,7 +28,7 @@ module.exports = ({ redis, logger }) => async paymentId => {
 
   await newReservation.save();
 
-  redis.publish(
+  publisherClient.publish(
     'hostel-reservation-complete-payment',
     JSON.stringify({
       hostelId: newReservation.hostelId,
@@ -30,6 +36,8 @@ module.exports = ({ redis, logger }) => async paymentId => {
       totalRevenue: newReservation.shouldPayPrice
     })
   );
+
+  publisherClient.quit();
 
   logger.info(
     `new Hostel reservation is completed${JSON.stringify(
