@@ -13,40 +13,13 @@ module.exports = ({
   logger,
   getReservedRoomCountByHotels,
   accepted
-}) => async ({
-  lastId,
-  availableFrom,
-  availableTo,
-  Type,
-  government,
-  numberOfPersons,
-  freeServices,
-  generalServices,
-  hostelServices,
-  entertainmentServices,
-  foodServices,
-  available,
-  priceFrom,
-  priceTo,
-  rate,
-  key,
-  limit
-}) => {
+}) => async ({ limit }) => {
   const query = {
-    _id: { $gt: lastId },
-    name: { $regex: key, $options: 'i' },
     status: accepted,
     isHidden: false,
     isArchived: false
   };
-  if (government) query['address.government'] = government;
-  if (freeServices) query.freeServices = { $all: freeServices };
-  if (generalServices) query.generalServices = { $all: generalServices };
-  if (hostelServices) query.hostelServices = { $all: hostelServices };
-  if (entertainmentServices)
-    query.entertainmentServices = { $all: entertainmentServices };
-  if (foodServices) query.foodServices = { $all: foodServices };
-  if (rate) query.rate = { $gte: Number(rate) };
+
   const select = 'name totalRate totalUsersRated rooms address.government';
   const sort = { createdAt: 1 };
   const hostels = await model.getMany({
@@ -59,28 +32,18 @@ module.exports = ({
   if (hostels && hostels.length !== 0) {
     const hostelsIds = [];
     hostels.map(hostel => hostelsIds.push(hostel._id));
-    const newAvailableFrom =
-      new Date(availableFrom).getTime() || new Date().getTime();
-    const newAvailableTo =
-      availableTo || new Date().setDate(new Date().getDate() + 1);
+    const availableFrom = new Date().getTime();
+    const availableTo = new Date().setDate(new Date().getDate() + 1);
     const reservedHostels = await getReservedRoomCountByHotels(
       hostelsIds,
-      newAvailableFrom,
-      new Date(newAvailableTo).getTime()
+      availableFrom,
+      new Date(availableTo).getTime()
     );
-
     let filteredHostels = [];
     hostels.forEach(hostel => {
       hostel.totalRooms = 0;
       hostel.totalAvailableRooms = 0;
       hostel.available = false;
-      hostel.rooms = hostel.rooms.filter(
-        group =>
-          group.Type === Type &&
-          group.numberOfPersons >= (Number(numberOfPersons) || 0) &&
-          group.pricePerPerson >= (Number(priceFrom) || 0) &&
-          group.pricePerPerson <= (Number(priceTo) || 10000000000)
-      );
       if (hostel.rooms[0]) {
         const getHostelData = reservedHostels.filter(
           reservedHostel => String(reservedHostel._id) === String(hostel._id)
@@ -116,8 +79,7 @@ module.exports = ({
       }
       filteredHostels.push(hostel);
     });
-    if (available)
-      filteredHostels = filteredHostels.filter(hosetl => hosetl.available);
+    filteredHostels = filteredHostels.filter(hosetl => hosetl.available);
 
     return filteredHostels;
   }
