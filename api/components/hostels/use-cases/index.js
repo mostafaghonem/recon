@@ -90,6 +90,7 @@ const editHostelAvailability = makeEditHostelAvailability({
 const getHostel = makeGetHostel({
   ApplicationError,
   logger,
+  getReservedRoomCountByHotels,
   accepted: REQUEST_RESPONSE.ACCEPTED
 });
 

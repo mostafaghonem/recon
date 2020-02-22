@@ -41,6 +41,7 @@ module.exports = ({
     );
     let filteredHostels = [];
     hostels.forEach(hostel => {
+      hostel.totalRate = hostel.totalRate / hostel.totalUsersRated || 0;
       hostel.totalRooms = 0;
       hostel.totalAvailableRooms = 0;
       hostel.available = false;
