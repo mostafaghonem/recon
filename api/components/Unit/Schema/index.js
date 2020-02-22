@@ -3,6 +3,10 @@ const { defaultConstants } = require('../../../shared/constants');
 
 const UnitState = Object.values(defaultConstants.UnitState);
 
+const UnitTypes = Object.values(defaultConstants.UnitTypes);
+
+
 module.exports = makeUnitScheme({
-  requestStates: UnitState
+  requestStates: UnitState,
+  unitTypes: UnitTypes,
 });

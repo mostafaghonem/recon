@@ -5,7 +5,6 @@ const mongoose = require('mongoose');
 const { ObjectId } = mongoose.Types;
 
 const makeUnitCreate = require('./unit-create-validation');
-const makeUpdateIdentityRequests = require('./update-identity-requests');
 const { defaultConstants } = require('../../../shared/constants');
 
 const requestStatus = Object.values(defaultConstants.REQUEST_STATUS);
