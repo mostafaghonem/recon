@@ -6,6 +6,7 @@ const {
   unhideHostelValidation,
   deleteHostelValidation,
   getHostels,
+  getRecommendedHostels,
   getHostel,
   editHostel,
   editHostelRooms,
@@ -83,6 +84,16 @@ router.get(
     authorizeMiddleware([PERMISSIONS.RENTER])
   ],
   controllers.getHostels
+);
+
+router.get(
+  '/recommended',
+  [
+    validateMiddleware(getRecommendedHostels),
+    authenticateMiddleware,
+    authorizeMiddleware([PERMISSIONS.RENTER])
+  ],
+  controllers.getRecommendedHostels
 );
 
 router.get(

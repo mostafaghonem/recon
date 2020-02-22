@@ -24,18 +24,18 @@ module.exports = ({ ApplicationError, logger, addIdentityRequests }) => async (
   if (user) {
     const identificationImages = user.identificationImages || [];
     updatedProfile.identificationImages.forEach(url => {});
-    const compareImages = compare(
-      identificationImages,
-      updatedProfile.identificationImages
-    );
-    if (!compareImages) {
-      await addIdentityRequests({
-        userId,
-        identificationImages: updatedProfile.identificationImages
-      });
-      delete updatedProfile.identificationImages;
-    }
-    const updateUserProfile = await model.updateOneById({
+    // const compareImages = compare(
+    //   identificationImages,
+    //   updatedProfile.identificationImages
+    // );
+    // if (!compareImages) {
+    //   await addIdentityRequests({
+    //     userId,
+    //     identificationImages: updatedProfile.identificationImages
+    //   });
+    //   delete updatedProfile.identificationImages;
+    // }
+    await model.updateOneById({
       id: userId,
       update: updatedProfile
     });
