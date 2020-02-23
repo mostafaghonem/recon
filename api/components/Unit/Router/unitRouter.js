@@ -1,7 +1,21 @@
 const express = require('express');
 const {
-    userCreateValidation,
-} = require('../validations');
+    addUnitValidation,
+    deleteUnitValidation
+    // getUnits
+    // addUnitValidation,
+    // addUnitRoomsValidation,
+    // hideUnitValidation,
+    // unhideUnitValidation,
+    // deleteUnitValidation,
+    // getUnits,
+    // getRecommendedUnits,
+    // getUnit,
+    // editUnit,
+    // editUnitRooms,
+    // editUnitAvailability,
+    // rateUnit
+} = require('../Validation');
 
 const router = express.Router();
 
@@ -10,151 +24,110 @@ const authorizeMiddleware = require('../../../middlewares/authorizeMiddleware');
 const { PERMISSIONS } = require('../../../shared/constants/defaults');
 
 const validateMiddleware = require('../../../middlewares/validateMiddleware');
-const controllers = require('../controllers');
-
-// @route
-// @ GET api/users/register
-// !access  anonymous
-router.post(
-    '/register',
-    [validateMiddleware(userRegisterValidation)],
-    controllers.registerUser
-);
-
-// @route
-// @ POST api/users/login
-// !access  anonymous
-router.post(
-    '/login',
-    [validateMiddleware(userLoginValidation)],
-    controllers.loginUser
-);
-
-// @route
-// @ POST api/users/phone/verify
-// !access  anonymous
-router.post(
-    '/phone/verify',
-    [validateMiddleware(phoneVerificationValidation)],
-    controllers.verifyPhone
-);
-
-// @route
-// @ POST api/users/phone/verify
-// !access  anonymous
-router.post(
-    '/phone/edit/verify',
-    [
-        validateMiddleware(phoneVerificationValidation),
-        authenticateMiddleware,
-        authorizeMiddleware([PERMISSIONS.RENTER, PERMISSIONS.HOUSE_OWNER])
-    ],
-    controllers.phoneUpdateVerification
-);
-
-// @route
-// @ PUT api/users/phone/edit
-// !access  anonymous
-router.put(
-    '/phone/edit',
-    [
-        validateMiddleware(updatePhone),
-        authenticateMiddleware,
-        authorizeMiddleware([PERMISSIONS.RENTER, PERMISSIONS.HOUSE_OWNER])
-    ],
-    controllers.updatePhone
-);
-
-router.post(
-    '/password/forget',
-    [validateMiddleware(forgetPasswordValidation)],
-    controllers.forgetPassword
-);
-
-router.post(
-    '/password/confirmForget',
-    [validateMiddleware(confirmForgetPasswordValidation)],
-    controllers.confirnForgetPassword
-);
-
-router.put(
-    '/password/change',
-    [validateMiddleware(changePasswordValidation)],
-    controllers.changePassword
-);
-
-// !access  anonymous
-router.get('/facebook-auth', controllers.facebookAuth);
-
-router.get('/facebook-auth-back', controllers.facebookAuthBack);
-
-router.get('/facebook-user-data/:facebookId', controllers.getFacebookUserData);
-
-// GET /auth/google
-//   Use passport.authenticate() as route middleware to authenticate the
-//   request.  The first step in Google authentication will involve redirecting
-//   the user to google.com.  After authorization, Google will redirect the user
-//   back to this application at /auth/google/callback
-router.get('/google', controllers.googleAuthController);
-
-// GET /auth/google/callback
-//   Use passport.authenticate() as route middleware to authenticate the
-//   request.  If authentication fails, the user will be redirected back to the
-//   login page.  Otherwise, the primary route function function will be called,
-//   which, in this example, will redirect the user to the home page.
-router.get('/google/callback', controllers.googleAuthCallback);
-
-router.get('/google-user-data/:googleId', controllers.getGoogleUserData);
+const controllers = require('../Controller');
 
 // @route
 // @ GET api/users/profile/view
 // !access  anonymous
-router.get(
-    '/profile/view',
+router.post(
+    '/',
     [
+        validateMiddleware(addUnitValidation),
         authenticateMiddleware,
-        authorizeMiddleware([PERMISSIONS.RENTER, PERMISSIONS.HOUSE_OWNER])
+        authorizeMiddleware([PERMISSIONS.HOUSE_OWNER])
     ],
-    controllers.getUserProfile
+    controllers.addUnit
 );
 
-// @route
-// @ PUT api/users/profile/edit
-// !access  anonymous
-router.put(
-    '/profile/edit',
+
+// router.put(
+//     '/hide/:id',
+//     [
+//         validateMiddleware(hideUnitValidation),
+//         authenticateMiddleware,
+//         authorizeMiddleware([PERMISSIONS.HOUSE_OWNER])
+//     ],
+//     controllers.hideUnit
+// );
+
+// router.put(
+//     '/unhide/:id',
+//     [
+//         validateMiddleware(unhideUnitValidation),
+//         authenticateMiddleware,
+//         authorizeMiddleware([PERMISSIONS.HOUSE_OWNER])
+//     ],
+//     controllers.unhideUnit
+// );
+
+router.delete(
+    '/:id',
     [
-        validateMiddleware(updateProfile),
+        validateMiddleware(deleteUnitValidation),
         authenticateMiddleware,
-        authorizeMiddleware([PERMISSIONS.RENTER, PERMISSIONS.HOUSE_OWNER])
+        authorizeMiddleware([PERMISSIONS.HOUSE_OWNER])
     ],
-    controllers.updateUserProfile
+    controllers.deleteUnit
 );
 
-// @route
-// @ GET api/users/houseOwner
-// !access  anonymous
-router.get(
-    '/houseOwner/:id',
-    [
-        validateMiddleware(getHouseOwnerInfo),
-        authenticateMiddleware,
-        authorizeMiddleware([PERMISSIONS.RENTER, PERMISSIONS.ADMIN])
-    ],
-    controllers.getHouseOwnerInfo
-);
+// router.get(
+//     '/',
+//     [
+//         validateMiddleware(getUnits),
+//         authenticateMiddleware,
+//         authorizeMiddleware([PERMISSIONS.RENTER])
+//     ],
+//     controllers.getUnits
+// );
 
-// @route
-// @ GET api/users/houseOwner/ci
-// !access  anonymous
-router.get(
-    '/houseOwner/ci/:id',
-    [
-        validateMiddleware(getHouseOwnerInfo),
-        authenticateMiddleware,
-        authorizeMiddleware([PERMISSIONS.RENTER, PERMISSIONS.ADMIN])
-    ],
-    controllers.getHouseOwnerInfoWithCi
-);
+// router.get(
+//     '/recommended',
+//     [
+//         validateMiddleware(getRecommendedUnits),
+//         authenticateMiddleware,
+//         authorizeMiddleware([PERMISSIONS.RENTER])
+//     ],
+//     controllers.getRecommendedUnits
+// );
+
+// router.get(
+//     '/:id',
+//     [
+//         validateMiddleware(getUnit),
+//         authenticateMiddleware,
+//         authorizeMiddleware([PERMISSIONS.RENTER])
+//     ],
+//     controllers.getUnit
+// );
+
+// router.post(
+//     '/rate',
+//     [
+//         validateMiddleware(rateUnit),
+//         authenticateMiddleware,
+//         authorizeMiddleware([PERMISSIONS.RENTER])
+//     ],
+//     controllers.rateunit
+// );
+
+// router.put(
+//     '/',
+//     [
+//         validateMiddleware(editUnit),
+//         authenticateMiddleware,
+//         authorizeMiddleware([PERMISSIONS.HOUSE_OWNER, PERMISSIONS.ADMIN])
+//     ],
+//     controllers.editUnit
+// );
+
+// router.put(
+//     '/availability',
+//     [
+//         validateMiddleware(editUnitAvailability),
+//         authenticateMiddleware,
+//         authorizeMiddleware([PERMISSIONS.HOUSE_OWNER, PERMISSIONS.ADMIN])
+//     ],
+//     controllers.editUnitAvailability
+// );
 
 module.exports = router;

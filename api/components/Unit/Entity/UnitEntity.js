@@ -1,97 +1,214 @@
-const mongoose = require('mongoose');
-
-const { ObjectId } = mongoose.Types;
 // TODO: should be injected only
+const bcjs = require('bcryptjs');
+const mongoose = require('mongoose');
+const jsonwebtoken = require('jsonwebtoken');
+const Promise = require('bluebird');
+const { PERMISSIONS } = require('../../../shared/constants/defaults');
+
+const _jwt = Promise.promisifyAll(jsonwebtoken);
+const __ObjectId = mongoose.Types.ObjectId;
+
+const { ApplicationError: AppError } = require('../../../shared/errors');
 
 // this require only for auto-complete
-const Model = require('../Models/index');
+const Model = require('../Models');
 
 // Inject dependency !no-requires
-const buildUnitEntity = () => {
+const buildUnitEntity = (
+  obj = {
+    bcrypt: bcjs,
+    ApplicationError: AppError,
+    ObjectId: __ObjectId,
+    jwt: _jwt,
+    _,
+    pendingStatus
+  }
+) => {
+  // eslint-disable-next-line no-unused-vars
+  const { bcrypt, ApplicationError, ObjectId, jwt, _, pendingStatus } = obj;
   class UnitEntity {
-    constructor(
-      renter = '',
-      owner = '',
-      unit = '',
-      from = '',
-      to = '',
-      cost = '',
-      state = '',
-      _id = ObjectId()
-    ) {
-      this.id = _id;
-      this.renter = renter;
-      this.owner = owner;
-      this.unit = unit;
-      this.from = from;
-      this.to = to;
-      this.cost = cost;
-      this.state = state;
-    }
-
     static async loadEntityFromDbById(id) {
       const exists = await Model.getOneById({ id });
-      if (exists) return new UnitEntity({ ...exists });
+      if (exists) return new UnitEntity(exists);
       return undefined;
     }
 
-    static async validReservationOrNot(unitId, from, to) {
-      const one = Model.getOne({
-        unit: unitId,
-        from: { $lte: from },
-        to: { $gte: to }
+    static async loadEntityFromDbByFacebookId(facebookId) {
+      const exists = await Model.getOne({ query: { facebookId } });
+      if (exists) return new UnitEntity(exists);
+      return undefined;
+    }
+
+    static async loadEntityFromDbByGoogleId(googleId) {
+      const exists = await Model.getOne({ query: { googleId } });
+      if (exists) return new UnitEntity(exists);
+      return undefined;
+    }
+
+    static async loadEntityFromDbByPhone(phone) {
+      const exists = await Model.getOne({
+        query: { phone }
       });
-      if (one) {
-        return false;
+      if (exists) return new UnitEntity(exists);
+      return undefined;
+    }
+
+    constructor(
+      data = {
+        userId: String,
+        description: String,
+        image: String,
+        currency: String,
+        address: {
+          government: String,
+          street: String,
+          nearTo: String,
+          highlight: String,
+          houseNumber: Number,
+          apartmentNumber: Number,
+          floorNumber: Number
+        },
+        type: String,
+        rentersType: String,
+        numberOfPeople: Number,
+        numberOfRooms: Number,
+        hasFurniture: Boolean,
+        availableCountNow: Number,
+        pricePerPerson: String,
+        daiyOrMonthly: String,
+        highlight: String,
+        availability: Array,
+        services: Array,
+        ownerTerms: Array,
+        gallery: Array,
+        status: String
       }
-      return true;
+    ) {
+      this.id = data.id || data._id || new ObjectId();
+      this.userId = data.userId || '';
+      this.type = data.type || '';
+      this.rentersType = data.rentersType || '';
+      this.description = data.description || '';
+      this.image = data.image || '';
+      this.currency = data.currency || '';
+      this.numberOfPeople = data.numberOfPeople || 0;
+      this.numberOfRooms = data.numberOfRooms || 0;
+      this.hasFurniture = data.hasFurniture || false;
+      this.availableCountNow = data.availableCountNow || 0;
+      this.pricePerPerson = data.pricePerPerson || 0;
+      this.daiyOrMonthly = data.daiyOrMonthly || '';
+      this.highlight = data.highlight || '';
+      this.availability = data.availability || [];
+      this.services = data.services || [];
+      this.ownerTerms = data.ownerTerms || [];
+      this.gallery = data.gallery || [];
+      this.status = data.status || '';
+      if (data.address) {
+        this.address = {
+          government: data.address.government || '',
+          street: data.address.street || '',
+          nearTo: data.address.nearTo || '',
+          highlight: data.address.highlight || '',
+          houseNumber: data.address.houseNumber || 1,
+          apartmentNumber: data.address.apartmentNumber || 1,
+          floorNumber: data.address.floorNumber || 1
+        };
+      } else {
+        this.address = {
+          government: '',
+          street: '',
+          nearTo: '',
+          highlight: '',
+          houseNumber: 1,
+          apartmentNumber: 1,
+          floorNumber: 1
+        };
+      }
+      this.rates = data.rates || [];
+      this.totalRate = data.totalRate || 0;
+      this.totalUsersRated = data.totalUsersRated || 0;
+      this.status = data.status || pendingStatus;
+      this.note = data.note || '';
+      this.totalOnlineBooking = data.totalOnlineBooking || 0;
+      this.totalRevenue = data.totalRevenue || 0;
+      this.isHidden = data.isHidden || false;
+      this.isArchived = data.isArchived || false;
     }
 
-    // TODO
-    // here you need to adding shared method
-    // like:
-    // 1 - getting all request intersect with the same request
-    async gettingIntersectAndUpdateState(filter, newState) {
-      const newFilter = {
-        ...{
-          unit: this.unit,
-          from: { $lte: this.from },
-          to: { $gte: this.to }
-        },
-        ...filter
-      };
-      const ret = await Model.updateManyByFilter({
-        filter: newFilter,
-        update: { state: newState }
+    async save() {
+      await Model.upsertOneById({
+        id: this.id,
+        update: this.mapToDb()
       });
-      return ret;
     }
 
-    async gettingIntersectWithFilter(filter) {
-      const newFilter = {
-        ...{
-          unit: this.unit,
-          from: { $lte: this.from },
-          to: { $gte: this.to }
-        },
-        ...filter
-      };
-      let ret = await Model.getMany({
-        filter: newFilter
-      });
-      ret = ret.forEach(request => {
-        return new UnitEntity(request);
-      });
-      return ret;
-    }
-
-    async updateState() {
-      Model.updateOneById({ id: this.id, update: this.toJson() });
-    }
-
+    // used by other services
     toJson() {
       return {
-        state: this.state
+        id: this.id,
+        userId: this.userId,
+        type: this.type,
+        description: this.description,
+        image: this.image,
+        currency: this.currency,
+        address: this.address,
+        rentersType: this.rentersType,
+        numberOfPeople: this.numberOfPeople,
+        numberOfRooms: this.numberOfRooms,
+        hasFurniture: this.hasFurniture,
+        availableCountNow: this.availableCountNow,
+        pricePerPerson: this.pricePerPerson,
+        daiyOrMonthly: this.daiyOrMonthly,
+        highlight: this.highlight,
+        availability: this.availability,
+        services: this.services,
+        ownerTerms: this.ownerTerms,
+        gallery: this.gallery,
+      };
+    }
+
+    // ! need to be private
+    mapToDb() {
+      return {
+        userId: this.userId,
+        name: this.name,
+        phone: this.phone,
+        email: this.email,
+        managerEmail: this.managerEmail,
+        description: this.description,
+        image: this.image,
+        currency: this.currency,
+        address: {
+          government: this.address.government,
+          street: this.address.street,
+          nearTo: this.address.nearTo,
+          highlight: this.address.highlight,
+          houseNumber: this.address.houseNumber,
+          apartmentNumber: this.address.apartmentNumber,
+          floorNumber: this.address.floorNumber
+        },
+        type: this.type,
+        rentersType: this.rentersType,
+        numberOfPeople: this.numberOfPeople,
+        numberOfRooms: this.numberOfRooms,
+        hasFurniture: this.hasFurniture,
+        availableCountNow: this.availableCountNow,
+        pricePerPerson: this.pricePerPerson,
+        daiyOrMonthly: this.daiyOrMonthly,
+        highlight: this.highlight,
+        availability: this.availability,
+        services: this.services,
+        ownerTerms: this.ownerTerms,
+        gallery: this.gallery,
+        rates: this.rates,
+        totalRate: this.totalRate,
+        totalUsersRated: this.totalUsersRated,
+        status: this.status,
+        note: this.note,
+        totalOnlineBooking: this.totalOnlineBooking,
+        totalRevenue: this.totalRevenue,
+        isHidden: this.isHidden,
+        isArchived: this.isArchived
       };
     }
   }

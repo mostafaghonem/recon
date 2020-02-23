@@ -40,11 +40,26 @@ module.exports = {
     RECEIVED: 'received',
     REFUSED: 'refused'
   },
-  UnitState: {
-    SEND: 'send',
-    ACCEPT_BY_ADMIN: 'accept_by_admin',
-    PENDING_UPDATE: 'pending_update',
-    REFUSED: 'refused'
+  UNIT_TYPES: {
+    BED: 'bed',
+    ROOM: 'room',
+    APPARTEMENT: 'appartement'
+  },
+  UNIT_SERVICES: {
+    BUTANE: 'butane',
+    HEATER: 'heater',
+    TV: 'tv',
+    AIR_CONDITIONING: 'air_conditioning',
+    FRIDGE: 'fridge',
+    BED: 'bed',
+    BATHTUB: 'bathtub',
+    COFFE_MACHINE: 'coffe_machine',
+    DESK: 'desk',
+    DISHWASHER: 'dishwasher',
+    CLOSET: 'closet',
+    MICROWAVE: 'microwave',
+    GARAGE: 'garage',
+    WASHING_MACHINE: 'washing_machine'
   },
   FREESERVICES: {
     FREE_AIRPORT_TRANSFERS: 'free_airport_transfers',
@@ -154,5 +169,10 @@ module.exports = {
   ROOMS_STATUS: {
     AVAILABLE: 'available',
     BOOKED: 'booked'
+  },
+  RENTERS_TYPES: {
+    BOYS: 'boys',
+    GIRLS: 'girls',
+    FAMILY: 'family'
   }
 };

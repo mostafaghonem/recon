@@ -5,59 +5,69 @@ const { ObjectId } = mongoose.Types;
 module.exports = ({
   rentersType,
   unitTypes,
-  dailyOrMonthly,
-  requestStates,
+  PricePer,
+  requestStatus,
+  pendingStatus,
   currencies,
-  unitFacilities
+  unitServices
 }) => {
   const Unit = new Schema(
     {
-      owner: {
+      userId: {
         type: ObjectId,
-        required: true
+        ref: 'User'
       },
       type: {
         type: String,
         enum: unitTypes,
         required: true
       },
-      renters_type: {
+      description: {
+        type: String,
+        required: true,
+        min: 5,
+        max: 500
+      },
+      image: {
+        type: String,
+        required: true
+      },
+      currency: {
+        type: String,
+        enum: currencies,
+        required: true
+      },
+      rentersType: {
         type: String,
         enum: rentersType,
         required: true
       },
-      number_of_people: {
+      numberOfPeople: {
         type: Number,
         required: true
       },
-      has_furniture: {
+      numberOfRooms: {
+        type: Number,
+        required: true
+      },
+      hasFurniture: {
         type: Boolean,
         default: false
       },
-      available_count: {
+      availableCountNow: {
         type: Number,
         default: 1
       },
-      price_per_person: {
+      pricePerPerson: {
         type: Number,
         required: true
       },
-      daiy_or_monthly: {
+      daiyOrMonthly: {
         type: String,
-        enum: dailyOrMonthly
+        enum: PricePer
       },
       highlight: {
         type: String
-      },
-      description: {
-        type: String,
-        min: 2,
-        max: 1000
-      },
-      currency: {
-        type: String,
-        default: currencies.EGP,
-        enum: currencies
       },
       availability: [
         {
@@ -71,7 +81,7 @@ module.exports = ({
       ],
       address: new Schema(
         {
-          governorate: {
+          government: {
             type: String,
             required: true
           },
@@ -79,21 +89,21 @@ module.exports = ({
             type: String,
             required: true
           },
-          street_close_by: {
+          nearTo: {
             type: String
           },
-          street_mark: {
+          highlight: {
             type: String
           },
-          unit_house_number: {
+          houseNumber: {
             type: String,
             required: true
           },
-          unit_number: {
+          apartmentNumber: {
             type: String,
             required: true
           },
-          unit_floor: {
+          floorNumber: {
             type: String,
             required: true
           }
@@ -102,34 +112,48 @@ module.exports = ({
           _id: false
         }
       ),
-      facilities: [
+      services: [
         {
           type: String,
-          enum: unitFacilities
+          enum: unitServices
         }
       ],
-      owner_terms: [
+      ownerTerms: [
         {
           type: String,
           min: 2,
           max: 255
         }
       ],
-      image: {
-        type: String
-      },
       gallery: [
         {
           type: String
         }
       ],
-      state: {
+      status: {
         type: String,
-        enum: requestStates
+        enum: requestStatus,
+        default: pendingStatus
       },
       reasonOfRefuse: {
         type: String,
         default: 'there is an request accept in your time before'
+      },
+      totalOnlineBooking: {
+        type: Number,
+        default: 0
+      },
+      totalRevenue: {
+        type: Number,
+        default: 0
+      },
+      isHidden: {
+        type: Boolean,
+        default: false
+      },
+      isArchived: {
+        type: Boolean,
+        default: false
       }
     },
     {

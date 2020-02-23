@@ -1,12 +1,22 @@
 const makeUnitScheme = require('./UnitSchema');
 const { defaultConstants } = require('../../../shared/constants');
 
-const UnitState = Object.values(defaultConstants.UnitState);
+const unitTypes = Object.values(defaultConstants.UNIT_TYPES);
+const unitServices = Object.values(defaultConstants.UNIT_SERVICES);
+const rentersType = Object.values(defaultConstants.RENTERS_TYPES);
 
-const UnitTypes = Object.values(defaultConstants.UnitTypes);
-
+const currencies = Object.values(defaultConstants.CURRENCIES);
+const requestStatus = Object.values(defaultConstants.REQUEST_STATUS);
+const PricePer = Object.values(defaultConstants.PRICE_PER);
+const pendingStatus = require('../../../shared/constants/defaults')
+  .REQUEST_STATUS;
 
 module.exports = makeUnitScheme({
-  requestStates: UnitState,
-  unitTypes: UnitTypes,
+  rentersType,
+  unitTypes,
+  PricePer,
+  requestStatus,
+  pendingStatus: pendingStatus.PENDING,
+  currencies,
+  unitServices
 });

@@ -1,42 +1,121 @@
-// Welcome to you in salah zoon please don't edit any part in this code :DD
-// There is three main use case here
-/*
-    TODO
-    
-     
-    1 - getting un-available times over single unit
-        : get all request with state done or received
-        : and with data larger than current data
-    2 - when user select from - to reservation stamp 
-        : need to cal the cost of his reservation and retrieve it to front
-        ** less (need to get some data from unit schema)
-    3 - adding request 
-        : need to check if this request have intersect with same unit and over 
-        from to with another request with state payed or received
+/**
+ * ! You should require any other external-use-cases or any dependency needed in any use-case here in index and inject it to the method wrapper
+ *
+ * ! if you need to throw Error use throw new ApplicationError() and will handle the rest in express catcher
+ */
+
+const logger = require('../../../startup/logger');
+const { ApplicationError } = require('../../../shared/errors');
+const { REQUEST_RESPONSE } = require('../../../shared/constants/defaults');
+const { ROOMS_STATUS } = require('../../../shared/constants/defaults');
+// const {
+//     getReservedRoomCountByHotels,
+//     isGroupBusyInDateTs
+// } = require('../../UnitReservation/unit-reservation-external-use-cases');
+
+const makeAddUnit = require('./add-unit');
+const makeDeleteUnit = require('./delete-unit');
+// const makeAddUnitRooms = require('./add-unit-rooms');
+// const makeHideUnit = require('./hide-unit');
+// const makeUnhideUnit = require('./unhide-unit');
+// const makeGetUnits = require('./get-units');
+// const makeGetRecommendedUnits = require('./get-recommended-units');
+// const makeEditUnit = require('./edit-unit');
+// const makeEditUnitRooms = require('./edit-unit-rooms');
+// const makeEditUnitAvailability = require('./edit-unit-availability');
+// const makeGetUnit = require('./get-unit');
+// const makeRateUnit = require('./rate-unit');
+const {
+    addUploadedUnitsRequests
+} = require('../../UploadedUnitRequests/UploadedUnitsRequests-external-use-cases');
+
+const addUnit = makeAddUnit({
+    ApplicationError,
+    logger,
+    addUploadedUnitsRequests,
+    accepted: REQUEST_RESPONSE.ACCEPTED
+});
 
 
+const deleteUnit = makeDeleteUnit({
+    ApplicationError,
+    logger
+});
 
-    4 - getting request with filter like:
-        : get all request to admin with pagination and search
-        : get all request to renter renter id with pagination and search
-        : get all request to unit it self with pagination and search
+// const hideUnit = makeHideUnit({
+//   ApplicationError,
+//   logger
+// });
 
+// const unhideUnit = makeUnhideUnit({
+//   ApplicationError,
+//   logger
+// });
 
-    5 - accept request from admin 
-        : here we can update the request state as "acceptBYAdmin" 
-
-
-    6 - accept request from owner 
-        : update the request state to "acceptByOwner"
-        : here we need to gel all request with intersect with this request 
-        : update its state to pending 
-    7 - refuse request from Owner for any reason but all before payed
-        : update the request to "refuse"
-        : getting all request that is pending 
-        and have no intersect with accepted request and made it "send"
-    8 - renter accept pay
-        : update request to "PAYED"
-        : get all request that intersect with this request and made it "refuse"
+// const addUnitRooms = makeAddUnitRooms({
+//   ApplicationError,
+//   logger
+// });
 
 
-*/
+// const getUnits = makeGetUnits({
+//   ApplicationError,
+//   logger,
+//   getReservedRoomCountByHotels,
+//   accepted: REQUEST_RESPONSE.ACCEPTED
+// });
+
+// const getRecommendedUnits = makeGetRecommendedUnits({
+//   ApplicationError,
+//   logger,
+//   getReservedRoomCountByHotels,
+//   accepted: REQUEST_RESPONSE.ACCEPTED
+// });
+
+// const editUnit = makeEditUnit({
+//   ApplicationError,
+//   logger
+// });
+
+// const editUnitRooms = makeEditUnitRooms({
+//   ApplicationError,
+//   logger
+// });
+
+// const editUnitAvailability = makeEditUnitAvailability({
+//   ApplicationError,
+//   logger,
+//   isGroupBusyInDateTs,
+//   roomsStatus: ROOMS_STATUS
+// });
+
+// const getUnit = makeGetUnit({
+//   ApplicationError,
+//   logger,
+//   getReservedRoomCountByHotels,
+//   accepted: REQUEST_RESPONSE.ACCEPTED
+// });
+
+// const rateUnit = makeRateUnit({
+//   ApplicationError,
+//   logger,
+//   accepted: REQUEST_RESPONSE.ACCEPTED
+// });
+
+const unitsUseCases = {
+    addUnit,
+    deleteUnit
+    //   addUnitRooms,
+    //   hideUnit,
+    //   unhideUnit,
+    //   deleteUnit,
+    //   getUnits,
+    //   getRecommendedUnits,
+    //   editUnit,
+    //   editUnitRooms,
+    //   editUnitAvailability,
+    //   getUnit,
+    //   rateUnit
+};
+
+module.exports = unitsUseCases;
