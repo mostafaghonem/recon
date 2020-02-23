@@ -7,6 +7,10 @@ module.exports = ({ redis }) => {
       _user.facebookId
     );
     if (!user) {
+      console.log(
+        `face-book-login-service-_user ${JSON.stringify(_user, undefined, 4)}`
+      );
+
       // @REVIEW == too long time
       await redis.setexAsync(
         `${_user.id}-fb-data`,

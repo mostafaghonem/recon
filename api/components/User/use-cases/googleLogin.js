@@ -5,6 +5,10 @@ module.exports = ({ redis }) => {
   const googleLoginSetter = async _user => {
     const user = await UserEntity.loadEntityFromDbByGoogleId(_user.id);
     if (!user) {
+      console.log(
+        `google-login-service-_user ${JSON.stringify(_user, undefined, 4)}`
+      );
+
       // eslint-disable-next-line no-param-reassign
       _user.fullName = _user.displayName;
       // eslint-disable-next-line no-param-reassign
