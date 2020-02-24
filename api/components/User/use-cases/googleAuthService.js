@@ -15,10 +15,6 @@ module.exports = ({ passport, GoogleStrategy }) => () => {
         callbackURL: `${process.env.BASE_URL}/api/users/google/callback`
       },
       (token, tokenSecret, profile, done) => {
-        console.log(
-          `google-auth-service-profile ${JSON.stringify(profile, undefined, 4)}`
-        );
-
         done(null, profile);
       }
     )
