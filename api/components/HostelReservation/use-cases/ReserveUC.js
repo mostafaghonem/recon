@@ -23,7 +23,8 @@ module.exports = ({
   shouldPayPrice,
   totalReservedCount,
   rooms,
-  reserveDatets = new Date().getTime()
+  reserveDatets = new Date().getTime(),
+  paymentMethod = 'credit'
 }) => {
   const publisherClient = publisher.createClient({
     no_ready_check: true,
@@ -64,6 +65,10 @@ module.exports = ({
     JSON.stringify(reservationData)
   );
 
+  if (paymentMethod === 'credit') {
+    return { paymentId, shouldPay: reservationData.shouldPayPrice };
+  }
+
   const paymentSent = await processPayment({
     paymentId,
     payload: reservationData,
@@ -73,6 +78,8 @@ module.exports = ({
 
   if (!paymentSent)
     throw new ApplicationError(`This Reservation can't be processed`, 500);
+
+  // return 'payment request is sent';
 
   // !After payment processed successfully should call the following code in another external use-case passing paymentId
 
