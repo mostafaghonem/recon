@@ -8,6 +8,7 @@ const uploadedHostelsRequests = require('../components/uploadedHostelsRequests')
 const HostelReservation = require('../components/HostelReservation');
 const uploader = require('../components/uploader');
 const Units = require('../components/Unit');
+const Payment = require('../components/Payment');
 
 module.exports = app => {
   app.use('/', express.static(path.join(__dirname, '../../public')));
@@ -18,6 +19,7 @@ module.exports = app => {
   app.use('/api/requests/uploaded/hostels', uploadedHostelsRequests.Router);
   app.use('/api/hostel-reservations', HostelReservation.Router);
   app.use('/api/units', Units.Router);
+  app.use('/api/payment', Payment.Router);
   app.use(ErrorHandler.catch404Errors);
   app.use(ErrorHandler.handleUnexpectedErrors);
 };
