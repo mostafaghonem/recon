@@ -13,6 +13,18 @@ module.exports = ({
   foodServices
 }) => ({ query }) => {
   const error = {};
+  if (query.freeServices)
+    query.freeServices = String(query.freeServices).split(',');
+  if (query.generalServices)
+    query.generalServices = String(query.generalServices).split(',');
+  if (query.hostelServices)
+    query.hostelServices = String(query.hostelServices).split(',');
+  if (query.entertainmentServices)
+    query.entertainmentServices = String(query.entertainmentServices).split(
+      ','
+    );
+  if (query.foodServices)
+    query.foodServices = String(query.foodServices).split(',');
   const scheme = {
     lastId: {
       value: query.lastId,
@@ -154,6 +166,13 @@ module.exports = ({
       (Number(ele.value) < 1 || Number(ele.value) > 50)
     )
       error[key] = ['limit should be between 1 and 50'];
+    if (
+      key === 'priceTo' &&
+      query.priceTo &&
+      query.priceFrom &&
+      Number(ele.value) < Number(query.priceFrom)
+    )
+      error[key] = ['priceTo should be greater than priceFrom'];
   });
 
   return { error: _.isEmpty(error) ? undefined : error };

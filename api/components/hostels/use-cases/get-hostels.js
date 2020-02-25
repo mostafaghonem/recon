@@ -39,7 +39,8 @@ module.exports = ({
     isHidden: false,
     isArchived: false
   };
-  if (government) query['address.government'] = government;
+  if (government)
+    query['address.government'] = String(government).toLowerCase();
   if (freeServices) query.freeServices = { $all: freeServices };
   if (generalServices) query.generalServices = { $all: generalServices };
   if (hostelServices) query.hostelServices = { $all: hostelServices };
@@ -47,7 +48,7 @@ module.exports = ({
     query.entertainmentServices = { $all: entertainmentServices };
   if (foodServices) query.foodServices = { $all: foodServices };
   if (rate) query.rate = { $gte: Number(rate) };
-  const select = 'name totalRate totalUsersRated rooms address.government';
+  const select = 'name image rate totalUsersRated rooms address.government';
   const sort = { createdAt: 1 };
   const hostels = await model.getMany({
     query,
@@ -59,29 +60,28 @@ module.exports = ({
   if (hostels && hostels.length !== 0) {
     const hostelsIds = [];
     hostels.map(hostel => hostelsIds.push(hostel._id));
-    const newAvailableFrom =
-      new Date(availableFrom).getTime() || new Date().getTime();
-    const newAvailableTo =
-      availableTo || new Date().setDate(new Date().getDate() + 1);
     const reservedHostels = await getReservedRoomCountByHotels(
       hostelsIds,
-      newAvailableFrom,
-      new Date(newAvailableTo).getTime()
+      availableFrom,
+      availableTo
     );
 
     let filteredHostels = [];
     hostels.forEach(hostel => {
-      hostel.totalRate = hostel.totalRate / hostel.totalUsersRated || 0;
       hostel.totalRooms = 0;
       hostel.totalAvailableRooms = 0;
       hostel.available = false;
       hostel.rooms = hostel.rooms.filter(
         group =>
-          group.Type === Type &&
           group.numberOfPersons >= (Number(numberOfPersons) || 0) &&
           group.pricePerPerson >= (Number(priceFrom) || 0) &&
           group.pricePerPerson <= (Number(priceTo) || 10000000000)
       );
+      if (Type)
+        hostel.rooms = hostel.rooms.filter(
+          group =>
+            String(group.Type).toLowerCase() === String(Type).toLowerCase()
+        );
       if (hostel.rooms[0]) {
         const getHostelData = reservedHostels.filter(
           reservedHostel => String(reservedHostel._id) === String(hostel._id)
@@ -114,8 +114,8 @@ module.exports = ({
             } else group.available = false;
           }
         });
+        filteredHostels.push(hostel);
       }
-      filteredHostels.push(hostel);
     });
     if (available)
       filteredHostels = filteredHostels.filter(hosetl => hosetl.available);

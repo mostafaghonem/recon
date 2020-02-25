@@ -23,7 +23,7 @@ module.exports = ({ ApplicationError, logger }) => async ({
     isArchived: false
   };
   const select =
-    'name image status address totalRate totalUsersRated totalOnlineBooking totalRevenue note';
+    'name image status address rate totalUsersRated totalOnlineBooking totalRevenue note';
   let sort = { createdAt: 1 };
   if (status !== 'pending') sort = { updatedAt: -1 };
   const hostels = await model.getMany({

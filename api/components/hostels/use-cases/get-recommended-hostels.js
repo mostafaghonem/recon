@@ -20,8 +20,9 @@ module.exports = ({
     isArchived: false
   };
 
-  const select = 'name totalRate totalUsersRated rooms address.government';
-  const sort = { createdAt: 1 };
+  const select =
+    'name image rate totalUsersRated rooms address.government createdAt';
+  const sort = { createdAt: -1 };
   const hostels = await model.getMany({
     query,
     select,
@@ -41,7 +42,6 @@ module.exports = ({
     );
     let filteredHostels = [];
     hostels.forEach(hostel => {
-      hostel.totalRate = hostel.totalRate / hostel.totalUsersRated || 0;
       hostel.totalRooms = 0;
       hostel.totalAvailableRooms = 0;
       hostel.available = false;
