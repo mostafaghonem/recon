@@ -1,6 +1,11 @@
 const Model = require('../Model');
 
-const paymentMethodMaker = ({ axios, ObjectId, completePayment }) => {
+const paymentMethodMaker = ({
+  axios,
+  ObjectId,
+  completePayment,
+  costOfOperation
+}) => {
   const getPaymentOperationToken = async reservationId => {
     {
       /** **********step1************** */
@@ -15,13 +20,14 @@ const paymentMethodMaker = ({ axios, ObjectId, completePayment }) => {
       );
       // console.log('done step1');
       const tokenFromStep1 = responseStep1.data.token;
+      const cost = await costOfOperation(reservationId);
 
       /** **********step2************** */
       const bodyStep2 = {
         auth_token: tokenFromStep1,
         delivery_needed: 'false',
         merchant_id: '4501',
-        amount_cents: 100,
+        amount_cents: cost * 100,
         currency: 'EGP',
         merchant_order_id: ObjectId(),
         items: []
@@ -38,7 +44,7 @@ const paymentMethodMaker = ({ axios, ObjectId, completePayment }) => {
       /** **********step3************** */
       const bodyStep3 = {
         auth_token: tokenFromStep1,
-        amount_cents: 100,
+        amount_cents: cost * 100,
         expiration: 3600,
         order_id: orderResponseId,
         billing_data: {
@@ -67,8 +73,13 @@ const paymentMethodMaker = ({ axios, ObjectId, completePayment }) => {
       return tokenFromStep3;
     }
   };
-
-  return { getPaymentOperationToken };
+  const confirmPayment = async orderId => {
+    const find = await Model.getOne({ query: { orderId } });
+    if (find) {
+      completePayment(find.reservationId);
+    }
+  };
+  return { getPaymentOperationToken, confirmPayment };
 };
 
 module.exports = paymentMethodMaker;
