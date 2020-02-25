@@ -31,7 +31,9 @@ const paymentMethodMaker = ({ axios, ObjectId }) => {
         bodyStep2
       );
       const orderResponseId = responseStep2.data.id;
-      await Model.createOne({ orderId: orderResponseId, reservationId });
+      await Model.createOne({
+        document: { orderId: orderResponseId, reservationId }
+      });
       // console.log('done step2');
       /** **********step3************** */
       const bodyStep3 = {
