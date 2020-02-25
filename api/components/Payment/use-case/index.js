@@ -1,9 +1,16 @@
 const axios = require('axios');
 const mongoose = require('mongoose');
+const {
+  completePayment
+} = require('../../HostelReservation/hostel-reservation-external-use-cases');
 
 const { ObjectId } = mongoose.Types;
 const paymentUseCaseMaker = require('./paymentUseCase');
 
-const { getPaymentOperationToken } = paymentUseCaseMaker({ axios, ObjectId });
+const { getPaymentOperationToken, confirmPayment } = paymentUseCaseMaker({
+  axios,
+  ObjectId,
+  completePayment
+});
 
-module.exports = { getPaymentOperationToken };
+module.exports = { getPaymentOperationToken, confirmPayment };
