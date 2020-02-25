@@ -16,4 +16,6 @@ router.post(
   controller.paymentToken
 );
 
+router.get('/call-back-transaction', controller.paymentToken);
+
 module.exports = router;
