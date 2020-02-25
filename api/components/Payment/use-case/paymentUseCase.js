@@ -1,6 +1,6 @@
 const Model = require('../Model');
 
-const paymentMethodMaker = ({ axios, ObjectId }) => {
+const paymentMethodMaker = ({ axios, ObjectId, completePayment }) => {
   const getPaymentOperationToken = async reservationId => {
     {
       /** **********step1************** */
@@ -21,7 +21,7 @@ const paymentMethodMaker = ({ axios, ObjectId }) => {
         auth_token: tokenFromStep1,
         delivery_needed: 'false',
         merchant_id: '4501',
-        amount_cents: 1,
+        amount_cents: 100,
         currency: 'EGP',
         merchant_order_id: ObjectId(),
         items: []
@@ -38,7 +38,7 @@ const paymentMethodMaker = ({ axios, ObjectId }) => {
       /** **********step3************** */
       const bodyStep3 = {
         auth_token: tokenFromStep1,
-        amount_cents: 1,
+        amount_cents: 100,
         expiration: 3600,
         order_id: orderResponseId,
         billing_data: {
@@ -67,6 +67,7 @@ const paymentMethodMaker = ({ axios, ObjectId }) => {
       return tokenFromStep3;
     }
   };
+
   return { getPaymentOperationToken };
 };
 
