@@ -9,10 +9,13 @@ exports.paymentToken = async (req, res) => {
 };
 
 exports.transactionProcess = async (req, res) => {
-  const id = req.query.id;
-  const txnResponseCode = req.query.txn_response_code;
-  const success = req.query.success;
-  console.log(id, txnResponseCode, success);
-  console.log(req.query);
+  console.log('body transaction process', req.body);
+  console.log('Query transaction process', req.query);
   res.status(400).json('test');
+};
+
+exports.transactionProcessCallBack = async (req, res) => {
+  console.log('body transaction call back process', req.body);
+  console.log('Query transaction call back process', req.query);
+  res.status(200).json('test');
 };

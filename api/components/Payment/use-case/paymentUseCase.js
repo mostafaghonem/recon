@@ -4,6 +4,7 @@ const paymentMethodMaker = ({ axios, ObjectId }) => {
   const getPaymentOperationToken = async reservationId => {
     {
       /** **********step1************** */
+      // console.log('start step1');
       const token =
         'ZXlKMGVYQWlPaUpLVjFRaUxDSmhiR2NpT2lKSVV6VXhNaUo5LmV5SndjbTltYVd4bFgzQnJJam8wTlRBeExDSmpiR0Z6Y3lJNklrMWxjbU5vWVc1MElpd2libUZ0WlNJNklqRTFOelV5TVRJNU9EZ3VORFU0TlRFM0luMC5TSFdLRlBnWFVBOENxWTRadWw0YnFWeEZkQzdDVU51N1MwSVlrdENIYW9MdS01NEFlR1RYMUs1aFlxTVliTVk2X0xvWXhSQ0NsSmFMdGMyY1gwOW9iQQ==';
       const responseStep1 = await axios.default.post(
@@ -12,7 +13,7 @@ const paymentMethodMaker = ({ axios, ObjectId }) => {
           api_key: token
         }
       );
-
+      // console.log('done step1');
       const tokenFromStep1 = responseStep1.data.token;
 
       /** **********step2************** */
@@ -31,8 +32,8 @@ const paymentMethodMaker = ({ axios, ObjectId }) => {
       );
       const orderResponseId = responseStep2.data.id;
       await Model.createOne({ orderId: orderResponseId, reservationId });
-
-      /** **********step2************** */
+      // console.log('done step2');
+      /** **********step3************** */
       const bodyStep3 = {
         auth_token: tokenFromStep1,
         amount_cents: 1,
@@ -54,7 +55,7 @@ const paymentMethodMaker = ({ axios, ObjectId }) => {
           state: 'Utah'
         },
         currency: 'EGP',
-        integration_id: 8310
+        integration_id: 8310 // number of integration
       };
       const responseStep3 = await axios.default.post(
         'https://accept.paymobsolutions.com/api/acceptance/payment_keys',
