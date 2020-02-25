@@ -12,7 +12,7 @@ module.exports = ({
 }) => async id => {
   const query = { _id: id, status: accepted, isArchived: false };
   const select =
-    'name description image currency address freeServices generalServices hostelServices entertainmentServices foodServices rooms totalRate totalUsersRated';
+    'name description image currency address freeServices generalServices hostelServices entertainmentServices foodServices rooms rate totalUsersRated';
   const checkExistence = await model.getOne({ query, select });
   if (!checkExistence)
     throw new ApplicationError('.نأسف ، لا يمكننا العثور على هذا الفندق', 403);
@@ -60,18 +60,18 @@ module.exports = ({
       }
     });
   }
-  checkExistence.totalRate =
-    checkExistence.totalRate / checkExistence.totalUsersRated || 0;
   checkExistence.similarHostels = [];
 
   const filter = {
     _id: { $ne: checkExistence._id },
     status: accepted,
-    'address.government': checkExistence.address.government,
+    'address.government': String(
+      checkExistence.address.government
+    ).toLowerCase(),
     isHidden: false,
     isArchived: false
   };
-  const project = 'name totalRate totalUsersRated rooms address.government';
+  const project = 'name image rate totalUsersRated rooms address.government';
   const sort = { createdAt: 1 };
   const hostels = await model.getMany({
     query: filter,
@@ -92,10 +92,7 @@ module.exports = ({
       newAvailableFrom,
       new Date(newAvailableTo).getTime()
     );
-
-    const filteredHostels = [];
     hostels.forEach(hostel => {
-      hostel.totalRate = hostel.totalRate / hostel.totalUsersRated || 0;
       hostel.totalRooms = 0;
       hostel.totalAvailableRooms = 0;
       hostel.available = false;

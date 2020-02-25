@@ -43,7 +43,7 @@ module.exports = ({
     image,
     currency,
     address: {
-      government: address.government,
+      government: String(address.government).toLowerCase(),
       street: address.street,
       nearTo: address.nearTo,
       highlight: address.highlight,

@@ -196,6 +196,10 @@ module.exports = ({
           { _id: false }
         )
       ],
+      rate: {
+        type: Number,
+        default: 0
+      },
       totalRate: {
         type: Number,
         default: 0
