@@ -17,6 +17,18 @@ module.exports = ({ GenericModel = _GenericModel }) => {
       return this.exists({ filter: { $or: orOp } });
     }
 
+    getUsersWithIds(usersIds) {
+      return this.getMany({
+        query: { _id: { $in: usersIds } }
+      });
+    }
+
+    getUsersWithPhoneSearch(phone) {
+      return this.getMany({
+        query: { phone: { $in: [new RegExp(`^${phone}`, 'i')] } }
+      });
+    }
+
     anotherSpecificModelFunc() {
       return this.getAggregate([
         {

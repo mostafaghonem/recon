@@ -9,10 +9,16 @@ const makeAdminViewUC = require('./AdminViewUC');
 const makeRenterViewUC = require('./RenterViewUC');
 const makeHostelViewUC = require('./HostelViewUC');
 const {
+  getUsersByIds,
+  getUsersByPhone
+} = require('../../User/user-external-use-cases');
+
+// getRenterDataWithPhoneSearch,
+// getRenterDataWithIds,
+const {
   checkAndCalculateReservationCost,
-  getHostelsDataFromIds,
-  getRenterDataWithPhoneSearch,
-  processPayment
+  processPayment,
+  getHostelsDataFromIds
 } = require('./__mocks');
 
 module.exports.ReserveUC = makeReserveUC({
@@ -28,20 +34,22 @@ module.exports.ReserveUC = makeReserveUC({
 module.exports.AdminViewUC = makeAdminViewUC({
   ApplicationError,
   logger,
-  getRenterDataWithPhoneSearch,
+  getRenterDataWithPhoneSearch: getUsersByPhone,
+  getRenterDataWithIds: getUsersByIds,
   getHostelsDataFromIds
 });
 
 module.exports.RenterViewUC = makeRenterViewUC({
   ApplicationError,
   logger,
-  getRenterDataWithPhoneSearch,
+  getRenterDataWithIds: getUsersByIds,
   getHostelsDataFromIds
 });
 
 module.exports.HostelViewUC = makeHostelViewUC({
   ApplicationError,
   logger,
-  getRenterDataWithPhoneSearch,
+  getRenterDataWithPhoneSearch: getUsersByPhone,
+  getRenterDataWithIds: getUsersByIds,
   getHostelsDataFromIds
 });

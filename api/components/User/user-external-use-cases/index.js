@@ -9,13 +9,27 @@ const logger = require('../../../startup/logger');
 const { ApplicationError } = require('../../../shared/errors');
 
 const makeUpdateIdentification = require('./update-identification');
+const makeGetUsersByIds = require('./get-users-data-with-ids');
+const makeGetUsersByPhone = require('./get-users-data-with-phone');
 
 const updateIdentification = makeUpdateIdentification({
   ApplicationError,
   logger
 });
 
+const getUsersByIds = makeGetUsersByIds({
+  logger,
+  ApplicationError
+});
+
+const getUsersByPhone = makeGetUsersByPhone({
+  logger,
+  ApplicationError
+});
+
 const UsersExternalService = Object.freeze({
+  getUsersByPhone,
+  getUsersByIds,
   updateIdentification
 });
 
