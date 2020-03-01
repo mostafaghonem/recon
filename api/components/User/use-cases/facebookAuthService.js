@@ -14,9 +14,6 @@ module.exports = ({ passport, FacebookStrategy }) => () => {
         profileFields: ['id', 'emails', 'name', 'picture.type(large)', 'gender']
       },
       async (accessToken, refreshToken, profile, done) => {
-        console.log('aaaaaaaaaaaaaaaaaaaaaaaaaa');
-        console.log(profile);
-        console.log('aaaaaaaaaaaaaaaaaaaaaaaaaa');
         const user = new UserEntity({
           facebookId: profile.id,
           fullName: `${profile.name.givenName} ${profile.name.familyName}`,

@@ -30,8 +30,8 @@ router.post(
   '/',
   [
     validateMiddleware(addHostelValidation),
-    authenticateMiddleware,
-    authorizeMiddleware([PERMISSIONS.HOUSE_OWNER])
+    authenticateMiddleware
+    // authorizeMiddleware([PERMISSIONS.HOUSE_OWNER])
   ],
   controllers.addHostel
 );
@@ -40,8 +40,8 @@ router.post(
   '/rooms',
   [
     validateMiddleware(addHostelRoomsValidation),
-    authenticateMiddleware,
-    authorizeMiddleware([PERMISSIONS.HOUSE_OWNER])
+    authenticateMiddleware
+    // authorizeMiddleware([PERMISSIONS.HOUSE_OWNER])
   ],
   controllers.addHostelRooms
 );
@@ -50,8 +50,8 @@ router.put(
   '/hide/:id',
   [
     validateMiddleware(hideHostelValidation),
-    authenticateMiddleware,
-    authorizeMiddleware([PERMISSIONS.HOUSE_OWNER])
+    authenticateMiddleware
+    // authorizeMiddleware([PERMISSIONS.HOUSE_OWNER])
   ],
   controllers.hideHostel
 );
@@ -60,8 +60,8 @@ router.put(
   '/unhide/:id',
   [
     validateMiddleware(unhideHostelValidation),
-    authenticateMiddleware,
-    authorizeMiddleware([PERMISSIONS.HOUSE_OWNER])
+    authenticateMiddleware
+    // authorizeMiddleware([PERMISSIONS.HOUSE_OWNER])
   ],
   controllers.unhideHostel
 );
@@ -70,8 +70,8 @@ router.delete(
   '/:id',
   [
     validateMiddleware(deleteHostelValidation),
-    authenticateMiddleware,
-    authorizeMiddleware([PERMISSIONS.HOUSE_OWNER])
+    authenticateMiddleware
+    // authorizeMiddleware([PERMISSIONS.HOUSE_OWNER])
   ],
   controllers.deleteHostel
 );
@@ -80,8 +80,8 @@ router.get(
   '/',
   [
     validateMiddleware(getHostels),
-    authenticateMiddleware,
-    authorizeMiddleware([PERMISSIONS.RENTER])
+    authenticateMiddleware
+    // authorizeMiddleware([PERMISSIONS.RENTER])
   ],
   controllers.getHostels
 );
@@ -90,8 +90,8 @@ router.get(
   '/recommended',
   [
     validateMiddleware(getRecommendedHostels),
-    authenticateMiddleware,
-    authorizeMiddleware([PERMISSIONS.RENTER])
+    authenticateMiddleware
+    // authorizeMiddleware([PERMISSIONS.RENTER])
   ],
   controllers.getRecommendedHostels
 );
@@ -100,8 +100,8 @@ router.get(
   '/:id',
   [
     validateMiddleware(getHostel),
-    authenticateMiddleware,
-    authorizeMiddleware([PERMISSIONS.RENTER])
+    authenticateMiddleware
+    // authorizeMiddleware([PERMISSIONS.RENTER])
   ],
   controllers.getHostel
 );
@@ -110,8 +110,8 @@ router.post(
   '/rate',
   [
     validateMiddleware(rateHostel),
-    authenticateMiddleware,
-    authorizeMiddleware([PERMISSIONS.RENTER])
+    authenticateMiddleware
+    // authorizeMiddleware([PERMISSIONS.RENTER])
   ],
   controllers.ratehostel
 );
@@ -120,8 +120,8 @@ router.put(
   '/',
   [
     validateMiddleware(editHostel),
-    authenticateMiddleware,
-    authorizeMiddleware([PERMISSIONS.HOUSE_OWNER, PERMISSIONS.ADMIN])
+    authenticateMiddleware
+    // authorizeMiddleware([PERMISSIONS.HOUSE_OWNER, PERMISSIONS.ADMIN])
   ],
   controllers.editHostel
 );
@@ -130,8 +130,8 @@ router.put(
   '/availability',
   [
     validateMiddleware(editHostelAvailability),
-    authenticateMiddleware,
-    authorizeMiddleware([PERMISSIONS.HOUSE_OWNER, PERMISSIONS.ADMIN])
+    authenticateMiddleware
+    // authorizeMiddleware([PERMISSIONS.HOUSE_OWNER, PERMISSIONS.ADMIN])
   ],
   controllers.editHostelAvailability
 );
@@ -140,8 +140,8 @@ router.put(
   '/rooms',
   [
     validateMiddleware(editHostelRooms),
-    authenticateMiddleware,
-    authorizeMiddleware([PERMISSIONS.HOUSE_OWNER, PERMISSIONS.ADMIN])
+    authenticateMiddleware
+    // authorizeMiddleware([PERMISSIONS.HOUSE_OWNER, PERMISSIONS.ADMIN])
   ],
   controllers.editHostelRooms
 );
