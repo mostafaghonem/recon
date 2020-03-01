@@ -57,7 +57,7 @@ module.exports = ({
     },
     identificationImages: {
       value: body.identificationImages,
-      rules: new Builder().required().isArray().rules
+      rules: new Builder().isArray().rules
     },
     code: {
       value: body.code,
