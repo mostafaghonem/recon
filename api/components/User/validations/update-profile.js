@@ -57,7 +57,7 @@ module.exports = ({
     },
     identificationImages: {
       value: body.identificationImages,
-      rules: new Builder().isArray().rules
+      rules: new Builder().rules
     },
     code: {
       value: body.code,
@@ -66,12 +66,16 @@ module.exports = ({
     // TODO: Edit error messages
   };
   if (body.identificationImages) {
-    body.identificationImages.forEach((url, index) => {
-      scheme[`body.identificationImages.${index}`] = {
-        value: url,
-        rules: new Builder().isURL('Should be a valid URL').rules
-      };
-    });
+    if (!_.isArray(body.identificationImages))
+      error.identificationImages = ['identificationImages should be array'];
+    else {
+      body.identificationImages.forEach((url, index) => {
+        scheme[`body.identificationImages.${index}`] = {
+          value: url,
+          rules: new Builder().isURL('Should be a valid URL').rules
+        };
+      });
+    }
   }
 
   Object.keys(scheme).forEach(key => {
