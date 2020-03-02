@@ -204,8 +204,8 @@ router.get(
   '/uploaded/hostels',
   [
     validateMiddleware(getUploadedHostels),
-    authenticateMiddleware,
-    authorizeMiddleware([PERMISSIONS.HOUSE_OWNER])
+    authenticateMiddleware
+    // authorizeMiddleware([PERMISSIONS.HOUSE_OWNER])
   ],
   controllers.getUploadedHostels
 );
@@ -217,8 +217,8 @@ router.get(
   '/uploaded/hostel/:id',
   [
     validateMiddleware(getUploadedHostelDetails),
-    authenticateMiddleware,
-    authorizeMiddleware([PERMISSIONS.HOUSE_OWNER])
+    authenticateMiddleware
+    // authorizeMiddleware([PERMISSIONS.HOUSE_OWNER])
   ],
   controllers.getUploadedHostelDetails
 );
