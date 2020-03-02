@@ -19,7 +19,6 @@
   },
 
   "rules": {
-    "prettier/prettier": ["error"],
     "no-console": "error",
     "no-restricted-globals": "warn",
     "no-mixed-spaces-and-tabs": "error",
