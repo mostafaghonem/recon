@@ -79,8 +79,8 @@ router.delete(
 router.get(
   '/',
   [
-    validateMiddleware(getHostels),
-    authenticateMiddleware
+    validateMiddleware(getHostels)
+    // authenticateMiddleware,
     // authorizeMiddleware([PERMISSIONS.RENTER])
   ],
   controllers.getHostels
@@ -89,8 +89,8 @@ router.get(
 router.get(
   '/recommended',
   [
-    validateMiddleware(getRecommendedHostels),
-    authenticateMiddleware
+    validateMiddleware(getRecommendedHostels)
+    // authenticateMiddleware,
     // authorizeMiddleware([PERMISSIONS.RENTER])
   ],
   controllers.getRecommendedHostels
@@ -99,8 +99,8 @@ router.get(
 router.get(
   '/:id',
   [
-    validateMiddleware(getHostel),
-    authenticateMiddleware
+    validateMiddleware(getHostel)
+    // authenticateMiddleware,
     // authorizeMiddleware([PERMISSIONS.RENTER])
   ],
   controllers.getHostel
