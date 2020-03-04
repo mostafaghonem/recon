@@ -1,6 +1,7 @@
 module.exports = {
   PAGINATION: {
-    LIMIT: 20
+    LIMIT: 20,
+    LAST_ID: '000000000000'
   },
   PERMISSIONS: {
     RENTER: 'renter',
@@ -59,7 +60,8 @@ module.exports = {
     CLOSET: 'closet',
     MICROWAVE: 'microwave',
     GARAGE: 'garage',
-    WASHING_MACHINE: 'washing_machine'
+    WASHING_MACHINE: 'washing_machine',
+    WIFI: 'wifi'
   },
   FREESERVICES: {
     FREE_AIRPORT_TRANSFERS: 'free_airport_transfers',

@@ -71,10 +71,10 @@ module.exports = ({
       },
       availability: [
         {
-          in: {
+          from: {
             type: Date
           },
-          out: {
+          to: {
             type: Date
           }
         }

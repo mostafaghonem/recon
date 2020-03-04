@@ -1,9 +1,10 @@
 const { defaultConstants } = require('../../../shared/constants');
 
-const pagination = Object.values(defaultConstants.PAGINATION);
+const pagination = Object.freeze(defaultConstants.PAGINATION);
 
 const makeAddUnitCtrl = require('./add-unit');
 const makeDeleteUnitCtrl = require('./delete-unit');
+const makeGetMyUnitsCtrl = require('./get-my-units');
 // const makeAddUnitRoomsCtrl = require('./add-unit-rooms');
 // const makeHideUnitCtrl = require('./hide-unit');
 // const makeUnhideUnitCtrl = require('./unhide-unit');
@@ -16,6 +17,7 @@ const makeDeleteUnitCtrl = require('./delete-unit');
 // ->
 const addUnit = makeAddUnitCtrl({});
 const deleteUnit = makeDeleteUnitCtrl({});
+const getMyUnits = makeGetMyUnitsCtrl({ pagination });
 // const hideUnit = makeHideUnitCtrl({});
 // const unhideUnit = makeUnhideUnitCtrl({});
 // const getUnits = makeGetUnitsCtrl({ pagination });
@@ -26,18 +28,18 @@ const deleteUnit = makeDeleteUnitCtrl({});
 // const rateUnit = makeRateUnitCtrl({});
 
 const unitsCtrl = Object.freeze({
-    addUnit,
-    deleteUnit
-
-    // hideUnit,
-    // unhideUnit,
-    // deleteUnit,
-    // getUnits,
-    // getRecommendedUnits,
-    // editUnit,
-    // editUnitAvailability,
-    // getUnit,
-    // rateUnit
+  addUnit,
+  deleteUnit,
+  getMyUnits
+  // hideUnit,
+  // unhideUnit,
+  // deleteUnit,
+  // getUnits,
+  // getRecommendedUnits,
+  // editUnit,
+  // editUnitAvailability,
+  // getUnit,
+  // rateUnit
 });
 
 module.exports = unitsCtrl;

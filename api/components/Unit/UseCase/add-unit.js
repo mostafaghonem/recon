@@ -62,7 +62,6 @@ module.exports = ({
             services,
             ownerTerms,
             gallery,
-            status,
             reasonOfRefuse,
             totalOnlineBooking,
             totalRevenue,
