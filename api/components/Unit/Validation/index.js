@@ -6,7 +6,8 @@ const { ObjectId } = mongoose.Types;
 const { defaultConstants } = require('../../../shared/constants');
 
 const makeAddunitValidation = require('./add-unit-validation');
-const makeDeleteunitValidation = require('./delete-unit-validation');
+const makeDeleteUnitValidation = require('./delete-unit-validation');
+const makeGetMyUnitsValidation = require('./get-my-units-validation');
 
 // const makeAddunitRoomsValidation = require('./add-unit-rooms-validation');
 // const makeHideunitValidation = require('./hide-unit-validation');
@@ -27,19 +28,26 @@ const currencies = Object.values(defaultConstants.CURRENCIES);
 const rentersType = Object.values(defaultConstants.RENTERS_TYPES);
 
 module.exports.addUnitValidation = makeAddunitValidation({
-    _,
-    ValidatorHelper,
-    Builder,
-    rentersType,
-    unitTypes,
-    PricePer,
-    currencies,
-    unitServices
+  _,
+  ValidatorHelper,
+  Builder,
+  rentersType,
+  unitTypes,
+  PricePer,
+  currencies,
+  unitServices
 });
 
-module.exports.deleteUnitValidation = makeDeleteunitValidation({
-    _,
-    ValidatorHelper,
-    Builder,
-    ObjectId
+module.exports.deleteUnitValidation = makeDeleteUnitValidation({
+  _,
+  ValidatorHelper,
+  Builder,
+  ObjectId
+});
+
+module.exports.getMyUnitsValidation = makeGetMyUnitsValidation({
+  _,
+  ValidatorHelper,
+  Builder,
+  ObjectId
 });

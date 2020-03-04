@@ -16,6 +16,45 @@ module.exports = ({ GenericModel = _GenericModel }) => {
       }
       return true;
     }
+
+    async getMyUnits(userId, lastId, limit) {
+      const query = {
+        userId,
+        _id: {
+          $gt: lastId
+        },
+        isHidden: false,
+        isArchived: false
+      };
+
+      const select =
+        'type image gallery daiyOrMonthly pricePerPerson status reasonOfRefuse address totalRate totalUsersRated totalOnlineBooking totalRevenue';
+      const sort = { createdAt: 1 };
+      const units = await this.getMany({
+        query,
+        select,
+        sort,
+        limit
+      });
+
+      const hasNext =
+        units && units.length
+          ? await this.checkHasNext(query, units[units.length - 1]._id)
+          : false;
+      return { hasNext, units };
+    }
+
+    async checkHasNext(query = {}, lastId) {
+      // eslint-disable-next-line no-param-reassign
+      query._id = {
+        $gt: lastId
+      };
+
+      const response = await this.getOne({
+        query
+      });
+      return response;
+    }
   }
   return new UnitModel(unitSchema);
 };

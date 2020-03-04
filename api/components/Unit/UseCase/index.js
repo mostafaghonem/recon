@@ -7,7 +7,6 @@
 const logger = require('../../../startup/logger');
 const { ApplicationError } = require('../../../shared/errors');
 const { REQUEST_RESPONSE } = require('../../../shared/constants/defaults');
-const { ROOMS_STATUS } = require('../../../shared/constants/defaults');
 // const {
 //     getReservedRoomCountByHotels,
 //     isGroupBusyInDateTs
@@ -15,6 +14,7 @@ const { ROOMS_STATUS } = require('../../../shared/constants/defaults');
 
 const makeAddUnit = require('./add-unit');
 const makeDeleteUnit = require('./delete-unit');
+const makeGetMyUnits = require('./get-my-units');
 // const makeAddUnitRooms = require('./add-unit-rooms');
 // const makeHideUnit = require('./hide-unit');
 // const makeUnhideUnit = require('./unhide-unit');
@@ -26,22 +26,24 @@ const makeDeleteUnit = require('./delete-unit');
 // const makeGetUnit = require('./get-unit');
 // const makeRateUnit = require('./rate-unit');
 const {
-    addUploadedUnitsRequests
+  addUploadedUnitsRequests
 } = require('../../UploadedUnitRequests/UploadedUnitsRequests-external-use-cases');
 
 const addUnit = makeAddUnit({
-    ApplicationError,
-    logger,
-    addUploadedUnitsRequests,
-    accepted: REQUEST_RESPONSE.ACCEPTED
+  ApplicationError,
+  logger,
+  addUploadedUnitsRequests,
+  accepted: REQUEST_RESPONSE.ACCEPTED
 });
-
 
 const deleteUnit = makeDeleteUnit({
-    ApplicationError,
-    logger
+  ApplicationError,
+  logger
 });
 
+const getMyUnits = makeGetMyUnits({
+  ApplicationError
+});
 // const hideUnit = makeHideUnit({
 //   ApplicationError,
 //   logger
@@ -56,7 +58,6 @@ const deleteUnit = makeDeleteUnit({
 //   ApplicationError,
 //   logger
 // });
-
 
 // const getUnits = makeGetUnits({
 //   ApplicationError,
@@ -103,19 +104,20 @@ const deleteUnit = makeDeleteUnit({
 // });
 
 const unitsUseCases = {
-    addUnit,
-    deleteUnit
-    //   addUnitRooms,
-    //   hideUnit,
-    //   unhideUnit,
-    //   deleteUnit,
-    //   getUnits,
-    //   getRecommendedUnits,
-    //   editUnit,
-    //   editUnitRooms,
-    //   editUnitAvailability,
-    //   getUnit,
-    //   rateUnit
+  addUnit,
+  deleteUnit,
+  getMyUnits
+  //   addUnitRooms,
+  //   hideUnit,
+  //   unhideUnit,
+  //   deleteUnit,
+  //   getUnits,
+  //   getRecommendedUnits,
+  //   editUnit,
+  //   editUnitRooms,
+  //   editUnitAvailability,
+  //   getUnit,
+  //   rateUnit
 };
 
 module.exports = unitsUseCases;
