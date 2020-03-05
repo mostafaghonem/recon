@@ -62,7 +62,7 @@ module.exports = ({
         type: Number,
         required: true
       },
-      daiyOrMonthly: {
+      dailyOrMonthly: {
         type: String,
         enum: PricePer
       },

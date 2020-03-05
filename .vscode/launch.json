@@ -15,7 +15,7 @@
       "internalConsoleOptions": "neverOpen",
       "env": {
         "NODE_ENV": "local",
-        "PORT": "7070"
+        "PORT": "5050"
       },
       "outputCapture": "std",
       "skipFiles": ["<node_internals>/**"]
