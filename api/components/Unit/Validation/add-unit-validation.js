@@ -46,8 +46,8 @@ module.exports = ({
       value: body.pricePerPerson,
       rules: new Builder().isNumber().min(1).rules
     },
-    daiyOrMonthly: {
-      value: body.daiyOrMonthly,
+    dailyOrMonthly: {
+      value: body.dailyOrMonthly,
       rules: new Builder()
         .required('يجب ادخال عدد الحجز اسبوعي ام شهري')
         .isMember(PricePer).rules
