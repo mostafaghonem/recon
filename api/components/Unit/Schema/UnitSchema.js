@@ -130,12 +130,39 @@ module.exports = ({
           type: String
         }
       ],
+      rates: [
+        new Schema(
+          {
+            userId: {
+              type: ObjectId,
+              ref: 'User'
+            },
+            rate: {
+              type: Number,
+              default: 0
+            }
+          },
+          { _id: false }
+        )
+      ],
+      rate: {
+        type: Number,
+        default: 0
+      },
+      totalRate: {
+        type: Number,
+        default: 0
+      },
+      totalUsersRated: {
+        type: Number,
+        default: 0
+      },
       status: {
         type: String,
         enum: requestStatus,
         default: pendingStatus
       },
-      reasonOfRefuse: {
+      note: {
         type: String,
         default: 'there is an request accept in your time before'
       },

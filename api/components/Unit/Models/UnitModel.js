@@ -28,7 +28,7 @@ module.exports = ({ GenericModel = _GenericModel }) => {
       };
 
       const select =
-        'type image gallery dailyOrMonthly pricePerPerson status reasonOfRefuse address totalRate totalUsersRated totalOnlineBooking totalRevenue numberOfPeople numberOfRooms availableCountNow hasFurniture rentersType';
+        'type image gallery dailyOrMonthly pricePerPerson status note rates totalRate totalUsersRated address totalRate totalUsersRated totalOnlineBooking totalRevenue numberOfPeople numberOfRooms availableCountNow hasFurniture rentersType';
       const sort = { createdAt: 1 };
       const units = await this.getMany({
         query,

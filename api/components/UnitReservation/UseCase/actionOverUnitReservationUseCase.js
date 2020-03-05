@@ -44,12 +44,12 @@ module.exports = (/* but your inject here */) => {
         Done: getting all request that is pending 
         TODO need to debug:and have no intersect with accepted request and made it "send"
   */
-  const refuseActionFromOwner = async (requestId, reasonOfRefuse) => {
+  const refuseActionFromOwner = async (requestId, note) => {
     await Models.updateOneById({
       id: requestId,
       update: {
         state: UnitReservationState.refuseActionFromOwner,
-        reasonOfRefuse
+        note
       }
     });
     const request = await UnitReservationEntity.loadEntityFromDbById(requestId);
