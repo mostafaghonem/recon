@@ -75,7 +75,7 @@ const buildUnitEntity = (
         hasFurniture: Boolean,
         availableCountNow: Number,
         pricePerPerson: String,
-        daiyOrMonthly: String,
+        dailyOrMonthly: String,
         highlight: String,
         availability: Array,
         services: Array,
@@ -96,7 +96,7 @@ const buildUnitEntity = (
       this.hasFurniture = data.hasFurniture || false;
       this.availableCountNow = data.availableCountNow || 0;
       this.pricePerPerson = data.pricePerPerson || 0;
-      this.daiyOrMonthly = data.daiyOrMonthly || '';
+      this.dailyOrMonthly = data.dailyOrMonthly || '';
       this.highlight = data.highlight || '';
       this.availability = data.availability || [];
       this.services = data.services || [];
@@ -158,12 +158,12 @@ const buildUnitEntity = (
         hasFurniture: this.hasFurniture,
         availableCountNow: this.availableCountNow,
         pricePerPerson: this.pricePerPerson,
-        daiyOrMonthly: this.daiyOrMonthly,
+        dailyOrMonthly: this.dailyOrMonthly,
         highlight: this.highlight,
         availability: this.availability,
         services: this.services,
         ownerTerms: this.ownerTerms,
-        gallery: this.gallery,
+        gallery: this.gallery
       };
     }
 
@@ -194,7 +194,7 @@ const buildUnitEntity = (
         hasFurniture: this.hasFurniture,
         availableCountNow: this.availableCountNow,
         pricePerPerson: this.pricePerPerson,
-        daiyOrMonthly: this.daiyOrMonthly,
+        dailyOrMonthly: this.dailyOrMonthly,
         highlight: this.highlight,
         availability: this.availability,
         services: this.services,

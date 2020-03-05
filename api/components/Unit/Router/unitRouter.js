@@ -1,20 +1,21 @@
 const express = require('express');
 const {
-    addUnitValidation,
-    deleteUnitValidation
-    // getUnits
-    // addUnitValidation,
-    // addUnitRoomsValidation,
-    // hideUnitValidation,
-    // unhideUnitValidation,
-    // deleteUnitValidation,
-    // getUnits,
-    // getRecommendedUnits,
-    // getUnit,
-    // editUnit,
-    // editUnitRooms,
-    // editUnitAvailability,
-    // rateUnit
+  addUnitValidation,
+  deleteUnitValidation,
+  getMyUnitsValidation
+  // getUnits
+  // addUnitValidation,
+  // addUnitRoomsValidation,
+  // hideUnitValidation,
+  // unhideUnitValidation,
+  // deleteUnitValidation,
+  // getUnits,
+  // getRecommendedUnits,
+  // getUnit,
+  // editUnit,
+  // editUnitRooms,
+  // editUnitAvailability,
+  // rateUnit
 } = require('../Validation');
 
 const router = express.Router();
@@ -27,18 +28,32 @@ const validateMiddleware = require('../../../middlewares/validateMiddleware');
 const controllers = require('../Controller');
 
 // @route
-// @ GET api/users/profile/view
+// @ POST api/units/
+// Description: Add new unit
 // !access  anonymous
 router.post(
-    '/',
-    [
-        validateMiddleware(addUnitValidation),
-        authenticateMiddleware,
-        authorizeMiddleware([PERMISSIONS.HOUSE_OWNER])
-    ],
-    controllers.addUnit
+  '/',
+  [
+    validateMiddleware(addUnitValidation),
+    authenticateMiddleware,
+    authorizeMiddleware([PERMISSIONS.HOUSE_OWNER])
+  ],
+  controllers.addUnit
 );
 
+// @route
+// @ GET api/units/my-units
+// Description: Get my units for house owners
+// !access  anonymous
+router.get(
+  '/my-units',
+  [
+    validateMiddleware(getMyUnitsValidation),
+    authenticateMiddleware,
+    authorizeMiddleware([PERMISSIONS.HOUSE_OWNER])
+  ],
+  controllers.getMyUnits
+);
 
 // router.put(
 //     '/hide/:id',
@@ -61,13 +76,13 @@ router.post(
 // );
 
 router.delete(
-    '/:id',
-    [
-        validateMiddleware(deleteUnitValidation),
-        authenticateMiddleware,
-        authorizeMiddleware([PERMISSIONS.HOUSE_OWNER])
-    ],
-    controllers.deleteUnit
+  '/:id',
+  [
+    validateMiddleware(deleteUnitValidation),
+    authenticateMiddleware,
+    authorizeMiddleware([PERMISSIONS.HOUSE_OWNER])
+  ],
+  controllers.deleteUnit
 );
 
 // router.get(

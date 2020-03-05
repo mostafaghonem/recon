@@ -33,7 +33,7 @@ module.exports = ({ requestStates }) => {
         type: String,
         enum: requestStates
       },
-      reasonOfRefuse: {
+      note: {
         type: String,
         default: 'there is an request accept in your time before'
       }
