@@ -63,7 +63,8 @@ router.get(
       const presignedURL = s3.getSignedUrl('putObject', params);
       return res.status(200).send({
         url: `https://${bucket}.s3.${region}.amazonaws.com/${contentStorageKey}`,
-        presignedURL
+        presignedURL,
+        contentType
       });
     } catch (ex) {
       logger.info(
