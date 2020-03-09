@@ -8,7 +8,7 @@ module.exports = ({ _, Builder = ___, ValidatorHelper = __ }) => ({
   const scheme = {
     phone: {
       value: query.phone,
-      rules: new Builder().isMobile().rules
+      rules: new Builder().minLength(1).maxLength(15).rules
     },
     status: {
       value: query.status,
