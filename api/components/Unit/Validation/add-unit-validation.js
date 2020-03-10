@@ -116,10 +116,6 @@ module.exports = ({
         .required()
         .isNumber()
         .min(1).rules
-    },
-    services: {
-      value: body.services,
-      rules: new Builder().required().isArray().rules
     }
   };
 
