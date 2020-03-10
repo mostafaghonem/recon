@@ -8,7 +8,7 @@ module.exports = ({ ApplicationError, logger }) => async userId => {
     isArchived: false
   };
   const select =
-    'fullName phone email birthDateTs gender job government image identificationImages';
+    'fullName phone email birthDateTs gender job government image identificationImages identificationStatus';
   const user = await model.getOne({ query, select });
   if (user) {
     logger.info(`"${user.fullName}" just got his profile data.`);

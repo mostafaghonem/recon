@@ -23,7 +23,7 @@ module.exports = ({
     },
     image: {
       value: body.image,
-      rules: new Builder().required().isURL().rules
+      rules: new Builder().required().rules
     },
     phone: {
       value: body.phone,
