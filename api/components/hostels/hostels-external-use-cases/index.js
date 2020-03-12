@@ -16,13 +16,13 @@ const {
   getReservedRoomCountByHotels
 } = require('../../HostelReservation/hostel-reservation-external-use-cases');
 
-const getUserHostels = makeGetUserHostelsCount({
+const getUserHostels = makeGetUserHostels({
   ApplicationError,
   logger,
   getReservedRoomCountByHotels
 });
 
-const getUserHostelsCount = makeGetUserHostels({
+const getUserHostelsCount = makeGetUserHostelsCount({
   ApplicationError,
   logger
 });
