@@ -12,7 +12,7 @@ module.exports = ({
 }) => async id => {
   const query = { _id: id, status: accepted, isArchived: false };
   const select =
-    'name description image currency address freeServices generalServices hostelServices entertainmentServices foodServices rooms rate totalUsersRated';
+    'name description image currency address isHidden freeServices generalServices hostelServices entertainmentServices foodServices rooms rate totalUsersRated';
   const checkExistence = await model.getOne({ query, select });
   if (!checkExistence)
     throw new ApplicationError('.نأسف ، لا يمكننا العثور على هذا الفندق', 403);
@@ -71,8 +71,7 @@ module.exports = ({
     isHidden: false,
     isArchived: false
   };
-  const project =
-    'name image rate totalUsersRated rooms isHidden address.government';
+  const project = 'name image rate totalUsersRated rooms address.government';
   const sort = { createdAt: 1 };
   const hostels = await model.getMany({
     query: filter,
