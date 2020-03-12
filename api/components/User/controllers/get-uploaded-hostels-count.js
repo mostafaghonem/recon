@@ -13,9 +13,6 @@ module.exports = () => {
         count: uploadedHostelsCount || 0
       });
     } catch (e) {
-      console.log('aaaaaaaaaaaaaaaaaaaaaaaa');
-      console.log(e);
-      console.log('aaaaaaaaaaaaaaaaaaaaaaaa');
       return next(e);
     }
   };
