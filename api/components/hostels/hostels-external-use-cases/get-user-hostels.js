@@ -64,15 +64,12 @@ module.exports = ({
                 group.availableRooms =
                   Number(group.totalRooms) -
                   Number(getGroupData[0].totalReservedCount);
-                if (group.availableRooms > 0) {
-                  group.available = true;
-                  hostel.available = true;
-                }
+                if (hostel.totalRooms > 0) hostel.available = true;
               }
             } else {
               hostel.totalRooms += Number(group.totalRooms);
               hostel.totalAvailableRooms += Number(group.totalAvailableRooms);
-              if (group.availableRooms > 0) hostel.available = true;
+              if (hostel.totalRooms > 0) hostel.available = true;
             }
           });
         }
