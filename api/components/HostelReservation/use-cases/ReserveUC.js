@@ -122,4 +122,5 @@ module.exports = ({
       4
     )}`
   );
+  return { paymentId, shouldPay: reservationData.shouldPayPrice };
 };
