@@ -198,6 +198,18 @@ router.get(
 );
 
 // @route
+// @ GET api/users/uploaded/hostels/count
+// !access  anonymous
+router.get(
+  '/uploaded/hostels/count',
+  [
+    authenticateMiddleware
+    // authorizeMiddleware([PERMISSIONS.HOUSE_OWNER])
+  ],
+  controllers.getUploadedHostelsCount
+);
+
+// @route
 // @ GET api/users/uploaded/hostels
 // !access  anonymous
 router.get(

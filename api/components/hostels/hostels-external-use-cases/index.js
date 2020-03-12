@@ -7,6 +7,7 @@
  */
 const logger = require('../../../startup/logger');
 const { ApplicationError } = require('../../../shared/errors');
+const makeGetUserHostelsCount = require('./get-user-hostels-count');
 const makeGetUserHostels = require('./get-user-hostels');
 const makeUpdateHostelStatus = require('./update-hostel-status');
 const makeGetHouseOwnerHostel = require('./get-houseOwner-hostel');
@@ -15,10 +16,15 @@ const {
   getReservedRoomCountByHotels
 } = require('../../HostelReservation/hostel-reservation-external-use-cases');
 
-const getUserHostels = makeGetUserHostels({
+const getUserHostels = makeGetUserHostelsCount({
   ApplicationError,
   logger,
   getReservedRoomCountByHotels
+});
+
+const getUserHostelsCount = makeGetUserHostels({
+  ApplicationError,
+  logger
 });
 
 const updateHostelStatus = makeUpdateHostelStatus({
@@ -40,6 +46,7 @@ const getHouseOwnerHostel = makeGetHouseOwnerHostel({
 const HostelsExternalService = Object.freeze({
   getUserHostels,
   updateHostelStatus,
+  getUserHostelsCount,
   getHouseOwnerHostel,
   calculateReservationCost
 });

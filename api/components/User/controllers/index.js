@@ -13,6 +13,7 @@ const makeUpdatePhone = require('./update-phone');
 const makePhoneUpdateVerification = require('./phone-update-verification');
 const makeGetHouseOwnerInfo = require('./houseOwner-info');
 const makeGetHouseOwnerInfoWithCi = require('./houseOwner-info-with-ci');
+const makeGetUploadedHostelsCount = require('./get-uploaded-hostels-count');
 const makeGetUploadedHostels = require('./get-uploaded-hostels');
 const makeGetUploadedHostelDetails = require('./get-uploaded-hostel-details');
 const {
@@ -44,6 +45,7 @@ const updatePhone = makeUpdatePhone({});
 const phoneUpdateVerification = makePhoneUpdateVerification({});
 const getHouseOwnerInfo = makeGetHouseOwnerInfo({});
 const getHouseOwnerInfoWithCi = makeGetHouseOwnerInfoWithCi({});
+const getUploadedHostelsCount = makeGetUploadedHostelsCount({});
 const getUploadedHostels = makeGetUploadedHostels({ pagination });
 const getUploadedHostelDetails = makeGetUploadedHostelDetails({});
 
@@ -63,6 +65,7 @@ const userCtrl = Object.freeze({
   phoneUpdateVerification,
   getHouseOwnerInfo,
   getHouseOwnerInfoWithCi,
+  getUploadedHostelsCount,
   getUploadedHostels,
   getUploadedHostelDetails,
   googleAuthController,
