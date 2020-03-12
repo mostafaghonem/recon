@@ -9,7 +9,7 @@
 module.exports = ({ ApplicationError, logger, getUserHostelsCount }) => async ({
   userId
 }) => {
-  const hostelsCount = await getUserHostels({
+  const hostelsCount = await getUserHostelsCount({
     userId
   });
 
