@@ -17,7 +17,8 @@ const {
 
 const getUserHostels = makeGetUserHostels({
   ApplicationError,
-  logger
+  logger,
+  getReservedRoomCountByHotels
 });
 
 const updateHostelStatus = makeUpdateHostelStatus({
@@ -33,8 +34,7 @@ const calculateReservationCost = makeCalculateReservationCost({
 
 const getHouseOwnerHostel = makeGetHouseOwnerHostel({
   ApplicationError,
-  logger,
-  getReservedRoomCountByHotels
+  logger
 });
 
 const HostelsExternalService = Object.freeze({
