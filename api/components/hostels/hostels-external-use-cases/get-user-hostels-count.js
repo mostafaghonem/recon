@@ -13,7 +13,7 @@ module.exports = ({ ApplicationError, logger }) => async ({ userId }) => {
     userId,
     isArchived: false
   };
-  const hostelsCount = await model.countDocuments({ filter });
+  const hostelsCount = await model.count({ filter });
 
   return hostelsCount;
 };

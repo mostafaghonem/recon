@@ -18,11 +18,6 @@ module.exports = class GenericModel {
     return this.DbAccess.create(document);
   }
 
-  countDocuments(params = { filter: {} }) {
-    const { filter } = params;
-    return this.DbAccess.create(filter);
-  }
-
   getMany(
     params = {
       query: {},
