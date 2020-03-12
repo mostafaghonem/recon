@@ -221,6 +221,10 @@ module.exports = ({
         type: Number,
         default: 0
       },
+      totalBooking: {
+        type: Number,
+        default: 0
+      },
       totalRevenue: {
         type: Number,
         default: 0
