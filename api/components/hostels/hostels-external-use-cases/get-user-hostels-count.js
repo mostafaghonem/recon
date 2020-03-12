@@ -9,11 +9,11 @@ const model = require('../models');
 
 // should have no implementation for any specific orm
 module.exports = ({ ApplicationError, logger }) => async ({ userId }) => {
-  const query = {
+  const filter = {
     userId,
     isArchived: false
   };
-  const hostelsCount = await model.countDocuments(query);
+  const hostelsCount = await model.countDocuments({ filter });
 
   return hostelsCount;
 };
