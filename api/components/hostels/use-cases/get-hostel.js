@@ -71,7 +71,8 @@ module.exports = ({
     isHidden: false,
     isArchived: false
   };
-  const project = 'name image rate totalUsersRated rooms address.government';
+  const project =
+    'name image rate totalUsersRated rooms isHidden address.government';
   const sort = { createdAt: 1 };
   const hostels = await model.getMany({
     query: filter,
