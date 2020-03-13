@@ -68,27 +68,33 @@ module.exports = ({
             },
             street: {
               type: String,
-              required: true
+              required: true,
+              set: v => v.trim()
             },
             nearTo: {
               type: String,
-              required: true
+              required: true,
+              set: v => v.trim()
             },
             highlight: {
               type: String,
-              required: true
+              required: true,
+              set: v => v.trim()
             },
             houseNumber: {
               type: Number,
-              required: true
+              required: true,
+              set: v => v.trim()
             },
             apartmentNumber: {
               type: Number,
-              required: true
+              required: true,
+              set: v => v.trim()
             },
             floorNumber: {
               type: Number,
-              required: true
+              required: true,
+              set: v => v.trim()
             }
           },
           {

@@ -52,28 +52,28 @@ module.exports = ({
       rules: new Builder().required().isMember(currencies).rules
     },
     'address.government': {
-      value: body.address ? body.address.government : '',
+      value: body.address ? String(body.address.government).trim() : '',
       rules: new Builder()
         .required()
         .minLength(3)
         .maxLength(100).rules
     },
     'address.street': {
-      value: body.address ? body.address.street : '',
+      value: body.address ? String(body.address.street).trim() : '',
       rules: new Builder()
         .required()
         .minLength(10)
         .maxLength(200).rules
     },
     'address.nearTo': {
-      value: body.address ? body.address.nearTo : '',
+      value: body.address ? String(body.address.nearTo).trim() : '',
       rules: new Builder()
         .required()
         .minLength(10)
         .maxLength(200).rules
     },
     'address.highlight': {
-      value: body.address ? body.address.highlight : '',
+      value: body.address ? String(body.address.highlight).trim() : '',
       rules: new Builder()
         .required()
         .minLength(10)

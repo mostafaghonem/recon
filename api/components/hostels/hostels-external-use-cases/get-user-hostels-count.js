@@ -13,7 +13,18 @@ module.exports = ({ ApplicationError, logger }) => async ({ userId }) => {
     userId,
     isArchived: false
   };
-  const hostelsCount = await model.count({ filter });
+  const hostelsData = {
+    count: 0,
+    revenue: 0
+  };
+  const userHostels = await model.getMany({ filter, select: 'totalRevenue' });
+  if (userHostels && userHostels.length !== 0) {
+    hostelsData.count = userHostels.length;
+    hostelsData.revenue =
+      userHostels.reduce((a, b) => ({
+        totalRevenue: a.totalRevenue + b.totalRevenue
+      })).age || 0;
+  }
 
-  return hostelsCount;
+  return hostelsData;
 };

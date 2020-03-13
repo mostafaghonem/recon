@@ -83,14 +83,14 @@ module.exports = ({
         .rules
     }
   };
-  if (body.images && _.isArray(body.images)) {
-    body.images.forEach((url, index) => {
-      scheme[`body.images.${index}`] = {
-        value: url,
-        rules: new Builder().isURL('Should be a valid URL').rules
-      };
-    });
-  }
+  // if (body.images && _.isArray(body.images)) {
+  //   body.images.forEach((url, index) => {
+  //     scheme[`body.images.${index}`] = {
+  //       value: url,
+  //       rules: new Builder().isURL('Should be a valid URL').rules
+  //     };
+  //   });
+  // }
   if (
     body.totalRooms &&
     body.totalAvailableRooms &&

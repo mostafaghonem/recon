@@ -9,9 +9,9 @@
 module.exports = ({ ApplicationError, logger, getUserHostelsCount }) => async ({
   userId
 }) => {
-  const hostelsCount = await getUserHostelsCount({
+  const hostelsData = await getUserHostelsCount({
     userId
   });
 
-  return hostelsCount;
+  return hostelsData;
 };
