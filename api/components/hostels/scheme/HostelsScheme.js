@@ -83,18 +83,15 @@ module.exports = ({
             },
             houseNumber: {
               type: Number,
-              required: true,
-              set: v => v.trim()
+              required: true
             },
             apartmentNumber: {
               type: Number,
-              required: true,
-              set: v => v.trim()
+              required: true
             },
             floorNumber: {
               type: Number,
-              required: true,
-              set: v => v.trim()
+              required: true
             }
           },
           {
