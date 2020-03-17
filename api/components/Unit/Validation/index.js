@@ -8,7 +8,7 @@ const { defaultConstants } = require('../../../shared/constants');
 const makeAddunitValidation = require('./add-unit-validation');
 const makeDeleteUnitValidation = require('./delete-unit-validation');
 const makeGetMyUnitsValidation = require('./get-my-units-validation');
-
+const makeGetMyUnitValidation = require('./get-my-unit-validation');
 // const makeAddunitRoomsValidation = require('./add-unit-rooms-validation');
 // const makeHideunitValidation = require('./hide-unit-validation');
 // const makeUnhideunitValidation = require('./unhide-unit-validation');
@@ -46,6 +46,13 @@ module.exports.deleteUnitValidation = makeDeleteUnitValidation({
 });
 
 module.exports.getMyUnitsValidation = makeGetMyUnitsValidation({
+  _,
+  ValidatorHelper,
+  Builder,
+  ObjectId
+});
+
+module.exports.getMyUnitValidation = makeGetMyUnitValidation({
   _,
   ValidatorHelper,
   Builder,
