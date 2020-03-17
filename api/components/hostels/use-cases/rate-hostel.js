@@ -30,7 +30,7 @@ module.exports = ({ ApplicationError, logger, accepted }) => async ({
     update = {
       $set: { 'rates.$.rate': Number(rate) },
       totalRate,
-      rate: finalRate
+      rate: Number(finalRate.toFixed(1))
     };
     await model.update({ filter, update });
   } else {
@@ -39,7 +39,7 @@ module.exports = ({ ApplicationError, logger, accepted }) => async ({
     finalRate = Number(totalRate) / Number(totalUsersRated);
     update.totalUsersRated = totalUsersRated;
     update.totalRate = totalRate;
-    update.rate = finalRate;
+    update.rate = Number(finalRate.toFixed(1));
     update.$push = { rates: { userId, rate } };
     await model.updateOneById({ id: hostelId, update });
   }

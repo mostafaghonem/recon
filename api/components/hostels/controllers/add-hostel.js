@@ -9,9 +9,6 @@ module.exports = () => {
         .status(200)
         .json({ message: 'Hostel added successfully!', hostelId: addedHostel });
     } catch (e) {
-      console.log('aaaaaaaaaaaaaaaaaaaaaaa');
-      console.log(e);
-      console.log('aaaaaaaaaaaaaaaaaaaaaaa');
       return next(e);
     }
   };

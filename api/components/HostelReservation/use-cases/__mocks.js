@@ -79,21 +79,17 @@ const getHostelsDataFromIds = async idArray => {
 };
 
 const checkAndCalculateReservationCost = async ({
-  renterId,
   hostelId,
   fromts,
   tots,
-  totalReservedCount,
   rooms
 }) => {
   logger.info(
     `checkAndCalculateReservationCost called with args ${JSON.stringify(
       {
-        renterId,
         hostelId,
         fromts,
         tots,
-        totalReservedCount,
         rooms
       },
       undefined,
