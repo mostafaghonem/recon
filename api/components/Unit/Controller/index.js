@@ -5,6 +5,7 @@ const pagination = Object.freeze(defaultConstants.PAGINATION);
 const makeAddUnitCtrl = require('./add-unit');
 const makeDeleteUnitCtrl = require('./delete-unit');
 const makeGetMyUnitsCtrl = require('./get-my-units');
+const makeGetMyUnitCtrl = require('./get-my-unit');
 // const makeAddUnitRoomsCtrl = require('./add-unit-rooms');
 // const makeHideUnitCtrl = require('./hide-unit');
 // const makeUnhideUnitCtrl = require('./unhide-unit');
@@ -18,6 +19,7 @@ const makeGetMyUnitsCtrl = require('./get-my-units');
 const addUnit = makeAddUnitCtrl({});
 const deleteUnit = makeDeleteUnitCtrl({});
 const getMyUnits = makeGetMyUnitsCtrl({ pagination });
+const getMyUnit = makeGetMyUnitCtrl({});
 // const hideUnit = makeHideUnitCtrl({});
 // const unhideUnit = makeUnhideUnitCtrl({});
 // const getUnits = makeGetUnitsCtrl({ pagination });
@@ -30,7 +32,8 @@ const getMyUnits = makeGetMyUnitsCtrl({ pagination });
 const unitsCtrl = Object.freeze({
   addUnit,
   deleteUnit,
-  getMyUnits
+  getMyUnits,
+  getMyUnit
   // hideUnit,
   // unhideUnit,
   // deleteUnit,
