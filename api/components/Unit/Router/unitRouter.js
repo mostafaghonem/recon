@@ -2,7 +2,8 @@ const express = require('express');
 const {
   addUnitValidation,
   deleteUnitValidation,
-  getMyUnitsValidation
+  getMyUnitsValidation,
+  getMyUnitValidation
   // getUnits
   // addUnitValidation,
   // addUnitRoomsValidation,
@@ -53,6 +54,20 @@ router.get(
     authorizeMiddleware([PERMISSIONS.HOUSE_OWNER])
   ],
   controllers.getMyUnits
+);
+
+// @route
+// @ GET api/units/my-unit/:id
+// Description: Get my unit of specific unit for house owners
+// !access  anonymous
+router.get(
+  '/my-unit/:id',
+  [
+    validateMiddleware(getMyUnitValidation),
+    authenticateMiddleware,
+    authorizeMiddleware([PERMISSIONS.HOUSE_OWNER])
+  ],
+  controllers.getMyUnit
 );
 
 // router.put(
