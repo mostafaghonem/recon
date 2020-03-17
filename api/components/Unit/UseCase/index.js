@@ -15,6 +15,7 @@ const { REQUEST_RESPONSE } = require('../../../shared/constants/defaults');
 const makeAddUnit = require('./add-unit');
 const makeDeleteUnit = require('./delete-unit');
 const makeGetMyUnits = require('./get-my-units');
+const makeGetMyUnit = require('./get-my-unit');
 // const makeAddUnitRooms = require('./add-unit-rooms');
 // const makeHideUnit = require('./hide-unit');
 // const makeUnhideUnit = require('./unhide-unit');
@@ -32,8 +33,7 @@ const {
 const addUnit = makeAddUnit({
   ApplicationError,
   logger,
-  addUploadedUnitsRequests,
-  accepted: REQUEST_RESPONSE.ACCEPTED
+  addUploadedUnitsRequests
 });
 
 const deleteUnit = makeDeleteUnit({
@@ -44,6 +44,12 @@ const deleteUnit = makeDeleteUnit({
 const getMyUnits = makeGetMyUnits({
   ApplicationError
 });
+
+const getMyUnit = makeGetMyUnit({
+  ApplicationError,
+  accepted: REQUEST_RESPONSE.ACCEPTED
+});
+
 // const hideUnit = makeHideUnit({
 //   ApplicationError,
 //   logger
@@ -106,7 +112,8 @@ const getMyUnits = makeGetMyUnits({
 const unitsUseCases = {
   addUnit,
   deleteUnit,
-  getMyUnits
+  getMyUnits,
+  getMyUnit
   //   addUnitRooms,
   //   hideUnit,
   //   unhideUnit,
