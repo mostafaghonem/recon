@@ -9,17 +9,16 @@ const makeAdminViewUC = require('./AdminViewUC');
 const makeRenterViewUC = require('./RenterViewUC');
 const makeHostelViewUC = require('./HostelViewUC');
 const {
+  calculateReservationCost,
+  getHostelsDataFromIds
+} = require('../../hostels/hostels-external-use-cases');
+
+const {
   getUsersByIds,
   getUsersByPhone
 } = require('../../User/user-external-use-cases');
 
-// getRenterDataWithPhoneSearch,
-// getRenterDataWithIds,
-const {
-  checkAndCalculateReservationCost,
-  processPayment,
-  getHostelsDataFromIds
-} = require('./__mocks');
+const { processPayment } = require('./__mocks');
 
 module.exports.ReserveUC = makeReserveUC({
   ApplicationError,
@@ -27,7 +26,7 @@ module.exports.ReserveUC = makeReserveUC({
   redis: redisClient,
   publisher: redis,
   uuid,
-  checkAndCalculateReservationCost,
+  checkAndCalculateReservationCost: calculateReservationCost,
   processPayment
 });
 

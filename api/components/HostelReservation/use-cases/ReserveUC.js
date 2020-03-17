@@ -20,7 +20,6 @@ module.exports = ({
   fromts,
   tots,
   totalPrice,
-  shouldPayPrice,
   totalReservedCount,
   rooms,
   reserveDatets = new Date().getTime(),
@@ -34,11 +33,9 @@ module.exports = ({
 
   // ! we must use this service to make sure that shouldPayPrice is correct
   const reservationCost = await checkAndCalculateReservationCost({
-    renterId,
     hostelId,
     fromts,
     tots,
-    totalReservedCount,
     rooms
   });
 
