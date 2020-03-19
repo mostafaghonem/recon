@@ -32,7 +32,12 @@ module.exports = ({ ApplicationError, logger }) => async ({
     match: { isArchived: false },
     select: '_id name'
   };
-  const allRequestsCount = await model.count({ filter: query });
+  const filter = {
+    _id: { $gt: '000000000000' },
+    status,
+    isArchived: false
+  };
+  const allRequestsCount = await model.count({ filter });
   let requests = await model.getMany({
     query,
     select,
