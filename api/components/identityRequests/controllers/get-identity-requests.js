@@ -13,7 +13,8 @@ module.exports = ({ pagination }) => {
 
       return res.status(200).json({
         success: true,
-        requests: IdentityRequests || []
+        requests: IdentityRequests.requests || [],
+        allRequestsCount: IdentityRequests.allRequestsCount || 0
       });
     } catch (e) {
       return next(e);

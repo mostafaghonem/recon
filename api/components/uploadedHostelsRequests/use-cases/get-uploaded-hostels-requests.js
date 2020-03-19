@@ -32,6 +32,7 @@ module.exports = ({ ApplicationError, logger }) => async ({
     match: { isArchived: false },
     select: '_id name'
   };
+  const allRequestsCount = await model.count({ query });
   let requests = await model.getMany({
     query,
     select,
@@ -43,5 +44,5 @@ module.exports = ({ ApplicationError, logger }) => async ({
   });
   requests = requests.filter(request => request.userId && request.hostelId);
 
-  return requests;
+  return { requests, allRequestsCount };
 };
