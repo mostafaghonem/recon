@@ -32,7 +32,7 @@ module.exports = ({ redis, logger, publisher }) => async paymentId => {
     'hostel-reservation-complete-payment',
     JSON.stringify({
       hostelId: newReservation.hostelId,
-      totalOnlineBooking: 1,
+      totalOnlineBooking: newReservation.totalReservedCount,
       totalRevenue: newReservation.shouldPayPrice
     })
   );

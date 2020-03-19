@@ -1,6 +1,6 @@
 const redis = require('redis');
-const { REQUEST_RESPONSE } = require('../../../shared/constants/defaults');
-const { ApplicationError } = require('../../../shared/errors');
+// const { REQUEST_RESPONSE } = require('../../../shared/constants/defaults');
+// const { ApplicationError } = require('../../../shared/errors');
 
 const subscriper = redis.createClient({
   no_ready_check: true,
@@ -8,16 +8,23 @@ const subscriper = redis.createClient({
   auth_pass: process.env.REDIS_PASS
 });
 
-const makeUpdateHostelBookingData = require('./update-hostel-bookingData');
+// const makeUpdateHostelBookingData = require('./update-hostel-bookingData');
+const makeUpdateHostelTotalRevenue = require('./update-hostels-totalRevenue');
 const logger = require('../../../startup/logger');
 
 // ! has errors
 
 module.exports = () => {
-  makeUpdateHostelBookingData({
+  // ! Depricated
+  // makeUpdateHostelBookingData({
+  //   logger,
+  //   ApplicationError,
+  //   redis: subscriper,
+  //   accepted: REQUEST_RESPONSE.ACCEPTED
+  // });
+
+  makeUpdateHostelTotalRevenue({
     logger,
-    ApplicationError,
-    redis: subscriper,
-    accepted: REQUEST_RESPONSE.ACCEPTED
+    redis: subscriper
   });
 };
