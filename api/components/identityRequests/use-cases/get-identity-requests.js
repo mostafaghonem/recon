@@ -27,7 +27,7 @@ module.exports = ({ ApplicationError, logger }) => async ({
     match: { isArchived: false, fullName: { $regex: key, $options: 'i' } },
     select: '_id fullName phone email government gender job'
   };
-  const allRequestsCount = await model.count({ query });
+  const allRequestsCount = await model.count({ filter: query });
   let requests = await model.getMany({
     query,
     select,
