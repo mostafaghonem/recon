@@ -25,7 +25,7 @@ module.exports = ({ ApplicationError, logger }) => async ({
   const populate = {
     path: 'userId',
     match: { isArchived: false, fullName: { $regex: key, $options: 'i' } },
-    select: '_id fullName gender job birthDateTs createdAt'
+    select: '_id fullName gender image job birthDateTs createdAt'
   };
   const anotherPopulate = {
     path: 'hostelId',
