@@ -174,6 +174,10 @@ module.exports = ({
         type: Number,
         default: 0
       },
+      isFull: {
+        type: Boolean,
+        default: false
+      },
       isHidden: {
         type: Boolean,
         default: false

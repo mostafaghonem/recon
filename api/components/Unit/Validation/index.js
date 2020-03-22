@@ -13,6 +13,7 @@ const makeEditUnitValidation = require('./edit-unit-validation');
 const makeHideUnitValidation = require('./hide-unit-validation');
 const makeUnhideUnitValidation = require('./unhide-unit-validation');
 const makeGetValidation = require('./get-unit-validation');
+const makeGetUnitsValidation = require('./get-units-validation');
 // const makeAddunitRoomsValidation = require('./add-unit-rooms-validation');
 // const makeDeleteunitValidation = require('./delete-unit-validation');
 // const makeGetunitsValidation = require('./get-units-validation');
@@ -79,4 +80,15 @@ module.exports.getUnitValidation = makeGetValidation({
   ValidatorHelper,
   Builder,
   ObjectId
+});
+
+module.exports.getUnitsValidation = makeGetUnitsValidation({
+  _,
+  ValidatorHelper,
+  Builder,
+  rentersType,
+  unitTypes,
+  PricePer,
+  currencies,
+  unitServices
 });
