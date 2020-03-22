@@ -141,11 +141,7 @@ router.put(
 // @ GET api/units/
 // Description: Get Units for Renter
 // !access  anonymous
-router.get(
-  '/',
-  [validateMiddleware(getUnitsValidation), authenticateMiddleware],
-  controllers.getUnits
-);
+router.get('/', [validateMiddleware(getUnitsValidation)], controllers.getUnits);
 
 // router.get(
 //     '/recommended',
