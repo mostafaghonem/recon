@@ -10,7 +10,7 @@ module.exports = ({ ApplicationError, accepted }) => async (
 ) => {
   const query = { _id: id, status: accepted, isArchived: false };
   const select =
-    'type description userId image currency rentersType numberOfPeople numberOfRooms hasFurniture availableCountNow pricePerPerson dailyOrMonthly highlight availability available gallery address isHidden services conditions status rate totalUsersRated';
+    'type description userId image currency rentersType numberOfPeople numberOfRooms hasFurniture availableCountNow pricePerPerson dailyOrMonthly highlight availability available gallery address isFull isHidden services conditions status rate totalUsersRated';
   const checkExistence = await model.getOne({ query, select });
   if (!checkExistence) {
     throw new ApplicationError('.نأسف ، لا يمكننا العثور على هذه الوحدة', 403);
