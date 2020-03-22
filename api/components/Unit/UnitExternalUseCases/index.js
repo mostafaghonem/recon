@@ -10,9 +10,13 @@ const _ = require('lodash');
 const mongoose = require('mongoose');
 const logger = require('../../../startup/logger');
 const { ApplicationError } = require('../../../shared/errors');
+const { REQUEST_RESPONSE } = require('../../../shared/constants/defaults');
+const { getUsersByIds } = require('../../User/user-external-use-cases');
 const makeGetUnitsDataFromIds = require('./get-units-data-from-Ids');
 const makeUpdateUnitTotalRevenue = require('./update-units-totalRevenue');
 const makeCalculateReservationCost = require('./calculate-reservation-cost');
+const makeGetUnitWithOwner = require('./get-unit-with-owner');
+const makeGetUnit = require('./get-unit');
 
 const { ObjectId } = mongoose.Types;
 
@@ -35,10 +39,23 @@ const getunitsDataFromIds = makeGetUnitsDataFromIds({
   Promise
 });
 
+const getUnit = makeGetUnit({
+  ApplicationError,
+  accepted: REQUEST_RESPONSE.ACCEPTED
+});
+
+const getUnitWithOwner = makeGetUnitWithOwner({
+  ApplicationError,
+  getUsersByIds,
+  accepted: REQUEST_RESPONSE.ACCEPTED
+});
+
 const unitsExternalService = Object.freeze({
   updateUnitTotalRevenue,
   getunitsDataFromIds,
-  calculateReservationCost
+  calculateReservationCost,
+  getUnit,
+  getUnitWithOwner
 });
 
 module.exports = unitsExternalService;
