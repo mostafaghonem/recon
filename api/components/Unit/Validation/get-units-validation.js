@@ -39,7 +39,7 @@ module.exports = ({
     },
     type: {
       value: query.type,
-      rules: new Builder().isMember(rentersType).rules
+      rules: new Builder().isMember(unitTypes).rules
     },
     rentersType: {
       value: query.rentersType,
@@ -65,7 +65,7 @@ module.exports = ({
     },
     available: {
       value: query.available,
-      rules: new Builder().isBoolean().isMember([true, false]).rules
+      rules: new Builder().isNumber().isMember([1, 2, 3]).rules
     },
     priceFrom: {
       value: query.priceFrom,
@@ -88,43 +88,11 @@ module.exports = ({
     }
   };
 
-  if (query.freeServices) {
-    query.freeServices.forEach((url, index) => {
-      scheme[`query.freeServices.${index}`] = {
+  if (query.services) {
+    query.services.forEach((url, index) => {
+      scheme[`query.services.${index}`] = {
         value: url,
-        rules: new Builder().isMember(freeServices).rules
-      };
-    });
-  }
-  if (query.generalServices) {
-    query.generalServices.forEach((url, index) => {
-      scheme[`query.generalServices.${index}`] = {
-        value: url,
-        rules: new Builder().isMember(generalServices).rules
-      };
-    });
-  }
-  if (query.entertainmentServices) {
-    query.entertainmentServices.forEach((url, index) => {
-      scheme[`query.entertainmentServices.${index}`] = {
-        value: url,
-        rules: new Builder().isMember(entertainmentServices).rules
-      };
-    });
-  }
-  if (query.hostelServices) {
-    query.hostelServices.forEach((url, index) => {
-      scheme[`query.hostelServices.${index}`] = {
-        value: url,
-        rules: new Builder().isMember(hostelServices).rules
-      };
-    });
-  }
-  if (query.foodServices) {
-    query.foodServices.forEach((url, index) => {
-      scheme[`query.foodServices.${index}`] = {
-        value: url,
-        rules: new Builder().isMember(foodServices).rules
+        rules: new Builder().isMember(unitServices).rules
       };
     });
   }
