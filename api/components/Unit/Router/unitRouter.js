@@ -73,16 +73,6 @@ router.get(
   controllers.getMyUnit
 );
 
-// router.get(
-//     '/',
-//     [
-//         validateMiddleware(getUnits),
-//         authenticateMiddleware,
-//         authorizeMiddleware([PERMISSIONS.RENTER])
-//     ],
-//     controllers.getUnits
-// );
-
 // @route
 // @ GET api/units/unit/:id
 // Description: Get unit details for renter
@@ -137,6 +127,28 @@ router.put(
   controllers.editUnit
 );
 
+// External Routes for External Use Cases
+
+// @route
+// @ GET api/units/unit/:id
+// Description: Get unit details for renter
+// !access  anonymous
+router.get(
+  '/external/unit/:id',
+  [validateMiddleware(getUnitValidation)],
+  controllers.externalGetUnit
+);
+
+// @route
+// @ GET api/units/unit/:id
+// Description: Get unit details for renter
+// !access  anonymous
+router.get(
+  '/external/unit-with-owner/:id',
+  [validateMiddleware(getUnitValidation)],
+  controllers.externalGetUnitWithOwner
+);
+
 // @route
 // @ GET api/units/
 // Description: Get Units for Renter
@@ -183,25 +195,4 @@ router.get('/', [validateMiddleware(getUnitsValidation)], controllers.getUnits);
 //     controllers.editUnitAvailability
 // );
 
-// External Routes for External Use Cases
-
-// @route
-// @ GET api/units/unit/:id
-// Description: Get unit details for renter
-// !access  anonymous
-router.get(
-  '/external/unit/:id',
-  [validateMiddleware(getUnitValidation)],
-  controllers.externalGetUnit
-);
-
-// @route
-// @ GET api/units/unit/:id
-// Description: Get unit details for renter
-// !access  anonymous
-router.get(
-  '/external/unit-with-owner/:id',
-  [validateMiddleware(getUnitValidation)],
-  controllers.externalGetUnitWithOwner
-);
 module.exports = router;
