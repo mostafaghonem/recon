@@ -46,7 +46,20 @@ module.exports = ({ ApplicationError, logger, accepted }) => async ({
   if (rate) query.rate = { $gte: Number(rate) };
   if (type) query.type = type;
   if (rentersType) query.rentersType = rentersType;
-  const select = 'name image rate totalUsersRated rooms address.government';
+  if (numberOfPersons) {
+    query.numberOfPersons = { $gte: Number(numberOfPersons) };
+  }
+
+  if (available === 1) {
+    query.isFull = false;
+  } else if (available === 2) {
+    query.hasFurniture = true;
+  } else if (available === 3) {
+    query.hasFurniture = false;
+  }
+
+  const select =
+    'type image gallery dailyOrMonthly pricePerPerson status note rates totalRate totalUsersRated address totalRate totalUsersRated totalOnlineBooking totalRevenue numberOfPeople numberOfRooms availableCountNow hasFurniture rentersType isFull';
   const sort = { createdAt: 1 };
   const units = await model.getMany({
     query,
@@ -67,7 +80,9 @@ module.exports = ({ ApplicationError, logger, accepted }) => async ({
     let filteredUnits = [];
 
     if (available === 1) {
-      filteredUnits = unitsAvailbility.filter(hosetl => hosetl.value);
+      filteredUnits = unitsAvailbility
+        .map(o => ({ ...units.find(p => p._id === o._id), available: o.value }))
+        .filter(unit => unit.available);
     }
 
     return filteredUnits;
