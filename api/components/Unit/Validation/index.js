@@ -93,6 +93,7 @@ module.exports.getUnitsValidation = makeGetUnitsValidation({
   _,
   ValidatorHelper,
   Builder,
+  ObjectId,
   rentersType,
   unitTypes,
   PricePer,
