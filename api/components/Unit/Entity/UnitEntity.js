@@ -79,7 +79,7 @@ const buildUnitEntity = (
         highlight: String,
         availability: Array,
         services: Array,
-        ownerTerms: Array,
+        conditions: Array,
         gallery: Array,
         status: String
       }
@@ -100,7 +100,7 @@ const buildUnitEntity = (
       this.highlight = data.highlight || '';
       this.availability = data.availability || [];
       this.services = data.services || [];
-      this.ownerTerms = data.ownerTerms || [];
+      this.conditions = data.conditions || [];
       this.gallery = data.gallery || [];
       this.status = data.status || '';
       if (data.address) {
@@ -162,7 +162,7 @@ const buildUnitEntity = (
         highlight: this.highlight,
         availability: this.availability,
         services: this.services,
-        ownerTerms: this.ownerTerms,
+        conditions: this.conditions,
         gallery: this.gallery
       };
     }
@@ -198,7 +198,7 @@ const buildUnitEntity = (
         highlight: this.highlight,
         availability: this.availability,
         services: this.services,
-        ownerTerms: this.ownerTerms,
+        conditions: this.conditions,
         gallery: this.gallery,
         rates: this.rates,
         totalRate: this.totalRate,

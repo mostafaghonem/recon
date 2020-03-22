@@ -118,7 +118,7 @@ module.exports = ({
           enum: unitServices
         }
       ],
-      ownerTerms: [
+      conditions: [
         {
           type: String,
           min: 2,
