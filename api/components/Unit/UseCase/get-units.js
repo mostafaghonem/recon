@@ -1,10 +1,10 @@
 /* eslint-disable no-param-reassign */
 const model = require('../Models');
 
-const getUnitsAvailbility = ({ unitIds, availableFrom, availableTo }) => {
-  return unitIds.map(o => ({
+const getUnitsAvailbility = ({ unitsIds, availableFrom, availableTo }) => {
+  return unitsIds.map(o => ({
     _id: o,
-    available: true
+    value: true
   }));
 };
 
@@ -23,7 +23,7 @@ module.exports = ({ ApplicationError, logger, accepted }) => async ({
   type,
   rentersType,
   government,
-  numberOfPersons,
+  numberOfPeople,
   services,
   available,
   priceFrom,
@@ -34,20 +34,31 @@ module.exports = ({ ApplicationError, logger, accepted }) => async ({
 }) => {
   const query = {
     _id: { $gt: lastId },
-    name: { $regex: key, $options: 'i' },
     status: accepted,
-    isFull: false,
     isHidden: false,
     isArchived: false
   };
+  if (key && key !== '') {
+    query.$or = [
+      {
+        'address.street': { $regex: key, $options: 'i' }
+      },
+      {
+        'address.nearTo': { $regex: key, $options: 'i' }
+      },
+      {
+        'address.highlight': { $regex: key, $options: 'i' }
+      }
+    ];
+  }
   if (government)
     query['address.government'] = String(government).toLowerCase();
-  if (services) query.services = { $all: services };
+  if (services) query.services = { $in: services };
   if (rate) query.rate = { $gte: Number(rate) };
   if (type) query.type = type;
   if (rentersType) query.rentersType = rentersType;
-  if (numberOfPersons) {
-    query.numberOfPersons = { $gte: Number(numberOfPersons) };
+  if (numberOfPeople) {
+    query.numberOfPeople = { $gte: Number(numberOfPeople) };
   }
 
   if (available === 1) {
@@ -71,13 +82,13 @@ module.exports = ({ ApplicationError, logger, accepted }) => async ({
   if (units && units.length !== 0) {
     const unitsIds = [];
     units.map(unit => unitsIds.push(unit._id));
-    const unitsAvailbility = await getUnitsAvailbility(
+    const unitsAvailbility = await getUnitsAvailbility({
       unitsIds,
       availableFrom,
       availableTo
-    );
+    });
 
-    let filteredUnits = [];
+    let filteredUnits = units;
 
     if (available === 1) {
       filteredUnits = unitsAvailbility

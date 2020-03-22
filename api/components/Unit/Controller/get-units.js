@@ -5,7 +5,7 @@ module.exports = ({ pagination }) => {
     try {
       const limit = Number(req.query.limit) || Number(pagination.LIMIT);
       const key = req.query.key || '';
-      const hostels = await getUnits({
+      const units = await getUnits({
         ...req.query,
         key,
         limit
@@ -13,7 +13,7 @@ module.exports = ({ pagination }) => {
 
       return res.status(200).json({
         success: true,
-        hostels: hostels || []
+        units: units || []
       });
     } catch (e) {
       return next(e);
