@@ -4,6 +4,7 @@ const pagination = Object.freeze(defaultConstants.PAGINATION);
 
 const makeAddUnitCtrl = require('./add-unit');
 const makeDeleteUnitCtrl = require('./delete-unit');
+const makeGetUnitsCtrl = require('./get-units');
 const makeGetMyUnitsCtrl = require('./get-my-units');
 const makeGetMyUnitCtrl = require('./get-my-unit');
 const makeHideUnitCtrl = require('./hide-unit');
@@ -23,6 +24,7 @@ const makeExternalGetUnitWithOwner = require('./external-get-unit-with-owner');
 // ->
 const addUnit = makeAddUnitCtrl({});
 const deleteUnit = makeDeleteUnitCtrl({});
+const getUnits = makeGetUnitsCtrl({ pagination });
 const getMyUnits = makeGetMyUnitsCtrl({ pagination });
 const getMyUnit = makeGetMyUnitCtrl({});
 const hideUnit = makeHideUnitCtrl({});
@@ -31,7 +33,6 @@ const editUnit = makeEditUnitCtrl({});
 const getUnit = makeGetUnit({});
 const externalGetUnit = makeExternalGetUnit({});
 const externalGetUnitWithOwner = makeExternalGetUnitWithOwner({});
-// const getUnits = makeGetUnitsCtrl({ pagination });
 // const getRecommendedUnits = makeGetRecommendedUnitsCtrl({ pagination });
 // const editUnit = makeEditUnitCtrl({});
 // const editUnitAvailability = makeEditUnitAvailabilityCtrl({});
@@ -48,7 +49,8 @@ const unitsCtrl = Object.freeze({
   editUnit,
   getUnit,
   externalGetUnit,
-  externalGetUnitWithOwner
+  externalGetUnitWithOwner,
+  getUnits
 
   // getUnits,
   // getRecommendedUnits,

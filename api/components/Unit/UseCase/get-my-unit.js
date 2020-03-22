@@ -4,8 +4,8 @@ const model = require('../Models');
 
 // should have no implementation for any specific orm
 
-module.exports = ({ ApplicationError, accepted }) => async id => {
-  const query = { _id: id, status: accepted, isArchived: false };
+module.exports = ({ ApplicationError }) => async id => {
+  const query = { _id: id, isArchived: false };
   const checkExistence = await model.getOne({ query });
   if (!checkExistence)
     throw new ApplicationError('.نأسف ، لا يمكننا العثور على هذه الوحدة', 403);
