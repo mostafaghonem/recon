@@ -31,7 +31,7 @@ module.exports = ({ requestStates }) => {
       },
       state: {
         type: String,
-        enum: requestStates
+        enum: Object.values(requestStates)
       },
       note: {
         type: String,
@@ -44,5 +44,5 @@ module.exports = ({ requestStates }) => {
     }
   );
 
-  return mongoose.model('User', User);
+  return mongoose.model('unitReservation', User);
 };
