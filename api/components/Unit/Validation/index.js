@@ -54,6 +54,13 @@ module.exports.getMyUnitsValidation = makeGetMyUnitsValidation({
   ObjectId
 });
 
+module.exports.getMyUnitValidation = makeGetMyUnitValidation({
+  _,
+  ValidatorHelper,
+  Builder,
+  ObjectId
+});
+
 module.exports.hideUnitValidation = makeHideUnitValidation({
   _,
   ValidatorHelper,
