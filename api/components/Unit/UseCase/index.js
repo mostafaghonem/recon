@@ -10,6 +10,7 @@ const { REQUEST_RESPONSE } = require('../../../shared/constants/defaults');
 const makeAddUnit = require('./add-unit');
 const makeDeleteUnit = require('./delete-unit');
 const makeGetUnit = require('./get-unit');
+const makeGetUnits = require('./get-units');
 const makeGetMyUnits = require('./get-my-units');
 const makeGetMyUnit = require('./get-my-unit');
 const makeHideUnit = require('./hide-unit');
@@ -19,7 +20,6 @@ const makeEditUnit = require('./edit-unit');
 // const makeAddUnitRooms = require('./add-unit-rooms');
 // const makeHideUnit = require('./hide-unit');
 // const makeUnhideUnit = require('./unhide-unit');
-// const makeGetUnits = require('./get-units');
 // const makeGetRecommendedUnits = require('./get-recommended-units');
 
 // const makeEditUnitRooms = require('./edit-unit-rooms');
@@ -42,6 +42,12 @@ const deleteUnit = makeDeleteUnit({
 });
 
 const getUnit = makeGetUnit({
+  ApplicationError,
+  logger,
+  accepted: REQUEST_RESPONSE.ACCEPTED
+});
+
+const getUnits = makeGetUnits({
   ApplicationError,
   logger,
   accepted: REQUEST_RESPONSE.ACCEPTED
@@ -74,13 +80,6 @@ const editUnit = makeEditUnit({
 // const addUnitRooms = makeAddUnitRooms({
 //   ApplicationError,
 //   logger
-// });
-
-// const getUnits = makeGetUnits({
-//   ApplicationError,
-//   logger,
-//   getReservedRoomCountByHotels,
-//   accepted: REQUEST_RESPONSE.ACCEPTED
 // });
 
 // const getRecommendedUnits = makeGetRecommendedUnits({
@@ -123,12 +122,10 @@ const unitsUseCases = {
   hideUnit,
   unhideUnit,
   editUnit,
-  getUnit
+  getUnit,
+  getUnits
   //   addUnitRooms,
-  //   hideUnit,
-  //   unhideUnit,
   //   deleteUnit,
-  //   getUnits,
   //   getRecommendedUnits,
   //   editUnit,
   //   editUnitRooms,

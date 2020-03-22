@@ -7,7 +7,8 @@ const {
   hideUnitValidation,
   unhideUnitValidation,
   editUnitValidation,
-  getUnitValidation
+  getUnitValidation,
+  getUnitsValidation
   // getUnits
   // addUnitValidation,
   // addUnitRoomsValidation,
@@ -136,15 +137,15 @@ router.put(
   controllers.editUnit
 );
 
-// router.get(
-//     '/',
-//     [
-//         validateMiddleware(getUnits),
-//         authenticateMiddleware,
-//         authorizeMiddleware([PERMISSIONS.RENTER])
-//     ],
-//     controllers.getUnits
-// );
+// @route
+// @ GET api/units/
+// Description: Get Units for Renter
+// !access  anonymous
+router.get(
+  '/',
+  [validateMiddleware(getUnitsValidation), authenticateMiddleware],
+  controllers.getUnits
+);
 
 // router.get(
 //     '/recommended',
