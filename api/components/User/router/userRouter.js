@@ -34,6 +34,15 @@ router.post(
 );
 
 // @route
+// @ GET api/users/hasAdminAuthority
+// !access  ADMIN
+router.get(
+  '/hasAdminAuthority',
+  [authenticateMiddleware, authorizeMiddleware([PERMISSIONS.ADMIN])],
+  (req, res) => res.status(200).json({ ok: true })
+);
+
+// @route
 // @ POST api/users/login
 // !access  anonymous
 router.post(
