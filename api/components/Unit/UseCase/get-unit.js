@@ -21,9 +21,31 @@ module.exports = ({ ApplicationError, accepted }) => async (
   const filter = {
     _id: { $ne: checkExistence._id },
     status: accepted,
-    'address.government': String(
-      checkExistence.address.government
-    ).toLowerCase(),
+    $or: [
+      {
+        type: checkExistence.type
+      },
+      {
+        'address.government': String(
+          checkExistence.address.government
+        ).toLowerCase()
+      },
+      {
+        'address.street': {
+          $regex: new RegExp(checkExistence.address.street),
+          $options: 'i'
+        }
+      },
+      {
+        numberOfPeople: checkExistence.numberOfPeople
+      },
+      {
+        numberOfRooms: checkExistence.numberOfRooms
+      }
+    ],
+    isFull: {
+      $nin: [true]
+    },
     isHidden: false,
     isArchived: false
   };

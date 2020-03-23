@@ -23,7 +23,6 @@ module.exports = ({ GenericModel = _GenericModel }) => {
         _id: {
           $gt: lastId
         },
-        isFull: false,
         isHidden: false,
         isArchived: false
       };
