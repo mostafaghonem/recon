@@ -1,12 +1,13 @@
 const { defaultConstants } = require('../../../shared/constants');
 
-const pagination = Object.values(defaultConstants.PAGINATION);
+const pagination = Object.freeze(defaultConstants.PAGINATION);
 
 const makeGetUploadedUnitsRequests = require('./get-uploaded-units-requests');
 const makeUpdateUploadedUnitRequest = require('./update-uploaded-unit-request');
 
 const getUploadedUnitsRequests = makeGetUploadedUnitsRequests({
-  pagination
+  pagination,
+  pending: defaultConstants.REQUEST_STATUS.PENDING
 });
 const updateUploadedUnitRequest = makeUpdateUploadedUnitRequest({});
 

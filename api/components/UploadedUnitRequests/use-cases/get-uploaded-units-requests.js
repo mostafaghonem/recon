@@ -30,7 +30,7 @@ module.exports = ({ ApplicationError, logger }) => async ({
   const anotherPopulate = {
     path: 'unitId',
     match: { isArchived: false },
-    select: '_id name'
+    select: '_id type address'
   };
   let requests = await model.getMany({
     query,

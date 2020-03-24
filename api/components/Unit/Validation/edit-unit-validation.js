@@ -91,24 +91,15 @@ module.exports = ({
     },
     'address.highlight': {
       value: body.address ? body.address.highlight : '',
-      rules: new Builder()
-        .required()
-        .minLength(10)
-        .maxLength(200).rules
+      rules: new Builder().minLength(10).maxLength(200).rules
     },
     'address.houseNumber': {
       value: body.address ? body.address.houseNumber : '',
-      rules: new Builder()
-        .required()
-        .isNumber()
-        .min(1).rules
+      rules: new Builder().isNumber().min(1).rules
     },
     'address.apartmentNumber': {
       value: body.address ? body.address.apartmentNumber : '',
-      rules: new Builder()
-        .required()
-        .isNumber()
-        .min(1).rules
+      rules: new Builder().isNumber().min(1).rules
     },
     'address.floorNumber': {
       value: body.address ? body.address.floorNumber : '',
