@@ -16,6 +16,7 @@ const makeEditHostelRoomsValidation = require('./edit-hostel-rooms-validation');
 const makeEditHostelAvailabilityValidation = require('./edit-hostel-availability-validation');
 const makeGetHostelValidation = require('./get-hostel-validation');
 const makeRateHostelValidation = require('./rate-hostel-validation');
+const makeGetAvailabilityData = require('./get-Availability-data');
 
 const { defaultConstants } = require('../../../shared/constants');
 
@@ -55,6 +56,13 @@ module.exports.addHostelRoomsValidation = makeAddHostelRoomsValidation({
 });
 
 module.exports.hideHostelValidation = makeHideHostelValidation({
+  _,
+  Builder,
+  ValidatorHelper,
+  ObjectId
+});
+
+module.exports.getAvailabilityData = makeGetAvailabilityData({
   _,
   Builder,
   ValidatorHelper,

@@ -25,6 +25,7 @@ const makeEditHostelRooms = require('./edit-hostel-rooms');
 const makeEditHostelAvailability = require('./edit-hostel-availability');
 const makeGetHostel = require('./get-hostel');
 const makeRateHostel = require('./rate-hostel');
+const makeGetAvailabilityData = require('./get-Availability-data');
 const {
   addUploadedHostelsRequests
 } = require('../../uploadedHostelsRequests/uploadedHostelsRequests-external-use-cases');
@@ -70,6 +71,12 @@ const getRecommendedHostels = makeGetRecommendedHostels({
   accepted: REQUEST_RESPONSE.ACCEPTED
 });
 
+const getAvailabilityData = makeGetAvailabilityData({
+  ApplicationError,
+  logger,
+  getReservedRoomCountByHotels
+});
+
 const editHostel = makeEditHostel({
   ApplicationError,
   logger
@@ -108,6 +115,7 @@ const hostelsUseCases = {
   deleteHostel,
   getHostels,
   getRecommendedHostels,
+  getAvailabilityData,
   editHostel,
   editHostelRooms,
   editHostelAvailability,

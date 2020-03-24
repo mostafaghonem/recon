@@ -14,6 +14,7 @@ const makeEditHostelRoomsCtrl = require('./edit-hostel-rooms');
 const makeEditHostelAvailabilityCtrl = require('./edit-hostel-availability');
 const makeGetHostelCtrl = require('./get-hostel');
 const makeRateHostelCtrl = require('./rate-hostel');
+const makeGetAvailabilityData = require('./get-Availability-data');
 // ->
 const addHostel = makeAddHostelCtrl({});
 const addHostelRooms = makeAddHostelRoomsCtrl({});
@@ -27,6 +28,7 @@ const editHostelRooms = makeEditHostelRoomsCtrl({});
 const editHostelAvailability = makeEditHostelAvailabilityCtrl({});
 const getHostel = makeGetHostelCtrl({});
 const ratehostel = makeRateHostelCtrl({});
+const getAvailabilityData = makeGetAvailabilityData({});
 
 const hostelsCtrl = Object.freeze({
   addHostel,
@@ -40,6 +42,7 @@ const hostelsCtrl = Object.freeze({
   editHostelAvailability,
   getHostel,
   ratehostel,
+  getAvailabilityData,
   editHostelRooms
 });
 
