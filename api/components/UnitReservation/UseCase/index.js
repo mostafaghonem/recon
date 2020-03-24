@@ -40,3 +40,10 @@
 
 
 */
+const addingUnitReservationMaker = require('./addUnitReservationUseCase');
+
+module.exports = {
+  addUnitReservationUseCase: addingUnitReservationMaker({
+    calculateCost: () => 0
+  })
+};

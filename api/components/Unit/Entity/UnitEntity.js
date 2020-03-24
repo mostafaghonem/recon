@@ -79,7 +79,7 @@ const buildUnitEntity = (
         highlight: String,
         availability: Array,
         services: Array,
-        ownerTerms: Array,
+        conditions: Array,
         gallery: Array,
         status: String
       }
@@ -100,7 +100,7 @@ const buildUnitEntity = (
       this.highlight = data.highlight || '';
       this.availability = data.availability || [];
       this.services = data.services || [];
-      this.ownerTerms = data.ownerTerms || [];
+      this.conditions = data.conditions || [];
       this.gallery = data.gallery || [];
       this.status = data.status || '';
       if (data.address) {
@@ -132,6 +132,7 @@ const buildUnitEntity = (
       this.totalOnlineBooking = data.totalOnlineBooking || 0;
       this.totalRevenue = data.totalRevenue || 0;
       this.isHidden = data.isHidden || false;
+      this.isFull = data.isFull || false;
       this.isArchived = data.isArchived || false;
     }
 
@@ -162,7 +163,7 @@ const buildUnitEntity = (
         highlight: this.highlight,
         availability: this.availability,
         services: this.services,
-        ownerTerms: this.ownerTerms,
+        conditions: this.conditions,
         gallery: this.gallery
       };
     }
@@ -198,7 +199,7 @@ const buildUnitEntity = (
         highlight: this.highlight,
         availability: this.availability,
         services: this.services,
-        ownerTerms: this.ownerTerms,
+        conditions: this.conditions,
         gallery: this.gallery,
         rates: this.rates,
         totalRate: this.totalRate,
@@ -207,6 +208,7 @@ const buildUnitEntity = (
         note: this.note,
         totalOnlineBooking: this.totalOnlineBooking,
         totalRevenue: this.totalRevenue,
+        isFull: this.isFull,
         isHidden: this.isHidden,
         isArchived: this.isArchived
       };

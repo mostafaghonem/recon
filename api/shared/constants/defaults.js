@@ -1,4 +1,5 @@
 module.exports = {
+  ObjectIdPattern: /^[0-9a-fA-F]{24}$/,
   PAGINATION: {
     LIMIT: 20,
     LAST_ID: '000000000000'

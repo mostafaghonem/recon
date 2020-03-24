@@ -118,7 +118,7 @@ module.exports = ({
           enum: unitServices
         }
       ],
-      ownerTerms: [
+      conditions: [
         {
           type: String,
           min: 2,
@@ -173,6 +173,10 @@ module.exports = ({
       totalRevenue: {
         type: Number,
         default: 0
+      },
+      isFull: {
+        type: Boolean,
+        default: false
       },
       isHidden: {
         type: Boolean,

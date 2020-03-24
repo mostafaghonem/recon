@@ -7,20 +7,21 @@
 const logger = require('../../../startup/logger');
 const { ApplicationError } = require('../../../shared/errors');
 const { REQUEST_RESPONSE } = require('../../../shared/constants/defaults');
-// const {
-//     getReservedRoomCountByHotels,
-//     isGroupBusyInDateTs
-// } = require('../../UnitReservation/unit-reservation-external-use-cases');
-
 const makeAddUnit = require('./add-unit');
 const makeDeleteUnit = require('./delete-unit');
+const makeGetUnit = require('./get-unit');
+const makeGetUnits = require('./get-units');
 const makeGetMyUnits = require('./get-my-units');
+const makeGetMyUnit = require('./get-my-unit');
+const makeHideUnit = require('./hide-unit');
+const makeUnhideUnit = require('./unhide-unit');
+const makeEditUnit = require('./edit-unit');
+
 // const makeAddUnitRooms = require('./add-unit-rooms');
 // const makeHideUnit = require('./hide-unit');
 // const makeUnhideUnit = require('./unhide-unit');
-// const makeGetUnits = require('./get-units');
 // const makeGetRecommendedUnits = require('./get-recommended-units');
-// const makeEditUnit = require('./edit-unit');
+
 // const makeEditUnitRooms = require('./edit-unit-rooms');
 // const makeEditUnitAvailability = require('./edit-unit-availability');
 // const makeGetUnit = require('./get-unit');
@@ -32,8 +33,7 @@ const {
 const addUnit = makeAddUnit({
   ApplicationError,
   logger,
-  addUploadedUnitsRequests,
-  accepted: REQUEST_RESPONSE.ACCEPTED
+  addUploadedUnitsRequests
 });
 
 const deleteUnit = makeDeleteUnit({
@@ -41,29 +41,45 @@ const deleteUnit = makeDeleteUnit({
   logger
 });
 
+const getUnit = makeGetUnit({
+  ApplicationError,
+  logger,
+  accepted: REQUEST_RESPONSE.ACCEPTED
+});
+
+const getUnits = makeGetUnits({
+  ApplicationError,
+  logger,
+  accepted: REQUEST_RESPONSE.ACCEPTED
+});
+
 const getMyUnits = makeGetMyUnits({
   ApplicationError
 });
-// const hideUnit = makeHideUnit({
-//   ApplicationError,
-//   logger
-// });
 
-// const unhideUnit = makeUnhideUnit({
-//   ApplicationError,
-//   logger
-// });
+const getMyUnit = makeGetMyUnit({
+  ApplicationError,
+  accepted: REQUEST_RESPONSE.ACCEPTED
+});
+
+const hideUnit = makeHideUnit({
+  ApplicationError,
+  logger
+});
+
+const unhideUnit = makeUnhideUnit({
+  ApplicationError,
+  logger
+});
+
+const editUnit = makeEditUnit({
+  ApplicationError,
+  logger
+});
 
 // const addUnitRooms = makeAddUnitRooms({
 //   ApplicationError,
 //   logger
-// });
-
-// const getUnits = makeGetUnits({
-//   ApplicationError,
-//   logger,
-//   getReservedRoomCountByHotels,
-//   accepted: REQUEST_RESPONSE.ACCEPTED
 // });
 
 // const getRecommendedUnits = makeGetRecommendedUnits({
@@ -71,11 +87,6 @@ const getMyUnits = makeGetMyUnits({
 //   logger,
 //   getReservedRoomCountByHotels,
 //   accepted: REQUEST_RESPONSE.ACCEPTED
-// });
-
-// const editUnit = makeEditUnit({
-//   ApplicationError,
-//   logger
 // });
 
 // const editUnitRooms = makeEditUnitRooms({
@@ -106,12 +117,15 @@ const getMyUnits = makeGetMyUnits({
 const unitsUseCases = {
   addUnit,
   deleteUnit,
-  getMyUnits
+  getMyUnits,
+  getMyUnit,
+  hideUnit,
+  unhideUnit,
+  editUnit,
+  getUnit,
+  getUnits
   //   addUnitRooms,
-  //   hideUnit,
-  //   unhideUnit,
   //   deleteUnit,
-  //   getUnits,
   //   getRecommendedUnits,
   //   editUnit,
   //   editUnitRooms,

@@ -7,8 +7,7 @@ const { UnitEntity } = require('../Entity');
 module.exports = ({
   ApplicationError,
   logger,
-  addUploadedUnitsRequests,
-  accepted
+  addUploadedUnitsRequests
 }) => async ({
   userId,
   type,
@@ -34,50 +33,51 @@ module.exports = ({
   highlight,
   availability = [],
   services = [],
-  ownerTerms = [],
+  conditions = [],
   gallery = [],
   status,
   note,
   totalOnlineBooking,
   totalRevenue,
+  isFull,
   isHidden,
   isArchived
 }) => {
-    const newUnit = new UnitEntity({
-      userId,
-      type,
-      description,
-      image,
-      currency,
-      address,
-      rentersType,
-      numberOfPeople,
-      numberOfRooms,
-      hasFurniture,
-      availableCountNow,
-      pricePerPerson,
-      dailyOrMonthly,
-      highlight,
-      availability,
-      services,
-      ownerTerms,
-      gallery,
-      note,
-      totalOnlineBooking,
-      totalRevenue,
-      isHidden,
-      isArchived,
-      status: accepted
-    });
-    await newUnit.save();
-    await addUploadedUnitsRequests({ userId, unitId: newUnit.id });
+  const newUnit = new UnitEntity({
+    userId,
+    type,
+    description,
+    image,
+    currency,
+    address,
+    rentersType,
+    numberOfPeople,
+    numberOfRooms,
+    hasFurniture,
+    availableCountNow,
+    pricePerPerson,
+    dailyOrMonthly,
+    highlight,
+    availability,
+    services,
+    conditions,
+    gallery,
+    note,
+    totalOnlineBooking,
+    totalRevenue,
+    isFull,
+    isHidden,
+    isArchived
+  });
+  await newUnit.save();
+  await addUploadedUnitsRequests({ userId, unitId: newUnit.id });
 
-    logger.info(
-      `new Unit just been added with data => \n${JSON.stringify(
-        newUnit.toJson(),
-        undefined,
-        6
-      )}`
-    );
-    return newUnit.id;
-  };
+  logger.info(
+    `new Unit just been added with data => \n${JSON.stringify(
+      newUnit.toJson(),
+      undefined,
+      6
+    )}`
+  );
+  return newUnit.id;
+};

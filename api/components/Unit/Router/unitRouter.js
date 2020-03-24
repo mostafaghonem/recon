@@ -2,12 +2,16 @@ const express = require('express');
 const {
   addUnitValidation,
   deleteUnitValidation,
-  getMyUnitsValidation
+  getMyUnitsValidation,
+  getMyUnitValidation,
+  hideUnitValidation,
+  unhideUnitValidation,
+  editUnitValidation,
+  getUnitValidation,
+  getUnitsValidation
   // getUnits
   // addUnitValidation,
   // addUnitRoomsValidation,
-  // hideUnitValidation,
-  // unhideUnitValidation,
   // deleteUnitValidation,
   // getUnits,
   // getRecommendedUnits,
@@ -55,25 +59,49 @@ router.get(
   controllers.getMyUnits
 );
 
-// router.put(
-//     '/hide/:id',
-//     [
-//         validateMiddleware(hideUnitValidation),
-//         authenticateMiddleware,
-//         authorizeMiddleware([PERMISSIONS.HOUSE_OWNER])
-//     ],
-//     controllers.hideUnit
-// );
+// @route
+// @ GET api/units/my-unit/:id
+// Description: Get my unit of specific unit for house owners
+// !access  anonymous
+router.get(
+  '/my-unit/:id',
+  [
+    validateMiddleware(getMyUnitValidation),
+    authenticateMiddleware,
+    authorizeMiddleware([PERMISSIONS.HOUSE_OWNER])
+  ],
+  controllers.getMyUnit
+);
 
-// router.put(
-//     '/unhide/:id',
-//     [
-//         validateMiddleware(unhideUnitValidation),
-//         authenticateMiddleware,
-//         authorizeMiddleware([PERMISSIONS.HOUSE_OWNER])
-//     ],
-//     controllers.unhideUnit
-// );
+// @route
+// @ GET api/units/unit/:id
+// Description: Get unit details for renter
+// !access  anonymous
+router.get(
+  '/unit/:id',
+  [validateMiddleware(getUnitValidation)],
+  controllers.getUnit
+);
+
+router.put(
+  '/hide/:id',
+  [
+    validateMiddleware(hideUnitValidation),
+    authenticateMiddleware,
+    authorizeMiddleware([PERMISSIONS.HOUSE_OWNER])
+  ],
+  controllers.hideUnit
+);
+
+router.put(
+  '/unhide/:id',
+  [
+    validateMiddleware(unhideUnitValidation),
+    authenticateMiddleware,
+    authorizeMiddleware([PERMISSIONS.HOUSE_OWNER])
+  ],
+  controllers.unhideUnit
+);
 
 router.delete(
   '/:id',
@@ -85,15 +113,47 @@ router.delete(
   controllers.deleteUnit
 );
 
-// router.get(
-//     '/',
-//     [
-//         validateMiddleware(getUnits),
-//         authenticateMiddleware,
-//         authorizeMiddleware([PERMISSIONS.RENTER])
-//     ],
-//     controllers.getUnits
-// );
+// @route
+// @ PUT api/units/edit/:id
+// Description: Edit unit by Admin or House Owner
+// !access  anonymous
+router.put(
+  '/edit/:id',
+  [
+    validateMiddleware(editUnitValidation),
+    authenticateMiddleware,
+    authorizeMiddleware([PERMISSIONS.HOUSE_OWNER, PERMISSIONS.ADMIN])
+  ],
+  controllers.editUnit
+);
+
+// External Routes for External Use Cases
+
+// @route
+// @ GET api/units/unit/:id
+// Description: Get unit details for renter
+// !access  anonymous
+router.get(
+  '/external/unit/:id',
+  [validateMiddleware(getUnitValidation)],
+  controllers.externalGetUnit
+);
+
+// @route
+// @ GET api/units/unit/:id
+// Description: Get unit details for renter
+// !access  anonymous
+router.get(
+  '/external/unit-with-owner/:id',
+  [validateMiddleware(getUnitValidation)],
+  controllers.externalGetUnitWithOwner
+);
+
+// @route
+// @ GET api/units/
+// Description: Get Units for Renter
+// !access  anonymous
+router.get('/', [validateMiddleware(getUnitsValidation)], controllers.getUnits);
 
 // router.get(
 //     '/recommended',
@@ -123,16 +183,6 @@ router.delete(
 //         authorizeMiddleware([PERMISSIONS.RENTER])
 //     ],
 //     controllers.rateunit
-// );
-
-// router.put(
-//     '/',
-//     [
-//         validateMiddleware(editUnit),
-//         authenticateMiddleware,
-//         authorizeMiddleware([PERMISSIONS.HOUSE_OWNER, PERMISSIONS.ADMIN])
-//     ],
-//     controllers.editUnit
 // );
 
 // router.put(
