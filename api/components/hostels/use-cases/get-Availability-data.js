@@ -18,9 +18,6 @@ module.exports = ({
   };
   const select = { rooms: { $elemMatch: { _id: roomId } } };
   const checkExistence = await model.getOne({ query, select });
-  console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
-  console.log(checkExistence);
-  console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
   if (!checkExistence)
     throw new ApplicationError(
       '. نأسف ، لا يمكننا العثور على هذا الفندق او هذه الغرفة',
@@ -60,13 +57,7 @@ module.exports = ({
         group.availableRooms = Number(group.totalAvailableRooms);
       }
     });
-    console.log('bbbbbbbbbbbbbbbbbbbbbbbbbbbbbb');
-    console.log(checkExistence);
-    console.log('bbbbbbbbbbbbbbbbbbbbbbbbbbbbbb');
     return checkExistence.rooms[0].availableRooms;
   }
-  console.log('bbbbbbbbbb2bbbbbbbb');
-  console.log(checkExistence);
-  console.log('bbbbbbbbbb2bbbbbbbb');
   return 0;
 };
