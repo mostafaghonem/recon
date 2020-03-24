@@ -4,9 +4,16 @@ const app = express();
 
 require('dotenv').config({ path: `${process.env.NODE_ENV}.env` });
 
-require('./startup/db').connect();
-require('./startup/handleErrors')();
-require('./startup/middlewares')(app);
-require('./startup/routes')(app);
+const dbConfig = require('./startup/db');
+const handleErrorsConfig = require('./startup/handleErrors');
+const middlewaresConfig = require('./startup/middlewares');
+const routesConfig = require('./startup/routes');
 
-module.exports = app;
+module.exports = async () => {
+  dbConfig.connect();
+  handleErrorsConfig();
+  middlewaresConfig(app);
+  await routesConfig(app);
+
+  return app;
+};

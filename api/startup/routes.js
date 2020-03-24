@@ -1,5 +1,8 @@
-const express = require('express');
-const path = require('path');
+// const express = require('express');
+// const path = require('path');
+
+const nuxtConfig = require('./nuxt');
+
 const ErrorHandler = require('../middlewares/errorHandlerMiddleware');
 const User = require('../components/User');
 const identityRequests = require('../components/identityRequests');
@@ -10,8 +13,8 @@ const uploader = require('../components/uploader');
 const Units = require('../components/Unit');
 const Payment = require('../components/Payment');
 
-module.exports = app => {
-  app.use('/', express.static(path.join(__dirname, '../../public')));
+module.exports = async app => {
+  // app.use('/admindashboard/', express.static(path.join(__dirname, '../../public')));
   app.use('/api/uploader', uploader.Router);
   app.use('/api/users', User.Router);
   app.use('/api/identityRequests', identityRequests.Router);
@@ -20,6 +23,10 @@ module.exports = app => {
   app.use('/api/hostel-reservations', HostelReservation.Router);
   app.use('/api/units', Units.Router);
   app.use('/api/payment', Payment.Router);
+
+  // ! nuxt config
+  await nuxtConfig(app);
+
   app.use(ErrorHandler.catch404Errors);
   app.use(ErrorHandler.handleUnexpectedErrors);
 };
