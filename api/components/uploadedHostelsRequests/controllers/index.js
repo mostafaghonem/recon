@@ -1,6 +1,6 @@
 const { defaultConstants } = require('../../../shared/constants');
 
-const pagination = Object.values(defaultConstants.PAGINATION);
+const pagination = Object.freeze(defaultConstants.PAGINATION);
 
 const makeGetUploadedHostelsRequests = require('./get-uploaded-hostels-requests');
 const makeUpdateUploadedHostelRequest = require('./update-uploaded-hostel-request');
