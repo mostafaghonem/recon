@@ -16,7 +16,7 @@ module.exports = ({
     userId,
     isArchived: false
   };
-  const select = { rooms: { _id: roomId } };
+  const select = { rooms: { $elemMatch: { _id: roomId } } };
   const checkExistence = await model.getOne({ query, select });
   console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
   console.log(checkExistence);
