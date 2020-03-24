@@ -27,7 +27,7 @@ const {
 
 const { defaultConstants } = require('../../../shared/constants');
 
-const pagination = Object.values(defaultConstants.PAGINATION);
+const pagination = Object.freeze(defaultConstants.PAGINATION);
 
 // ->
 const registerUser = makeUserRegisterCtrl({});

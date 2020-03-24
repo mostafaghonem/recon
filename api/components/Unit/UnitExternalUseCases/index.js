@@ -8,6 +8,8 @@
 const Promise = require('bluebird');
 const _ = require('lodash');
 const mongoose = require('mongoose');
+
+const { ObjectId } = mongoose.Types;
 const logger = require('../../../startup/logger');
 const { ApplicationError } = require('../../../shared/errors');
 const { REQUEST_RESPONSE } = require('../../../shared/constants/defaults');
@@ -17,8 +19,7 @@ const makeUpdateUnitTotalRevenue = require('./update-units-totalRevenue');
 const makeCalculateReservationCost = require('./calculate-reservation-cost');
 const makeGetUnitWithOwner = require('./get-unit-with-owner');
 const makeGetUnit = require('./get-unit');
-
-const { ObjectId } = mongoose.Types;
+const makeUpdateUnitStatus = require('./update-unit-status');
 
 const updateUnitTotalRevenue = makeUpdateUnitTotalRevenue({
   ApplicationError,
@@ -50,12 +51,17 @@ const getUnitWithOwner = makeGetUnitWithOwner({
   accepted: REQUEST_RESPONSE.ACCEPTED
 });
 
+const updateUnitStatus = makeUpdateUnitStatus({
+  ApplicationError,
+  logger
+});
 const unitsExternalService = Object.freeze({
   updateUnitTotalRevenue,
   getunitsDataFromIds,
   calculateReservationCost,
   getUnit,
-  getUnitWithOwner
+  getUnitWithOwner,
+  updateUnitStatus
 });
 
 module.exports = unitsExternalService;

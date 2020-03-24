@@ -1,5 +1,3 @@
-const { Builder, ValidatorHelper } = require('validation-helpers');
-
 module.exports = ({
   _,
   Builder,
@@ -10,10 +8,6 @@ module.exports = ({
   const error = {};
 
   const scheme = {
-    lastId: {
-      value: query.lastId,
-      rules: new Builder().required('You should provide lastId').rules
-    },
     status: {
       value: query.status,
       rules: new Builder()
