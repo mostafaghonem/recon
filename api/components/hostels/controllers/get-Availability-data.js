@@ -11,6 +11,9 @@ module.exports = () => {
 
       return res.status(200).json({ success: true, availabilityData });
     } catch (e) {
+      console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
+      console.log(e);
+      console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
       return next(e);
     }
   };

@@ -30,8 +30,8 @@ const controllers = require('../controllers');
 router.post(
   '/',
   [
-    validateMiddleware(addHostelValidation),
-    authenticateMiddleware
+    authenticateMiddleware,
+    validateMiddleware(addHostelValidation)
     // authorizeMiddleware([PERMISSIONS.HOUSE_OWNER])
   ],
   controllers.addHostel
@@ -40,8 +40,8 @@ router.post(
 router.post(
   '/rooms',
   [
-    validateMiddleware(addHostelRoomsValidation),
-    authenticateMiddleware
+    authenticateMiddleware,
+    validateMiddleware(addHostelRoomsValidation)
     // authorizeMiddleware([PERMISSIONS.HOUSE_OWNER])
   ],
   controllers.addHostelRooms
@@ -50,8 +50,8 @@ router.post(
 router.put(
   '/hide/:id',
   [
-    validateMiddleware(hideHostelValidation),
-    authenticateMiddleware
+    authenticateMiddleware,
+    validateMiddleware(hideHostelValidation)
     // authorizeMiddleware([PERMISSIONS.HOUSE_OWNER])
   ],
   controllers.hideHostel
@@ -60,8 +60,8 @@ router.put(
 router.put(
   '/unhide/:id',
   [
-    validateMiddleware(unhideHostelValidation),
-    authenticateMiddleware
+    authenticateMiddleware,
+    validateMiddleware(unhideHostelValidation)
     // authorizeMiddleware([PERMISSIONS.HOUSE_OWNER])
   ],
   controllers.unhideHostel
@@ -70,8 +70,8 @@ router.put(
 router.delete(
   '/:id',
   [
-    validateMiddleware(deleteHostelValidation),
-    authenticateMiddleware
+    authenticateMiddleware,
+    validateMiddleware(deleteHostelValidation)
     // authorizeMiddleware([PERMISSIONS.HOUSE_OWNER])
   ],
   controllers.deleteHostel
@@ -110,8 +110,8 @@ router.get(
 router.post(
   '/rate',
   [
-    validateMiddleware(rateHostel),
-    authenticateMiddleware
+    authenticateMiddleware,
+    validateMiddleware(rateHostel)
     // authorizeMiddleware([PERMISSIONS.RENTER])
   ],
   controllers.ratehostel
@@ -120,8 +120,8 @@ router.post(
 router.put(
   '/',
   [
-    validateMiddleware(editHostel),
-    authenticateMiddleware
+    authenticateMiddleware,
+    validateMiddleware(editHostel)
     // authorizeMiddleware([PERMISSIONS.HOUSE_OWNER, PERMISSIONS.ADMIN])
   ],
   controllers.editHostel
@@ -130,18 +130,18 @@ router.put(
 router.put(
   '/availability',
   [
-    validateMiddleware(editHostelAvailability),
-    authenticateMiddleware
+    authenticateMiddleware,
+    validateMiddleware(editHostelAvailability)
     // authorizeMiddleware([PERMISSIONS.HOUSE_OWNER, PERMISSIONS.ADMIN])
   ],
   controllers.editHostelAvailability
 );
 
-router.put(
+router.get(
   '/availability/data',
   [
-    validateMiddleware(getAvailabilityData),
-    authenticateMiddleware
+    authenticateMiddleware,
+    validateMiddleware(getAvailabilityData)
     // authorizeMiddleware([PERMISSIONS.HOUSE_OWNER, PERMISSIONS.ADMIN])
   ],
   controllers.getAvailabilityData
@@ -150,8 +150,8 @@ router.put(
 router.put(
   '/rooms',
   [
-    validateMiddleware(editHostelRooms),
-    authenticateMiddleware
+    authenticateMiddleware,
+    validateMiddleware(editHostelRooms)
     // authorizeMiddleware([PERMISSIONS.HOUSE_OWNER, PERMISSIONS.ADMIN])
   ],
   controllers.editHostelRooms
