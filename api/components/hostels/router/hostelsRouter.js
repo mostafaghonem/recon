@@ -4,6 +4,7 @@ const {
   addHostelRoomsValidation,
   hideHostelValidation,
   unhideHostelValidation,
+  getAvailabilityData,
   deleteHostelValidation,
   getHostels,
   getRecommendedHostels,
@@ -134,6 +135,16 @@ router.put(
     // authorizeMiddleware([PERMISSIONS.HOUSE_OWNER, PERMISSIONS.ADMIN])
   ],
   controllers.editHostelAvailability
+);
+
+router.put(
+  '/availability/data',
+  [
+    validateMiddleware(getAvailabilityData),
+    authenticateMiddleware
+    // authorizeMiddleware([PERMISSIONS.HOUSE_OWNER, PERMISSIONS.ADMIN])
+  ],
+  controllers.getAvailabilityData
 );
 
 router.put(
