@@ -22,6 +22,7 @@ const _7f43c427 = () => interopDefault(import('..\\pages\\units\\index.vue' /* w
 const _b39f99de = () => interopDefault(import('..\\pages\\hotel\\add.vue' /* webpackChunkName: "pages_hotel_add" */))
 const _f3cf9bb8 = () => interopDefault(import('..\\pages\\hotel\\addGroup\\index.vue' /* webpackChunkName: "pages_hotel_addGroup_index" */))
 const _71cfb6f8 = () => interopDefault(import('..\\pages\\hotel\\edit\\index.vue' /* webpackChunkName: "pages_hotel_edit_index" */))
+const _71d4c7dd = () => interopDefault(import('..\\pages\\hotel\\editGroup\\index.vue' /* webpackChunkName: "pages_hotel_editGroup_index" */))
 const _077b2b8b = () => interopDefault(import('..\\pages\\hotels\\search.vue' /* webpackChunkName: "pages_hotels_search" */))
 const _00d0a4ae = () => interopDefault(import('..\\pages\\unit\\add.vue' /* webpackChunkName: "pages_unit_add" */))
 const _7fd7f076 = () => interopDefault(import('..\\pages\\unitDetails\\reservationForm.vue' /* webpackChunkName: "pages_unitDetails_reservationForm" */))
@@ -125,6 +126,10 @@ export const routerOptions = {
     path: "/hotel/edit",
     component: _71cfb6f8,
     name: "hotel-edit"
+  }, {
+    path: "/hotel/editGroup",
+    component: _71d4c7dd,
+    name: "hotel-editGroup"
   }, {
     path: "/hotels/search",
     component: _077b2b8b,

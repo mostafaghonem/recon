@@ -84,7 +84,8 @@ const editHostel = makeEditHostel({
 
 const editHostelRooms = makeEditHostelRooms({
   ApplicationError,
-  logger
+  logger,
+  getReservedRoomCountByHotels
 });
 
 const editHostelAvailability = makeEditHostelAvailability({
