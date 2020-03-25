@@ -44,13 +44,18 @@ module.exports = ({
     availableFrom,
     new Date(availableTo).getTime()
   );
-  const getHostelData = getHostelReservation.filter(
-    reservedHostel => String(reservedHostel._id) === String(hostelId)
-  );
-  const getGroupData = getHostelData[0].rooms.filter(
-    room => String(room.groupId) === String(groupId)
-  );
-  const totalOnlineBookedRooms = getGroupData[0].totalReservedCount || 0;
+  let totalOnlineBookedRooms = 0;
+  if (getHostelReservation) {
+    const getHostelData = getHostelReservation.filter(
+      reservedHostel => String(reservedHostel._id) === String(hostelId)
+    );
+    if (getHostelData[0] && getHostelData[0].rooms) {
+      const getGroupData = getHostelData[0].rooms.filter(
+        room => String(room.groupId) === String(groupId)
+      );
+      totalOnlineBookedRooms = getGroupData[0].totalReservedCount || 0;
+    }
+  }
   if (Number(totalRooms) < Number(totalOnlineBookedRooms))
     throw new ApplicationError(
       'لا يمكن ان يكون عدد الاماكن الكلى اقل من العدد المحجوز حاليا',
