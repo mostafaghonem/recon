@@ -79,7 +79,12 @@ module.exports.editUnitValidation = makeEditUnitValidation({
   _,
   ValidatorHelper,
   Builder,
-  ObjectId
+  ObjectId,
+  rentersType,
+  unitTypes,
+  PricePer,
+  currencies,
+  unitServices
 });
 
 module.exports.getUnitValidation = makeGetValidation({
