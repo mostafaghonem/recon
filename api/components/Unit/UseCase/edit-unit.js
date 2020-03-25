@@ -28,7 +28,7 @@ module.exports = ({ ApplicationError, logger }) => async ({
   const filter = { _id: unitId, userId, isArchived: false };
   const checkExistence = await model.exists({ filter });
   if (!checkExistence)
-    throw new ApplicationError('.نأسف ، لا يمكننا العثور على هذا الفندق', 403);
+    throw new ApplicationError('.نأسف ، لا يمكننا العثور على هذه الوحدة', 403);
   const update = {
     description,
     currency,
