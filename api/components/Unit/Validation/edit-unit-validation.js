@@ -81,30 +81,42 @@ module.exports = ({
     'address.street': {
       value: body.address ? body.address.street : '',
       rules: new Builder()
-        .required()
+        .required('يجب ادخال الشارع')
         .minLength(10)
         .maxLength(200).rules
     },
     'address.nearTo': {
       value: body.address ? body.address.nearTo : '',
-      rules: new Builder().minLength(10).maxLength(200).rules
+      rules: new Builder()
+        .required('يجب ادخال قريباً من')
+        .minLength(10)
+        .maxLength(200).rules
     },
     'address.highlight': {
       value: body.address ? body.address.highlight : '',
-      rules: new Builder().minLength(10).maxLength(200).rules
+      rules: new Builder()
+        .required('يجب ادخال علامة مميزة')
+        .minLength(10)
+        .maxLength(200).rules
     },
     'address.houseNumber': {
       value: body.address ? body.address.houseNumber : '',
-      rules: new Builder().isNumber().min(1).rules
+      rules: new Builder()
+        .required('يجب ادخال رقم المنزل')
+        .isNumber()
+        .min(1).rules
     },
     'address.apartmentNumber': {
       value: body.address ? body.address.apartmentNumber : '',
-      rules: new Builder().isNumber().min(1).rules
+      rules: new Builder()
+        .required('يجب ادخال رقم الشقة')
+        .isNumber()
+        .min(1).rules
     },
     'address.floorNumber': {
       value: body.address ? body.address.floorNumber : '',
       rules: new Builder()
-        .required()
+        .required('يجب ادخال رقم الدور')
         .isNumber()
         .min(1).rules
     }
