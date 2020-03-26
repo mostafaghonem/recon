@@ -32,8 +32,11 @@ exports.facebookAuthBackController = [
     if (!token) {
       return res.redirect(`/registration?faceId=${user.id}`);
     }
+
     // need to set cookie then redirect to home
-    return res.redirect(`/registration?token=${token}`);
+    return res
+      .setHeader('Set-Cookie', [`sknToken=${token}`])
+      .redirect(`/registration?token=${token}`);
   }
 ];
 
@@ -47,7 +50,9 @@ exports.googleAuthCallback = [
       return res.redirect(`/registration?googleId=${user.id}`);
     }
     // need to set cookie then redirect to home
-    return res.redirect(`/registration?token=${token}`);
+    return res
+      .setHeader('Set-Cookie', [`sknToken=${token}`])
+      .redirect(`/registration?token=${token}`);
   }
 ];
 
