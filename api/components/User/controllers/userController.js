@@ -33,7 +33,7 @@ exports.facebookAuthBackController = [
       return res.redirect(`/registration?faceId=${user.id}`);
     }
     res.cookie('sknToken', token, {
-      maxAge: 9000000000000,
+      maxAge: 365 * 24 * 60 * 60 * 1000,
       httpOnly: true
     });
     // need to set cookie then redirect to home
@@ -51,7 +51,7 @@ exports.googleAuthCallback = [
       return res.redirect(`/registration?googleId=${user.id}`);
     }
     res.cookie('sknToken', token, {
-      maxAge: 9000000000000,
+      maxAge: 365 * 24 * 60 * 60 * 1000,
       httpOnly: true
     });
     // need to set cookie then redirect to home

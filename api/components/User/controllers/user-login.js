@@ -10,7 +10,7 @@ module.exports = ({}) => {
       const agent = req.headers['user-agent'] || req.body.agent;
       const result = await loginUser({ ...req.body, agent });
       res.cookie('sknToken', result, {
-        maxAge: 900000000,
+        maxAge: 365 * 24 * 60 * 60 * 1000,
         httpOnly: true
       });
 
