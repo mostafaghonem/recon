@@ -11,6 +11,7 @@ module.exports = ({}) => {
       const result = await loginUser({ ...req.body, agent });
       return res
         .status(200)
+        .setHeader('Set-Cookie', [`sknToken=${result}`])
         .json({ message: 'User logged in successfully!', token: result });
     } catch (e) {
       return next(e);
