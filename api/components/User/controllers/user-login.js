@@ -9,9 +9,13 @@ module.exports = ({}) => {
     try {
       const agent = req.headers['user-agent'] || req.body.agent;
       const result = await loginUser({ ...req.body, agent });
+      res.cookie('sknToken', result, {
+        maxAge: 900000000,
+        httpOnly: true
+      });
+
       return res
         .status(200)
-        .setHeader('Set-Cookie', [`sknToken=${result}`])
         .json({ message: 'User logged in successfully!', token: result });
     } catch (e) {
       return next(e);

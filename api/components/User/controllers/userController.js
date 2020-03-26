@@ -32,11 +32,12 @@ exports.facebookAuthBackController = [
     if (!token) {
       return res.redirect(`/registration?faceId=${user.id}`);
     }
-
+    res.cookie('sknToken', token, {
+      maxAge: 9000000000000,
+      httpOnly: true
+    });
     // need to set cookie then redirect to home
-    return res
-      .setHeader('Set-Cookie', [`sknToken=${token}`])
-      .redirect(`/registration?token=${token}`);
+    return res.redirect(`/registration?token=${token}`);
   }
 ];
 
@@ -49,10 +50,12 @@ exports.googleAuthCallback = [
     if (!token) {
       return res.redirect(`/registration?googleId=${user.id}`);
     }
+    res.cookie('sknToken', token, {
+      maxAge: 9000000000000,
+      httpOnly: true
+    });
     // need to set cookie then redirect to home
-    return res
-      .setHeader('Set-Cookie', [`sknToken=${token}`])
-      .redirect(`/registration?token=${token}`);
+    return res.redirect(`/registration?token=${token}`);
   }
 ];
 
