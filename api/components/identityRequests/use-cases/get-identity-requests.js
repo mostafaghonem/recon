@@ -9,13 +9,12 @@ const model = require('../models');
 
 // should have no implementation for any specific orm
 module.exports = ({ ApplicationError, logger }) => async ({
-  lastId,
+  skip,
   status,
   key,
   limit
 }) => {
   const query = {
-    _id: { $gt: lastId },
     status,
     isArchived: false
   };
@@ -28,7 +27,6 @@ module.exports = ({ ApplicationError, logger }) => async ({
     select: '_id fullName phone email government gender job'
   };
   const filter = {
-    _id: { $gt: '000000000000' },
     status,
     isArchived: false
   };
@@ -37,7 +35,7 @@ module.exports = ({ ApplicationError, logger }) => async ({
     query,
     select,
     sort,
-    skip: 0,
+    skip: Number(skip) || 0,
     limit,
     populate
   });
