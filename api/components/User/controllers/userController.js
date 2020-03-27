@@ -27,15 +27,21 @@ exports.facebookAuthBackController = [
     scope: ['email']
   }),
   async (req, res) => {
+    const BASE_DOMAIN = process.env.BASE_URL
+      ? process.env.BASE_URL.replace('https://app', '')
+      : 'localhost';
     const user = req.user;
     const token = await loginService(user);
     if (!token) {
       return res.redirect(`/registration?faceId=${user.id}`);
     }
+
     res.cookie('sknToken', token, {
+      domain: BASE_DOMAIN,
       maxAge: 365 * 24 * 60 * 60 * 1000,
       httpOnly: false
     });
+
     // need to set cookie then redirect to home
     return res.redirect(`/registration?token=${token}`);
   }
@@ -44,16 +50,22 @@ exports.facebookAuthBackController = [
 exports.googleAuthCallback = [
   googleAuth.authenticate('google', { failureRedirect: '/login' }),
   async (req, res) => {
+    const BASE_DOMAIN = process.env.BASE_URL
+      ? process.env.BASE_URL.replace('https://app', '')
+      : 'localhost';
     const user = req.user;
 
     let token = await googleLoginSetter(user);
     if (!token) {
       return res.redirect(`/registration?googleId=${user.id}`);
     }
+
     res.cookie('sknToken', token, {
+      domain: BASE_DOMAIN,
       maxAge: 365 * 24 * 60 * 60 * 1000,
       httpOnly: false
     });
+
     // need to set cookie then redirect to home
     return res.redirect(`/registration?token=${token}`);
   }
