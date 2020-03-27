@@ -43,15 +43,19 @@ module.exports = app => {
   app.use(cookieParser());
   app.use(
     cors({
-      origin: function(origin, callback) {
+      origin: function check(origin, callback) {
         console.log('origin', origin);
+        if (!origin) {
+          return callback(null, true);
+        }
         const base = origin
           .replace('app.', '')
           .replace('admin.', '')
           .replace('http//', '')
           .replace('https//');
         const origins = new RegExp(`\\.${base.replace(/\./g, '\\.')}$`);
-        callback(null, origins);
+        console.log('regex', origins);
+        return callback(null, origins);
       },
       credentials: true
     })
