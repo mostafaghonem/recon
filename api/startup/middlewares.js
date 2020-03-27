@@ -39,5 +39,18 @@ module.exports = app => {
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({ extended: true }));
   app.use(cookieParser());
-  app.use(cors({ origin: true, credentials: true }));
+  app.use(
+    cors({
+      origin(origin, callback) {
+        const base = origin
+          .replace('app.', '')
+          .replace('admin.', '')
+          .replace('http//', '')
+          .replace('https//');
+        const origins = new RegExp(`\\.${base.replace(/\./g, '\\.')}$`);
+        callback(null, origins);
+      },
+      credentials: true
+    })
+  );
 };
