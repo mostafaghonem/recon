@@ -44,8 +44,7 @@ module.exports = app => {
   app.use(
     cors({
       origin: function check(origin, callback) {
-        console.log('origin', origin);
-        if (!origin) {
+        if (!origin || (origin && origin.includes('localhost'))) {
           return callback(null, true);
         }
         const base = origin
@@ -54,7 +53,6 @@ module.exports = app => {
           .replace('http://', '')
           .replace('https://', '');
         const origins = new RegExp(`\\.${base.replace(/\./g, '\\.')}$`);
-        console.log('regex', origins);
         return callback(null, origins);
       },
       credentials: true
