@@ -1,3 +1,5 @@
+/* eslint-disable object-shorthand */
+/* eslint-disable func-names */
 const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
@@ -41,7 +43,8 @@ module.exports = app => {
   app.use(cookieParser());
   app.use(
     cors({
-      origin(origin, callback) {
+      origin: function(origin, callback) {
+        console.log('origin', origin);
         const base = origin
           .replace('app.', '')
           .replace('admin.', '')
