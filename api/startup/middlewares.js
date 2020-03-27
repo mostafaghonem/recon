@@ -44,16 +44,18 @@ module.exports = app => {
   app.use(
     cors({
       origin: function check(origin, callback) {
-        if (!origin || (origin && origin.includes('localhost'))) {
-          return callback(null, true);
+        const hasAdmin = origin && origin.includes('admin');
+        const hasApp = origin && origin.includes('app');
+        if (hasAdmin || hasApp) {
+          const base = origin
+            .replace('app.', '')
+            .replace('admin.', '')
+            .replace('http://', '')
+            .replace('https://', '');
+          const origins = new RegExp(`\\.${base.replace(/\./g, '\\.')}$`);
+          return callback(null, origins);
         }
-        const base = origin
-          .replace('app.', '')
-          .replace('admin.', '')
-          .replace('http://', '')
-          .replace('https://', '');
-        const origins = new RegExp(`\\.${base.replace(/\./g, '\\.')}$`);
-        return callback(null, origins);
+        return callback(null, true);
       },
       credentials: true
     })
