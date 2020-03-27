@@ -6,7 +6,10 @@
 
 const logger = require('../../../startup/logger');
 const { ApplicationError } = require('../../../shared/errors');
-const { REQUEST_RESPONSE } = require('../../../shared/constants/defaults');
+const {
+  REQUEST_RESPONSE,
+  REQUEST_STATUS
+} = require('../../../shared/constants/defaults');
 const { ROOMS_STATUS } = require('../../../shared/constants/defaults');
 const {
   getReservedRoomCountByHotels,
@@ -34,7 +37,7 @@ const addHostel = makeAddHostel({
   ApplicationError,
   logger,
   addUploadedHostelsRequests,
-  accepted: REQUEST_RESPONSE.ACCEPTED
+  pending: REQUEST_STATUS.PENDING
 });
 
 const hideHostel = makeHideHostel({

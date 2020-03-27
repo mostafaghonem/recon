@@ -8,7 +8,7 @@ module.exports = ({
   ApplicationError,
   logger,
   addUploadedHostelsRequests,
-  accepted
+  pending
 }) => async ({
   userId,
   name,
@@ -56,7 +56,7 @@ module.exports = ({
     hostelServices,
     entertainmentServices,
     foodServices,
-    status: accepted
+    status: pending
   });
   await newHostel.save();
   await addUploadedHostelsRequests({ userId, hostelId: newHostel.id });
