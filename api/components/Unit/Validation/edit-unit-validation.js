@@ -54,9 +54,8 @@ module.exports = ({
     },
     image: {
       value: body.image,
-      rules: new Builder()
-        .required('يجب ادخال عدد الحجز صورة أساسية للوحدة')
-        .isURL().rules
+      rules: new Builder().required('يجب ادخال عدد الحجز صورة أساسية للوحدة')
+        .rules
     },
     description: {
       value: body.description,

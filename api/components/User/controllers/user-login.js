@@ -11,7 +11,7 @@ module.exports = ({}) => {
       const result = await loginUser({ ...req.body, agent });
       res.cookie('sknToken', result, {
         maxAge: 365 * 24 * 60 * 60 * 1000,
-        httpOnly: true
+        httpOnly: false
       });
 
       return res
