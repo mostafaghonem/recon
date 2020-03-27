@@ -52,7 +52,7 @@ module.exports = app => {
           .replace('app.', '')
           .replace('admin.', '')
           .replace('http://', '')
-          .replace('https://');
+          .replace('https://', '');
         const origins = new RegExp(`\\.${base.replace(/\./g, '\\.')}$`);
         console.log('regex', origins);
         return callback(null, origins);
