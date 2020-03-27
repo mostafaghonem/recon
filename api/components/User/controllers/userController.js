@@ -34,7 +34,7 @@ exports.facebookAuthBackController = [
     }
     res.cookie('sknToken', token, {
       maxAge: 365 * 24 * 60 * 60 * 1000,
-      httpOnly: true
+      httpOnly: false
     });
     // need to set cookie then redirect to home
     return res.redirect(`/registration?token=${token}`);
@@ -52,7 +52,7 @@ exports.googleAuthCallback = [
     }
     res.cookie('sknToken', token, {
       maxAge: 365 * 24 * 60 * 60 * 1000,
-      httpOnly: true
+      httpOnly: false
     });
     // need to set cookie then redirect to home
     return res.redirect(`/registration?token=${token}`);
