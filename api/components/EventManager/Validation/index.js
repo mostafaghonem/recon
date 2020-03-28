@@ -8,7 +8,7 @@ const { defaultConstants } = require('../../../shared/constants');
 const makeCreateunitValidation = require('./create-event-validation');
 const makeDeleteUnitValidation = require('./delete-event-validation');
 const makeEditUnitValidation = require('./update-event-validation');
-const makeGetValidation = require('./get-evemt-validation');
+const makeGetValidation = require('./get-event-validation');
 const makeGetUnitsValidation = require('./get-events-validation');
 
 const eventsType = Object.values(defaultConstants.EVENTS_TYPES);
