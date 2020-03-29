@@ -156,5 +156,30 @@ module.exports = {
     BOYS: 'boys',
     GIRLS: 'girls',
     FAMILY: 'family'
+  },
+  EVENTS_TYPES: {
+    ADMIN_NOTIFICATIONS_COUNT: 'admin_notifications_count',
+    USER_NOTIFICATIONS_COUNT: 'renter_notifications_count',
+    UNITS_REQUEST_ADD_UNIT: 'units_request_add_unit',
+    UNITS_REQUEST_EDIT_UNIT: 'units_request_edit_unit',
+    UNITS_REQUEST_ADD_UNIT_ACCEPTED: 'units_request_add_unit_accepted',
+    UNITS_REQUEST_ADD_UNIT_REJECTED: 'units_request_add_unit_rejected',
+    UNITS_REQUEST_EDIT_UNIT_ACCEPTED: 'units_request_edit_unit_accepted',
+    UNITS_REQUEST_EDIT_UNIT_REJECTED: 'units_request_edit_unit_rejected',
+    HOSTELS_REQUEST_ADD_HOSTEL: 'hostels_request_add_hostel',
+    HOSTELS_REQUEST_EDIT_HOSTEL: 'hostels_request_edit_hostel',
+    HOSTELS_REQUEST_ADD_HOSTEL_ACCEPTED: 'hostels_request_add_hostel_accepted',
+    HOSTELS_REQUEST_ADD_HOSTEL_REJECTED: 'hostels_request_add_hostel_rejected',
+    HOSTELS_REQUEST_EDIT_HOSTEL_ACCEPTED:
+      'hostels_request_edit_hostel_accepted',
+    HOSTELS_REQUEST_EDIT_HOSTEL_REJECTED: 'hostels_request_edit_hostel_rejected'
+  },
+  OBJECTS_TYPES: {
+    UNIT: 'unit',
+    HOTEL: 'hotel',
+    HOSTEL: 'hostel',
+    UNIT_REQUEST: 'unit_request',
+    HOTEL_REQUEST: 'hotel_request',
+    HOSTEL_REQUEST: 'hostel_request'
   }
 };

@@ -7,7 +7,9 @@ const { UnitEntity } = require('../Entity');
 module.exports = ({
   ApplicationError,
   logger,
-  addUploadedUnitsRequests
+  addUploadedUnitsRequests,
+  createUnitEvent,
+  events
 }) => async ({
   userId,
   type,
@@ -71,6 +73,12 @@ module.exports = ({
   });
   await newUnit.save();
   await addUploadedUnitsRequests({ userId, unitId: newUnit.id });
+  await createUnitEvent({
+    userId,
+    unitId: newUnit.id,
+    unit: newUnit.toJson(),
+    eventType: events.UNITS_REQUEST_ADD_UNIT
+  });
 
   logger.info(
     `new Unit just been added with data => \n${JSON.stringify(

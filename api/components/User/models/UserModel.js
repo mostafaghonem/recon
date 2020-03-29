@@ -29,6 +29,12 @@ module.exports = ({ GenericModel = _GenericModel }) => {
       });
     }
 
+    getUsersWithPermissions(permissions) {
+      return this.getMany({
+        query: { permissions: { $in: permissions } }
+      });
+    }
+
     anotherSpecificModelFunc() {
       return this.getAggregate([
         {
