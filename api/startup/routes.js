@@ -12,6 +12,7 @@ const UploadedUnitRequests = require('../components/UploadedUnitRequests');
 const HostelReservation = require('../components/HostelReservation');
 const uploader = require('../components/uploader');
 const Units = require('../components/Unit');
+const EventManager = require('../components/EventManager');
 const Payment = require('../components/Payment');
 const reservationRouter = require('../components/UnitReservation/Router');
 
@@ -27,7 +28,7 @@ module.exports = async app => {
   app.use('/api/units', Units.Router);
   app.use('/api/payment', Payment.Router);
   app.use('/api/unit-reservation', reservationRouter);
-
+  app.use('/api/events', EventManager.Router);
   // ! nuxt config
   await nuxtConfig(app);
 

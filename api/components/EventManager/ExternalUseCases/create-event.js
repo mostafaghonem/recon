@@ -7,7 +7,8 @@ const { EventEntity } = require('../Entity');
 module.exports = ({
   ApplicationError,
   logger,
-  getUsersByPermissions
+  getUsersByPermissions,
+  _
 }) => async ({
   type,
   userId,
@@ -15,15 +16,19 @@ module.exports = ({
   message,
   objectId,
   objectName,
+  objectType,
   timestamp = new Date().getTime(),
   eventCounter,
-  targets = [],
+  targets = {},
   permissions = [],
   createdAt
 }) => {
   if (permissions && permissions.length) {
-    // eslint-disable-next-line no-param-reassign
-    targets = await getUsersByPermissions(permissions);
+    const targetsObj = await getUsersByPermissions(permissions);
+    if (targetsObj && !_.isEmpty(targetsObj)) {
+      // eslint-disable-next-line no-param-reassign
+      targets = targetsObj;
+    }
   }
   const Event = new EventEntity({
     type,
@@ -31,6 +36,7 @@ module.exports = ({
     username,
     message,
     objectId,
+    objectType,
     objectName,
     timestamp,
     eventCounter,

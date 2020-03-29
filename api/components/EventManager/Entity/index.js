@@ -20,4 +20,4 @@ const Entity = makeEventEntity({
   _
 });
 
-module.exports.UnitEntity = Entity;
+module.exports.EventEntity = Entity;

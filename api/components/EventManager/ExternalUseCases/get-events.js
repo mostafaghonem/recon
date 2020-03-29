@@ -28,8 +28,8 @@ module.exports = ({ ApplicationError, logger }) => async ({
   if (userId) query.userId = userId;
   if (objectId) query.objectId = objectId;
   if (objectType) query.objectType = objectType;
-  if (targetId) query['target.userId'] = targetId;
-  if (typeof seen !== 'undefined') query['target.seen'] = seen;
+  if (targetId) query[`targets.${targetId}`] = { $exists: true };
+  if (typeof seen !== 'undefined') query[`targets.${targetId}.seen`] = !!seen;
   if (timestamp) query.timestamp = timestamp;
 
   const select = '';

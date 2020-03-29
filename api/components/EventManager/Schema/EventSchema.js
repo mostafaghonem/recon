@@ -35,8 +35,9 @@ module.exports = ({ eventsTypes, objectsTypes }) => {
     eventCounter: {
       type: Number
     },
-    targets: [
-      new Schema(
+    targets: {
+      type: Schema.Types.Map,
+      of: new Schema(
         {
           userId: {
             type: ObjectId,
@@ -45,11 +46,15 @@ module.exports = ({ eventsTypes, objectsTypes }) => {
           seen: {
             type: Boolean,
             default: false
+          },
+          interacted: {
+            type: Boolean,
+            default: false
           }
         },
         { _id: false }
       )
-    ],
+    },
     createdAt: {
       type: Date,
       default: Date.now()

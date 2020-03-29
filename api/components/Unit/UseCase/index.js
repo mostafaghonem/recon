@@ -6,7 +6,10 @@
 
 const logger = require('../../../startup/logger');
 const { ApplicationError } = require('../../../shared/errors');
-const { REQUEST_RESPONSE } = require('../../../shared/constants/defaults');
+const {
+  REQUEST_RESPONSE,
+  EVENTS_TYPES
+} = require('../../../shared/constants/defaults');
 const makeAddUnit = require('./add-unit');
 const makeDeleteUnit = require('./delete-unit');
 const makeGetUnit = require('./get-unit');
@@ -30,10 +33,14 @@ const {
   addUploadedUnitsRequests
 } = require('../../UploadedUnitRequests/UploadedUnitsRequests-external-use-cases');
 
+const { createUnitEvent } = require('../UnitExternalUseCases');
+
 const addUnit = makeAddUnit({
   ApplicationError,
   logger,
-  addUploadedUnitsRequests
+  addUploadedUnitsRequests,
+  createUnitEvent,
+  events: EVENTS_TYPES
 });
 
 const deleteUnit = makeDeleteUnit({
@@ -74,7 +81,9 @@ const unhideUnit = makeUnhideUnit({
 
 const editUnit = makeEditUnit({
   ApplicationError,
-  logger
+  logger,
+  createUnitEvent,
+  events: EVENTS_TYPES
 });
 
 // const addUnitRooms = makeAddUnitRooms({

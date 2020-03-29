@@ -17,9 +17,11 @@ module.exports = ({ GenericModel = _GenericModel }) => {
     }
 
     async getUnseen(userId, lastId, limit) {
+      const target = `targets.${userId}`;
+      const unseen = `targets.${userId}.seen`;
       const query = {
-        'targets.userId': userId,
-        'targets.seen': false,
+        [target]: userId,
+        [unseen]: false,
         _id: {
           $gt: lastId
         }

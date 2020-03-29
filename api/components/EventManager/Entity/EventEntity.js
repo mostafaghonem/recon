@@ -59,14 +59,22 @@ const buildEventEntity = (
       this.timestamp = data.timestamp || new Date().getTime();
       this.eventCounter = data.eventCounter || 0;
       this.createdAt = data.createdAt || new Date();
+      this.targets = {};
       if (data.targets) {
-        this.targets = data.targets.map(target => {
+        Object.keys(data.targets).map(key => {
+          const target = data.targets[key];
           if (target && target.userId) {
             const seen =
               typeof target.seen === 'undefined' ? false : target.seen;
-            return {
+            const interacted =
+              typeof target.interacted === 'undefined'
+                ? false
+                : target.interacted;
+
+            this.targets[key] = {
               userId: target.userId,
-              seen
+              seen,
+              interacted
             };
           }
           return {
@@ -75,7 +83,7 @@ const buildEventEntity = (
           };
         });
       } else {
-        this.targets = [];
+        this.targets = {};
       }
     }
 
