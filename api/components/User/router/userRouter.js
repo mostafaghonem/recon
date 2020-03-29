@@ -52,6 +52,11 @@ router.post(
 );
 
 // @route
+// @ POST api/users/logout
+// !access  anonymous
+router.get('/logout', [authenticateMiddleware], controllers.logOutUser);
+
+// @route
 // @ POST api/users/phone/verify
 // !access  anonymous
 router.post(

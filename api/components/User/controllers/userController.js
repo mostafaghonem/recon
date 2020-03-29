@@ -27,9 +27,9 @@ exports.facebookAuthBackController = [
     scope: ['email']
   }),
   async (req, res) => {
-    const BASE_DOMAIN = process.env.BASE_URL
-      ? process.env.BASE_URL.replace('https://app', '')
-      : 'localhost';
+    let BASE_DOMAIN =
+      process.env.NODE_ENV === 'local' ? 'localhost' : process.env.BASE_URL;
+    BASE_DOMAIN = BASE_DOMAIN || 'localhost';
     const user = req.user;
     const token = await loginService(user);
     if (!token) {
@@ -39,7 +39,7 @@ exports.facebookAuthBackController = [
     res.cookie('sknToken', token, {
       domain: BASE_DOMAIN,
       maxAge: 365 * 24 * 60 * 60 * 1000,
-      httpOnly: false
+      httpOnly: true
     });
 
     // need to set cookie then redirect to home
@@ -50,9 +50,9 @@ exports.facebookAuthBackController = [
 exports.googleAuthCallback = [
   googleAuth.authenticate('google', { failureRedirect: '/login' }),
   async (req, res) => {
-    const BASE_DOMAIN = process.env.BASE_URL
-      ? process.env.BASE_URL.replace('https://app', '')
-      : 'localhost';
+    let BASE_DOMAIN =
+      process.env.NODE_ENV === 'local' ? 'localhost' : process.env.BASE_URL;
+    BASE_DOMAIN = BASE_DOMAIN || 'localhost';
     const user = req.user;
 
     let token = await googleLoginSetter(user);
@@ -63,7 +63,7 @@ exports.googleAuthCallback = [
     res.cookie('sknToken', token, {
       domain: BASE_DOMAIN,
       maxAge: 365 * 24 * 60 * 60 * 1000,
-      httpOnly: false
+      httpOnly: true
     });
 
     // need to set cookie then redirect to home

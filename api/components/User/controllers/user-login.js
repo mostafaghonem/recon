@@ -7,15 +7,15 @@ const { loginUser } = require('../use-cases');
 module.exports = ({}) => {
   return async (req, res, next) => {
     try {
-      const BASE_DOMAIN = process.env.BASE_URL
-        ? process.env.BASE_URL.replace('https://app', '')
-        : 'localhost';
+      let BASE_DOMAIN =
+        process.env.NODE_ENV === 'local' ? 'localhost' : process.env.BASE_URL;
+      BASE_DOMAIN = BASE_DOMAIN || 'localhost';
       const agent = req.headers['user-agent'] || req.body.agent;
       const result = await loginUser({ ...req.body, agent });
       res.cookie('sknToken', result, {
         domain: BASE_DOMAIN,
         maxAge: 365 * 24 * 60 * 60 * 1000,
-        httpOnly: false
+        httpOnly: true
       });
 
       return res

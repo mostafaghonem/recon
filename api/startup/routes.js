@@ -1,5 +1,5 @@
-// const express = require('express');
-// const path = require('path');
+const favicon = require('serve-favicon');
+const path = require('path');
 
 const nuxtConfig = require('./nuxt');
 
@@ -29,6 +29,8 @@ module.exports = async app => {
   app.use('/api/payment', Payment.Router);
   app.use('/api/unit-reservation', reservationRouter);
   app.use('/api/events', EventManager.Router);
+
+  app.use(favicon(path.resolve('./public/favicon.ico')));
   // ! nuxt config
   await nuxtConfig(app);
 
