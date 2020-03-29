@@ -1,5 +1,6 @@
 const makeUserRegisterCtrl = require('./user-register');
 const makeUserLoginCtrl = require('./user-login');
+const makeUserLogOutCtrl = require('./user-logout');
 const makePhoneVerification = require('./sms-verification');
 const makeForgetPassword = require('./forget-password');
 const makeConfirmForgetPassword = require('./confirm-forget-password');
@@ -32,6 +33,7 @@ const pagination = Object.freeze(defaultConstants.PAGINATION);
 // ->
 const registerUser = makeUserRegisterCtrl({});
 const loginUser = makeUserLoginCtrl({});
+const logOutUser = makeUserLogOutCtrl({});
 const verifyPhone = makePhoneVerification({});
 const forgetPassword = makeForgetPassword({});
 const confirmForgetPassword = makeConfirmForgetPassword({});
@@ -52,6 +54,7 @@ const getUploadedHostelDetails = makeGetUploadedHostelDetails({});
 const userCtrl = Object.freeze({
   registerUser,
   loginUser,
+  logOutUser,
   verifyPhone,
   forgetPassword,
   updatePhone,
