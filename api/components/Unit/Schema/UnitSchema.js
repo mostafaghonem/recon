@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const mongoosePaginate = require('mongoose-paginate-v2');
 
 const { Schema } = mongoose;
 const { ObjectId } = mongoose.Types;
@@ -194,5 +195,6 @@ module.exports = ({
   );
 
   Unit.path('address').required(true);
+  Unit.plugin(mongoosePaginate);
   return mongoose.model('Unit', Unit);
 };

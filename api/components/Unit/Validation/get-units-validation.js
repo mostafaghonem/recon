@@ -49,8 +49,8 @@ module.exports = ({
       value: query.government,
       rules: new Builder().minLength(3).maxLength(100).rules
     },
-    numberOfPersons: {
-      value: query.numberOfPersons,
+    numberOfPeople: {
+      value: query.numberOfPeople,
       rules: new Builder()
         .isNumber('يجب ان يكون عدد الاشخاص رقم')
         .min(1, 'يجب ان يكون عدد الاشخاص 1 علي الاقل').rules

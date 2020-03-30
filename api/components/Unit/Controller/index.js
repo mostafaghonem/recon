@@ -9,6 +9,8 @@ const makeGetMyUnitsCtrl = require('./get-my-units');
 const makeGetMyUnitCtrl = require('./get-my-unit');
 const makeHideUnitCtrl = require('./hide-unit');
 const makeUnhideUnitCtrl = require('./unhide-unit');
+const makeSetFullCtrl = require('./set-full');
+const makeSetNotFullCtrl = require('./set-not-full');
 const makeEditUnitCtrl = require('./edit-unit');
 const makeGetUnit = require('./get-unit');
 const makeExternalGetUnit = require('./external-get-unit');
@@ -29,6 +31,8 @@ const getMyUnits = makeGetMyUnitsCtrl({ pagination });
 const getMyUnit = makeGetMyUnitCtrl({});
 const hideUnit = makeHideUnitCtrl({});
 const unhideUnit = makeUnhideUnitCtrl({});
+const setFull = makeSetFullCtrl({});
+const setNotFull = makeSetNotFullCtrl({});
 const editUnit = makeEditUnitCtrl({});
 const getUnit = makeGetUnit({});
 const externalGetUnit = makeExternalGetUnit({});
@@ -50,7 +54,9 @@ const unitsCtrl = Object.freeze({
   getUnit,
   externalGetUnit,
   externalGetUnitWithOwner,
-  getUnits
+  getUnits,
+  setFull,
+  setNotFull
 
   // getUnits,
   // getRecommendedUnits,

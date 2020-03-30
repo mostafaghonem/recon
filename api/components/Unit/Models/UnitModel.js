@@ -17,30 +17,30 @@ module.exports = ({ GenericModel = _GenericModel }) => {
       return true;
     }
 
-    async getMyUnits(userId, lastId, limit) {
+    async getMyUnits(userId, lastId, limit, rest = {}) {
       const query = {
         userId,
         _id: {
           $gt: lastId
         },
+        ...rest,
         isArchived: false
       };
 
       const select =
         'type image gallery dailyOrMonthly pricePerPerson status note rates totalRate totalUsersRated address totalRate totalUsersRated totalOnlineBooking totalRevenue numberOfPeople numberOfRooms availableCountNow hasFurniture rentersType isFull';
       const sort = { createdAt: 1 };
-      const units = await this.getMany({
-        query,
+      const response = await this.DbAccess.paginate(query, {
         select,
         sort,
         limit
       });
 
-      const hasNext =
-        units && units.length
-          ? await this.checkHasNext(query, units[units.length - 1]._id)
-          : false;
-      return { hasNext, units };
+      return {
+        hasNext: response.hasNextPage,
+        units: response.docs,
+        total: response.totalDocs
+      };
     }
 
     async checkHasNext(query = {}, lastId) {

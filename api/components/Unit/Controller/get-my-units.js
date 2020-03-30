@@ -7,6 +7,8 @@ module.exports = ({ pagination }) => {
       const lastId = req.query.lastId || String(pagination.LAST_ID);
       const units = await getMyUnits({
         userId: req.user.id,
+        status: req.query.status,
+        key: req.query.key,
         lastId,
         limit
       });

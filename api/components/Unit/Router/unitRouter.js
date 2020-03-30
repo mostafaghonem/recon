@@ -103,6 +103,26 @@ router.put(
   controllers.unhideUnit
 );
 
+router.put(
+  '/full/:id',
+  [
+    validateMiddleware(hideUnitValidation),
+    authenticateMiddleware,
+    authorizeMiddleware([PERMISSIONS.HOUSE_OWNER])
+  ],
+  controllers.setFull
+);
+
+router.put(
+  '/not-full/:id',
+  [
+    validateMiddleware(unhideUnitValidation),
+    authenticateMiddleware,
+    authorizeMiddleware([PERMISSIONS.HOUSE_OWNER])
+  ],
+  controllers.setNotFull
+);
+
 router.delete(
   '/:id',
   [
