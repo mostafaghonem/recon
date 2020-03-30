@@ -1,11 +1,23 @@
-module.exports = ({ _, ValidatorHelper, Builder, ObjectId }) => ({ query }) => {
+module.exports = ({
+  _,
+  ValidatorHelper,
+  Builder,
+  ObjectId,
+  requestStatus
+}) => ({ query }) => {
   const error = {};
   const scheme = {
     lastId: {
       value: query.lastId,
       rules: new Builder().rules
     },
-
+    status: {
+      value: query.status,
+      rules: new Builder().isMember(
+        requestStatus,
+        'يجب ان تكون حالة الطلب من ضمن مقبول او مرفوض او لم يحدد بعد'
+      ).rules
+    },
     limit: {
       value: query.limit,
       rules: new Builder()

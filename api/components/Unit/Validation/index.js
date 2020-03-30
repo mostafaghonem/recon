@@ -28,6 +28,7 @@ const unitServices = Object.values(defaultConstants.UNIT_SERVICES);
 const PricePer = Object.values(defaultConstants.PRICE_PER);
 const currencies = Object.values(defaultConstants.CURRENCIES);
 const rentersType = Object.values(defaultConstants.RENTERS_TYPES);
+const requestStatus = Object.values(defaultConstants.REQUEST_STATUS);
 
 module.exports.addUnitValidation = makeAddunitValidation({
   _,
@@ -51,7 +52,8 @@ module.exports.getMyUnitsValidation = makeGetMyUnitsValidation({
   _,
   ValidatorHelper,
   Builder,
-  ObjectId
+  ObjectId,
+  requestStatus
 });
 
 module.exports.getMyUnitValidation = makeGetMyUnitValidation({
