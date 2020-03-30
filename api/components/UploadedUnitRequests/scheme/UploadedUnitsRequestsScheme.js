@@ -21,8 +21,7 @@ module.exports = ({ unitSchema, requestStatus, requestTypes }) => {
         default: requestTypes.ADD
       },
       update: {
-        type: UnitSchema,
-        default: {}
+        type: UnitSchema
       },
       status: {
         type: String,

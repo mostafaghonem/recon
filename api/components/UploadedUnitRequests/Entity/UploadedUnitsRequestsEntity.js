@@ -39,7 +39,7 @@ const buildUploadedUnitsRequestsEntity = (
       this.userId = data.userId || new ObjectId();
       this.unitId = data.unitId || '';
       this.status = data.status || 'pending';
-      this.update = data.update || {};
+      this.update = data.update || undefined;
       this.createdAt = data.createdAt || new Date();
       this.isArchived = data.isArchived || false;
     }
