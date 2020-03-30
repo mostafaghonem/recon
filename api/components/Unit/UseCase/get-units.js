@@ -51,8 +51,7 @@ module.exports = ({ ApplicationError, logger, accepted }) => async ({
       }
     ];
   }
-  if (government)
-    query['address.government'] = String(government).toLowerCase();
+  if (government) query['address.government'] = String(government);
   if (services) query.services = { $in: services };
   if (rate) query.rate = { $gte: Number(rate) };
   if (type) query.type = type;

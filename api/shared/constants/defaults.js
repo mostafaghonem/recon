@@ -28,6 +28,10 @@ module.exports = {
     ACCEPTED: 'accepted',
     REJECTED: 'rejected'
   },
+  REQUEST_TYPES: {
+    EDIT: 'edit',
+    ADD: 'add'
+  },
   SMS: {
     USERNAME: 'skn@epusheg.com',
     PASSWORD: '2020skn',

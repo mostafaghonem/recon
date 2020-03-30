@@ -8,16 +8,26 @@
 const logger = require('../../../startup/logger');
 // TODO need to remove it from here and find a solution to put it in index.js
 const { ApplicationError } = require('../../../shared/errors');
+const { REQUEST_TYPES } = require('../../../shared/constants/defaults');
 
+const requestTypes = Object.freeze(REQUEST_TYPES);
 const makeAddUploadedUnitsRequests = require('./add-uploaded-unit-request');
+const makeEditUploadedUnitsRequests = require('./edit-uploaded-unit-request');
 
 const addUploadedUnitsRequests = makeAddUploadedUnitsRequests({
   ApplicationError,
   logger
 });
 
+const editUploadedUnitsRequests = makeEditUploadedUnitsRequests({
+  ApplicationError,
+  logger,
+  requestTypes
+});
+
 const UploadedUnitsRequestsExternalService = Object.freeze({
-  addUploadedUnitsRequests
+  addUploadedUnitsRequests,
+  editUploadedUnitsRequests
 });
 
 module.exports = UploadedUnitsRequestsExternalService;

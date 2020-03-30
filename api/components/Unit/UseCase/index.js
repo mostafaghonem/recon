@@ -18,7 +18,10 @@ const makeGetMyUnits = require('./get-my-units');
 const makeGetMyUnit = require('./get-my-unit');
 const makeHideUnit = require('./hide-unit');
 const makeUnhideUnit = require('./unhide-unit');
+const makeSetFull = require('./set-full');
+const makeSetNotFull = require('./set-not-full');
 const makeEditUnit = require('./edit-unit');
+const makeEditUnitRequest = require('./edit-unit-request');
 
 // const makeAddUnitRooms = require('./add-unit-rooms');
 // const makeHideUnit = require('./hide-unit');
@@ -30,7 +33,8 @@ const makeEditUnit = require('./edit-unit');
 // const makeGetUnit = require('./get-unit');
 // const makeRateUnit = require('./rate-unit');
 const {
-  addUploadedUnitsRequests
+  addUploadedUnitsRequests,
+  editUploadedUnitsRequests
 } = require('../../UploadedUnitRequests/UploadedUnitsRequests-external-use-cases');
 
 const { createUnitEvent } = require('../UnitExternalUseCases');
@@ -79,10 +83,28 @@ const unhideUnit = makeUnhideUnit({
   logger
 });
 
+const setFull = makeSetFull({
+  ApplicationError,
+  logger
+});
+
+const setNotFull = makeSetNotFull({
+  ApplicationError,
+  logger
+});
+
 const editUnit = makeEditUnit({
   ApplicationError,
   logger,
   createUnitEvent,
+  events: EVENTS_TYPES
+});
+
+const editUnitRequest = makeEditUnitRequest({
+  ApplicationError,
+  logger,
+  createUnitEvent,
+  editUploadedUnitsRequests,
   events: EVENTS_TYPES
 });
 
@@ -132,7 +154,10 @@ const unitsUseCases = {
   unhideUnit,
   editUnit,
   getUnit,
-  getUnits
+  getUnits,
+  setFull,
+  setNotFull,
+  editUnitRequest
   //   addUnitRooms,
   //   deleteUnit,
   //   getRecommendedUnits,

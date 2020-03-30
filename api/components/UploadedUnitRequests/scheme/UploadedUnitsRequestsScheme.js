@@ -4,7 +4,8 @@ const { Schema } = mongoose;
 
 const { ObjectId } = mongoose.Types;
 
-module.exports = ({ requestStatus }) => {
+module.exports = ({ unitSchema, requestStatus, requestTypes }) => {
+  const UnitSchema = new Schema(unitSchema.schema.paths, { _id: false });
   const uploadedUnitRequest = new Schema(
     {
       userId: {
@@ -14,6 +15,14 @@ module.exports = ({ requestStatus }) => {
       unitId: {
         type: ObjectId,
         ref: 'Unit'
+      },
+      type: {
+        type: String,
+        default: requestTypes.ADD
+      },
+      update: {
+        type: UnitSchema,
+        default: {}
       },
       status: {
         type: String,

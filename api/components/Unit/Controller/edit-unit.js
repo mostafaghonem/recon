@@ -1,11 +1,11 @@
-const { editUnit } = require('../UseCase');
+const { editUnitRequest } = require('../UseCase');
 
 module.exports = () => {
   return async (req, res, next) => {
     try {
       const userId = req.user.id;
       const unitId = req.params.id;
-      await editUnit({ userId, unitId, ...req.body });
+      await editUnitRequest({ userId, unitId, ...req.body });
 
       return res
         .status(200)

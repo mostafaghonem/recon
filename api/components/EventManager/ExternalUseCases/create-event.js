@@ -25,6 +25,9 @@ module.exports = ({
 }) => {
   if (permissions && permissions.length) {
     const targetsObj = await getUsersByPermissions(permissions);
+    if (targetsObj[userId]) {
+      delete targetsObj[userId];
+    }
     if (targetsObj && !_.isEmpty(targetsObj)) {
       // eslint-disable-next-line no-param-reassign
       targets = targetsObj;
