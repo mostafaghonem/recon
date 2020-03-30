@@ -47,25 +47,31 @@ module.exports = (
     renderId,
     comingOne /** {unit, from , to} */
   ) => {
+    // console.log(renderId);
+    // console.log(comingOne);
     const checkValid = await Model.checkAddingNewReservation(
       comingOne.unit,
       comingOne
     );
     if (checkValid && comingOne.from < comingOne.to) {
-      const cost = await calculateCost(comingOne.unit);
+      const cost = calculateCost(comingOne.unit);
       const unitDetail = await getUnitDetail(comingOne.unit);
-      console.log({
-        ...comingOne,
-        renter: renderId,
-        cost,
-        owner: unitDetail.userId
-      });
-      throw new Error();
+      // console.log(unitDetail);
+      // console.log('888888888888888');
+      // console.log({
+      //   ...comingOne,
+      //   renter: renderId,
+      //   cost,
+      //   owner: unitDetail.userId
+      // });
+      // throw new Error();
       const result = await Model.createOne({
-        ...comingOne,
-        renter: renderId,
-        cost,
-        owner: unitDetail.userId
+        document: {
+          ...comingOne,
+          renter: renderId,
+          cost,
+          owner: unitDetail.userId
+        }
       });
       return { result };
     }

@@ -18,7 +18,7 @@ module.exports = ({ GenericModel = _GenericModel }) => {
           }
         }
       });
-      if (result.length) {
+      if (result) {
         return false;
       }
       return true;
