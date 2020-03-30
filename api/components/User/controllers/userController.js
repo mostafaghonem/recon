@@ -7,6 +7,8 @@ const {
   googleLoginGetter
 } = require('../use-cases');
 
+const { getBaseDomain } = require('../../../shared/constants');
+
 exports.facebookAuthController = facebookAuth.authenticate('facebook');
 
 exports.facebookUserData = async (req, res) => {
@@ -27,9 +29,8 @@ exports.facebookAuthBackController = [
     scope: ['email']
   }),
   async (req, res) => {
-    let BASE_DOMAIN =
-      process.env.NODE_ENV === 'local' ? 'localhost' : process.env.BASE_URL;
-    BASE_DOMAIN = BASE_DOMAIN || 'localhost';
+    const domain = getBaseDomain();
+    const maxAge = 365 * 24 * 60 * 60 * 1000;
     const user = req.user;
     const token = await loginService(user);
     if (!token) {
@@ -37,8 +38,8 @@ exports.facebookAuthBackController = [
     }
 
     res.cookie('sknToken', token, {
-      domain: BASE_DOMAIN,
-      maxAge: 365 * 24 * 60 * 60 * 1000,
+      domain,
+      maxAge,
       httpOnly: true
     });
 
@@ -50,19 +51,18 @@ exports.facebookAuthBackController = [
 exports.googleAuthCallback = [
   googleAuth.authenticate('google', { failureRedirect: '/login' }),
   async (req, res) => {
-    let BASE_DOMAIN =
-      process.env.NODE_ENV === 'local' ? 'localhost' : process.env.BASE_URL;
-    BASE_DOMAIN = BASE_DOMAIN || 'localhost';
+    const domain = getBaseDomain();
+    const maxAge = 365 * 24 * 60 * 60 * 1000;
     const user = req.user;
 
-    let token = await googleLoginSetter(user);
+    const token = await googleLoginSetter(user);
     if (!token) {
       return res.redirect(`/registration?googleId=${user.id}`);
     }
 
     res.cookie('sknToken', token, {
-      domain: BASE_DOMAIN,
-      maxAge: 365 * 24 * 60 * 60 * 1000,
+      domain,
+      maxAge,
       httpOnly: true
     });
 

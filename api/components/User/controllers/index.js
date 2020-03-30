@@ -26,13 +26,16 @@ const {
   googleUserData
 } = require('./userController');
 
-const { defaultConstants } = require('../../../shared/constants');
+const {
+  defaultConstants,
+  getBaseDomain
+} = require('../../../shared/constants');
 
 const pagination = Object.freeze(defaultConstants.PAGINATION);
 
 // ->
 const registerUser = makeUserRegisterCtrl({});
-const loginUser = makeUserLoginCtrl({});
+const loginUser = makeUserLoginCtrl({ getBaseDomain });
 const logOutUser = makeUserLogOutCtrl({});
 const verifyPhone = makePhoneVerification({});
 const forgetPassword = makeForgetPassword({});
