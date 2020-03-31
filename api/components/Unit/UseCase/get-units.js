@@ -70,7 +70,7 @@ module.exports = ({ ApplicationError, logger, accepted }) => async ({
 
   const select =
     'type image gallery dailyOrMonthly pricePerPerson status note rates totalRate totalUsersRated address totalRate totalUsersRated totalOnlineBooking totalRevenue numberOfPeople numberOfRooms availableCountNow hasFurniture rentersType isFull';
-  const sort = { createdAt: 1 };
+  const sort = { createdAt: -1 };
   const units = await model.getMany({
     query,
     select,

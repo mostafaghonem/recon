@@ -50,7 +50,7 @@ module.exports = ({ ApplicationError, accepted }) => async (
     isArchived: false
   };
   const project = select;
-  const sort = { createdAt: 1 };
+  const sort = { createdAt: -1 };
   const units = await model.getMany({
     query: filter,
     select: project,
