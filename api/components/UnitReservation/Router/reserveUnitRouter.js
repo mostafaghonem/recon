@@ -1,13 +1,20 @@
 const express = require('express');
 const { reserveUnitController } = require('../Controller');
 const reserveUnitValidation = require('../Validation/reserveUnitValidation');
+const authorizeMiddleware = require('../../../middlewares/authorizeMiddleware');
+const authenticateMiddleware = require('../../../middlewares/authenticateMiddleware');
+const { PERMISSIONS } = require('../../../shared/constants/defaults');
 
 module.exports = ({ validation }) => {
   const router = express.Router({ mergeParams: true });
 
   router.post(
     '/',
-    validation(reserveUnitValidation.bookRequest, 'body'),
+    [
+      validation(reserveUnitValidation.bookRequest, 'body'),
+      authenticateMiddleware,
+      authorizeMiddleware([PERMISSIONS.RENTER])
+    ],
     reserveUnitController.reserveUnit
   );
 

@@ -31,7 +31,8 @@ module.exports = ({ requestStates }) => {
       },
       state: {
         type: String,
-        enum: Object.values(requestStates)
+        enum: Object.values(requestStates),
+        default: requestStates.SEND
       },
       note: {
         type: String,
