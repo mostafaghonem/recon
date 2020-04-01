@@ -29,7 +29,7 @@ module.exports = ({ GenericModel = _GenericModel }) => {
 
       const select =
         'type image gallery dailyOrMonthly pricePerPerson status note rates totalRate totalUsersRated address totalRate totalUsersRated totalOnlineBooking totalRevenue numberOfPeople numberOfRooms availableCountNow hasFurniture rentersType isFull';
-      const sort = { createdAt: -1 };
+      const sort = { createdAt: 1 };
       const response = await this.DbAccess.paginate(query, {
         select,
         sort,
