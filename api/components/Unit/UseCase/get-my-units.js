@@ -8,14 +8,22 @@ const model = require('../Models');
  */
 
 // should have no implementation for any specific orm
-module.exports = ApplicationError => async ({
+module.exports = ({ ApplicationError, getSortObj }) => async ({
   userId,
   status,
   key,
   lastId,
-  limit
+  limit,
+  sortIndex,
+  sortValue,
+  sortKey
 }) => {
-  const rest = {};
+  const sortObj = getSortObj({
+    sortIndex,
+    sortKey,
+    sortValue
+  });
+  const rest = sortObj.query;
 
   if (status) {
     rest.status = status;
@@ -41,7 +49,8 @@ module.exports = ApplicationError => async ({
     userId,
     lastId,
     limit,
-    rest
+    rest,
+    sortObj.sort
   );
 
   if (!units) {

@@ -38,9 +38,13 @@ module.exports = ({
       value: query.limit,
       rules: new Builder().isMember(sortKeys).rules
     },
-    sortValue: {
+    sortIndex: {
       value: query.limit,
       rules: new Builder().isNumber().isMember(sortValues).rules
+    },
+    sortValue: {
+      value: query.limit,
+      rules: new Builder().rules
     }
   };
 

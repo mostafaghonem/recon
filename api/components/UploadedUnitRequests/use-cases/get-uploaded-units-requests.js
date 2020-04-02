@@ -8,37 +8,30 @@ const model = require('../models');
  */
 
 // should have no implementation for any specific orm
-module.exports = ({ ApplicationError, logger, moment }) => async ({
-  lastId,
+module.exports = ({ ApplicationError, logger, getSortObj, moment }) => async ({
   status,
   type,
   key,
   limit,
   lastTimestamp,
   unitId,
-  sortValue,
-  sortKey
+  sortIndex,
+  sortKey,
+  sortValue
 }) => {
+  const sortObj = getSortObj({
+    sortIndex,
+    sortKey,
+    sortValue
+  });
+  const sort = sortObj.sort;
   const query = {
+    ...sortObj.query,
     status,
     isArchived: false
   };
 
-  const select = 'userId status unitId createdAt';
-  let sort = { _id: 1 };
-  if (sortValue && sortKey) {
-    const operator = parseInt(sortValue, 10) === -1 ? '$lt' : '$gt';
-    sort[sortKey] = sortValue;
-    query[sortKey] = {
-      [operator]: sortValue
-    };
-  } else {
-    query._id = { $gt: lastId };
-  }
-
-  if (status !== 'pending') {
-    sort = { updatedAt: -1 };
-  }
+  const select = 'userId status unitId createdAt updatedAt';
 
   if (lastTimestamp) {
     query.createdAt = { $gt: moment(lastTimestamp) };

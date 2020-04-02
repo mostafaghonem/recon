@@ -3,7 +3,9 @@ module.exports = ({
   ValidatorHelper,
   Builder,
   ObjectId,
-  requestStatus
+  requestStatus,
+  sortKeys,
+  sortValues
 }) => ({ query }) => {
   const error = {};
   const scheme = {
@@ -23,6 +25,18 @@ module.exports = ({
       rules: new Builder()
         .isNumber('لا يمكن ان يتخطى عدد الوحدات المطلوبة مئة وحدة')
         .max(100).rules
+    },
+    sortKey: {
+      value: query.limit,
+      rules: new Builder().isMember(sortKeys).rules
+    },
+    sortIndex: {
+      value: query.limit,
+      rules: new Builder().isNumber().isMember(sortValues).rules
+    },
+    sortValue: {
+      value: query.limit,
+      rules: new Builder().rules
     }
   };
 

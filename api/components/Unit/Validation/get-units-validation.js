@@ -9,7 +9,9 @@ module.exports = ({
   unitTypes,
   PricePer,
   currencies,
-  unitServices
+  unitServices,
+  sortKeys,
+  sortValues
 }) => ({ query }) => {
   const error = {};
   if (query.services) {
@@ -20,7 +22,7 @@ module.exports = ({
   const scheme = {
     lastId: {
       value: query.lastId,
-      rules: new Builder().required('You should provide lastId').rules
+      rules: new Builder().rules
     },
     availableFrom: {
       value: query.availableFrom,
@@ -85,6 +87,18 @@ module.exports = ({
         .isNumber('يجب ان يكون التقييم رقم')
         .min(1, 'يجب ان يكون التقييم 1 علي الاقل')
         .max(5, 'يجب ان يكون التقييم 5 علي الاكثر').rules
+    },
+    sortKey: {
+      value: query.limit,
+      rules: new Builder().isMember(sortKeys).rules
+    },
+    sortIndex: {
+      value: query.limit,
+      rules: new Builder().isNumber().isMember(sortValues).rules
+    },
+    sortValue: {
+      value: query.limit,
+      rules: new Builder().rules
     }
   };
 
@@ -101,7 +115,7 @@ module.exports = ({
     const ele = scheme[key];
     const { errors, isValid } = ValidatorHelper(ele.value, ele.rules);
     if (!isValid) error[key] = errors;
-    if (key === 'lastId' && !ObjectId.isValid(ele.value))
+    if (key === 'lastId' && ele.value && !ObjectId.isValid(ele.value))
       error[key] = ['lastId should be a valid ObjectId'];
     if (key === 'limit' && query.limit && _.isNaN(Number(ele.value)))
       error[key] = ['you should provide a valid limit'];

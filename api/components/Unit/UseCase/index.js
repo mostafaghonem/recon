@@ -10,6 +10,8 @@ const {
   REQUEST_RESPONSE,
   EVENTS_TYPES
 } = require('../../../shared/constants/defaults');
+const { getSortObj } = require('../../../shared/constants/methods');
+
 const makeAddUnit = require('./add-unit');
 const makeDeleteUnit = require('./delete-unit');
 const makeGetUnit = require('./get-unit');
@@ -61,11 +63,13 @@ const getUnit = makeGetUnit({
 const getUnits = makeGetUnits({
   ApplicationError,
   logger,
-  accepted: REQUEST_RESPONSE.ACCEPTED
+  accepted: REQUEST_RESPONSE.ACCEPTED,
+  getSortObj
 });
 
 const getMyUnits = makeGetMyUnits({
-  ApplicationError
+  ApplicationError,
+  getSortObj
 });
 
 const getMyUnit = makeGetMyUnit({

@@ -15,6 +15,7 @@ module.exports = ({ pagination, pending }) => {
         lastId,
         unitId,
         lastTimestamp: req.query.lastTimestamp,
+        sortIndex: req.query.sortIndex,
         sortValue: req.query.sortValue,
         sortKey: req.query.sortKey
       });
