@@ -185,5 +185,14 @@ module.exports = {
     UNIT_REQUEST: 'unit_request',
     HOTEL_REQUEST: 'hotel_request',
     HOSTEL_REQUEST: 'hostel_request'
+  },
+  SORT_KEYS: {
+    UPDATED_AT: 'updatedAt',
+    CREATED_AT: 'createdAt',
+    _ID: '_id'
+  },
+  SORT_VALUES: {
+    ASC: 1,
+    DESC: -1
   }
 };

@@ -1,5 +1,6 @@
 const { Builder, ValidatorHelper } = require('validation-helpers');
 const _ = require('lodash');
+const moment = require('moment');
 const mongoose = require('mongoose');
 
 const { ObjectId } = mongoose.Types;
@@ -10,14 +11,27 @@ const { defaultConstants } = require('../../../shared/constants');
 
 const requestStatus = Object.values(defaultConstants.REQUEST_STATUS);
 const requestResponse = Object.values(defaultConstants.REQUEST_RESPONSE);
-const { REQUEST_RESPONSE } = require('../../../shared/constants/defaults');
+const {
+  REQUEST_RESPONSE,
+  REQUEST_TYPES,
+  SORT_KEYS,
+  SORT_VALUES
+} = require('../../../shared/constants/defaults');
+
+const requestTypes = Object.values(REQUEST_TYPES);
+const sortValues = Object.values(SORT_VALUES);
+const sortKeys = Object.values(SORT_KEYS);
 
 module.exports.getUploadedUnitsRequests = makeGetUploadedUnitsRequests({
+  moment,
   _,
   Builder,
   ValidatorHelper,
   ObjectId,
-  requestStatus
+  requestTypes,
+  requestStatus,
+  sortKeys,
+  sortValues
 });
 
 module.exports.updateUploadedUnitRequest = makeUpdateUploadedUnitsRequests({
@@ -26,5 +40,8 @@ module.exports.updateUploadedUnitRequest = makeUpdateUploadedUnitsRequests({
   ValidatorHelper,
   ObjectId,
   requestResponse,
-  reject: REQUEST_RESPONSE.REJECTED
+  requestTypes,
+  reject: REQUEST_RESPONSE.REJECTED,
+  sortKeys,
+  sortValues
 });

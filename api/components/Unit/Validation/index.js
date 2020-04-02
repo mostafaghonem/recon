@@ -29,6 +29,8 @@ const PricePer = Object.values(defaultConstants.PRICE_PER);
 const currencies = Object.values(defaultConstants.CURRENCIES);
 const rentersType = Object.values(defaultConstants.RENTERS_TYPES);
 const requestStatus = Object.values(defaultConstants.REQUEST_STATUS);
+const sortValues = Object.values(defaultConstants.SORT_VALUES);
+const sortKeys = Object.values(defaultConstants.SORT_KEYS);
 
 module.exports.addUnitValidation = makeAddunitValidation({
   _,
@@ -53,7 +55,9 @@ module.exports.getMyUnitsValidation = makeGetMyUnitsValidation({
   ValidatorHelper,
   Builder,
   ObjectId,
-  requestStatus
+  requestStatus,
+  sortValues,
+  sortKeys
 });
 
 module.exports.getMyUnitValidation = makeGetMyUnitValidation({
@@ -93,7 +97,9 @@ module.exports.getUnitValidation = makeGetValidation({
   _,
   ValidatorHelper,
   Builder,
-  ObjectId
+  ObjectId,
+  sortValues,
+  sortKeys
 });
 
 module.exports.getUnitsValidation = makeGetUnitsValidation({
@@ -105,5 +111,7 @@ module.exports.getUnitsValidation = makeGetUnitsValidation({
   unitTypes,
   PricePer,
   currencies,
-  unitServices
+  unitServices,
+  sortValues,
+  sortKeys
 });
