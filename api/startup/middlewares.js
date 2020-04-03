@@ -46,10 +46,12 @@ module.exports = app => {
       origin: function check(origin, callback) {
         const hasAdmin = origin && origin.includes('admin');
         const hasApp = origin && origin.includes('app');
-        if (hasAdmin || hasApp) {
+        const hasWWW = origin && origin.includes('www');
+        if (hasAdmin || hasApp || hasWWW) {
           const base = origin
             .replace('app.', '')
             .replace('admin.', '')
+            .replace('www.', '')
             .replace('http://', '')
             .replace('https://', '');
           const origins = new RegExp(`\\.${base.replace(/\./g, '\\.')}$`);
