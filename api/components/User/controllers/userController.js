@@ -7,6 +7,8 @@ const {
   googleLoginGetter
 } = require('../use-cases');
 
+const { getBaseDomain } = require('../../../shared/constants');
+
 exports.facebookAuthController = facebookAuth.authenticate('facebook');
 
 exports.facebookUserData = async (req, res) => {
@@ -27,11 +29,20 @@ exports.facebookAuthBackController = [
     scope: ['email']
   }),
   async (req, res) => {
+    const domain = getBaseDomain();
+    const maxAge = 365 * 24 * 60 * 60 * 1000;
     const user = req.user;
     const token = await loginService(user);
     if (!token) {
       return res.redirect(`/registration?faceId=${user.id}`);
     }
+
+    res.cookie('sknToken', token, {
+      domain,
+      maxAge,
+      httpOnly: true
+    });
+
     // need to set cookie then redirect to home
     return res.redirect(`/registration?token=${token}`);
   }
@@ -40,12 +51,21 @@ exports.facebookAuthBackController = [
 exports.googleAuthCallback = [
   googleAuth.authenticate('google', { failureRedirect: '/login' }),
   async (req, res) => {
+    const domain = getBaseDomain();
+    const maxAge = 365 * 24 * 60 * 60 * 1000;
     const user = req.user;
 
-    let token = await googleLoginSetter(user);
+    const token = await googleLoginSetter(user);
     if (!token) {
       return res.redirect(`/registration?googleId=${user.id}`);
     }
+
+    res.cookie('sknToken', token, {
+      domain,
+      maxAge,
+      httpOnly: true
+    });
+
     // need to set cookie then redirect to home
     return res.redirect(`/registration?token=${token}`);
   }

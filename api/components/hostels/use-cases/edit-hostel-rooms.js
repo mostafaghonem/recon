@@ -4,7 +4,11 @@ const model = require('../models');
 
 // should have no implementation for any specific orm
 
-module.exports = ({ ApplicationError, logger }) => async ({
+module.exports = ({
+  ApplicationError,
+  logger,
+  getReservedRoomCountByHotels
+}) => async ({
   userId,
   hostelId,
   groupId,
@@ -33,10 +37,28 @@ module.exports = ({ ApplicationError, logger }) => async ({
     );
 
   // TODO call gamal service
-  const totalOnlineBookedRooms = 1;
+  const availableFrom = new Date().getTime();
+  const availableTo = new Date().setDate(new Date().getDate() + 1);
+  const getHostelReservation = await getReservedRoomCountByHotels(
+    [hostelId],
+    availableFrom,
+    new Date(availableTo).getTime()
+  );
+  let totalOnlineBookedRooms = 0;
+  if (getHostelReservation) {
+    const getHostelData = getHostelReservation.filter(
+      reservedHostel => String(reservedHostel._id) === String(hostelId)
+    );
+    if (getHostelData[0] && getHostelData[0].rooms) {
+      const getGroupData = getHostelData[0].rooms.filter(
+        room => String(room.groupId) === String(groupId)
+      );
+      totalOnlineBookedRooms = getGroupData[0].totalReservedCount || 0;
+    }
+  }
   if (Number(totalRooms) < Number(totalOnlineBookedRooms))
     throw new ApplicationError(
-      'لا يمكن ان يكون عدد الاماكن الكلى اكبر من العدد المحجوز حاليا',
+      'لا يمكن ان يكون عدد الاماكن الكلى اقل من العدد المحجوز حاليا',
       400
     );
   else if (

@@ -18,19 +18,28 @@ module.exports = ({ ApplicationError, logger, accepted }) => async ({
     userRate => String(userRate.userId) === String(userId)
   );
   let update = {};
+  let totalRate;
+  let finalRate;
   if (checkUserRate[0]) {
     const filter = {
       _id: hostelId,
       'rates.userId': userId
     };
+    totalRate = checkExistence.totalRate - checkUserRate[0].rate + Number(rate);
+    finalRate = Number(totalRate) / Number(checkExistence.totalUsersRated);
     update = {
       $set: { 'rates.$.rate': Number(rate) },
-      totalRate: checkExistence.totalRate - checkUserRate[0].rate + Number(rate)
+      totalRate,
+      rate: Number(finalRate.toFixed(1))
     };
     await model.update({ filter, update });
   } else {
-    update.totalUsersRated = checkExistence.totalUsersRated + 1;
-    update.totalRate = checkExistence.totalRate + Number(rate);
+    const totalUsersRated = Number(checkExistence.totalUsersRated) + 1;
+    totalRate = checkExistence.totalRate + Number(rate);
+    finalRate = Number(totalRate) / Number(totalUsersRated);
+    update.totalUsersRated = totalUsersRated;
+    update.totalRate = totalRate;
+    update.rate = Number(finalRate.toFixed(1));
     update.$push = { rates: { userId, rate } };
     await model.updateOneById({ id: hostelId, update });
   }

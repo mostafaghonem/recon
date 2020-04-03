@@ -5,14 +5,20 @@ module.exports = ({ ApplicationError, logger }) => async (
   userId,
   identificationImages
 ) => {
-  const select = 'fullName';
+  const select = 'fullName permissions';
   const user = await model.getOneById({ id: userId, select });
   if (user) {
     if (identificationImages[0]) {
+      const update = {
+        identificationImages,
+        identificationStatus: true
+      };
       await model.updateOneById({
         id: userId,
-        update: { identificationImages }
+        update
       });
+      if (!user.permissions.includes('houseOwner'))
+        update.$push = { permissions: 'houseOwner' };
     }
 
     logger.info(`${userId} identity just updated`);

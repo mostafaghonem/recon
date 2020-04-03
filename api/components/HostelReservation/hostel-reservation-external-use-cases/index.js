@@ -13,7 +13,8 @@ const redisClient = require('../../../shared/redis-client');
 const makeGetReservedRoomCountByHotel = require('./get-reserved-room-count-by-hotel');
 const makeIsGroupBusyInDateTs = require('./is-group-busy-in-this-date');
 const makeCompletePayment = require('./complete-payment');
-const { updateHostelBookingData } = require('./__mocks');
+const makeGetReservationCostById = require('./get-reservation-cost-by-id');
+// const { updateHostelBookingData } = require('./__mocks');
 
 /**
  *  ! This will return the hostelId containing array of rooms each one has a groupId with the max reservation count in it in the specified period
@@ -47,8 +48,11 @@ const isGroupBusyInDateTs = makeIsGroupBusyInDateTs({});
 const completePayment = makeCompletePayment({
   logger,
   redis: redisClient,
-  publisher: redis,
-  updateHostelBookingData
+  publisher: redis
+});
+
+const getReservationCostById = makeGetReservationCostById({
+  redis: redisClient
 });
 
 // const isGroupBusyInDateTs = (hostelIds, groupIds, datets) => {
@@ -58,6 +62,7 @@ const completePayment = makeCompletePayment({
 const HostelReservationExternals = Object.freeze({
   getReservedRoomCountByHotels,
   isGroupBusyInDateTs,
+  getReservationCostById,
   completePayment
 });
 

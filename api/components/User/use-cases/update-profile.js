@@ -35,7 +35,7 @@ module.exports = ({ ApplicationError, logger, addIdentityRequests }) => async (
       });
       delete updatedProfile.identificationImages;
     }
-    const updateUserProfile = await model.updateOneById({
+    await model.updateOneById({
       id: userId,
       update: updatedProfile
     });

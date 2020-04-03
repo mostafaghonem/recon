@@ -118,6 +118,7 @@ const buildHostelEntity = (
       this.rooms = data.rooms || [];
       this.rates = data.rates || [];
       this.totalRate = data.totalRate || 0;
+      this.rate = data.rate || 0;
       this.totalUsersRated = data.totalUsersRated || 0;
       this.status = data.status || pendingStatus;
       this.note = data.note || '';
@@ -184,6 +185,7 @@ const buildHostelEntity = (
         rooms: this.rooms,
         rates: this.rates,
         totalRate: this.totalRate,
+        rate: this.rate,
         totalUsersRated: this.totalUsersRated,
         status: this.status,
         note: this.note,

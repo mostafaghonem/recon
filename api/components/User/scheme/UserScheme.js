@@ -80,7 +80,8 @@ module.exports = ({ genderEnum, jobTypeEnum, permissions }) => {
       },
       identificationImages: [String],
       identificationStatus: {
-        type: Boolean
+        type: Boolean,
+        default: false
       },
       permissions: [
         {

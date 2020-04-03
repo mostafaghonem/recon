@@ -48,7 +48,7 @@ module.exports.handleUnexpectedErrors = (err, req, res, next) => {
     if (process.env.NODE_ENV === 'development') {
       errorResponse.stackTrace = error.stack;
     }
-    logger.error(error);
+    logger.error(errorMessage);
   }
 
   // return the error

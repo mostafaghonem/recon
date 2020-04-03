@@ -7,7 +7,8 @@ const { HostelsEntity } = require('../Entity');
 module.exports = ({
   ApplicationError,
   logger,
-  addUploadedHostelsRequests
+  addUploadedHostelsRequests,
+  pending
 }) => async ({
   userId,
   name,
@@ -42,7 +43,7 @@ module.exports = ({
     image,
     currency,
     address: {
-      government: address.government,
+      government: String(address.government).toLowerCase(),
       street: address.street,
       nearTo: address.nearTo,
       highlight: address.highlight,
@@ -54,7 +55,8 @@ module.exports = ({
     generalServices,
     hostelServices,
     entertainmentServices,
-    foodServices
+    foodServices,
+    status: pending
   });
   await newHostel.save();
   await addUploadedHostelsRequests({ userId, hostelId: newHostel.id });

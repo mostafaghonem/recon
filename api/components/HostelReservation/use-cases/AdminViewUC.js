@@ -9,7 +9,8 @@ const Models = require('../Models');
 module.exports = ({
   logger,
   getHostelsDataFromIds,
-  getRenterDataWithPhoneSearch
+  getRenterDataWithPhoneSearch,
+  getRenterDataWithIds
 }) => async ({ phone, status, skip, limit }) => {
   let userDataMap;
   let hostelsDataMap;
@@ -55,7 +56,7 @@ module.exports = ({
     // # get the rest of data from users and hostel Component
     [hostelsDataMap, userDataMap] = await Promise.all([
       getHostelsDataFromIds([...hostelIdsSet]),
-      getRenterDataWithPhoneSearch(null, [...renterIdsSet])
+      getRenterDataWithIds([...renterIdsSet])
     ]);
   }
 

@@ -17,7 +17,7 @@ module.exports = ({
   const scheme = {
     image: {
       value: body.image,
-      rules: new Builder().required().isURL().rules
+      rules: new Builder().required().rules
     },
     fullName: {
       value: body.fullName,
@@ -57,7 +57,7 @@ module.exports = ({
     },
     identificationImages: {
       value: body.identificationImages,
-      rules: new Builder().required().isArray().rules
+      rules: new Builder().rules
     },
     code: {
       value: body.code,
@@ -66,12 +66,16 @@ module.exports = ({
     // TODO: Edit error messages
   };
   if (body.identificationImages) {
-    body.identificationImages.forEach((url, index) => {
-      scheme[`body.identificationImages.${index}`] = {
-        value: url,
-        rules: new Builder().isURL('Should be a valid URL').rules
-      };
-    });
+    if (!_.isArray(body.identificationImages))
+      error.identificationImages = ['identificationImages should be array'];
+    // else {
+    //   body.identificationImages.forEach((url, index) => {
+    //     scheme[`body.identificationImages.${index}`] = {
+    //       value: url,
+    //       rules: new Builder().isURL('Should be a valid URL').rules
+    //     };
+    //   });
+    // }
   }
 
   Object.keys(scheme).forEach(key => {

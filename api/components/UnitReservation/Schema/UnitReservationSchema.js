@@ -31,9 +31,10 @@ module.exports = ({ requestStates }) => {
       },
       state: {
         type: String,
-        enum: requestStates
+        enum: Object.values(requestStates),
+        default: requestStates.SEND
       },
-      reasonOfRefuse: {
+      note: {
         type: String,
         default: 'there is an request accept in your time before'
       }
@@ -44,5 +45,5 @@ module.exports = ({ requestStates }) => {
     }
   );
 
-  return mongoose.model('User', User);
+  return mongoose.model('unitReservation', User);
 };

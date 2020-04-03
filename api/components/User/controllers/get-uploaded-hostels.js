@@ -15,7 +15,7 @@ module.exports = ({ pagination }) => {
 
       return res.status(200).json({
         success: true,
-        requests: uploadedHostels || []
+        hostels: uploadedHostels || []
       });
     } catch (e) {
       return next(e);

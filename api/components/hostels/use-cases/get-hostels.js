@@ -35,11 +35,12 @@ module.exports = ({
   const query = {
     _id: { $gt: lastId },
     name: { $regex: key, $options: 'i' },
-    'address.government': government,
     status: accepted,
     isHidden: false,
     isArchived: false
   };
+  if (government)
+    query['address.government'] = String(government).toLowerCase();
   if (freeServices) query.freeServices = { $all: freeServices };
   if (generalServices) query.generalServices = { $all: generalServices };
   if (hostelServices) query.hostelServices = { $all: hostelServices };
@@ -47,7 +48,7 @@ module.exports = ({
     query.entertainmentServices = { $all: entertainmentServices };
   if (foodServices) query.foodServices = { $all: foodServices };
   if (rate) query.rate = { $gte: Number(rate) };
-  const select = 'name totalRate totalUsersRated rooms address.government';
+  const select = 'name image rate totalUsersRated rooms address.government';
   const sort = { createdAt: 1 };
   const hostels = await model.getMany({
     query,
@@ -61,8 +62,8 @@ module.exports = ({
     hostels.map(hostel => hostelsIds.push(hostel._id));
     const reservedHostels = await getReservedRoomCountByHotels(
       hostelsIds,
-      new Date(availableFrom).getTime(),
-      new Date(availableTo).getTime()
+      availableFrom,
+      availableTo
     );
 
     let filteredHostels = [];
@@ -72,11 +73,15 @@ module.exports = ({
       hostel.available = false;
       hostel.rooms = hostel.rooms.filter(
         group =>
-          group.Type === Type &&
           group.numberOfPersons >= (Number(numberOfPersons) || 0) &&
           group.pricePerPerson >= (Number(priceFrom) || 0) &&
           group.pricePerPerson <= (Number(priceTo) || 10000000000)
       );
+      if (Type)
+        hostel.rooms = hostel.rooms.filter(
+          group =>
+            String(group.Type).toLowerCase() === String(Type).toLowerCase()
+        );
       if (hostel.rooms[0]) {
         const getHostelData = reservedHostels.filter(
           reservedHostel => String(reservedHostel._id) === String(hostel._id)

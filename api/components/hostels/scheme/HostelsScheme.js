@@ -68,15 +68,18 @@ module.exports = ({
             },
             street: {
               type: String,
-              required: true
+              required: true,
+              set: v => v.trim()
             },
             nearTo: {
               type: String,
-              required: true
+              required: true,
+              set: v => v.trim()
             },
             highlight: {
               type: String,
-              required: true
+              required: true,
+              set: v => v.trim()
             },
             houseNumber: {
               type: Number,
@@ -196,6 +199,10 @@ module.exports = ({
           { _id: false }
         )
       ],
+      rate: {
+        type: Number,
+        default: 0
+      },
       totalRate: {
         type: Number,
         default: 0
@@ -214,6 +221,10 @@ module.exports = ({
         default: ''
       },
       totalOnlineBooking: {
+        type: Number,
+        default: 0
+      },
+      totalBooking: {
         type: Number,
         default: 0
       },

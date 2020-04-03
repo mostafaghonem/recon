@@ -6,7 +6,10 @@
 
 const logger = require('../../../startup/logger');
 const { ApplicationError } = require('../../../shared/errors');
-const { REQUEST_RESPONSE } = require('../../../shared/constants/defaults');
+const {
+  REQUEST_RESPONSE,
+  REQUEST_STATUS
+} = require('../../../shared/constants/defaults');
 const { ROOMS_STATUS } = require('../../../shared/constants/defaults');
 const {
   getReservedRoomCountByHotels,
@@ -19,11 +22,13 @@ const makeHideHostel = require('./hide-hostel');
 const makeUnhideHostel = require('./unhide-hostel');
 const makeDeleteHostel = require('./delete-hostel');
 const makeGetHostels = require('./get-hostels');
+const makeGetRecommendedHostels = require('./get-recommended-hostels');
 const makeEditHostel = require('./edit-hostel');
 const makeEditHostelRooms = require('./edit-hostel-rooms');
 const makeEditHostelAvailability = require('./edit-hostel-availability');
 const makeGetHostel = require('./get-hostel');
 const makeRateHostel = require('./rate-hostel');
+const makeGetAvailabilityData = require('./get-Availability-data');
 const {
   addUploadedHostelsRequests
 } = require('../../uploadedHostelsRequests/uploadedHostelsRequests-external-use-cases');
@@ -31,7 +36,8 @@ const {
 const addHostel = makeAddHostel({
   ApplicationError,
   logger,
-  addUploadedHostelsRequests
+  addUploadedHostelsRequests,
+  pending: REQUEST_STATUS.PENDING
 });
 
 const hideHostel = makeHideHostel({
@@ -61,6 +67,19 @@ const getHostels = makeGetHostels({
   accepted: REQUEST_RESPONSE.ACCEPTED
 });
 
+const getRecommendedHostels = makeGetRecommendedHostels({
+  ApplicationError,
+  logger,
+  getReservedRoomCountByHotels,
+  accepted: REQUEST_RESPONSE.ACCEPTED
+});
+
+const getAvailabilityData = makeGetAvailabilityData({
+  ApplicationError,
+  logger,
+  getReservedRoomCountByHotels
+});
+
 const editHostel = makeEditHostel({
   ApplicationError,
   logger
@@ -68,7 +87,8 @@ const editHostel = makeEditHostel({
 
 const editHostelRooms = makeEditHostelRooms({
   ApplicationError,
-  logger
+  logger,
+  getReservedRoomCountByHotels
 });
 
 const editHostelAvailability = makeEditHostelAvailability({
@@ -81,6 +101,7 @@ const editHostelAvailability = makeEditHostelAvailability({
 const getHostel = makeGetHostel({
   ApplicationError,
   logger,
+  getReservedRoomCountByHotels,
   accepted: REQUEST_RESPONSE.ACCEPTED
 });
 
@@ -97,6 +118,8 @@ const hostelsUseCases = {
   unhideHostel,
   deleteHostel,
   getHostels,
+  getRecommendedHostels,
+  getAvailabilityData,
   editHostel,
   editHostelRooms,
   editHostelAvailability,

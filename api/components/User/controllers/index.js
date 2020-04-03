@@ -1,5 +1,6 @@
 const makeUserRegisterCtrl = require('./user-register');
 const makeUserLoginCtrl = require('./user-login');
+const makeUserLogOutCtrl = require('./user-logout');
 const makePhoneVerification = require('./sms-verification');
 const makeForgetPassword = require('./forget-password');
 const makeConfirmForgetPassword = require('./confirm-forget-password');
@@ -13,6 +14,7 @@ const makeUpdatePhone = require('./update-phone');
 const makePhoneUpdateVerification = require('./phone-update-verification');
 const makeGetHouseOwnerInfo = require('./houseOwner-info');
 const makeGetHouseOwnerInfoWithCi = require('./houseOwner-info-with-ci');
+const makeGetUploadedHostelsCount = require('./get-uploaded-hostels-count');
 const makeGetUploadedHostels = require('./get-uploaded-hostels');
 const makeGetUploadedHostelDetails = require('./get-uploaded-hostel-details');
 const {
@@ -24,13 +26,17 @@ const {
   googleUserData
 } = require('./userController');
 
-const { defaultConstants } = require('../../../shared/constants');
+const {
+  defaultConstants,
+  getBaseDomain
+} = require('../../../shared/constants');
 
-const pagination = Object.values(defaultConstants.PAGINATION);
+const pagination = Object.freeze(defaultConstants.PAGINATION);
 
 // ->
 const registerUser = makeUserRegisterCtrl({});
-const loginUser = makeUserLoginCtrl({});
+const loginUser = makeUserLoginCtrl({ getBaseDomain });
+const logOutUser = makeUserLogOutCtrl({});
 const verifyPhone = makePhoneVerification({});
 const forgetPassword = makeForgetPassword({});
 const confirmForgetPassword = makeConfirmForgetPassword({});
@@ -44,12 +50,14 @@ const updatePhone = makeUpdatePhone({});
 const phoneUpdateVerification = makePhoneUpdateVerification({});
 const getHouseOwnerInfo = makeGetHouseOwnerInfo({});
 const getHouseOwnerInfoWithCi = makeGetHouseOwnerInfoWithCi({});
+const getUploadedHostelsCount = makeGetUploadedHostelsCount({});
 const getUploadedHostels = makeGetUploadedHostels({ pagination });
 const getUploadedHostelDetails = makeGetUploadedHostelDetails({});
 
 const userCtrl = Object.freeze({
   registerUser,
   loginUser,
+  logOutUser,
   verifyPhone,
   forgetPassword,
   updatePhone,
@@ -63,6 +71,7 @@ const userCtrl = Object.freeze({
   phoneUpdateVerification,
   getHouseOwnerInfo,
   getHouseOwnerInfoWithCi,
+  getUploadedHostelsCount,
   getUploadedHostels,
   getUploadedHostelDetails,
   googleAuthController,

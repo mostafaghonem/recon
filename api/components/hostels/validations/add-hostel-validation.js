@@ -23,7 +23,7 @@ module.exports = ({
     },
     image: {
       value: body.image,
-      rules: new Builder().required().isURL().rules
+      rules: new Builder().required().rules
     },
     phone: {
       value: body.phone,
@@ -52,28 +52,28 @@ module.exports = ({
       rules: new Builder().required().isMember(currencies).rules
     },
     'address.government': {
-      value: body.address ? body.address.government : '',
+      value: body.address ? String(body.address.government).trim() : '',
       rules: new Builder()
         .required()
         .minLength(3)
         .maxLength(100).rules
     },
     'address.street': {
-      value: body.address ? body.address.street : '',
+      value: body.address ? String(body.address.street).trim() : '',
       rules: new Builder()
         .required()
         .minLength(10)
         .maxLength(200).rules
     },
     'address.nearTo': {
-      value: body.address ? body.address.nearTo : '',
+      value: body.address ? String(body.address.nearTo).trim() : '',
       rules: new Builder()
         .required()
         .minLength(10)
         .maxLength(200).rules
     },
     'address.highlight': {
-      value: body.address ? body.address.highlight : '',
+      value: body.address ? String(body.address.highlight).trim() : '',
       rules: new Builder()
         .required()
         .minLength(10)
@@ -102,41 +102,67 @@ module.exports = ({
     },
     freeServices: {
       value: body.freeServices,
-      rules: new Builder()
-        .required()
-        .isArray()
-        .isMember(freeServices).rules
+      rules: new Builder().required().isArray().rules
     },
     generalServices: {
       value: body.generalServices,
-      rules: new Builder()
-        .required()
-        .isArray()
-        .isMember(generalServices).rules
+      rules: new Builder().required().isArray().rules
     },
     hostelServices: {
       value: body.hostelServices,
-      rules: new Builder()
-        .required()
-        .isArray()
-        .isMember(hostelServices).rules
+      rules: new Builder().required().isArray().rules
     },
     entertainmentServices: {
       value: body.entertainmentServices,
-      rules: new Builder()
-        .required()
-        .isArray()
-        .isMember(entertainmentServices).rules
+      rules: new Builder().required().isArray().rules
     },
     foodServices: {
       value: body.foodServices,
-      rules: new Builder()
-        .required()
-        .isArray()
-        .isMember(foodServices).rules
+      rules: new Builder().required().isArray().rules
     }
     // TODO: Edit error messages
   };
+
+  if (body.freeServices) {
+    body.freeServices.forEach((url, index) => {
+      scheme[`body.freeServices.${index}`] = {
+        value: url,
+        rules: new Builder().isMember(freeServices).rules
+      };
+    });
+  }
+  if (body.generalServices) {
+    body.generalServices.forEach((url, index) => {
+      scheme[`body.generalServices.${index}`] = {
+        value: url,
+        rules: new Builder().isMember(generalServices).rules
+      };
+    });
+  }
+  if (body.entertainmentServices) {
+    body.entertainmentServices.forEach((url, index) => {
+      scheme[`body.entertainmentServices.${index}`] = {
+        value: url,
+        rules: new Builder().isMember(entertainmentServices).rules
+      };
+    });
+  }
+  if (body.hostelServices) {
+    body.hostelServices.forEach((url, index) => {
+      scheme[`body.hostelServices.${index}`] = {
+        value: url,
+        rules: new Builder().isMember(hostelServices).rules
+      };
+    });
+  }
+  if (body.foodServices) {
+    body.foodServices.forEach((url, index) => {
+      scheme[`body.foodServices.${index}`] = {
+        value: url,
+        rules: new Builder().isMember(foodServices).rules
+      };
+    });
+  }
 
   Object.keys(scheme).forEach(key => {
     const ele = scheme[key];

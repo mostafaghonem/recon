@@ -16,7 +16,7 @@ module.exports = ({
   const scheme = {
     image: {
       value: body.image,
-      rules: new Builder().required().isURL().rules
+      rules: new Builder().required().rules
     },
     fullName: {
       value: body.fullName,

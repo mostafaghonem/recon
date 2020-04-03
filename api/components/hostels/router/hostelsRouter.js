@@ -4,8 +4,10 @@ const {
   addHostelRoomsValidation,
   hideHostelValidation,
   unhideHostelValidation,
+  getAvailabilityData,
   deleteHostelValidation,
   getHostels,
+  getRecommendedHostels,
   getHostel,
   editHostel,
   editHostelRooms,
@@ -28,9 +30,9 @@ const controllers = require('../controllers');
 router.post(
   '/',
   [
-    validateMiddleware(addHostelValidation),
     authenticateMiddleware,
-    authorizeMiddleware([PERMISSIONS.HOUSE_OWNER])
+    validateMiddleware(addHostelValidation)
+    // authorizeMiddleware([PERMISSIONS.HOUSE_OWNER])
   ],
   controllers.addHostel
 );
@@ -38,9 +40,9 @@ router.post(
 router.post(
   '/rooms',
   [
-    validateMiddleware(addHostelRoomsValidation),
     authenticateMiddleware,
-    authorizeMiddleware([PERMISSIONS.HOUSE_OWNER])
+    validateMiddleware(addHostelRoomsValidation)
+    // authorizeMiddleware([PERMISSIONS.HOUSE_OWNER])
   ],
   controllers.addHostelRooms
 );
@@ -48,9 +50,9 @@ router.post(
 router.put(
   '/hide/:id',
   [
-    validateMiddleware(hideHostelValidation),
     authenticateMiddleware,
-    authorizeMiddleware([PERMISSIONS.HOUSE_OWNER])
+    validateMiddleware(hideHostelValidation)
+    // authorizeMiddleware([PERMISSIONS.HOUSE_OWNER])
   ],
   controllers.hideHostel
 );
@@ -58,9 +60,9 @@ router.put(
 router.put(
   '/unhide/:id',
   [
-    validateMiddleware(unhideHostelValidation),
     authenticateMiddleware,
-    authorizeMiddleware([PERMISSIONS.HOUSE_OWNER])
+    validateMiddleware(unhideHostelValidation)
+    // authorizeMiddleware([PERMISSIONS.HOUSE_OWNER])
   ],
   controllers.unhideHostel
 );
@@ -68,9 +70,9 @@ router.put(
 router.delete(
   '/:id',
   [
-    validateMiddleware(deleteHostelValidation),
     authenticateMiddleware,
-    authorizeMiddleware([PERMISSIONS.HOUSE_OWNER])
+    validateMiddleware(deleteHostelValidation)
+    // authorizeMiddleware([PERMISSIONS.HOUSE_OWNER])
   ],
   controllers.deleteHostel
 );
@@ -78,19 +80,29 @@ router.delete(
 router.get(
   '/',
   [
-    validateMiddleware(getHostels),
-    authenticateMiddleware,
-    authorizeMiddleware([PERMISSIONS.RENTER])
+    validateMiddleware(getHostels)
+    // authenticateMiddleware,
+    // authorizeMiddleware([PERMISSIONS.RENTER])
   ],
   controllers.getHostels
 );
 
 router.get(
+  '/recommended',
+  [
+    validateMiddleware(getRecommendedHostels)
+    // authenticateMiddleware,
+    // authorizeMiddleware([PERMISSIONS.RENTER])
+  ],
+  controllers.getRecommendedHostels
+);
+
+router.get(
   '/:id',
   [
-    validateMiddleware(getHostel),
-    authenticateMiddleware,
-    authorizeMiddleware([PERMISSIONS.RENTER])
+    validateMiddleware(getHostel)
+    // authenticateMiddleware,
+    // authorizeMiddleware([PERMISSIONS.RENTER])
   ],
   controllers.getHostel
 );
@@ -98,9 +110,9 @@ router.get(
 router.post(
   '/rate',
   [
-    validateMiddleware(rateHostel),
     authenticateMiddleware,
-    authorizeMiddleware([PERMISSIONS.RENTER])
+    validateMiddleware(rateHostel)
+    // authorizeMiddleware([PERMISSIONS.RENTER])
   ],
   controllers.ratehostel
 );
@@ -108,9 +120,9 @@ router.post(
 router.put(
   '/',
   [
-    validateMiddleware(editHostel),
     authenticateMiddleware,
-    authorizeMiddleware([PERMISSIONS.HOUSE_OWNER, PERMISSIONS.ADMIN])
+    validateMiddleware(editHostel)
+    // authorizeMiddleware([PERMISSIONS.HOUSE_OWNER, PERMISSIONS.ADMIN])
   ],
   controllers.editHostel
 );
@@ -118,19 +130,29 @@ router.put(
 router.put(
   '/availability',
   [
-    validateMiddleware(editHostelAvailability),
     authenticateMiddleware,
-    authorizeMiddleware([PERMISSIONS.HOUSE_OWNER, PERMISSIONS.ADMIN])
+    validateMiddleware(editHostelAvailability)
+    // authorizeMiddleware([PERMISSIONS.HOUSE_OWNER, PERMISSIONS.ADMIN])
   ],
   controllers.editHostelAvailability
+);
+
+router.get(
+  '/availability/data',
+  [
+    authenticateMiddleware,
+    validateMiddleware(getAvailabilityData)
+    // authorizeMiddleware([PERMISSIONS.HOUSE_OWNER, PERMISSIONS.ADMIN])
+  ],
+  controllers.getAvailabilityData
 );
 
 router.put(
   '/rooms',
   [
-    validateMiddleware(editHostelRooms),
     authenticateMiddleware,
-    authorizeMiddleware([PERMISSIONS.HOUSE_OWNER, PERMISSIONS.ADMIN])
+    validateMiddleware(editHostelRooms)
+    // authorizeMiddleware([PERMISSIONS.HOUSE_OWNER, PERMISSIONS.ADMIN])
   ],
   controllers.editHostelRooms
 );

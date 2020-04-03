@@ -1,3 +1,5 @@
+/* eslint-disable object-shorthand */
+/* eslint-disable func-names */
 const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
@@ -39,5 +41,23 @@ module.exports = app => {
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({ extended: true }));
   app.use(cookieParser());
-  app.use(cors());
+  app.use(
+    cors({
+      origin: function check(origin, callback) {
+        const hasAdmin = origin && origin.includes('admin');
+        const hasApp = origin && origin.includes('app');
+        if (hasAdmin || hasApp) {
+          const base = origin
+            .replace('app.', '')
+            .replace('admin.', '')
+            .replace('http://', '')
+            .replace('https://', '');
+          const origins = new RegExp(`\\.${base.replace(/\./g, '\\.')}$`);
+          return callback(null, origins);
+        }
+        return callback(null, true);
+      },
+      credentials: true
+    })
+  );
 };

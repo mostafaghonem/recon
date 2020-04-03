@@ -10,9 +10,11 @@ module.exports = ({
   const error = {};
 
   const scheme = {
-    lastId: {
-      value: query.lastId,
-      rules: new Builder().required('You should provide lastId').rules
+    skip: {
+      value: query.skip,
+      rules: new Builder()
+        .required('You should provide skip')
+        .isNumber('skip should be a number').rules
     },
     status: {
       value: query.status,

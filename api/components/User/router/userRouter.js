@@ -34,6 +34,15 @@ router.post(
 );
 
 // @route
+// @ GET api/users/hasAdminAuthority
+// !access  ADMIN
+router.get(
+  '/hasAdminAuthority',
+  [authenticateMiddleware, authorizeMiddleware([PERMISSIONS.ADMIN])],
+  (req, res) => res.status(200).json({ ok: true })
+);
+
+// @route
 // @ POST api/users/login
 // !access  anonymous
 router.post(
@@ -41,6 +50,11 @@ router.post(
   [validateMiddleware(userLoginValidation)],
   controllers.loginUser
 );
+
+// @route
+// @ POST api/users/logout
+// !access  anonymous
+router.get('/logout', [authenticateMiddleware], controllers.logOutUser);
 
 // @route
 // @ POST api/users/phone/verify
@@ -198,14 +212,26 @@ router.get(
 );
 
 // @route
+// @ GET api/users/uploaded/hostels/count
+// !access  anonymous
+router.get(
+  '/uploaded/hostels/count',
+  [
+    authenticateMiddleware
+    // authorizeMiddleware([PERMISSIONS.HOUSE_OWNER])
+  ],
+  controllers.getUploadedHostelsCount
+);
+
+// @route
 // @ GET api/users/uploaded/hostels
 // !access  anonymous
 router.get(
   '/uploaded/hostels',
   [
     validateMiddleware(getUploadedHostels),
-    authenticateMiddleware,
-    authorizeMiddleware([PERMISSIONS.HOUSE_OWNER])
+    authenticateMiddleware
+    // authorizeMiddleware([PERMISSIONS.HOUSE_OWNER])
   ],
   controllers.getUploadedHostels
 );
@@ -217,8 +243,8 @@ router.get(
   '/uploaded/hostel/:id',
   [
     validateMiddleware(getUploadedHostelDetails),
-    authenticateMiddleware,
-    authorizeMiddleware([PERMISSIONS.HOUSE_OWNER])
+    authenticateMiddleware
+    // authorizeMiddleware([PERMISSIONS.HOUSE_OWNER])
   ],
   controllers.getUploadedHostelDetails
 );

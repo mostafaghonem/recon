@@ -9,13 +9,12 @@ const model = require('../models');
 
 // should have no implementation for any specific orm
 module.exports = ({ ApplicationError, logger }) => async ({
-  lastId,
+  skip,
   status,
   key,
   limit
 }) => {
   const query = {
-    _id: { $gt: lastId },
     status,
     isArchived: false
   };
@@ -27,15 +26,20 @@ module.exports = ({ ApplicationError, logger }) => async ({
     match: { isArchived: false, fullName: { $regex: key, $options: 'i' } },
     select: '_id fullName phone email government gender job'
   };
+  const filter = {
+    status,
+    isArchived: false
+  };
+  const allRequestsCount = await model.count({ filter });
   let requests = await model.getMany({
     query,
     select,
     sort,
-    skip: 0,
+    skip: Number(skip) || 0,
     limit,
     populate
   });
   requests = requests.filter(request => request.userId);
 
-  return requests;
+  return { requests, allRequestsCount };
 };

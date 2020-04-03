@@ -13,7 +13,9 @@ const Model = require('../Models');
         from to with another request with state payed or received
  */
 
-module.exports = (/* but your inject here */) => {
+module.exports = (
+  { calculateCost, getUnitDetail } /* but your inject here */
+) => {
   /**
     Here you should return array of times like [{from:--, to:--}]
     from should be smaller than to and from should be less than current time
@@ -29,7 +31,10 @@ module.exports = (/* but your inject here */) => {
    you need to check if this monthly of with day
    if this monthly you need to cal amount of 
    */
-  const returnAllCostForUnit = async (/* unitId, from, to */) => {};
+  const returnAllCostForUnit = async (unitId, from, to) => {
+    const result = await calculateCost(unitId, from, to);
+    return result;
+  };
 
   /* here need to get all the unit 
     - with the same id and
@@ -38,10 +43,36 @@ module.exports = (/* but your inject here */) => {
     if length of coming list larger than 0 return un-valid unit 
     else added it with state send 
   */
-  const addingRequestToUnit = async (unitId, comingOne) => {
-    const checkValid = await Model.checkAddingNewReservation(unitId, comingOne);
+  const addingRequestToUnit = async (
+    renderId,
+    comingOne /** {unit, from , to} */
+  ) => {
+    // console.log(renderId);
+    // console.log(comingOne);
+    const checkValid = await Model.checkAddingNewReservation(
+      comingOne.unit,
+      comingOne
+    );
     if (checkValid && comingOne.from < comingOne.to) {
-      const result = await Model.createOne(comingOne);
+      const cost = calculateCost(comingOne.unit);
+      const unitDetail = await getUnitDetail(comingOne.unit);
+      // console.log(unitDetail);
+      // console.log('888888888888888');
+      // console.log({
+      //   ...comingOne,
+      //   renter: renderId,
+      //   cost,
+      //   owner: unitDetail.userId
+      // });
+      // throw new Error();
+      const result = await Model.createOne({
+        document: {
+          ...comingOne,
+          renter: renderId,
+          cost,
+          owner: unitDetail.userId
+        }
+      });
       return { result };
     }
     return { error: { message: 'not valid time', statusCode: 401 } };

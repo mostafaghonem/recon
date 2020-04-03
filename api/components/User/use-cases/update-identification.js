@@ -11,7 +11,7 @@ module.exports = ({ ApplicationError, logger }) => async (
     if (identificationImages[0]) {
       await model.updateOneById({
         id: userId,
-        update: { identificationImages }
+        update: { identificationImages, identificationStatus: true }
       });
     }
 

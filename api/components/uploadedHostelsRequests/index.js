@@ -1,3 +1,3 @@
-const userRouter = require('./router/uploadedHostelsRequestsRouter');
+const uploadedHostelsRequestsRouter = require('./router/uploadedHostelsRequestsRouter');
 
-module.exports.Router = userRouter;
+module.exports.Router = uploadedHostelsRequestsRouter;
