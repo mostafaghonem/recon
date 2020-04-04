@@ -36,7 +36,7 @@ const pagination = Object.freeze(defaultConstants.PAGINATION);
 // ->
 const registerUser = makeUserRegisterCtrl({});
 const loginUser = makeUserLoginCtrl({ getBaseDomain });
-const logOutUser = makeUserLogOutCtrl({});
+const logOutUser = makeUserLogOutCtrl({ getBaseDomain });
 const verifyPhone = makePhoneVerification({});
 const forgetPassword = makeForgetPassword({});
 const confirmForgetPassword = makeConfirmForgetPassword({});
