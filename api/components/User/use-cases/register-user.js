@@ -45,6 +45,7 @@ module.exports = ({ redis, ApplicationError, logger }) => async ({
   newUser.setPassword(password);
 
   await newUser.save();
+  const token = await newUser.generateToken();
 
   logger.info(
     `new User just registered with data => \n${JSON.stringify(
@@ -53,4 +54,5 @@ module.exports = ({ redis, ApplicationError, logger }) => async ({
       6
     )}`
   );
+  return token;
 };
