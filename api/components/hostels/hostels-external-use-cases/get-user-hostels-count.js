@@ -9,7 +9,7 @@ const model = require('../models');
 
 // should have no implementation for any specific orm
 module.exports = ({ ApplicationError, logger }) => async ({ userId }) => {
-  const filter = {
+  const query = {
     userId,
     isArchived: false
   };
@@ -17,13 +17,13 @@ module.exports = ({ ApplicationError, logger }) => async ({ userId }) => {
     count: 0,
     revenue: 0
   };
-  const userHostels = await model.getMany({ filter, select: 'totalRevenue' });
+  const userHostels = await model.getMany({ query, select: 'totalRevenue' });
   if (userHostels && userHostels.length !== 0) {
     hostelsData.count = userHostels.length;
     hostelsData.revenue =
       userHostels.reduce((a, b) => ({
         totalRevenue: a.totalRevenue + b.totalRevenue
-      })).age || 0;
+      })).totalRevenue || 0;
   }
 
   return hostelsData;
