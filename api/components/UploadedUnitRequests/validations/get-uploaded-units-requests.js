@@ -31,19 +31,19 @@ module.exports = ({
       rules: new Builder().rules
     },
     unitId: {
-      value: query.limit,
+      value: query.unitId,
       rules: new Builder().rules
     },
     sortKey: {
-      value: query.limit,
+      value: query.sortKey,
       rules: new Builder().isMember(sortKeys).rules
     },
     sortIndex: {
-      value: query.limit,
+      value: query.sortIndex,
       rules: new Builder().isNumber().isMember(sortValues).rules
     },
     sortValue: {
-      value: query.limit,
+      value: query.sortValue,
       rules: new Builder().rules
     }
   };

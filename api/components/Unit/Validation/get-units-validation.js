@@ -89,15 +89,15 @@ module.exports = ({
         .max(5, 'يجب ان يكون التقييم 5 علي الاكثر').rules
     },
     sortKey: {
-      value: query.limit,
+      value: query.sortKey,
       rules: new Builder().isMember(sortKeys).rules
     },
     sortIndex: {
-      value: query.limit,
+      value: query.sortIndex,
       rules: new Builder().isNumber().isMember(sortValues).rules
     },
     sortValue: {
-      value: query.limit,
+      value: query.sortValue,
       rules: new Builder().rules
     }
   };
