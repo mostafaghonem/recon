@@ -19,7 +19,7 @@ const getUnitsAvailbility = ({ unitsIds, availableFrom, availableTo }) => {
 module.exports = ({
   ApplicationError,
   logger,
-  getSortObj,
+  GetSortObj,
   accepted
 }) => async ({
   lastId,
@@ -40,7 +40,7 @@ module.exports = ({
   sortKey,
   sortValue
 }) => {
-  const sortObj = getSortObj({
+  const sortObj = GetSortObj({
     sortIndex,
     sortKey,
     sortValue

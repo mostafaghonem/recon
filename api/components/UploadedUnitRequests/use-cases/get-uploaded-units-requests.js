@@ -8,7 +8,13 @@ const model = require('../models');
  */
 
 // should have no implementation for any specific orm
-module.exports = ({ ApplicationError, logger, getSortObj, moment }) => async ({
+module.exports = ({
+  ApplicationError,
+  logger,
+  GetSortObj,
+  GetSearchObj,
+  moment
+}) => async ({
   status,
   type,
   key,
@@ -19,7 +25,7 @@ module.exports = ({ ApplicationError, logger, getSortObj, moment }) => async ({
   sortKey,
   sortValue
 }) => {
-  const sortObj = getSortObj({
+  const sortObj = GetSortObj({
     sortIndex,
     sortKey,
     sortValue
@@ -40,12 +46,18 @@ module.exports = ({ ApplicationError, logger, getSortObj, moment }) => async ({
   if (type) {
     query.type = type;
   }
-
-  const populate = {
-    path: 'userId',
-    match: { isArchived: false, fullName: { $regex: key, $options: 'i' } },
-    select: '_id fullName gender job birthDateTs createdAt'
-  };
+  const populate = [
+    {
+      path: 'userId',
+      match: { isArchived: false, fullName: { $regex: key, $options: 'i' } },
+      select: '_id fullName gender job birthDateTs createdAt'
+    },
+    {
+      path: 'unitId',
+      match: { isArchived: false, $or: GetSearchObj({ key }) },
+      select: '_id address type'
+    }
+  ];
 
   const params = {
     query,
@@ -57,19 +69,24 @@ module.exports = ({ ApplicationError, logger, getSortObj, moment }) => async ({
   };
 
   if (unitId) {
-    params.anotherPopulate = {
+    params.populate.push({
       path: 'unitId',
       match: { isArchived: false },
       select: {
         isArchived: false,
         isHidden: false
       }
-    };
+    });
 
     params.select += ` update`;
   }
-  let requests = await model.getMany(params);
+  // eslint-disable-next-line prefer-const
+  let { requests, total, hasNext } = await model.getRequests(params);
   requests = requests.filter(request => request.userId && request.unitId);
 
-  return requests;
+  return {
+    requests,
+    total,
+    hasNext
+  };
 };

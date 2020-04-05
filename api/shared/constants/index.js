@@ -1,5 +1,5 @@
 const { PERMISSIONS, PAGINATION, UnitReservationState } = require('./defaults');
-const { getBaseDomain } = require('./methods');
+const { GetBaseDomain } = require('./methods');
 const defaultConstants = require('./defaults');
 
 module.exports = {
@@ -7,5 +7,5 @@ module.exports = {
   PAGINATION,
   defaultConstants,
   UnitReservationState,
-  getBaseDomain
+  GetBaseDomain
 };

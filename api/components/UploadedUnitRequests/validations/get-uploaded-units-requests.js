@@ -14,9 +14,7 @@ module.exports = ({
   const scheme = {
     status: {
       value: query.status,
-      rules: new Builder()
-        .required('You should provide status')
-        .isMember(requestStatus).rules
+      rules: new Builder().isMember(requestStatus).rules
     },
     type: {
       value: query.type,

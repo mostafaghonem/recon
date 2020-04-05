@@ -8,7 +8,7 @@ const model = require('../Models');
  */
 
 // should have no implementation for any specific orm
-module.exports = ({ ApplicationError, getSortObj }) => async ({
+module.exports = ({ ApplicationError, GetSortObj }) => async ({
   userId,
   status,
   key,
@@ -18,7 +18,7 @@ module.exports = ({ ApplicationError, getSortObj }) => async ({
   sortValue,
   sortKey
 }) => {
-  const sortObj = getSortObj({
+  const sortObj = GetSortObj({
     sortIndex,
     sortKey,
     sortValue

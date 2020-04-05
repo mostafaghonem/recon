@@ -8,12 +8,13 @@ module.exports = ({ pagination, pending }) => {
       const lastId = req.query.lastId || String(pagination.LAST_ID);
       const unitId = req.query.unitId;
       const key = req.query.key || '';
-      const UploadedUnitsRequests = await getUploadedUnitsRequests({
+      const { requests, hasNext, total } = await getUploadedUnitsRequests({
         status,
         key,
         limit,
         lastId,
         unitId,
+        type: req.query.type,
         lastTimestamp: req.query.lastTimestamp,
         sortIndex: req.query.sortIndex,
         sortValue: req.query.sortValue,
@@ -22,7 +23,9 @@ module.exports = ({ pagination, pending }) => {
 
       return res.status(200).json({
         success: true,
-        requests: UploadedUnitsRequests || []
+        requests: requests || [],
+        total: total || 0,
+        hasNext: hasNext || false
       });
     } catch (e) {
       return next(e);

@@ -32,7 +32,8 @@ const buildUploadedUnitsRequestsEntity = (
         userId: String,
         unitId: String,
         status: String,
-        update: Object
+        update: Object,
+        type: String
       }
     ) {
       this.id = data.id || data._id || new ObjectId();
@@ -40,6 +41,7 @@ const buildUploadedUnitsRequestsEntity = (
       this.unitId = data.unitId || '';
       this.status = data.status || 'pending';
       this.update = data.update || undefined;
+      this.type = data.type || 'add';
       this.createdAt = data.createdAt || new Date();
       this.isArchived = data.isArchived || false;
     }
@@ -59,6 +61,7 @@ const buildUploadedUnitsRequestsEntity = (
         unitId: this.unitId,
         status: this.status,
         update: this.update,
+        type: this.type,
         createdAt: this.createdAt,
         isArchived: this.isArchived
       };
@@ -72,6 +75,7 @@ const buildUploadedUnitsRequestsEntity = (
         unitId: this.unitId,
         status: this.status,
         update: this.update,
+        type: this.type,
         createdAt: this.createdAt,
         isArchived: this.isArchived
       };

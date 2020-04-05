@@ -7,7 +7,7 @@ const {
   googleLoginGetter
 } = require('../use-cases');
 
-const { getBaseDomain } = require('../../../shared/constants');
+const { GetBaseDomain } = require('../../../shared/constants');
 
 exports.facebookAuthController = facebookAuth.authenticate('facebook');
 
@@ -29,7 +29,7 @@ exports.facebookAuthBackController = [
     scope: ['email']
   }),
   async (req, res) => {
-    const domain = getBaseDomain();
+    const domain = GetBaseDomain();
     const maxAge = 365 * 24 * 60 * 60 * 1000;
     const user = req.user;
     const token = await loginService(user);
@@ -51,7 +51,7 @@ exports.facebookAuthBackController = [
 exports.googleAuthCallback = [
   googleAuth.authenticate('google', { failureRedirect: '/login' }),
   async (req, res) => {
-    const domain = getBaseDomain();
+    const domain = GetBaseDomain();
     const maxAge = 365 * 24 * 60 * 60 * 1000;
     const user = req.user;
 
