@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const mongoosePaginate = require('mongoose-paginate-v2');
 
 const { Schema } = mongoose;
 
@@ -42,6 +43,6 @@ module.exports = ({ unitSchema, requestStatus, requestTypes }) => {
       autoIndex: true
     }
   );
-
+  uploadedUnitRequest.plugin(mongoosePaginate);
   return mongoose.model('UploadedUnitsRequests', uploadedUnitRequest);
 };

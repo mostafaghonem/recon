@@ -8,40 +8,85 @@ const model = require('../models');
  */
 
 // should have no implementation for any specific orm
-module.exports = ({ ApplicationError, logger }) => async ({
-  lastId,
+module.exports = ({
+  ApplicationError,
+  logger,
+  GetSortObj,
+  GetSearchObj,
+  moment
+}) => async ({
   status,
+  type,
   key,
-  limit
+  limit,
+  lastTimestamp,
+  unitId,
+  sortIndex,
+  sortKey,
+  sortValue
 }) => {
+  const sortObj = GetSortObj({
+    sortIndex,
+    sortKey,
+    sortValue
+  });
+  const sort = sortObj.sort;
   const query = {
-    _id: { $gt: lastId },
+    ...sortObj.query,
     status,
     isArchived: false
   };
-  const select = 'userId status unitId createdAt';
-  let sort = { createdAt: 1 };
-  if (status !== 'pending') sort = { updatedAt: -1 };
-  const populate = {
-    path: 'userId',
-    match: { isArchived: false, fullName: { $regex: key, $options: 'i' } },
-    select: '_id fullName gender job birthDateTs createdAt'
-  };
-  const anotherPopulate = {
-    path: 'unitId',
-    match: { isArchived: false },
-    select: '_id type address'
-  };
-  let requests = await model.getMany({
+
+  const select = 'userId status unitId createdAt updatedAt';
+
+  if (lastTimestamp) {
+    query.createdAt = { $gt: moment(lastTimestamp) };
+  }
+
+  if (type) {
+    query.type = type;
+  }
+  const populate = [
+    {
+      path: 'userId',
+      match: { isArchived: false, fullName: { $regex: key, $options: 'i' } },
+      select: '_id fullName gender job birthDateTs createdAt'
+    },
+    {
+      path: 'unitId',
+      match: { isArchived: false, $or: GetSearchObj({ key }) },
+      select: '_id address type'
+    }
+  ];
+
+  const params = {
     query,
     select,
     sort,
     skip: 0,
     limit,
-    populate,
-    anotherPopulate
-  });
+    populate
+  };
+
+  if (unitId) {
+    params.populate.push({
+      path: 'unitId',
+      match: { isArchived: false },
+      select: {
+        isArchived: false,
+        isHidden: false
+      }
+    });
+
+    params.select += ` update`;
+  }
+  // eslint-disable-next-line prefer-const
+  let { requests, total, hasNext } = await model.getRequests(params);
   requests = requests.filter(request => request.userId && request.unitId);
 
-  return requests;
+  return {
+    requests,
+    total,
+    hasNext
+  };
 };

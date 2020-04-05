@@ -17,7 +17,7 @@ module.exports = ({ GenericModel = _GenericModel }) => {
       return true;
     }
 
-    async getMyUnits(userId, lastId, limit, rest = {}) {
+    async getMyUnits(userId, lastId, limit, rest = {}, sortObj = {}) {
       const query = {
         userId,
         _id: {
@@ -28,8 +28,8 @@ module.exports = ({ GenericModel = _GenericModel }) => {
       };
 
       const select =
-        'type image gallery dailyOrMonthly pricePerPerson status note rates totalRate totalUsersRated address totalRate totalUsersRated totalOnlineBooking totalRevenue numberOfPeople numberOfRooms availableCountNow hasFurniture rentersType isFull';
-      const sort = { createdAt: 1 };
+        'type image gallery dailyOrMonthly pricePerPerson status note rates totalRate totalUsersRated address totalRate totalUsersRated totalOnlineBooking totalRevenue numberOfPeople numberOfRooms availableCountNow hasFurniture rentersType isFull createdAt updatedAt';
+      const sort = sortObj || { updatedAt: -1 };
       const response = await this.DbAccess.paginate(query, {
         select,
         sort,

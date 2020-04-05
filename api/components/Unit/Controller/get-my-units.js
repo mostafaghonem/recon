@@ -9,6 +9,9 @@ module.exports = ({ pagination }) => {
         userId: req.user.id,
         status: req.query.status,
         key: req.query.key,
+        sortIndex: req.query.sortIndex,
+        sortValue: req.query.sortValue,
+        sortKey: req.query.sortKey,
         lastId,
         limit
       });

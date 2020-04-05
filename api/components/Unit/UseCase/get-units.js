@@ -16,7 +16,12 @@ const getUnitsAvailbility = ({ unitsIds, availableFrom, availableTo }) => {
  */
 
 // should have no implementation for any specific orm
-module.exports = ({ ApplicationError, logger, accepted }) => async ({
+module.exports = ({
+  ApplicationError,
+  logger,
+  GetSortObj,
+  accepted
+}) => async ({
   lastId,
   availableFrom,
   availableTo,
@@ -30,10 +35,18 @@ module.exports = ({ ApplicationError, logger, accepted }) => async ({
   priceTo,
   rate,
   key,
-  limit
+  limit,
+  sortIndex,
+  sortKey,
+  sortValue
 }) => {
+  const sortObj = GetSortObj({
+    sortIndex,
+    sortKey,
+    sortValue
+  });
   const query = {
-    _id: { $gt: lastId },
+    ...sortObj.query,
     status: accepted,
     isHidden: false,
     isArchived: false
@@ -69,8 +82,8 @@ module.exports = ({ ApplicationError, logger, accepted }) => async ({
   }
 
   const select =
-    'type image gallery dailyOrMonthly pricePerPerson status note rates totalRate totalUsersRated address totalRate totalUsersRated totalOnlineBooking totalRevenue numberOfPeople numberOfRooms availableCountNow hasFurniture rentersType isFull';
-  const sort = { createdAt: 1 };
+    'type image gallery dailyOrMonthly pricePerPerson status note rates totalRate totalUsersRated address totalRate totalUsersRated totalOnlineBooking totalRevenue numberOfPeople numberOfRooms availableCountNow hasFurniture rentersType isFull createdAt updatedAt';
+  const sort = sortObj.sort;
   const units = await model.getMany({
     query,
     select,

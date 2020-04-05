@@ -2,10 +2,10 @@
 // @desc    user login
 
 // eslint-disable-next-line no-empty-pattern
-module.exports = ({ getBaseDomain }) => {
+module.exports = ({ GetBaseDomain }) => {
   return async (req, res, next) => {
     try {
-      const domain = getBaseDomain();
+      const domain = GetBaseDomain();
       await req.logout();
       req.session = null;
       await res.clearCookie('sknToken', { domain });

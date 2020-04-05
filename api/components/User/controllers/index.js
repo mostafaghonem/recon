@@ -28,15 +28,15 @@ const {
 
 const {
   defaultConstants,
-  getBaseDomain
+  GetBaseDomain
 } = require('../../../shared/constants');
 
 const pagination = Object.freeze(defaultConstants.PAGINATION);
 
 // ->
 const registerUser = makeUserRegisterCtrl({});
-const loginUser = makeUserLoginCtrl({ getBaseDomain });
-const logOutUser = makeUserLogOutCtrl({ getBaseDomain });
+const loginUser = makeUserLoginCtrl({ GetBaseDomain });
+const logOutUser = makeUserLogOutCtrl({ GetBaseDomain });
 const verifyPhone = makePhoneVerification({});
 const forgetPassword = makeForgetPassword({});
 const confirmForgetPassword = makeConfirmForgetPassword({});

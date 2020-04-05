@@ -4,11 +4,11 @@ const { loginUser } = require('../use-cases');
 // @desc    user login
 
 // eslint-disable-next-line no-empty-pattern
-module.exports = ({ getBaseDomain }) => {
+module.exports = ({ GetBaseDomain }) => {
   return async (req, res, next) => {
     try {
       const agent = req.headers['user-agent'] || req.body.agent;
-      const domain = getBaseDomain();
+      const domain = GetBaseDomain();
       const maxAge = 365 * 24 * 60 * 60 * 1000;
       const result = await loginUser({ ...req.body, agent });
       res.cookie('sknToken', result, {
