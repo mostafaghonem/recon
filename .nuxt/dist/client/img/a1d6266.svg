@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" id="door" width="29.869" height="30.366" viewBox="0 0 29.869 30.366">
+    <defs>
+        <style>
+            .cls-1{fill:#d1d1d1}
+        </style>
+    </defs>
+    <path id="Path_135" d="M31.45 15.969H20.5a.5.5 0 0 1-.5-.5V9.5a.5.5 0 0 1 .5-.5h10.95a.5.5 0 0 1 .5.5v5.974a.5.5 0 0 1-.5.495zM30.952 10H21v4.978h9.956z" class="cls-1" data-name="Path 135" transform="translate(-11.039 -5.018)"/>
+    <path id="Path_136" d="M19.493 33.987a1.493 1.493 0 1 1 1.493-1.493 1.493 1.493 0 0 1-1.493 1.493zm0-1.991a.5.5 0 1 0 .5.5.5.5 0 0 0-.5-.496z" class="cls-1" data-name="Path 136" transform="translate(.917 -16.066)"/>
+    <path id="Path_137" d="M3.991 30.371v-2.489a.5.5 0 0 1 .5-.5H6.48V1.5a.5.5 0 0 1 .5-.5h19.911a.5.5 0 0 1 .5.5v25.884h1.989a.5.5 0 0 1 .5.5v2.489h1.991v1H2v-1zM26.393 2H7.476v25.384h.5V2.991a.5.5 0 0 1 .5-.5H25.4a.5.5 0 0 1 .5.5v24.393h.5zM8.969 3.489v23.895H24.9V3.489zM4.987 30.371h23.895v-1.992H4.987z" class="cls-1" data-name="Path 137" transform="translate(-2 -1)"/>
+</svg>
