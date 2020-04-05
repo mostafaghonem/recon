@@ -47,7 +47,6 @@ module.exports = ({ ApplicationError, GetSortObj }) => async ({
   }
   const { units, total, hasNext } = await model.getMyUnits(
     userId,
-    lastId,
     limit,
     rest,
     sortObj.sort

@@ -84,11 +84,10 @@ module.exports = ({
   const select =
     'type image gallery dailyOrMonthly pricePerPerson status note rates totalRate totalUsersRated address totalRate totalUsersRated totalOnlineBooking totalRevenue numberOfPeople numberOfRooms availableCountNow hasFurniture rentersType isFull createdAt updatedAt';
   const sort = sortObj.sort;
-  const units = await model.getMany({
+  const { units, total, hasNext } = await model.getUnits({
     query,
     select,
     sort,
-    skip: 0,
     limit
   });
   if (units && units.length !== 0) {
@@ -108,7 +107,7 @@ module.exports = ({
         .filter(unit => unit.available);
     }
 
-    return filteredUnits;
+    return { total, hasNext, units: filteredUnits };
   }
-  return [];
+  return { total: 0, hasNext: false, units: [] };
 };

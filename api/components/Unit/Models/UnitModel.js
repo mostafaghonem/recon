@@ -17,12 +17,9 @@ module.exports = ({ GenericModel = _GenericModel }) => {
       return true;
     }
 
-    async getMyUnits(userId, lastId, limit, rest = {}, sortObj = {}) {
+    async getMyUnits(userId, limit, rest = {}, sortObj = {}) {
       const query = {
         userId,
-        _id: {
-          $gt: lastId
-        },
         ...rest,
         isArchived: false
       };
@@ -34,6 +31,31 @@ module.exports = ({ GenericModel = _GenericModel }) => {
         select,
         sort,
         limit
+      });
+
+      return {
+        hasNext: response.hasNextPage,
+        units: response.docs,
+        total: response.totalDocs
+      };
+    }
+
+    async getUnits(
+      params = {
+        query: {},
+        select: '',
+        sort: { _id: 1 },
+        skip: 0,
+        limit: 10000000000,
+        populate: []
+      }
+    ) {
+      const { limit, query, select, sort, populate } = params;
+      const response = await this.DbAccess.paginate(query, {
+        select,
+        sort,
+        limit,
+        populate
       });
 
       return {
