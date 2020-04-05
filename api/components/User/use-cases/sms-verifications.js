@@ -5,16 +5,18 @@ function getRandomCode(min, max) {
 }
 
 // should have no implementation for any specific orm
-module.exports = ({
-  redis,
-  ApplicationError,
-  logger,
-  smsService
-}) => async phone => {
+module.exports = ({ redis, ApplicationError, logger, smsService }) => async (
+  phone,
+  email
+) => {
   const userPhone = String(phone).replace('+2', '');
-  const isDuplicate = await Models.checkExistenceBy({ phone: userPhone });
+  const isDuplicatePhone = await Models.checkExistenceBy({ phone: userPhone });
+  const isDuplicateEmail = await Models.checkExistenceBy({ email });
 
-  if (isDuplicate) throw new ApplicationError('هذا الرقم موجود بالفعل', 400);
+  if (isDuplicatePhone)
+    throw new ApplicationError('هذا الرقم موجود بالفعل', 400);
+  if (isDuplicateEmail)
+    throw new ApplicationError('هذا البريد الالكترونى موجود بالفعل', 400);
 
   const checkExistence = await redis.getAsync(`${userPhone}-register-user`);
   if (!checkExistence) {
