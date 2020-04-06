@@ -6,15 +6,15 @@ import {
   globalHandleError
 } from './utils'
 
-import NuxtError from '..\\layouts\\error.vue'
+import NuxtError from '../layouts/error.vue'
 import NuxtLoading from './components/nuxt-loading.vue'
 
-import '..\\node_modules\\element-ui\\lib\\theme-chalk\\index.css'
+import '../node_modules/element-ui/lib/theme-chalk/index.css'
 
-import '..\\node_modules\\vue-phone-number-input\\dist\\vue-phone-number-input.css'
+import '../node_modules/vue-phone-number-input/dist/vue-phone-number-input.css'
 
-import _6f6c098b from '..\\layouts\\default.vue'
-import _89033b86 from '..\\layouts\\loginLayout.vue'
+import _6f6c098b from '../layouts/default.vue'
+import _89033b86 from '../layouts/loginLayout.vue'
 
 const layouts = { "_default": _6f6c098b,"_loginLayout": _89033b86 }
 

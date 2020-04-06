@@ -4,7 +4,7 @@ import ClientOnly from 'vue-client-only'
 import NoSsr from 'vue-no-ssr'
 import { createRouter } from './router.js'
 import NuxtChild from './components/nuxt-child.js'
-import NuxtError from '..\\layouts\\error.vue'
+import NuxtError from '../layouts/error.vue'
 import Nuxt from './components/nuxt.js'
 import App from './App.js'
 import { setContext, getLocation, getRouteData, normalizeError } from './utils'
@@ -12,10 +12,10 @@ import { createStore } from './store.js'
 
 /* Plugins */
 
-import nuxt_plugin_cookieuniversalnuxt_38c33064 from 'nuxt_plugin_cookieuniversalnuxt_38c33064' // Source: .\\cookie-universal-nuxt.js (mode: 'all')
-import nuxt_plugin_axios_85caee88 from 'nuxt_plugin_axios_85caee88' // Source: .\\axios.js (mode: 'all')
-import nuxt_plugin_elementui_d905880e from 'nuxt_plugin_elementui_d905880e' // Source: ..\\plugins\\element-ui (mode: 'all')
-import nuxt_plugin_ga_fb0a2534 from 'nuxt_plugin_ga_fb0a2534' // Source: ..\\plugins\\ga.js (mode: 'client')
+import nuxt_plugin_cookieuniversalnuxt_eaed14d6 from 'nuxt_plugin_cookieuniversalnuxt_eaed14d6' // Source: ./cookie-universal-nuxt.js (mode: 'all')
+import nuxt_plugin_axios_1a696026 from 'nuxt_plugin_axios_1a696026' // Source: ./axios.js (mode: 'all')
+import nuxt_plugin_elementui_d905880e from 'nuxt_plugin_elementui_d905880e' // Source: ../plugins/element-ui (mode: 'all')
+import nuxt_plugin_ga_fb0a2534 from 'nuxt_plugin_ga_fb0a2534' // Source: ../plugins/ga.js (mode: 'client')
 
 // Component: <ClientOnly>
 Vue.component(ClientOnly.name, ClientOnly)
@@ -172,12 +172,12 @@ async function createApp (ssrContext) {
 
   // Plugin execution
 
-  if (typeof nuxt_plugin_cookieuniversalnuxt_38c33064 === 'function') {
-    await nuxt_plugin_cookieuniversalnuxt_38c33064(app.context, inject)
+  if (typeof nuxt_plugin_cookieuniversalnuxt_eaed14d6 === 'function') {
+    await nuxt_plugin_cookieuniversalnuxt_eaed14d6(app.context, inject)
   }
 
-  if (typeof nuxt_plugin_axios_85caee88 === 'function') {
-    await nuxt_plugin_axios_85caee88(app.context, inject)
+  if (typeof nuxt_plugin_axios_1a696026 === 'function') {
+    await nuxt_plugin_axios_1a696026(app.context, inject)
   }
 
   if (typeof nuxt_plugin_elementui_d905880e === 'function') {
