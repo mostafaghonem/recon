@@ -66,18 +66,18 @@ module.exports = ({
   }
   if (government) query['address.government'] = String(government);
   if (services) query.services = { $in: services };
-  if (rate) query.rate = { $gte: Number(rate) };
+  if (rate) query.rate = { $gte: parseInt(rate, 10) };
   if (type) query.type = type;
   if (rentersType) query.rentersType = rentersType;
   if (numberOfPeople) {
-    query.numberOfPeople = { $gte: Number(numberOfPeople) };
+    query.numberOfPeople = { $gte: parseInt(numberOfPeople, 10) };
   }
 
-  if (available === 1) {
+  if (available && parseInt(available, 10) === 1) {
     query.isFull = false;
-  } else if (available === 2) {
+  } else if (available && parseInt(available, 10) === 2) {
     query.hasFurniture = true;
-  } else if (available === 3) {
+  } else if (available && parseInt(available, 10) === 3) {
     query.hasFurniture = false;
   }
 
