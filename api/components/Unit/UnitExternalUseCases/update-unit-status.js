@@ -14,14 +14,17 @@ module.exports = ({ ApplicationError, logger }) => async ({
   note,
   update
 }) => {
-  const obj = {
+  let obj = {
     status,
-    note,
-    ...update
+    note
   };
-  const hostels = await model.updateOneById({
+
+  if (update) {
+    obj = { status, note, ...update };
+  }
+  const units = await model.updateOneById({
     id: unitId,
     update: obj
   });
-  return hostels;
+  return units;
 };
