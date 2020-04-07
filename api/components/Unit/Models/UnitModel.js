@@ -76,6 +76,17 @@ module.exports = ({ GenericModel = _GenericModel }) => {
       });
       return response;
     }
+
+    async setUnitStatus({ unitId, status }) {
+      // eslint-disable-next-line no-param-reassign
+      const update = {
+        $set: {
+          status
+        }
+      };
+
+      return this.updateOneById(unitId, update);
+    }
   }
   return new UnitModel(unitSchema);
 };

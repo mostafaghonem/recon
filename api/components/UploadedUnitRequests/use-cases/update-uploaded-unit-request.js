@@ -1,10 +1,11 @@
 const model = require('../models');
 
-module.exports = ({ ApplicationError, logger, updateUnitStatus }) => async ({
-  requestId,
-  status,
-  note = ''
-}) => {
+module.exports = ({
+  ApplicationError,
+  logger,
+  updateUnitStatus,
+  accepted
+}) => async ({ requestId, status, note = '' }) => {
   const query = {
     _id: requestId,
     status: 'pending',
@@ -14,7 +15,7 @@ module.exports = ({ ApplicationError, logger, updateUnitStatus }) => async ({
   const request = await model.getOne({ query, select });
   if (request) {
     let params;
-    if (request.update) {
+    if (request.update && status === accepted) {
       params = { unitId: request.unitId, status, note, ...update };
     } else {
       params = { unitId: request.unitId, status, note };
