@@ -18,6 +18,7 @@ const _4fa34752 = () => interopDefault(import('../pages/registrationCode.vue' /*
 const _511fff6c = () => interopDefault(import('../pages/registrationDone.vue' /* webpackChunkName: "pages/registrationDone" */))
 const _1a8b1d19 = () => interopDefault(import('../pages/rents.vue' /* webpackChunkName: "pages/rents" */))
 const _ee3280bc = () => interopDefault(import('../pages/search-results.vue' /* webpackChunkName: "pages/search-results" */))
+const _6f18e1b1 = () => interopDefault(import('../pages/units/index.vue' /* webpackChunkName: "pages/units/index" */))
 const _f3c9a5f6 = () => interopDefault(import('../pages/hotel/add.vue' /* webpackChunkName: "pages/hotel/add" */))
 const _7be4722d = () => interopDefault(import('../pages/hotel/addGroup/index.vue' /* webpackChunkName: "pages/hotel/addGroup/index" */))
 const _72d0ae4e = () => interopDefault(import('../pages/hotel/edit/index.vue' /* webpackChunkName: "pages/hotel/edit/index" */))
@@ -112,6 +113,10 @@ export const routerOptions = {
     component: _ee3280bc,
     name: "search-results"
   }, {
+    path: "/units",
+    component: _6f18e1b1,
+    name: "units"
+  }, {
     path: "/hotel/add",
     component: _f3c9a5f6,
     name: "hotel-add"
@@ -168,7 +173,7 @@ export const routerOptions = {
     component: _57037e70,
     name: "unitDetails-id"
   }, {
-    path: "/units/:id?",
+    path: "/units/:id",
     component: _32259c59,
     name: "units-id"
   }, {
