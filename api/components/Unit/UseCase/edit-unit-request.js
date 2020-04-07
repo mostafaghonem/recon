@@ -56,7 +56,7 @@ module.exports = ({
     gallery
   };
 
-  await model.setUnitStatus({ unitId: checkExistence._id, status: pending });
+  await model.setUnitStatus({ unitId, status: pending });
   await editUploadedUnitsRequests({ userId, unitId, update });
   await createUnitEvent({
     userId,

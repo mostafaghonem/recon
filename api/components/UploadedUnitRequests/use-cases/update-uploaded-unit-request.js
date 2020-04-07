@@ -16,7 +16,7 @@ module.exports = ({
   if (request) {
     let params;
     if (request.update && status === accepted) {
-      params = { unitId: request.unitId, status, note, update };
+      params = { unitId: request.unitId, status, note, update: request.update };
     } else {
       params = { unitId: request.unitId, status, note };
     }

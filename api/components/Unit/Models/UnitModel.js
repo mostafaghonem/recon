@@ -79,13 +79,9 @@ module.exports = ({ GenericModel = _GenericModel }) => {
 
     async setUnitStatus({ unitId, status }) {
       // eslint-disable-next-line no-param-reassign
-      const update = {
-        $set: {
-          status
-        }
-      };
+      const update = { status };
 
-      return this.updateOneById(unitId, update);
+      return this.updateOneById({ id: unitId, update });
     }
   }
   return new UnitModel(unitSchema);
