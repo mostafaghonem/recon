@@ -15,7 +15,8 @@ module.exports = ({ ApplicationError, logger }) => async ({
 }) => {
   const update = {
     status,
-    note
+    note,
+    ...update
   };
   const hostels = await model.updateOneById({
     id: unitId,

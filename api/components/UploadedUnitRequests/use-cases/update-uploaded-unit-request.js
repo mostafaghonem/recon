@@ -10,10 +10,17 @@ module.exports = ({ ApplicationError, logger, updateUnitStatus }) => async ({
     status: 'pending',
     isArchived: false
   };
-  const select = 'unitId';
+  const select = 'unitId update';
   const request = await model.getOne({ query, select });
   if (request) {
-    await updateUnitStatus({ unitId: request.unitId, status, note });
+    let params;
+    if (request.update) {
+      params = { unitId: request.unitId, status, note, ...update };
+    } else {
+      params = { unitId: request.unitId, status, note };
+    }
+
+    await updateUnitStatus(params);
     const update = {
       status,
       note
