@@ -22,7 +22,6 @@ module.exports = ({
   GetSortObj,
   accepted
 }) => async ({
-  lastId,
   availableFrom,
   availableTo,
   type,
@@ -73,6 +72,20 @@ module.exports = ({
     query.numberOfPeople = { $gte: Number(numberOfPeople) };
   }
 
+  if (typeof priceFrom !== 'undefined') {
+    query.numberOfPeople = { $gte: Number(priceFrom) };
+  }
+
+  if (typeof priceTo !== 'undefined') {
+    // eslint-disable-next-line no-restricted-globals
+    const from = isNaN(priceFrom) ? 0 : Number(priceFrom);
+    // eslint-disable-next-line no-restricted-globals
+    const validTo = !isNaN(priceTo) && Number(priceTo) > from;
+    if (validTo) {
+      query.numberOfPeople = { $lte: Number(priceTo), $gte: from };
+    }
+  }
+
   if (available === 1) {
     query.isFull = false;
   } else if (available === 2) {
@@ -106,7 +119,6 @@ module.exports = ({
         .map(o => ({ ...units.find(p => p._id === o._id), available: o.value }))
         .filter(unit => unit.available);
     }
-
     return { total, hasNext, units: filteredUnits };
   }
   return { total: 0, hasNext: false, units: [] };
