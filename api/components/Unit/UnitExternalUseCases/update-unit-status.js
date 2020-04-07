@@ -20,6 +20,7 @@ module.exports = ({ ApplicationError, logger }) => async ({
   };
 
   if (update) {
+    delete update._id;
     obj = { status, note, ...update };
   }
   const units = await model.updateOneById({
