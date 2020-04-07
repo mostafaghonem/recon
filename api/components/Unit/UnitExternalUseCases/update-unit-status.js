@@ -21,6 +21,7 @@ module.exports = ({ ApplicationError, logger }) => async ({
 
   if (update) {
     delete update._id;
+    delete update.status;
     obj = { status, note, ...update };
   }
   const units = await model.updateOneById({
