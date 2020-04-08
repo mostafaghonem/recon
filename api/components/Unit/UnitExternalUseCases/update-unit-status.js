@@ -11,15 +11,22 @@ const model = require('../Models');
 module.exports = ({ ApplicationError, logger }) => async ({
   unitId,
   status,
-  note
+  note,
+  update
 }) => {
-  const update = {
+  let obj = {
     status,
     note
   };
-  const hostels = await model.updateOneById({
+
+  if (update) {
+    delete update._id;
+    delete update.status;
+    obj = { status, note, ...update };
+  }
+  const units = await model.updateOneById({
     id: unitId,
-    update
+    update: obj
   });
-  return hostels;
+  return units;
 };

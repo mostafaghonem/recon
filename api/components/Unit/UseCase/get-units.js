@@ -22,7 +22,6 @@ module.exports = ({
   GetSortObj,
   accepted
 }) => async ({
-  lastId,
   availableFrom,
   availableTo,
   type,
@@ -66,18 +65,32 @@ module.exports = ({
   }
   if (government) query['address.government'] = String(government);
   if (services) query.services = { $in: services };
-  if (rate) query.rate = { $gte: Number(rate) };
+  if (rate) query.rate = { $gte: parseInt(rate, 10) };
   if (type) query.type = type;
   if (rentersType) query.rentersType = rentersType;
   if (numberOfPeople) {
-    query.numberOfPeople = { $gte: Number(numberOfPeople) };
+    query.numberOfPeople = { $gte: parseInt(numberOfPeople, 10) };
   }
 
-  if (available === 1) {
+  if (typeof priceFrom !== 'undefined') {
+    query.numberOfPeople = { $gte: parseInt(priceFrom, 10) };
+  }
+
+  if (typeof priceTo !== 'undefined') {
+    // eslint-disable-next-line no-restricted-globals
+    const from = isNaN(priceFrom) ? 0 : parseInt(priceFrom, 10);
+    // eslint-disable-next-line no-restricted-globals
+    const validTo = !isNaN(priceTo) && parseInt(priceTo, 10) > from;
+    if (validTo) {
+      query.numberOfPeople = { $lte: parseInt(priceTo, 10), $gte: from };
+    }
+  }
+
+  if (available && parseInt(available, 10) === 1) {
     query.isFull = false;
-  } else if (available === 2) {
+  } else if (available && parseInt(available, 10) === 2) {
     query.hasFurniture = true;
-  } else if (available === 3) {
+  } else if (available && parseInt(available, 10) === 3) {
     query.hasFurniture = false;
   }
 
@@ -106,7 +119,6 @@ module.exports = ({
         .map(o => ({ ...units.find(p => p._id === o._id), available: o.value }))
         .filter(unit => unit.available);
     }
-
     return { total, hasNext, units: filteredUnits };
   }
   return { total: 0, hasNext: false, units: [] };

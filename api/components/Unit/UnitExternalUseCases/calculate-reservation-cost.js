@@ -11,6 +11,7 @@ module.exports = ({ ApplicationError, logger, _ }) => async ({
   rooms
 }) => {
   try {
+    let cost = 0;
     const query = {
       _id: hostelId,
       isArchived: false

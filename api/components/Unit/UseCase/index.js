@@ -8,7 +8,8 @@ const logger = require('../../../startup/logger');
 const { ApplicationError } = require('../../../shared/errors');
 const {
   REQUEST_RESPONSE,
-  EVENTS_TYPES
+  EVENTS_TYPES,
+  REQUEST_STATUS
 } = require('../../../shared/constants/defaults');
 const { GetSortObj } = require('../../../shared/constants/methods');
 
@@ -101,7 +102,8 @@ const editUnit = makeEditUnit({
   ApplicationError,
   logger,
   createUnitEvent,
-  events: EVENTS_TYPES
+  events: EVENTS_TYPES,
+  pending: REQUEST_STATUS.PENDING
 });
 
 const editUnitRequest = makeEditUnitRequest({
@@ -109,7 +111,8 @@ const editUnitRequest = makeEditUnitRequest({
   logger,
   createUnitEvent,
   editUploadedUnitsRequests,
-  events: EVENTS_TYPES
+  events: EVENTS_TYPES,
+  pending: REQUEST_STATUS.PENDING
 });
 
 // const addUnitRooms = makeAddUnitRooms({

@@ -76,6 +76,7 @@ module.exports = class GenericModel {
 
   updateOneById(params = { id: undefined, update: {} }) {
     const { id, update } = params;
+    console.log('updating unit', id, update);
     return this.DbAccess.findByIdAndUpdate(id, update, {
       runValidators: true,
       new: true
