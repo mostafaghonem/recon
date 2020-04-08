@@ -99,10 +99,7 @@ module.exports = ({
     },
     'address.houseNumber': {
       value: body.address ? body.address.houseNumber : '',
-      rules: new Builder()
-        .required('يجب ادخال رقم المنزل')
-        .isNumber()
-        .min(1).rules
+      rules: new Builder().required('يجب ادخال رقم المنزل').rules
     },
     'address.apartmentNumber': {
       value: body.address ? body.address.apartmentNumber : '',

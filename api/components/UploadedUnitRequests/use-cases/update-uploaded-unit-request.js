@@ -8,20 +8,19 @@ module.exports = ({
 }) => async ({ requestId, status, note = '' }) => {
   const query = {
     _id: requestId,
-    status: 'pending',
     isArchived: false
   };
   const select = 'unitId update';
   const request = await model.getOne({ query, select });
   if (request) {
-    let params;
+    const params = { unitId: request.unitId, status, note };
     if (request.update && status === accepted) {
-      params = { unitId: request.unitId, status, note, update: request.update };
-    } else {
-      params = { unitId: request.unitId, status, note };
+      params.update = request.update;
+    } else if (request.update && status !== accepted) {
+      params.status = accepted;
     }
-
     await updateUnitStatus(params);
+
     const update = {
       status,
       note
