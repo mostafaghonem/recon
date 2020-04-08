@@ -20,7 +20,7 @@ module.exports = ({ ApplicationError, logger, redis }) => async ({
     if (user.phone !== phone) {
       const checkCode = await redis.getAsync(`${phone}-phone-update`);
       if (Number(checkCode) !== Number(code))
-        throw new ApplicationError('Invalid Verfification Code', 400);
+        throw new ApplicationError('رمز التحقق غير صالح', 400);
     }
     await model.updateOneById({
       id: userId,

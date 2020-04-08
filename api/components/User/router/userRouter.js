@@ -3,6 +3,7 @@ const {
   userRegisterValidation,
   userLoginValidation,
   phoneVerificationValidation,
+  smsVerificationValidation,
   forgetPasswordValidation,
   confirmForgetPasswordValidation,
   confirmUpdatePasswordValidation,
@@ -61,7 +62,7 @@ router.get('/logout', [authenticateMiddleware], controllers.logOutUser);
 // !access  anonymous
 router.post(
   '/phone/verify',
-  [validateMiddleware(phoneVerificationValidation)],
+  [validateMiddleware(smsVerificationValidation)],
   controllers.verifyPhone
 );
 

@@ -20,14 +20,14 @@ module.exports = ({ redis, ApplicationError, logger }) => async ({
     );
     if (checkExistence) {
       if (Number(checkExistence) !== Number(code))
-        throw new ApplicationError('Invalid Verfification Code', 400);
+        throw new ApplicationError('رمز التحقق غير صالح', 400);
 
       logger.info(
         `Forget Password Verification Code for ${checkUser.phone} confirmed successfully`
       );
     } else
       throw new ApplicationError(
-        'You should get Verification Code first or again',
+        'يجب أن تحصل على رمز التحقق أولاً أو حاول مرة أخرى',
         400
       );
   } else

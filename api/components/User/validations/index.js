@@ -13,6 +13,7 @@ const requestStatus = Object.values(defaultConstants.REQUEST_STATUS);
 const makeUserRegisterValidation = require('./user-register-validation');
 const makeUserLoginValidation = require('./user-login-validation');
 const makeUserPhoneVerificationValidation = require('./phone-verification-validation');
+const makeUserSmsVerificationValidation = require('./sms-verification-validation');
 const makeForgetPasswordValidation = require('./forget-password-validation');
 const makeConfirmForgetPasswordValidation = require('./confirm-forget-password-validation');
 const makeConfirmUpdatePasswordValidation = require('./confirm-update-password-validation');
@@ -65,6 +66,12 @@ module.exports.phoneVerificationValidation = makeUserPhoneVerificationValidation
     ValidatorHelper
   }
 );
+
+module.exports.smsVerificationValidation = makeUserSmsVerificationValidation({
+  _,
+  Builder,
+  ValidatorHelper
+});
 
 module.exports.updateUserPasswordValidation = makeUpdateUserPasswordValidation({
   _,

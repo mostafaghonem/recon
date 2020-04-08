@@ -7,6 +7,12 @@ module.exports = ({ _, Builder, ValidatorHelper }) => ({ body }) => {
       rules: new Builder()
         .required('يجب ادخال رقم الهاتف')
         .isMobile('رقم هاتف غير صالح').rules
+    },
+    email: {
+      value: body.email,
+      rules: new Builder()
+        .required('يجب ادخال البريد الإلكتروني')
+        .isEmail('بريد إلكتروني غير صالح').rules
     }
   };
 

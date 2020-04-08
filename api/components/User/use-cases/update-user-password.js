@@ -24,7 +24,7 @@ module.exports = ({ ApplicationError, logger, redis }) => async ({
     );
     if (checkExistence) {
       if (Number(checkExistence) !== Number(code))
-        throw new ApplicationError('Invalid Verfification Code', 400);
+        throw new ApplicationError('رمز التحقق غير صالح', 400);
       user.setPassword(password);
       await user.save();
       await redis.deleteAsync(`${checkUser.phone}-changePassword`);
@@ -34,7 +34,7 @@ module.exports = ({ ApplicationError, logger, redis }) => async ({
       );
     } else
       throw new ApplicationError(
-        'You should get Verification Code first or again',
+        'يجب أن تحصل على رمز التحقق أولاً أو حاول مرة أخرى',
         400
       );
   } else
