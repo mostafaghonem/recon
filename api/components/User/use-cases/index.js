@@ -12,7 +12,8 @@ const logger = require('../../../startup/logger');
 const { ApplicationError } = require('../../../shared/errors');
 const smsService = require('../../../shared/services').smsService;
 const {
-  addIdentityRequests
+  addIdentityRequests,
+  getUserIdentityStatus
 } = require('../../identityRequests/identityRequests-external-use-cases');
 const {
   getUserHostels,
@@ -99,7 +100,8 @@ const updateUserPassword = makeUpdateUserPassword({
 
 const getUserProfile = makeGetUserProfile({
   ApplicationError,
-  logger
+  logger,
+  getUserIdentityStatus
 });
 
 const getHouseOwnerInfo = makeGetHouseOwnerInfo({

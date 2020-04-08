@@ -33,6 +33,7 @@ module.exports = ({ ApplicationError, logger, addIdentityRequests }) => async (
         userId,
         identificationImages: updatedProfile.identificationImages
       });
+      updatedProfile.identificationStatus = false;
       delete updatedProfile.identificationImages;
     }
     await model.updateOneById({

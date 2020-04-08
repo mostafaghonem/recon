@@ -10,14 +10,21 @@ const logger = require('../../../startup/logger');
 const { ApplicationError } = require('../../../shared/errors');
 
 const makeAddIdentityRequests = require('./add-identity-requests');
+const makeGetUserIdentityStatus = require('./get-user-identity-status');
 
 const addIdentityRequests = makeAddIdentityRequests({
   ApplicationError,
   logger
 });
 
+const getUserIdentityStatus = makeGetUserIdentityStatus({
+  ApplicationError,
+  logger
+});
+
 const IdentityRequestsExternalService = Object.freeze({
-  addIdentityRequests
+  addIdentityRequests,
+  getUserIdentityStatus
 });
 
 module.exports = IdentityRequestsExternalService;
