@@ -8,6 +8,22 @@ module.exports = ({
   sortValues
 }) => ({ query }) => {
   const error = {};
+
+  if (query.limit) {
+    // eslint-disable-next-line no-param-reassign
+    query.limit = String(query.limit).split(',');
+  }
+
+  if (query.sortValue) {
+    // eslint-disable-next-line no-param-reassign
+    query.sortValue = String(query.sortValue).split(',');
+  }
+
+  if (query.hasNext) {
+    // eslint-disable-next-line no-param-reassign
+    query.hasNext = String(query.hasNext).split(',');
+  }
+
   const scheme = {
     lastId: {
       value: query.lastId,
@@ -23,8 +39,8 @@ module.exports = ({
     limit: {
       value: query.limit,
       rules: new Builder()
-        .isNumber('لا يمكن ان يتخطى عدد الوحدات المطلوبة مئة وحدة')
-        .max(100).rules
+        .isArray('لم يتم إرسال حد صحيح')
+        .minLength(2, 'يجب طلب حدين').rules
     },
     sortKey: {
       value: query.sortKey,
@@ -36,7 +52,13 @@ module.exports = ({
     },
     sortValue: {
       value: query.sortValue,
-      rules: new Builder().rules
+      rules: new Builder().isArray().minLength(2, 'حدث خطا ما فى عرض المزيد')
+        .rules
+    },
+    hasNext: {
+      value: query.hasNext,
+      rules: new Builder().isArray().minLength(2, 'حدث خطا ما فى عرض المزيد')
+        .rules
     }
   };
 

@@ -22,6 +22,17 @@ const GetSortValue = (key, val) => {
       return ObjectId(val);
     }
 
+    if (val && val instanceof Array) {
+      const values = val.map(o => {
+        const isValid = o !== '' && moment(o).isValid();
+        if (isValid) {
+          return moment(o).toDate();
+        }
+        return isValid;
+      });
+      return values || [false, false];
+    }
+
     if (['createdAt', 'updatedAt'].includes(key) && moment(val).isValid()) {
       return moment(val).toDate();
     }
@@ -31,16 +42,25 @@ const GetSortValue = (key, val) => {
 };
 //
 const GetSortObj = ({ sortValue, sortKey, sortIndex }) => {
+  let query = {};
   const key = sortKey || 'updatedAt';
   const index = sortIndex ? parseInt(sortIndex, 10) : -1;
   const sort = {};
-  const query = {};
   const operator = parseInt(index, 10) === -1 ? '$lt' : '$gt';
   sort[key] = index;
   const value = GetSortValue(key, sortValue);
 
   if (value) {
     query[key] = { [operator]: value };
+  }
+
+  if (value && value instanceof Array) {
+    query = value.map(o => {
+      if (o) {
+        return { [key]: { [operator]: o } };
+      }
+      return {};
+    });
   }
   return { query, sort };
 };

@@ -35,7 +35,7 @@ module.exports = ({ GenericModel = _GenericModel }) => {
 
       return {
         hasNext: response.hasNextPage,
-        units: response.docs,
+        data: response.docs,
         total: response.totalDocs
       };
     }
