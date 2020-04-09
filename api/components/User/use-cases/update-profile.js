@@ -23,18 +23,23 @@ module.exports = ({ ApplicationError, logger, addIdentityRequests }) => async (
   const user = await model.getOneById({ id: userId, select });
   if (user) {
     const identificationImages = user.identificationImages || [];
-    updatedProfile.identificationImages.forEach(url => {});
+    // updatedProfile.identificationImages.forEach(url => {});
     const compareImages = compare(
       identificationImages,
       updatedProfile.identificationImages
     );
     if (!compareImages) {
-      await addIdentityRequests({
-        userId,
-        identificationImages: updatedProfile.identificationImages
-      });
+      if (
+        updatedProfile.identificationImages &&
+        updatedProfile.identificationImages.length !== 0
+      ) {
+        await addIdentityRequests({
+          userId,
+          identificationImages: updatedProfile.identificationImages
+        });
+      }
       updatedProfile.identificationStatus = false;
-      delete updatedProfile.identificationImages;
+      updatedProfile.$pull = { permissions: 'houseOwner' };
     }
     await model.updateOneById({
       id: userId,
