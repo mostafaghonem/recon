@@ -13,12 +13,12 @@ module.exports = ({ ApplicationError, logger }) => async (
         identificationImages,
         identificationStatus: true
       };
+      if (!user.permissions.includes('houseOwner'))
+        update.$push = { permissions: 'houseOwner' };
       await model.updateOneById({
         id: userId,
         update
       });
-      if (!user.permissions.includes('houseOwner'))
-        update.$push = { permissions: 'houseOwner' };
     }
 
     logger.info(`${userId} identity just updated`);
