@@ -3,7 +3,8 @@ const Model = require('../models');
 // should have no implementation for any specific orm
 module.exports = ({ ApplicationError, logger }) => async userId => {
   const query = {
-    userId
+    userId,
+    isArchived: false
   };
   const select = 'identificationImages status note';
   const sort = { createdAt: -1 };

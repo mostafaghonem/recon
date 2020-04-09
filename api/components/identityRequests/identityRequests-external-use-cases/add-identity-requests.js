@@ -7,6 +7,14 @@ module.exports = ({ ApplicationError, logger }) => async ({
   userId,
   identificationImages
 }) => {
+  const filter = {
+    userId,
+    status: 'pending'
+  };
+  const update = {
+    isArchived: true
+  };
+  await Models.updateManyByFilter({ filter, update });
   const newIdentityRequest = new IdentityRequestsEntity({
     userId,
     identificationImages
