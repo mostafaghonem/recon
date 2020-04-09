@@ -39,7 +39,7 @@ module.exports = ({ ApplicationError, logger, addIdentityRequests }) => async (
         });
       }
       updatedProfile.identificationStatus = false;
-      updatedProfile.$pull = { permissions: 'houseOwner' };
+      // updatedProfile.$pull = { permissions: 'houseOwner' };
     }
     await model.updateOneById({
       id: userId,
