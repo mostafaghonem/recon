@@ -14,7 +14,7 @@ module.exports = ({ pagination }) => {
       if (req.query.hasNext) {
         hasNext = String(req.query.hasNext)
           .split(',')
-          .map(o => (o ? 2 : 1));
+          .map(o => (o === 'true' ? 2 : 1));
       }
 
       const lastId = req.query.lastId || String(pagination.LAST_ID);
