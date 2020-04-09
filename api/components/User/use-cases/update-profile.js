@@ -19,7 +19,7 @@ module.exports = ({ ApplicationError, logger, addIdentityRequests }) => async (
   userId,
   updatedProfile
 ) => {
-  const select = 'identificationImages';
+  const select = 'identificationImages permissions';
   const user = await model.getOneById({ id: userId, select });
   if (user) {
     const identificationImages = user.identificationImages || [];
