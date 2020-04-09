@@ -11,6 +11,9 @@ module.exports = () => {
         success: true
       });
     } catch (e) {
+      console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
+      console.log(e);
+      console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
       return next(e);
     }
   };
