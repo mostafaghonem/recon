@@ -8,22 +8,17 @@ const model = require('../Models');
  */
 
 // should have no implementation for any specific orm
-module.exports = ({ ApplicationError, GetSortObj }) => async ({
-  userId,
-  status,
-  key,
-  lastId,
-  limit,
-  sortIndex,
-  sortValue,
-  sortKey
-}) => {
+module.exports = ({
+  ApplicationError,
+  GetSortObj,
+  getMyUploadedUnitsRequests
+}) => async ({ userId, status, key, limit, sortIndex, sortValue, sortKey }) => {
   const sortObj = GetSortObj({
     sortIndex,
     sortKey,
     sortValue
   });
-  const rest = sortObj.query;
+  const rest = sortObj.query[0];
 
   if (status) {
     rest.status = status;
@@ -45,19 +40,24 @@ module.exports = ({ ApplicationError, GetSortObj }) => async ({
       }
     ];
   }
-  const { units, total, hasNext } = await model.getMyUnits(
-    userId,
-    limit,
-    rest,
-    sortObj.sort
-  );
+  const unitsObj = await model.getMyUnits(userId, limit[0], rest, sortObj.sort);
 
-  if (!units) {
+  const requestsObj = await getMyUploadedUnitsRequests({
+    userId,
+    limit: limit[1],
+    rest,
+    sortObj
+  });
+
+  if (!unitsObj || (unitsObj && !unitsObj.units)) {
     throw new ApplicationError('Unable to get user own units');
   }
 
-  if (units && units.length !== 0) {
-    return { data: units, hasNext, total };
+  if (unitsObj.units && unitsObj.units.length !== 0) {
+    return { units: unitsObj, requests: requestsObj };
   }
-  return { data: [], total: 0, hasNext: false };
+  return {
+    requests: requestsObj,
+    units: { data: [], total: 0, hasNext: false }
+  };
 };

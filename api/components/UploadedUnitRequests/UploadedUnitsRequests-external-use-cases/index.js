@@ -13,6 +13,7 @@ const { REQUEST_TYPES } = require('../../../shared/constants/defaults');
 const requestTypes = Object.freeze(REQUEST_TYPES);
 const makeAddUploadedUnitsRequests = require('./add-uploaded-unit-request');
 const makeEditUploadedUnitsRequests = require('./edit-uploaded-unit-request');
+const makeGetMyUploadedUnitsRequests = require('./get-my-uploaded-unit-requests');
 
 const addUploadedUnitsRequests = makeAddUploadedUnitsRequests({
   ApplicationError,
@@ -25,9 +26,15 @@ const editUploadedUnitsRequests = makeEditUploadedUnitsRequests({
   requestTypes
 });
 
+const getMyUploadedUnitsRequests = makeGetMyUploadedUnitsRequests({
+  ApplicationError,
+  logger
+});
+
 const UploadedUnitsRequestsExternalService = Object.freeze({
   addUploadedUnitsRequests,
-  editUploadedUnitsRequests
+  editUploadedUnitsRequests,
+  getMyUploadedUnitsRequests
 });
 
 module.exports = UploadedUnitsRequestsExternalService;

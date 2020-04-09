@@ -37,7 +37,8 @@ const makeEditUnitRequest = require('./edit-unit-request');
 // const makeRateUnit = require('./rate-unit');
 const {
   addUploadedUnitsRequests,
-  editUploadedUnitsRequests
+  editUploadedUnitsRequests,
+  getMyUploadedUnitsRequests
 } = require('../../UploadedUnitRequests/UploadedUnitsRequests-external-use-cases');
 
 const { createUnitEvent } = require('../UnitExternalUseCases');
@@ -70,12 +71,14 @@ const getUnits = makeGetUnits({
 
 const getMyUnits = makeGetMyUnits({
   ApplicationError,
-  GetSortObj
+  GetSortObj,
+  getMyUploadedUnitsRequests
 });
 
 const getMyUnit = makeGetMyUnit({
   ApplicationError,
-  accepted: REQUEST_RESPONSE.ACCEPTED
+  accepted: REQUEST_RESPONSE.ACCEPTED,
+  getMyUploadedUnitsRequests
 });
 
 const hideUnit = makeHideUnit({
