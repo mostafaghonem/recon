@@ -19,6 +19,11 @@ module.exports = ({
     query.sortValue = String(query.sortValue).split(',');
   }
 
+  if (query.hasNext) {
+    // eslint-disable-next-line no-param-reassign
+    query.hasNext = String(query.hasNext).split(',');
+  }
+
   const scheme = {
     lastId: {
       value: query.lastId,
@@ -47,6 +52,11 @@ module.exports = ({
     },
     sortValue: {
       value: query.sortValue,
+      rules: new Builder().isArray().minLength(2, 'حدث خطا ما فى عرض المزيد')
+        .rules
+    },
+    hasNext: {
+      value: query.hasNext,
       rules: new Builder().isArray().minLength(2, 'حدث خطا ما فى عرض المزيد')
         .rules
     }

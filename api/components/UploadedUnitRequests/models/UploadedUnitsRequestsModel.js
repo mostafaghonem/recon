@@ -50,9 +50,6 @@ module.exports = ({ GenericModel = _GenericModel }) => {
       const $match = {
         $match: {
           userId: ObjectId(userId),
-          status: {
-            $ne: 'accepted'
-          },
           ...rest
         }
       };
