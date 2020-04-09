@@ -18,7 +18,7 @@ module.exports = ({
     sortKey,
     sortValue
   });
-  const rest = sortObj.query[0];
+  const rest = sortObj.query[0] || sortObj.query;
 
   if (status) {
     rest.status = status;
@@ -42,12 +42,15 @@ module.exports = ({
   }
   const unitsObj = await model.getMyUnits(userId, limit[0], rest, sortObj.sort);
 
-  const requestsObj = await getMyUploadedUnitsRequests({
-    userId,
-    limit: limit[1],
-    rest,
-    sortObj
-  });
+  const requestsObj =
+    status === 'accepted'
+      ? { data: [], hasNext: false }
+      : await getMyUploadedUnitsRequests({
+          userId,
+          limit: limit[1],
+          rest,
+          sortObj
+        });
 
   if (!unitsObj || (unitsObj && !unitsObj.units)) {
     throw new ApplicationError('Unable to get user own units');

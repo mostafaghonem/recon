@@ -41,14 +41,18 @@ module.exports = ({ GenericModel = _GenericModel }) => {
       let $paginate;
       if (rest.updatedAt) {
         $paginate = {
-          $match: sortObj.query[1]
+          $match: sortObj.query[1] || sortObj.query
         };
         // eslint-disable-next-line no-param-reassign
         delete rest.updatedAt;
       }
+
       const $match = {
         $match: {
           userId: ObjectId(userId),
+          status: {
+            $ne: 'accepted'
+          },
           ...rest
         }
       };
