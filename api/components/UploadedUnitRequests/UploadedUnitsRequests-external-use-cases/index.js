@@ -14,6 +14,7 @@ const requestTypes = Object.freeze(REQUEST_TYPES);
 const makeAddUploadedUnitsRequests = require('./add-uploaded-unit-request');
 const makeEditUploadedUnitsRequests = require('./edit-uploaded-unit-request');
 const makeGetMyUploadedUnitsRequests = require('./get-my-uploaded-unit-requests');
+const { setRequestsProcessedStatus } = require('../use-cases');
 
 const addUploadedUnitsRequests = makeAddUploadedUnitsRequests({
   ApplicationError,
@@ -34,6 +35,7 @@ const getMyUploadedUnitsRequests = makeGetMyUploadedUnitsRequests({
 const UploadedUnitsRequestsExternalService = Object.freeze({
   addUploadedUnitsRequests,
   editUploadedUnitsRequests,
+  setRequestsProcessedStatus,
   getMyUploadedUnitsRequests
 });
 

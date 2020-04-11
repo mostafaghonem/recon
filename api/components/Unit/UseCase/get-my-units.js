@@ -55,9 +55,8 @@ module.exports = ({
       ? { data: [], hasNext: false }
       : await model.getMyUnits(userId, limit[0], rest, sortObj.sort);
 
-  rest.type === 'edit';
   const requestsObj =
-    hasNext[1] === 1
+    hasNext[1] === 1 || status === 'accepted'
       ? { data: [], hasNext: false }
       : await getMyUploadedUnitsRequests({
           userId,

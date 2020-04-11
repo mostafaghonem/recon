@@ -132,6 +132,7 @@ const buildUnitEntity = (
       this.totalOnlineBooking = data.totalOnlineBooking || 0;
       this.totalRevenue = data.totalRevenue || 0;
       this.isHidden = data.isHidden || false;
+      this.isEditing = data.isEditing || false;
       this.isFull = data.isFull || false;
       this.isArchived = data.isArchived || false;
     }
@@ -208,6 +209,7 @@ const buildUnitEntity = (
         note: this.note,
         totalOnlineBooking: this.totalOnlineBooking,
         totalRevenue: this.totalRevenue,
+        isEditing: this.isEditing,
         isFull: this.isFull,
         isHidden: this.isHidden,
         isArchived: this.isArchived

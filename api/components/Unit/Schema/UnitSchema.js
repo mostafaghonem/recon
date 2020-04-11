@@ -164,8 +164,7 @@ module.exports = ({
         default: pendingStatus
       },
       note: {
-        type: String,
-        default: 'there is an request accept in your time before'
+        type: String
       },
       totalOnlineBooking: {
         type: Number,
@@ -174,6 +173,10 @@ module.exports = ({
       totalRevenue: {
         type: Number,
         default: 0
+      },
+      isEditing: {
+        type: Boolean,
+        default: false
       },
       isFull: {
         type: Boolean,

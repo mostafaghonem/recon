@@ -38,6 +38,7 @@ const makeEditUnitRequest = require('./edit-unit-request');
 const {
   addUploadedUnitsRequests,
   editUploadedUnitsRequests,
+  setRequestsProcessedStatus,
   getMyUploadedUnitsRequests
 } = require('../../UploadedUnitRequests/UploadedUnitsRequests-external-use-cases');
 
@@ -105,6 +106,7 @@ const editUnit = makeEditUnit({
   ApplicationError,
   logger,
   createUnitEvent,
+  setRequestsProcessedStatus,
   events: EVENTS_TYPES,
   pending: REQUEST_STATUS.PENDING
 });
@@ -114,6 +116,7 @@ const editUnitRequest = makeEditUnitRequest({
   logger,
   createUnitEvent,
   editUploadedUnitsRequests,
+  setRequestsProcessedStatus,
   events: EVENTS_TYPES,
   pending: REQUEST_STATUS.PENDING
 });

@@ -25,7 +25,7 @@ module.exports = ({ GenericModel = _GenericModel }) => {
       };
 
       const select =
-        'type image gallery dailyOrMonthly pricePerPerson status note rates totalRate totalUsersRated address totalRate totalUsersRated totalOnlineBooking totalRevenue numberOfPeople numberOfRooms availableCountNow hasFurniture rentersType isFull createdAt updatedAt';
+        'type image gallery dailyOrMonthly pricePerPerson status note rates totalRate totalUsersRated address totalRate totalUsersRated totalOnlineBooking totalRevenue numberOfPeople numberOfRooms availableCountNow hasFurniture rentersType isEditing isFull createdAt updatedAt';
       const sort = sortObj || { updatedAt: -1 };
       const response = await this.DbAccess.paginate(query, {
         select,
@@ -77,9 +77,9 @@ module.exports = ({ GenericModel = _GenericModel }) => {
       return response;
     }
 
-    async setUnitStatus({ unitId, status }) {
+    async setUnitEditStatus({ unitId, isEditing }) {
       // eslint-disable-next-line no-param-reassign
-      const update = { status };
+      const update = { isEditing };
 
       return this.updateOneById({ id: unitId, update });
     }

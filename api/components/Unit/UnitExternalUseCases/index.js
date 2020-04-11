@@ -68,7 +68,7 @@ const getUnitWithOwner = makeGetUnitWithOwner({
   accepted: REQUEST_RESPONSE.ACCEPTED
 });
 
-const updateUnitStatus = makeUpdateUnitStatus({
+const updateUnitEditStatus = makeUpdateUnitStatus({
   ApplicationError,
   logger
 });
@@ -91,7 +91,7 @@ const unitsExternalService = Object.freeze({
   calculateReservationCost,
   getUnit,
   getUnitWithOwner,
-  updateUnitStatus,
+  updateUnitEditStatus,
   createUnitEvent
 });
 

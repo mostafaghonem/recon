@@ -9,8 +9,8 @@ module.exports = ({
   logger,
   createUnitEvent,
   editUploadedUnitsRequests,
-  events,
-  pending
+  setRequestsProcessedStatus,
+  events
 }) => async ({
   userId,
   unitId,
@@ -56,7 +56,8 @@ module.exports = ({
     gallery
   };
 
-  await model.setUnitStatus({ unitId, status: pending });
+  await model.setUnitEditStatus({ unitId, isEditing: true });
+  await setRequestsProcessedStatus({ unitId });
   await editUploadedUnitsRequests({ userId, unitId, update });
   await createUnitEvent({
     userId,

@@ -33,7 +33,8 @@ const buildUploadedUnitsRequestsEntity = (
         unitId: String,
         status: String,
         update: Object,
-        type: String
+        type: String,
+        processed: Boolean
       }
     ) {
       this.id = data.id || data._id || new ObjectId();
@@ -42,6 +43,7 @@ const buildUploadedUnitsRequestsEntity = (
       this.status = data.status || 'pending';
       this.update = data.update || undefined;
       this.type = data.type || 'add';
+      this.processed = data.processed || false;
       this.createdAt = data.createdAt || new Date();
       this.isArchived = data.isArchived || false;
     }
@@ -62,6 +64,7 @@ const buildUploadedUnitsRequestsEntity = (
         status: this.status,
         update: this.update,
         type: this.type,
+        processed: this.processed,
         createdAt: this.createdAt,
         isArchived: this.isArchived
       };
@@ -76,6 +79,7 @@ const buildUploadedUnitsRequestsEntity = (
         status: this.status,
         update: this.update,
         type: this.type,
+        processed: this.processed,
         createdAt: this.createdAt,
         isArchived: this.isArchived
       };

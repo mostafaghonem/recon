@@ -6,10 +6,13 @@ const {
 } = require('../../../shared/constants/methods');
 const { REQUEST_STATUS } = require('../../../shared/constants/defaults');
 // TODO need to remove it from here and find a solution to put it in index.js
-const { updateUnitStatus } = require('../../Unit/UnitExternalUseCases');
+const { updateUnitEditStatus } = require('../../Unit/UnitExternalUseCases');
 const { ApplicationError } = require('../../../shared/errors');
 const makeGetUploadedUnitsRequests = require('./get-uploaded-units-requests');
 const makeUpdateUploadedUnitRequest = require('./update-uploaded-unit-request');
+const makeSetRequestsProcessedStatus = require('./set-requests-processed-status');
+
+const setRequestsProcessedStatus = makeSetRequestsProcessedStatus();
 
 const getUploadedUnitsRequests = makeGetUploadedUnitsRequests({
   moment,
@@ -23,13 +26,15 @@ const updateUploadedUnitsRequests = makeUpdateUploadedUnitRequest({
   moment,
   ApplicationError,
   logger,
-  updateUnitStatus,
+  updateUnitEditStatus,
+  setRequestsProcessedStatus,
   accepted: REQUEST_STATUS.ACCEPTED
 });
 
 const UploadedUnitsRequestsUseCases = {
   getUploadedUnitsRequests,
-  updateUploadedUnitsRequests
+  updateUploadedUnitsRequests,
+  setRequestsProcessedStatus
 };
 
 module.exports = UploadedUnitsRequestsUseCases;

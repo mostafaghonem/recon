@@ -54,6 +54,7 @@ module.exports = ({ GenericModel = _GenericModel }) => {
       const $match = {
         $match: {
           userId: ObjectId(userId),
+          processed: false,
           type: 'edit',
           status: {
             $ne: 'accepted'

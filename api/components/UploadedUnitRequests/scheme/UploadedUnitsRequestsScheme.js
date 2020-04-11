@@ -33,6 +33,10 @@ module.exports = ({ unitSchema, requestStatus, requestTypes }) => {
         type: String,
         default: ''
       },
+      processed: {
+        type: Boolean,
+        default: false
+      },
       isArchived: {
         type: Boolean,
         default: false

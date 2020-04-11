@@ -3,7 +3,8 @@ const model = require('../models');
 module.exports = ({
   ApplicationError,
   logger,
-  updateUnitStatus,
+  updateUnitEditStatus,
+  setRequestsProcessedStatus,
   accepted
 }) => async ({ requestId, status, note = '' }) => {
   const query = {
@@ -13,23 +14,20 @@ module.exports = ({
   const select = 'unitId update';
   const request = await model.getOne({ query, select });
   if (request) {
-    const params = { unitId: request.unitId, status, note };
+    const params = { unitId: request.unitId, isEditing: false, note };
     if (request.update && status === accepted) {
       params.update = request.update;
-    } else if (request.update && status !== accepted) {
-      params.status = accepted;
     }
-    await updateUnitStatus(params);
-
     const update = {
       status,
       note
     };
+    await updateUnitEditStatus(params);
+    await setRequestsProcessedStatus({ requestId, unitId: request.unitId });
     await model.updateOneById({
       id: requestId,
       update
     });
-
     logger.info(`admin just ${status}  ${requestId} uploaded unit request`);
   } else
     throw new ApplicationError('.نأسف ، لا يمكننا العثور على هذا الطلب', 403);

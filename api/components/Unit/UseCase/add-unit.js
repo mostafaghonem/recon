@@ -41,6 +41,7 @@ module.exports = ({
   note,
   totalOnlineBooking,
   totalRevenue,
+  isEditing,
   isFull,
   isHidden,
   isArchived
@@ -67,6 +68,7 @@ module.exports = ({
     note,
     totalOnlineBooking,
     totalRevenue,
+    isEditing,
     isFull,
     isHidden,
     isArchived
