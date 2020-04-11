@@ -161,6 +161,13 @@ module.exports = {
     GIRLS: 'girls',
     FAMILY: 'family'
   },
+  ADMIN_EVENT_TYPES: {
+    ADMIN_NOTIFICATIONS_COUNT: 'admin_notifications_count',
+    UNITS_REQUEST_ADD_UNIT: 'units_request_add_unit',
+    UNITS_REQUEST_EDIT_UNIT: 'units_request_edit_unit',
+    HOSTELS_REQUEST_ADD_HOSTEL: 'hostels_request_add_hostel',
+    HOSTELS_REQUEST_EDIT_HOSTEL: 'hostels_request_edit_hostel'
+  },
   EVENTS_TYPES: {
     ADMIN_NOTIFICATIONS_COUNT: 'admin_notifications_count',
     USER_NOTIFICATIONS_COUNT: 'renter_notifications_count',

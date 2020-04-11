@@ -7,6 +7,9 @@
 const _ = require('lodash');
 const logger = require('../../../startup/logger');
 const { ApplicationError } = require('../../../shared/errors');
+const { ADMIN_EVENT_TYPES } = require('../../../shared/constants/defaults');
+
+const AdminEventTypes = Object.values(ADMIN_EVENT_TYPES);
 const makeCreateEvent = require('./create-event');
 const makeDeleteEvent = require('./delete-event');
 const makeGetEvent = require('./get-event');
@@ -37,6 +40,7 @@ const getEvent = makeGetEvent({
 
 const getEvents = makeGetEvents({
   ApplicationError,
+  AdminEventTypes,
   logger
 });
 

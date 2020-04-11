@@ -9,7 +9,8 @@ const model = require('../Models');
  */
 
 // should have no implementation for any specific orm
-module.exports = ({ ApplicationError, logger }) => async ({
+module.exports = ({ ApplicationError, logger, AdminEventTypes }) => async ({
+  admin,
   lastId,
   type,
   userId,
@@ -24,6 +25,14 @@ module.exports = ({ ApplicationError, logger }) => async ({
     _id: { $gt: lastId }
   };
 
+  if (admin) {
+    query.type = {
+      $in: AdminEventTypes
+    };
+  }
+  query.type = {
+    $nin: AdminEventTypes
+  };
   if (type) query.type = type;
   if (userId) query.userId = userId;
   if (objectId) query.objectId = objectId;
