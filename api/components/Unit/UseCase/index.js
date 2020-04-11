@@ -18,6 +18,7 @@ const makeDeleteUnit = require('./delete-unit');
 const makeGetUnit = require('./get-unit');
 const makeGetUnits = require('./get-units');
 const makeGetMyUnits = require('./get-my-units');
+const makeGetMyUnitsCount = require('./get-my-units-count');
 const makeGetMyUnit = require('./get-my-unit');
 const makeHideUnit = require('./hide-unit');
 const makeUnhideUnit = require('./unhide-unit');
@@ -74,6 +75,10 @@ const getMyUnits = makeGetMyUnits({
   ApplicationError,
   GetSortObj,
   getMyUploadedUnitsRequests
+});
+
+const getMyUnitsCount = makeGetMyUnitsCount({
+  ApplicationError
 });
 
 const getMyUnit = makeGetMyUnit({
@@ -162,6 +167,7 @@ const unitsUseCases = {
   addUnit,
   deleteUnit,
   getMyUnits,
+  getMyUnitsCount,
   getMyUnit,
   hideUnit,
   unhideUnit,

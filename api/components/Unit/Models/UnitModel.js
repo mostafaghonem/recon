@@ -40,6 +40,23 @@ module.exports = ({ GenericModel = _GenericModel }) => {
       };
     }
 
+    async getMyUnitsCount(userId) {
+      const query = {
+        userId,
+        isArchived: false
+      };
+
+      const select = '_id';
+      const response = await this.DbAccess.paginate(query, {
+        select,
+        limit: 1
+      });
+
+      return {
+        total: response.totalDocs
+      };
+    }
+
     async getUnits(
       params = {
         query: {},

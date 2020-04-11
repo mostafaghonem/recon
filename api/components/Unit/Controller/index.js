@@ -49,6 +49,7 @@ const unitsCtrl = Object.freeze({
   addUnit,
   deleteUnit,
   getMyUnits,
+  getMyUnitsCount,
   getMyUnit,
   hideUnit,
   unhideUnit,

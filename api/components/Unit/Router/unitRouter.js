@@ -60,6 +60,16 @@ router.get(
 );
 
 // @route
+// @ GET api/units/my-units
+// Description: Get my units for house owners
+// !access  anonymous
+router.get(
+  '/my-units-count',
+  [authenticateMiddleware, authorizeMiddleware([PERMISSIONS.HOUSE_OWNER])],
+  controllers.getMyUnitsCount
+);
+
+// @route
 // @ GET api/units/my-unit/:id
 // Description: Get my unit of specific unit for house owners
 // !access  anonymous
