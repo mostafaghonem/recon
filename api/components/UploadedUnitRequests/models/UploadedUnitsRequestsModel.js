@@ -47,9 +47,16 @@ module.exports = ({ GenericModel = _GenericModel }) => {
         delete rest.updatedAt;
       }
 
+      if (rest.status === 'accepted') {
+        delete rest.status;
+      }
+
       const $match = {
         $match: {
           userId: ObjectId(userId),
+          status: {
+            $ne: 'accepted'
+          },
           ...rest
         }
       };
