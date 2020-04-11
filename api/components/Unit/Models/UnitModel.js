@@ -41,6 +41,7 @@ module.exports = ({ GenericModel = _GenericModel }) => {
     }
 
     async getMyUnitsCount(userId) {
+      let totalRevenue = 0;
       const query = {
         userId,
         isArchived: false
@@ -51,8 +52,17 @@ module.exports = ({ GenericModel = _GenericModel }) => {
         select,
         limit: 1
       });
+      if (response.docs && response.docs.length !== 0) {
+        totalRevenue = response.docs.reduce(
+          (a, b) => ({
+            totalRevenue: a.totalRevenue + b.totalRevenue
+          }),
+          { totalRevenue }
+        ).totalRevenue;
+      }
 
       return {
+        totalRevenue,
         total: response.totalDocs
       };
     }
