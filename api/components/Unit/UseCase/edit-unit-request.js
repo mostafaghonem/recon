@@ -32,10 +32,18 @@ module.exports = ({
   services,
   conditions
 }) => {
-  const filter = { _id: unitId, userId, isArchived: false };
-  const checkExistence = await model.exists({ filter });
+  const query = { _id: unitId, userId, isArchived: false };
+  const checkExistence = await model.getOne({
+    query,
+    select: { _id: 1, isEditing: 1 }
+  });
   if (!checkExistence)
     throw new ApplicationError('.نأسف ، لا يمكننا العثور على هذه الوحدة', 403);
+  if (checkExistence.isEditing)
+    throw new ApplicationError(
+      'نأسف ، لا يمكنك تعديل وحدة قيد إنتظار التعديل',
+      403
+    );
   const update = {
     description,
     currency,
@@ -64,10 +72,5 @@ module.exports = ({
     unitId,
     eventType: events.UNITS_REQUEST_EDIT_UNIT
   });
-  //   await model.updateOneById({
-  //     id: unitId,
-  //     update
-  //   });
-
   logger.info(`${unitId} Unit updated Successfully`);
 };

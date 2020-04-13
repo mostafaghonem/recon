@@ -92,18 +92,6 @@ module.exports = ({ GenericModel = _GenericModel }) => {
       };
     }
 
-    async checkHasNext(query = {}, lastId) {
-      // eslint-disable-next-line no-param-reassign
-      query._id = {
-        $gt: lastId
-      };
-
-      const response = await this.getOne({
-        query
-      });
-      return response;
-    }
-
     async setUnitEditStatus({ unitId, isEditing }) {
       // eslint-disable-next-line no-param-reassign
       const update = { isEditing };

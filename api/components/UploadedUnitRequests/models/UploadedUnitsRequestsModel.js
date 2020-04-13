@@ -71,6 +71,7 @@ module.exports = ({ GenericModel = _GenericModel }) => {
         $group: {
           _id: '$unitId',
           type: { $first: '$type' },
+          unitId: { $first: '$unitId' },
           note: { $first: '$note' },
           updatedAt: { $first: '$updatedAt' },
           status: { $first: '$status' },
