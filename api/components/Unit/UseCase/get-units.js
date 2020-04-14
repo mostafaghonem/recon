@@ -73,7 +73,7 @@ module.exports = ({
   }
 
   if (typeof priceFrom !== 'undefined') {
-    query.numberOfPeople = { $gte: parseInt(priceFrom, 10) };
+    query.pricePerPerson = { $gte: parseInt(priceFrom, 10) };
   }
 
   if (typeof priceTo !== 'undefined') {
@@ -82,7 +82,7 @@ module.exports = ({
     // eslint-disable-next-line no-restricted-globals
     const validTo = !isNaN(priceTo) && parseInt(priceTo, 10) > from;
     if (validTo) {
-      query.numberOfPeople = { $lte: parseInt(priceTo, 10), $gte: from };
+      query.pricePerPerson = { $lte: parseInt(priceTo, 10), $gte: from };
     }
   }
 

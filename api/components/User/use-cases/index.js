@@ -21,6 +21,7 @@ const {
   getUserHostelsCount
 } = require('../../hostels/hostels-external-use-cases');
 const { PERMISSIONS } = require('../../../shared/constants/defaults');
+const { GetSortObj } = require('../../../shared/constants/methods');
 // const emailService = require('../../../shared/services').emailService;
 
 const makeRegisterUserUC = require('./register-user');
@@ -46,6 +47,8 @@ const makeGetUploadedHostelsCount = require('./get-uploaded-hostels-count');
 const makeGetUploadedHostels = require('./get-uploaded-hostels');
 const makeGetUploadedHostelDetails = require('./get-uploaded-hostel-details');
 const makeGoogleLogin = require('./googleLogin');
+
+const makeGetFavoriteUnits = require('./get-favorite-units');
 
 const registerUser = makeRegisterUserUC({
   ApplicationError,
@@ -175,6 +178,8 @@ const { googleLoginGetter, googleLoginSetter } = makeGoogleLogin({
   redis: redisClient
 });
 
+const getFavoriteUnits = makeGetFavoriteUnits({ ApplicationError, GetSortObj });
+
 const userUseCases = {
   registerUser,
   googleAuth,
@@ -199,7 +204,8 @@ const userUseCases = {
   updateIdentification,
   changePassword,
   updatePasswordCode,
-  updateUserPassword
+  updateUserPassword,
+  getFavoriteUnits
 };
 
 module.exports = userUseCases;
