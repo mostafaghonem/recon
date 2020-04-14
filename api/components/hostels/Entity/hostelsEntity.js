@@ -124,6 +124,7 @@ const buildHostelEntity = (
       this.note = data.note || '';
       this.totalOnlineBooking = data.totalOnlineBooking || 0;
       this.totalRevenue = data.totalRevenue || 0;
+      this.totalBooking = data.totalBooking || 0;
       this.isHidden = data.isHidden || false;
       this.isArchived = data.isArchived || false;
     }
@@ -191,6 +192,7 @@ const buildHostelEntity = (
         note: this.note,
         totalOnlineBooking: this.totalOnlineBooking,
         totalRevenue: this.totalRevenue,
+        totalBooking: this.totalBooking,
         isHidden: this.isHidden,
         isArchived: this.isArchived
       };
