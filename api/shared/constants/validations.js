@@ -5,12 +5,16 @@ const { ValidatorHelper, Builder } = require('validation-helpers');
 const sortKeys = ['_id', 'updatedAt', 'createdAt'];
 const sortValues = [-1, 1];
 const { ObjectId } = mongoose.Types;
-module.exports.ObjectIdValidation = ({ params }) => {
+module.exports.ObjectIdValidation = ({ params, query }) => {
   const error = {};
 
   const scheme = {
     id: {
       value: params.id,
+      rules: new Builder().rules
+    },
+    limit: {
+      value: query.limit,
       rules: new Builder().rules
     }
   };
@@ -38,8 +42,9 @@ module.exports.PaginationValidtion = ({ query }) => {
     limit: {
       value: query.limit,
       rules: new Builder()
-        .isArray('لم يتم إرسال حد صحيح')
-        .minLength(2, 'يجب طلب حدين').rules
+        .isNumber()
+        .min(1)
+        .max(5).rules
     },
     sortKey: {
       value: query.sortKey,
@@ -58,7 +63,14 @@ module.exports.PaginationValidtion = ({ query }) => {
   Object.keys(scheme).forEach(key => {
     const ele = scheme[key];
     const { errors, isValid } = ValidatorHelper(ele.value, ele.rules);
-    if (!isValid) error[key] = errors;
+    if (key === 'limit' && query.limit && _.isNaN(Number(ele.value)))
+      error[key] = ['you should provide a valid limit'];
+    else if (
+      key === 'limit' &&
+      query.limit &&
+      (Number(ele.value) < 1 || Number(ele.value) > 50)
+    )
+      if (!isValid) error[key] = errors;
   });
 
   return {
