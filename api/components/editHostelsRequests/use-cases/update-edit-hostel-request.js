@@ -13,6 +13,15 @@ module.exports = ({ ApplicationError, logger, updateHostelData }) => async ({
   const select = 'hostelId hostel';
   const request = await model.getOne({ query, select });
   if (request) {
+    const filter = {
+      userId,
+      hostelId,
+      status
+    };
+    const update = {
+      isArchived: true
+    };
+    await model.updateManyByFilter({ filter, update });
     if (status === 'accepted')
       await updateHostelData({
         hostelId: request.hostelId,
