@@ -19,8 +19,8 @@ const controllers = require('../controllers');
 router.get(
   '/',
   [
-    validateMiddleware(getEditHostelsRequests),
     authenticateMiddleware,
+    validateMiddleware(getEditHostelsRequests),
     authorizeMiddleware([PERMISSIONS.ADMIN])
   ],
   controllers.getEditHostelsRequests
@@ -32,8 +32,8 @@ router.get(
 router.put(
   '/',
   [
-    validateMiddleware(updateEditHostelRequest),
     authenticateMiddleware,
+    validateMiddleware(updateEditHostelRequest),
     authorizeMiddleware([PERMISSIONS.ADMIN])
   ],
   controllers.updateEditHostelRequest

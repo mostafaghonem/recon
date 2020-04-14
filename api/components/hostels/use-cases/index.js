@@ -16,6 +16,10 @@ const {
   isGroupBusyInDateTs
 } = require('../../HostelReservation/hostel-reservation-external-use-cases');
 
+const {
+  addEditHostelsRequests
+} = require('../../editHostelsRequests/editHostelsRequests-external-use-cases');
+
 const makeAddHostel = require('./add-hostel');
 const makeAddHostelRooms = require('./add-hostel-rooms');
 const makeHideHostel = require('./hide-hostel');
@@ -82,7 +86,8 @@ const getAvailabilityData = makeGetAvailabilityData({
 
 const editHostel = makeEditHostel({
   ApplicationError,
-  logger
+  logger,
+  addEditHostelsRequests
 });
 
 const editHostelRooms = makeEditHostelRooms({

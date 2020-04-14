@@ -8,7 +8,10 @@ module.exports = () => {
 
       return res
         .status(200)
-        .json({ success: true, message: 'Hostel edited successfully!' });
+        .json({
+          success: true,
+          message: 'Edit request sent to admin successfully!'
+        });
     } catch (e) {
       return next(e);
     }

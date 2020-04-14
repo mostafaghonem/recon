@@ -8,6 +8,7 @@ const User = require('../components/User');
 const identityRequests = require('../components/identityRequests');
 const hostels = require('../components/hostels');
 const uploadedHostelsRequests = require('../components/uploadedHostelsRequests');
+const editHostelsRequests = require('../components/editHostelsRequests');
 const UploadedUnitRequests = require('../components/UploadedUnitRequests');
 const HostelReservation = require('../components/HostelReservation');
 const uploader = require('../components/uploader');
@@ -23,6 +24,7 @@ module.exports = async app => {
   app.use('/api/identityRequests', identityRequests.Router);
   app.use('/api/hostels', hostels.Router);
   app.use('/api/requests/uploaded/hostels', uploadedHostelsRequests.Router);
+  app.use('/api/requests/edit/hostels', editHostelsRequests.Router);
   app.use('/api/requests/uploaded/units', UploadedUnitRequests.Router);
   app.use('/api/hostel-reservations', HostelReservation.Router);
   app.use('/api/units', Units.Router);

@@ -31,13 +31,15 @@ const buildEditHostelsRequestsEntity = (
       data = {
         userId: String,
         hostelId: String,
-        status: String
+        status: String,
+        hostel: Object
       }
     ) {
       this.id = data.id || data._id || new ObjectId();
       this.userId = data.userId || new ObjectId();
       this.hostelId = data.hostelId || '';
       this.status = data.status || 'pending';
+      this.hostel = data.hostel || {};
       this.createdAt = data.createdAt || new Date();
       this.isArchived = data.isArchived || false;
     }
@@ -56,6 +58,7 @@ const buildEditHostelsRequestsEntity = (
         userId: this.userId,
         hostelId: this.hostelId,
         status: this.status,
+        hostel: this.hostel,
         createdAt: this.createdAt,
         isArchived: this.isArchived
       };
@@ -68,6 +71,7 @@ const buildEditHostelsRequestsEntity = (
         userId: this.userId,
         hostelId: this.hostelId,
         status: this.status,
+        hostel: this.hostel,
         createdAt: this.createdAt,
         isArchived: this.isArchived
       };

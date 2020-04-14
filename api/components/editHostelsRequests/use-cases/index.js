@@ -1,7 +1,7 @@
 const logger = require('../../../startup/logger');
 // TODO need to remove it from here and find a solution to put it in index.js
 const {
-  updateHostelStatus
+  updateHostelData
 } = require('../../hostels/hostels-external-use-cases');
 const { ApplicationError } = require('../../../shared/errors');
 
@@ -16,7 +16,7 @@ const getEditHostelsRequests = makeGetEditHostelsRequests({
 const updateEditHostelsRequests = makeUpdateEditHostelRequest({
   ApplicationError,
   logger,
-  updateHostelStatus
+  updateHostelData
 });
 
 const editHostelsRequestsUseCases = {

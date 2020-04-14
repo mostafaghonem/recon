@@ -4,7 +4,8 @@ const Models = require('../models');
 // should have no implementation for any specific orm
 module.exports = ({ ApplicationError, logger }) => async ({
   userId,
-  hostelId
+  hostelId,
+  hostel
 }) => {
   const filter = {
     userId,
@@ -17,7 +18,8 @@ module.exports = ({ ApplicationError, logger }) => async ({
   await Models.updateManyByFilter({ filter, update });
   const newEditHostelRequest = new EditHostelsRequestsEntity({
     userId,
-    hostelId
+    hostelId,
+    hostel
   });
   await newEditHostelRequest.save();
 

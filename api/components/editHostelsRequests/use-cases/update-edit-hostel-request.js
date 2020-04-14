@@ -1,6 +1,6 @@
 const model = require('../models');
 
-module.exports = ({ ApplicationError, logger, updateHostelStatus }) => async ({
+module.exports = ({ ApplicationError, logger, updateHostelData }) => async ({
   requestId,
   status,
   note = ''
@@ -10,10 +10,14 @@ module.exports = ({ ApplicationError, logger, updateHostelStatus }) => async ({
     status: 'pending',
     isArchived: false
   };
-  const select = 'hostelId';
+  const select = 'hostelId hostel';
   const request = await model.getOne({ query, select });
   if (request) {
-    await updateHostelStatus({ hostelId: request.hostelId, status, note });
+    if (status === 'accepted')
+      await updateHostelData({
+        hostelId: request.hostelId,
+        hostel: request.hostel
+      });
     const update = {
       status,
       note

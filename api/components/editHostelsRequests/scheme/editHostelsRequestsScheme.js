@@ -24,6 +24,7 @@ module.exports = ({ requestStatus }) => {
         type: String,
         default: ''
       },
+      hostel: Object,
       isArchived: {
         type: Boolean,
         default: false
