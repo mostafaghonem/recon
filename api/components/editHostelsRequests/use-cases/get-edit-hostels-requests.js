@@ -18,7 +18,7 @@ module.exports = ({ ApplicationError, logger }) => async ({
     status,
     isArchived: false
   };
-  const select = 'userId status hostelId hostel createdAt';
+  const select = 'userId status hostelId hostel note createdAt';
   let sort = { createdAt: 1 };
   if (status !== 'pending') sort = { updatedAt: -1 };
   const populate = {
