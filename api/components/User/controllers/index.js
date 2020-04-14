@@ -17,6 +17,10 @@ const makeGetHouseOwnerInfoWithCi = require('./houseOwner-info-with-ci');
 const makeGetUploadedHostelsCount = require('./get-uploaded-hostels-count');
 const makeGetUploadedHostels = require('./get-uploaded-hostels');
 const makeGetUploadedHostelDetails = require('./get-uploaded-hostel-details');
+const makeAddUnitToFavorites = require('./add-unit-to-favorite');
+const makRemoveUnitFromFavorites = require('./remove-unit-from-favorite');
+const makeGetFavoriteUnits = require('./get-favorite-units');
+
 const {
   facebookAuthController,
   facebookAuthBackController,
@@ -53,7 +57,9 @@ const getHouseOwnerInfoWithCi = makeGetHouseOwnerInfoWithCi({});
 const getUploadedHostelsCount = makeGetUploadedHostelsCount({});
 const getUploadedHostels = makeGetUploadedHostels({ pagination });
 const getUploadedHostelDetails = makeGetUploadedHostelDetails({});
-
+const addUnitToFavorites = makeAddUnitToFavorites({});
+const removeUnitFromFavorites = makRemoveUnitFromFavorites({});
+const getFavoriteUnits = makeGetFavoriteUnits({ pagination });
 const userCtrl = Object.freeze({
   registerUser,
   loginUser,
@@ -79,7 +85,10 @@ const userCtrl = Object.freeze({
   getGoogleUserData: googleUserData,
   facebookAuth: facebookAuthController,
   facebookAuthBack: facebookAuthBackController,
-  getFacebookUserData: facebookUserData
+  getFacebookUserData: facebookUserData,
+  addUnitToFavorites,
+  removeUnitFromFavorites,
+  getFavoriteUnits
 });
 
 module.exports = userCtrl;

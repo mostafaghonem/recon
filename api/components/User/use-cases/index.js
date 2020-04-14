@@ -48,6 +48,8 @@ const makeGetUploadedHostels = require('./get-uploaded-hostels');
 const makeGetUploadedHostelDetails = require('./get-uploaded-hostel-details');
 const makeGoogleLogin = require('./googleLogin');
 
+const makeAddUnitToFavorites = require('./add-unit-to-favorite');
+const makRemoveUnitFromFavorites = require('./remove-unit-from-favorite');
 const makeGetFavoriteUnits = require('./get-favorite-units');
 
 const registerUser = makeRegisterUserUC({
@@ -178,6 +180,13 @@ const { googleLoginGetter, googleLoginSetter } = makeGoogleLogin({
   redis: redisClient
 });
 
+const addUnitToFavorites = makeAddUnitToFavorites({
+  ApplicationError,
+  logger
+});
+const removeUnitFromFavorites = makRemoveUnitFromFavorites({
+  ApplicationError
+});
 const getFavoriteUnits = makeGetFavoriteUnits({ ApplicationError, GetSortObj });
 
 const userUseCases = {
@@ -205,6 +214,8 @@ const userUseCases = {
   changePassword,
   updatePasswordCode,
   updateUserPassword,
+  addUnitToFavorites,
+  removeUnitFromFavorites,
   getFavoriteUnits
 };
 

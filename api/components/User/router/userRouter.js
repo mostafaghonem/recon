@@ -1,5 +1,9 @@
 const express = require('express');
 const {
+  ObjectIdValidation,
+  PaginationValidtion
+} = require('../../../shared/constants/validations');
+const {
   userRegisterValidation,
   userLoginValidation,
   phoneVerificationValidation,
@@ -248,6 +252,37 @@ router.get(
     // authorizeMiddleware([PERMISSIONS.HOUSE_OWNER])
   ],
   controllers.getUploadedHostelDetails
+);
+
+// @route
+// @ POST api/users/favorite/units/:id
+// !access  anonymous
+router.post(
+  '/favorite/units/:id',
+  [
+    validateMiddleware(ObjectIdValidation),
+    authenticateMiddleware
+    // authorizeMiddleware([PERMISSIONS.HOUSE_OWNER])
+  ],
+  controllers.addUnitToFavorites
+);
+
+// @route
+// @ DELETE api/users/favorite/units/:id
+// !access  anonymous
+router.delete(
+  '/favorite/units/:id',
+  [validateMiddleware(ObjectIdValidation), authenticateMiddleware],
+  controllers.removeUnitFromFavorites
+);
+
+// @route
+// @ GET api/users/favorite/units
+// !access  anonymous
+router.get(
+  '/favorite/units',
+  [validateMiddleware(PaginationValidtion), authenticateMiddleware],
+  controllers.getFavoriteUnits
 );
 
 module.exports = router;

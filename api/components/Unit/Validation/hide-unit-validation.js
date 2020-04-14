@@ -1,5 +1,3 @@
-// const { Builder, ValidatorHelper } = require('validation-helpers');
-
 module.exports = ({ _, Builder, ValidatorHelper, ObjectId }) => ({
   params
 }) => {

@@ -5,17 +5,27 @@ const _GenericModel = require('../../shared/models/GenericModel');
 
 module.exports = ({ GenericModel = _GenericModel }) => {
   class UserFavoriteUnitsModel extends GenericModel {
-    getUnitsWithIds(userId, unitsIds) {
-      return this.getMany({
-        query: { userId, unitId: { $in: unitsIds } },
-        populate: { path: 'unitId', match: { isArchived: false } }
-      });
+    getUnitsWithIds(userId, unitsIds, options = {}) {
+      const query = { userId, unitId: { $in: unitsIds } };
+      const populate = { path: 'unitId', match: { isArchived: false } };
+      const params = { query };
+
+      if (options.populate) {
+        params.populate = populate;
+      }
+
+      if (options.favorite) {
+        params.query.favorite = true;
+      }
+
+      return this.getMany(params);
     }
 
     async getFavouriteUnits(userId, limit, rest = {}, sortObj = {}) {
       const select = '';
       const query = {
         userId,
+        favorite: true,
         ...rest
       };
       const populate = [
@@ -24,7 +34,7 @@ module.exports = ({ GenericModel = _GenericModel }) => {
           match: { isArchived: false }
         }
       ];
-      const sort = sortObj || { updatedAt: -1 };
+      const sort = sortObj.sort || { updatedAt: -1 };
       const response = await this.DbAccess.paginate(query, {
         select,
         sort,

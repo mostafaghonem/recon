@@ -1,4 +1,4 @@
-const Model = require('../models/UserFavoriteUnitsModel');
+const Model = require('../models/UserFavoriteUnitsIndex');
 
 // eslint-disable-next-line no-unused-vars
 module.exports = ({ ApplicationError, GetSortObj }) => async ({

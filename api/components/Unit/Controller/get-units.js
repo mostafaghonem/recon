@@ -5,9 +5,11 @@ module.exports = ({ pagination }) => {
     try {
       const limit = Number(req.query.limit) || Number(pagination.LIMIT);
       const lastId = req.query.lastId || String(pagination.LAST_ID);
+      const userId = req.user ? req.user.id : undefined;
       const key = req.query.key || '';
       const result = await getUnits({
         ...req.query,
+        userId,
         key,
         limit,
         lastId

@@ -12,6 +12,7 @@ const makeUpdateIdentification = require('./update-identification');
 const makeGetUsersByIds = require('./get-users-data-with-ids');
 const makeGetUsersByPhone = require('./get-users-data-with-phone');
 const makeGetUsersByPermissions = require('./get-users-with-permissions');
+const makeGetUnitsFavorability = require('./get-units-favorability');
 
 const updateIdentification = makeUpdateIdentification({
   ApplicationError,
@@ -33,11 +34,17 @@ const getUsersByPermissions = makeGetUsersByPermissions({
   ApplicationError
 });
 
+const getUnitsFavorability = makeGetUnitsFavorability({
+  logger,
+  ApplicationError
+});
+
 const UsersExternalService = Object.freeze({
   getUsersByPhone,
   getUsersByIds,
   getUsersByPermissions,
-  updateIdentification
+  updateIdentification,
+  getUnitsFavorability
 });
 
 module.exports = UsersExternalService;

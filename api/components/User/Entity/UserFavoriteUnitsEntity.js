@@ -1,28 +1,23 @@
 // TODO: should be injected only
-const bcjs = require('bcryptjs');
 const mongoose = require('mongoose');
-const jsonwebtoken = require('jsonwebtoken');
-const Promise = require('bluebird');
 
-const _jwt = Promise.promisifyAll(jsonwebtoken);
 const __ObjectId = mongoose.Types.ObjectId;
 
 // this require only for auto-complete
-const Model = require('../models');
+const Model = require('../models/UserFavoriteUnitsIndex');
 
 // Inject dependency !no-requires
-const buildUnitEntity = (
+const buildUserFavoriteUnitsEntity = (
   obj = {
-    ObjectId: __ObjectId,
-    jwt: _jwt
+    ObjectId: __ObjectId
   }
 ) => {
   // eslint-disable-next-line no-unused-vars
-  const { ObjectId, jwt } = obj;
-  class UnitEntity {
+  const { ObjectId } = obj;
+  class UserFavoriteUnitsEntity {
     static async loadEntityFromDbById(id) {
       const exists = await Model.getOneById({ id });
-      if (exists) return new UnitEntity(exists);
+      if (exists) return new UserFavoriteUnitsEntity(exists);
       return undefined;
     }
 
@@ -60,13 +55,13 @@ const buildUnitEntity = (
     mapToDb() {
       return {
         userId: this.userId,
-        unitId: this.v,
+        unitId: this.unitId,
         favorite: this.favorite
       };
     }
   }
 
-  return UnitEntity;
+  return UserFavoriteUnitsEntity;
 };
 
-module.exports = buildUnitEntity;
+module.exports = buildUserFavoriteUnitsEntity;

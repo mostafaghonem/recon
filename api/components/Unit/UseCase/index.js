@@ -42,7 +42,7 @@ const {
   setRequestsProcessedStatus,
   getMyUploadedUnitsRequests
 } = require('../../UploadedUnitRequests/UploadedUnitsRequests-external-use-cases');
-
+const { getUnitsFavorability } = require('../../User/user-external-use-cases');
 const { createUnitEvent } = require('../UnitExternalUseCases');
 
 const addUnit = makeAddUnit({
@@ -61,14 +61,16 @@ const deleteUnit = makeDeleteUnit({
 const getUnit = makeGetUnit({
   ApplicationError,
   logger,
-  accepted: REQUEST_RESPONSE.ACCEPTED
+  accepted: REQUEST_RESPONSE.ACCEPTED,
+  getUnitsFavorability
 });
 
 const getUnits = makeGetUnits({
   ApplicationError,
   logger,
   accepted: REQUEST_RESPONSE.ACCEPTED,
-  GetSortObj
+  GetSortObj,
+  getUnitsFavorability
 });
 
 const getMyUnits = makeGetMyUnits({

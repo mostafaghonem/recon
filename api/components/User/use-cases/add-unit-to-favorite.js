@@ -1,7 +1,8 @@
-const Model = require('../models/UserFavoriteUnitsModel');
+const Model = require('../models/UserFavoriteUnitsIndex');
+const { UserFavoriteUnitsEntity } = require('../Entity');
 
 // eslint-disable-next-line no-unused-vars
-module.exports = ({ ApplicationError, GetSortObj }) => async ({
+module.exports = ({ ApplicationError, logger }) => async ({
   userId,
   unitId
 }) => {
@@ -20,5 +21,18 @@ module.exports = ({ ApplicationError, GetSortObj }) => async ({
     });
   }
 
-  return true;
+  const newRecord = new UserFavoriteUnitsEntity({
+    userId,
+    unitId,
+    favorite: true
+  });
+  await newRecord.save();
+  logger.info(
+    `user has just added unit to his favorites with data => \n${JSON.stringify(
+      newRecord.toJson(),
+      undefined,
+      6
+    )}`
+  );
+  return newRecord.id;
 };

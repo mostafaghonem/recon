@@ -26,6 +26,7 @@ const router = express.Router();
 
 const authenticateMiddleware = require('../../../middlewares/authenticateMiddleware');
 const authorizeMiddleware = require('../../../middlewares/authorizeMiddleware');
+const visaMiddleware = require('../../../middlewares/visaMiddleware');
 const { PERMISSIONS } = require('../../../shared/constants/defaults');
 
 const validateMiddleware = require('../../../middlewares/validateMiddleware');
@@ -183,7 +184,11 @@ router.get(
 // @ GET api/units/
 // Description: Get Units for Renter
 // !access  anonymous
-router.get('/', [validateMiddleware(getUnitsValidation)], controllers.getUnits);
+router.get(
+  '/',
+  [validateMiddleware(getUnitsValidation), visaMiddleware],
+  controllers.getUnits
+);
 
 // router.get(
 //     '/recommended',

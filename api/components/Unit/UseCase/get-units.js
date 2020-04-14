@@ -20,8 +20,10 @@ module.exports = ({
   ApplicationError,
   logger,
   GetSortObj,
+  getUnitsFavorability,
   accepted
 }) => async ({
+  userId,
   availableFrom,
   availableTo,
   type,
@@ -39,6 +41,7 @@ module.exports = ({
   sortKey,
   sortValue
 }) => {
+  let unitsFavorability = {};
   const sortObj = GetSortObj({
     sortIndex,
     sortKey,
@@ -119,6 +122,28 @@ module.exports = ({
         .map(o => ({ ...units.find(p => p._id === o._id), available: o.value }))
         .filter(unit => unit.available);
     }
+
+    if (userId) {
+      unitsFavorability = await getUnitsFavorability({
+        userId,
+        unitsIds
+      });
+
+      filteredUnits = filteredUnits.map(o => {
+        const displayFavorite = true;
+        let favorite = false;
+
+        if (unitsFavorability[o._id.toString()]) {
+          favorite = true;
+        }
+        return {
+          ...JSON.parse(JSON.stringify(o)),
+          favorite,
+          displayFavorite
+        };
+      });
+    }
+
     return { total, hasNext, units: filteredUnits };
   }
   return { total: 0, hasNext: false, units: [] };
