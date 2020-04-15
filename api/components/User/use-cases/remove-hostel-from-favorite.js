@@ -1,8 +1,8 @@
-const Model = require('../models/UserFavoriteHostelsIndex');
+const Model = require('../models/UserFavoriteUnitsIndex');
 
 // eslint-disable-next-line no-unused-vars
-module.exports = ({ ApplicationError }) => async ({ userId, hostelId }) => {
-  const query = { hostelId, userId };
+module.exports = ({ ApplicationError }) => async ({ userId, unitId }) => {
+  const query = { unitId, userId };
   const checkExistence = await Model.getOne({
     query,
     select: { _id: 1, favorite: 1 }

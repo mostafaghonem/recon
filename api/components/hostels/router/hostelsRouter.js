@@ -19,6 +19,7 @@ const router = express.Router();
 
 const authenticateMiddleware = require('../../../middlewares/authenticateMiddleware');
 const authorizeMiddleware = require('../../../middlewares/authorizeMiddleware');
+const visaMiddleware = require('../../../middlewares/visaMiddleware');
 const { PERMISSIONS } = require('../../../shared/constants/defaults');
 
 const validateMiddleware = require('../../../middlewares/validateMiddleware');
@@ -79,11 +80,7 @@ router.delete(
 
 router.get(
   '/',
-  [
-    validateMiddleware(getHostels)
-    // authenticateMiddleware,
-    // authorizeMiddleware([PERMISSIONS.RENTER])
-  ],
+  [validateMiddleware(getHostels), visaMiddleware],
   controllers.getHostels
 );
 

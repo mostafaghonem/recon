@@ -285,4 +285,31 @@ router.get(
   controllers.getFavoriteUnits
 );
 
+// @route
+// @ POST api/users/favorite/units/:id
+// !access  anonymous
+router.post(
+  '/favorite/hostels/:id',
+  [validateMiddleware(ObjectIdValidation), authenticateMiddleware],
+  controllers.addUnitToFavorites
+);
+
+// @route
+// @ DELETE api/users/favorite/units/:id
+// !access  anonymous
+router.delete(
+  '/favorite/hostels/:id',
+  [validateMiddleware(ObjectIdValidation), authenticateMiddleware],
+  controllers.removeUnitFromFavorites
+);
+
+// @route
+// @ GET api/users/favorite/units
+// !access  anonymous
+router.get(
+  '/favorite/hostels',
+  [validateMiddleware(PaginationValidtion), authenticateMiddleware],
+  controllers.getFavoriteUnits
+);
+
 module.exports = router;

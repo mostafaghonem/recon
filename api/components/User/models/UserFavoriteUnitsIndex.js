@@ -1,5 +1,5 @@
-const makeUserFavoriteUnitsModel = require('./UserFavoriteUnitsModel');
+const makeUserFavoriteHostelsModel = require('./UserFavoriteHostelsModel');
 
 const GenericModel = require('../../shared/models/GenericModel');
 
-module.exports = makeUserFavoriteUnitsModel(GenericModel);
+module.exports = makeUserFavoriteHostelsModel(GenericModel);

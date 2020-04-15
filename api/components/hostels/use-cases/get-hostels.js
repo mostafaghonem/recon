@@ -12,8 +12,10 @@ module.exports = ({
   ApplicationError,
   logger,
   getReservedRoomCountByHotels,
+  getHostelsFavorability,
   accepted
 }) => async ({
+  userId,
   lastId,
   availableFrom,
   availableTo,
@@ -32,6 +34,7 @@ module.exports = ({
   key,
   limit
 }) => {
+  let hostelsFavorability = {};
   const query = {
     _id: { $gt: lastId },
     name: { $regex: key, $options: 'i' },
@@ -120,6 +123,26 @@ module.exports = ({
     if (available)
       filteredHostels = filteredHostels.filter(hosetl => hosetl.available);
 
+    if (userId) {
+      hostelsFavorability = await getHostelsFavorability({
+        userId,
+        hostelsIds
+      });
+
+      filteredHostels = filteredHostels.map(o => {
+        const displayFavorite = true;
+        let favorite = false;
+
+        if (hostelsFavorability[o._id.toString()]) {
+          favorite = true;
+        }
+        return {
+          ...JSON.parse(JSON.stringify(o)),
+          favorite,
+          displayFavorite
+        };
+      });
+    }
     return filteredHostels;
   }
   return [];

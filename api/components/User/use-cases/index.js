@@ -52,6 +52,10 @@ const makeAddUnitToFavorites = require('./add-unit-to-favorite');
 const makRemoveUnitFromFavorites = require('./remove-unit-from-favorite');
 const makeGetFavoriteUnits = require('./get-favorite-units');
 
+const makeAddHostelToFavorites = require('./add-hostel-to-favorite');
+const makRemoveHostelFromFavorites = require('./remove-hostel-from-favorite');
+const makeGetFavoriteHostels = require('./get-favorite-hostels');
+
 const registerUser = makeRegisterUserUC({
   ApplicationError,
   logger,
@@ -189,6 +193,18 @@ const removeUnitFromFavorites = makRemoveUnitFromFavorites({
 });
 const getFavoriteUnits = makeGetFavoriteUnits({ ApplicationError, GetSortObj });
 
+const addHostelToFavorites = makeAddHostelToFavorites({
+  ApplicationError,
+  logger
+});
+const removeHostelFromFavorites = makRemoveHostelFromFavorites({
+  ApplicationError
+});
+const getFavoriteHostels = makeGetFavoriteHostels({
+  ApplicationError,
+  GetSortObj
+});
+
 const userUseCases = {
   registerUser,
   googleAuth,
@@ -216,7 +232,10 @@ const userUseCases = {
   updateUserPassword,
   addUnitToFavorites,
   removeUnitFromFavorites,
-  getFavoriteUnits
+  getFavoriteUnits,
+  addHostelToFavorites,
+  removeHostelFromFavorites,
+  getFavoriteHostels
 };
 
 module.exports = userUseCases;
