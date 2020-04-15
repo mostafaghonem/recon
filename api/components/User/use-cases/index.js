@@ -3,6 +3,7 @@
  *
  * ! if you need to throw Error use throw new ApplicationError() and will handle the rest in express catcher
  */
+const moment = require('moment');
 const passport = require('passport');
 const FacebookStrategy = require('passport-facebook').Strategy;
 const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
@@ -20,6 +21,9 @@ const {
   getHouseOwnerHostel,
   getUserHostelsCount
 } = require('../../hostels/hostels-external-use-cases');
+const {
+  getReservedRoomCountByHotels
+} = require('../../HostelReservation/hostel-reservation-external-use-cases');
 const { PERMISSIONS } = require('../../../shared/constants/defaults');
 const { GetSortObj } = require('../../../shared/constants/methods');
 // const emailService = require('../../../shared/services').emailService;
@@ -201,8 +205,10 @@ const removeHostelFromFavorites = makRemoveHostelFromFavorites({
   ApplicationError
 });
 const getFavoriteHostels = makeGetFavoriteHostels({
+  moment,
   ApplicationError,
-  GetSortObj
+  GetSortObj,
+  getReservedRoomCountByHotels
 });
 
 const userUseCases = {

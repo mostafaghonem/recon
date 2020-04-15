@@ -31,6 +31,7 @@ module.exports = ({ GenericModel = _GenericModel }) => {
       const populate = [
         {
           path: 'hostelId',
+          select: 'name image rate totalUsersRated rooms address.government',
           match: { isArchived: false }
         }
       ];
