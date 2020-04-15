@@ -10,7 +10,8 @@ module.exports = ({ pagination }) => {
         userId: req.user.id,
         sortIndex: req.query.sortIndex,
         sortValue: req.query.sortValue,
-        sortKey: req.query.sortKey
+        sortKey: req.query.sortKey,
+        key: req.query.key || ''
       });
 
       return res.status(200).json(result);

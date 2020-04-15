@@ -1,8 +1,17 @@
 const mongoose = require('mongoose');
 const moment = require('moment');
+const cities = require('./cities');
 
 const { ObjectId } = mongoose.Types;
 
+const GetCityFromKey = key => {
+  const city = cities.find(
+    o =>
+      o.value.toLowerCase() === key.toLowerCase() ||
+      o.label.toLowerCase() === key.toLowerCase()
+  );
+  return city;
+};
 const GetBaseDomain = () => {
   return process.env.BASE_URL
     ? process.env.BASE_URL.substring(
@@ -66,21 +75,33 @@ const GetSortObj = ({ sortValue, sortKey, sortIndex }) => {
 };
 
 const GetSearchObj = ({ key }) => {
-  const $or = [
-    {
-      'address.street': { $regex: key, $options: 'i' }
-    },
-    {
-      'address.nearTo': { $regex: key, $options: 'i' }
-    },
-    {
-      'address.highlight': { $regex: key, $options: 'i' }
-    },
-    {
-      'address.government': { $regex: key, $options: 'i' }
+  if (key && key !== '') {
+    const city = GetCityFromKey(key);
+    const $or = [
+      {
+        'address.street': { $regex: key, $options: 'i' }
+      },
+      {
+        'address.nearTo': { $regex: key, $options: 'i' }
+      },
+      {
+        'address.highlight': { $regex: key, $options: 'i' }
+      },
+      {
+        'address.government': { $regex: key, $options: 'i' }
+      },
+      {
+        name: { $regex: key, $options: 'i' }
+      }
+    ];
+    if (city) {
+      $or.push({
+        'address.government': city.value
+      });
     }
-  ];
-  return $or;
+    return $or;
+  }
+  return false;
 };
 module.exports = {
   GetBaseDomain,

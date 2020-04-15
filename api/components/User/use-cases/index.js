@@ -25,7 +25,10 @@ const {
   getReservedRoomCountByHotels
 } = require('../../HostelReservation/hostel-reservation-external-use-cases');
 const { PERMISSIONS } = require('../../../shared/constants/defaults');
-const { GetSortObj } = require('../../../shared/constants/methods');
+const {
+  GetSortObj,
+  GetSearchObj
+} = require('../../../shared/constants/methods');
 // const emailService = require('../../../shared/services').emailService;
 
 const makeRegisterUserUC = require('./register-user');
@@ -195,7 +198,11 @@ const addUnitToFavorites = makeAddUnitToFavorites({
 const removeUnitFromFavorites = makRemoveUnitFromFavorites({
   ApplicationError
 });
-const getFavoriteUnits = makeGetFavoriteUnits({ ApplicationError, GetSortObj });
+const getFavoriteUnits = makeGetFavoriteUnits({
+  ApplicationError,
+  GetSearchObj,
+  GetSortObj
+});
 
 const addHostelToFavorites = makeAddHostelToFavorites({
   ApplicationError,
@@ -207,6 +214,7 @@ const removeHostelFromFavorites = makRemoveHostelFromFavorites({
 const getFavoriteHostels = makeGetFavoriteHostels({
   moment,
   ApplicationError,
+  GetSearchObj,
   GetSortObj,
   getReservedRoomCountByHotels
 });

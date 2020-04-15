@@ -21,7 +21,13 @@ module.exports = ({ GenericModel = _GenericModel }) => {
       return this.getMany(params);
     }
 
-    async getFavouriteHostels(userId, limit, rest = {}, sortObj = {}) {
+    async getFavouriteHostels(
+      userId,
+      limit,
+      rest = {},
+      sortObj = {},
+      objectRest = {}
+    ) {
       const select = '';
       const query = {
         userId,
@@ -32,7 +38,7 @@ module.exports = ({ GenericModel = _GenericModel }) => {
         {
           path: 'hostelId',
           select: 'name image rate totalUsersRated rooms address.government',
-          match: { isArchived: false }
+          match: { isArchived: false, isHidden: false, ...objectRest }
         }
       ];
       const sort = sortObj.sort || { updatedAt: -1 };

@@ -4,9 +4,10 @@ const Model = require('../models/UserFavoriteHostelsIndex');
 module.exports = ({
   moment,
   ApplicationError,
+  GetSearchObj,
   GetSortObj,
   getReservedRoomCountByHotels
-}) => async ({ userId, sortIndex, sortKey, sortValue, limit }) => {
+}) => async ({ userId, sortIndex, sortKey, sortValue, limit, key }) => {
   const availableFrom = moment().toDate();
   const availableTo = moment()
     .add(2, 'day')
@@ -18,14 +19,24 @@ module.exports = ({
     sortValue
   });
   const rest = sortObj.query[0] || sortObj.query;
-  const results = await Model.getFavouriteHostels(userId, limit, rest, sortObj);
+  const searchObj = GetSearchObj({ key });
+  const objectRest = searchObj ? { $or: searchObj } : {};
+  const results = await Model.getFavouriteHostels(
+    userId,
+    limit,
+    rest,
+    sortObj,
+    objectRest
+  );
   if (results.data && results.data.length) {
-    const hostels = results.data.map(o => ({
-      ...o.hostelId._doc,
-      favorite_id: o._id,
-      favorite: o.favorite,
-      displayFavorite: true
-    }));
+    const hostels = results.data
+      .filter(o => o.hostelId)
+      .map(o => ({
+        ...o.hostelId._doc,
+        favorite_id: o._id,
+        favorite: o.favorite,
+        displayFavorite: true
+      }));
     const hostelsIds = [];
     hostels.map(hostel => hostelsIds.push(hostel._id));
     const reservedHostels = await getReservedRoomCountByHotels(

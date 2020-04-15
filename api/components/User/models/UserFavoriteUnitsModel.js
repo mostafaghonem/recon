@@ -21,7 +21,13 @@ module.exports = ({ GenericModel = _GenericModel }) => {
       return this.getMany(params);
     }
 
-    async getFavouriteUnits(userId, limit, rest = {}, sortObj = {}) {
+    async getFavouriteUnits(
+      userId,
+      limit,
+      rest = {},
+      sortObj = {},
+      objectRest = {}
+    ) {
       const select = '';
       const query = {
         userId,
@@ -31,7 +37,7 @@ module.exports = ({ GenericModel = _GenericModel }) => {
       const populate = [
         {
           path: 'unitId',
-          match: { isArchived: false }
+          match: { isArchived: false, isHidden: false, ...objectRest }
         }
       ];
       const sort = sortObj.sort || { updatedAt: -1 };
@@ -44,7 +50,7 @@ module.exports = ({ GenericModel = _GenericModel }) => {
 
       return {
         hasNext: response.hasNextPage,
-        data: response.docs,
+        data: response.docs.filter(o => o.unitId),
         total: response.totalDocs
       };
     }
