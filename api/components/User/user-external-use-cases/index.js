@@ -40,7 +40,7 @@ const getUnitsFavorability = makeGetUnitsFavorability({
   ApplicationError
 });
 
-const getHostelsFavorability = makeGetUnitsFavorability({
+const getHostelsFavorability = makeGetHostelsFavorability({
   logger,
   ApplicationError
 });

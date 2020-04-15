@@ -9,6 +9,7 @@ module.exports = ({ pagination }) => {
       else req.query.available = false;
       const hostels = await getHostels({
         ...req.query,
+        userId: req.user.id,
         key,
         limit
       });

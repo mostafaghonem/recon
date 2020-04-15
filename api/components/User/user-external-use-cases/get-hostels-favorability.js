@@ -5,7 +5,7 @@ module.exports = ({ ApplicationError }) => async ({ userId, hostelsIds }) => {
   if (!userId) throw new ApplicationError('You should pass userId');
   if (!Array.isArray(hostelsIds))
     throw new ApplicationError(
-      'You should pass ids as array to getUsersByIds (User external service)'
+      'You should pass ids as array to getHostelsFavorability (User external service)'
     );
   const result = {};
   hostelsIds.forEach(id => {
