@@ -12,11 +12,11 @@ module.exports = ({ ApplicationError, logger }) => async ({
   skip,
   status,
   key,
-  limit
+  limit,
 }) => {
   const query = {
     status,
-    isArchived: false
+    isArchived: false,
   };
   const select = 'userId status hostelId hostel note createdAt';
   let sort = { createdAt: 1 };
@@ -24,17 +24,16 @@ module.exports = ({ ApplicationError, logger }) => async ({
   const populate = {
     path: 'userId',
     match: { isArchived: false, fullName: { $regex: key, $options: 'i' } },
-    select: '_id fullName gender image government job birthDateTs createdAt'
+    select: '_id fullName gender image government job birthDateTs createdAt',
   };
   const anotherPopulate = {
     path: 'hostelId',
     match: { isArchived: false },
-    select:
-      '_id name totalRevenue totalAvailableRooms totalOnlineBooking totalBooking totalUsersRated rate'
+    select: '',
   };
   const filter = {
     status,
-    isArchived: false
+    isArchived: false,
   };
   const allRequestsCount = await model.count({ filter });
   let requests = await model.getMany({
@@ -44,9 +43,9 @@ module.exports = ({ ApplicationError, logger }) => async ({
     skip: Number(skip) || 0,
     limit,
     populate,
-    anotherPopulate
+    anotherPopulate,
   });
-  requests = requests.filter(request => request.userId && request.hostelId);
+  requests = requests.filter((request) => request.userId && request.hostelId);
 
   return { requests, allRequestsCount };
 };
