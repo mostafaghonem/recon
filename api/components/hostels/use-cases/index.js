@@ -36,6 +36,9 @@ const makeGetAvailabilityData = require('./get-Availability-data');
 const {
   addUploadedHostelsRequests
 } = require('../../uploadedHostelsRequests/uploadedHostelsRequests-external-use-cases');
+const {
+  getHostelsFavorability
+} = require('../../User/user-external-use-cases');
 
 const addHostel = makeAddHostel({
   ApplicationError,
@@ -68,6 +71,7 @@ const getHostels = makeGetHostels({
   ApplicationError,
   logger,
   getReservedRoomCountByHotels,
+  getHostelsFavorability,
   accepted: REQUEST_RESPONSE.ACCEPTED
 });
 

@@ -3,15 +3,15 @@ const mongoosePaginate = require('mongoose-paginate-v2');
 
 const { Schema } = mongoose;
 
-const UserFavoriteUnits = new Schema(
+const UserFavoriteHostels = new Schema(
   {
     userId: {
       type: String,
       ref: 'User'
     },
-    unitId: {
+    hostelId: {
       type: String,
-      ref: 'Unit'
+      ref: 'Hostel'
     },
     favorite: {
       type: Boolean,
@@ -24,10 +24,10 @@ const UserFavoriteUnits = new Schema(
   }
 );
 
-UserFavoriteUnits.index(
-  { userId: 1, unitId: 1 },
+UserFavoriteHostels.index(
+  { userId: 1, hostelId: 1 },
   { unique: true, required: true }
 );
-UserFavoriteUnits.plugin(mongoosePaginate);
+UserFavoriteHostels.plugin(mongoosePaginate);
 
-module.exports = mongoose.model('UserFavoriteUnits', UserFavoriteUnits);
+module.exports = mongoose.model('UserFavoriteHostels', UserFavoriteHostels);
