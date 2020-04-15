@@ -291,7 +291,7 @@ router.get(
 router.post(
   '/favorite/hostels/:id',
   [validateMiddleware(ObjectIdValidation), authenticateMiddleware],
-  controllers.addUnitToFavorites
+  controllers.addHostelToFavorites
 );
 
 // @route
@@ -300,7 +300,7 @@ router.post(
 router.delete(
   '/favorite/hostels/:id',
   [validateMiddleware(ObjectIdValidation), authenticateMiddleware],
-  controllers.removeUnitFromFavorites
+  controllers.removeHostelFromFavorites
 );
 
 // @route
@@ -309,7 +309,7 @@ router.delete(
 router.get(
   '/favorite/hostels',
   [validateMiddleware(PaginationValidtion), authenticateMiddleware],
-  controllers.getFavoriteUnits
+  controllers.getFavoriteHostels
 );
 
 module.exports = router;
