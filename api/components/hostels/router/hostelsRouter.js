@@ -97,8 +97,8 @@ router.get(
 router.get(
   '/:id',
   [
-    validateMiddleware(getHostel)
-    // authenticateMiddleware,
+    validateMiddleware(getHostel),
+    visaMiddleware
     // authorizeMiddleware([PERMISSIONS.RENTER])
   ],
   controllers.getHostel

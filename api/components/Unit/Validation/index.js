@@ -14,10 +14,10 @@ const makeHideUnitValidation = require('./hide-unit-validation');
 const makeUnhideUnitValidation = require('./unhide-unit-validation');
 const makeGetValidation = require('./get-unit-validation');
 const makeGetUnitsValidation = require('./get-units-validation');
+
 // const makeAddunitRoomsValidation = require('./add-unit-rooms-validation');
 // const makeDeleteunitValidation = require('./delete-unit-validation');
 // const makeGetunitsValidation = require('./get-units-validation');
-// const makeGetRecommendedunitsValidation = require('./get-recommended-units-validation');
 // const makeEditunitRoomsValidation = require('./edit-unit-rooms-validation');
 // const makeEditunitAvailabilityValidation = require('./edit-unit-availability-validation');
 // const makeGetunitValidation = require('./get-unit-validation');

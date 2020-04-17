@@ -30,15 +30,9 @@ const makeSetFull = require('./set-full');
 const makeSetNotFull = require('./set-not-full');
 const makeEditUnit = require('./edit-unit');
 const makeEditUnitRequest = require('./edit-unit-request');
+const makeGetRecommendedUnits = require('./get-recommended-units');
 
-// const makeAddUnitRooms = require('./add-unit-rooms');
-// const makeHideUnit = require('./hide-unit');
-// const makeUnhideUnit = require('./unhide-unit');
-// const makeGetRecommendedUnits = require('./get-recommended-units');
-
-// const makeEditUnitRooms = require('./edit-unit-rooms');
 // const makeEditUnitAvailability = require('./edit-unit-availability');
-// const makeGetUnit = require('./get-unit');
 // const makeRateUnit = require('./rate-unit');
 const {
   addUploadedUnitsRequests,
@@ -141,12 +135,11 @@ const editUnitRequest = makeEditUnitRequest({
 //   logger
 // });
 
-// const getRecommendedUnits = makeGetRecommendedUnits({
-//   ApplicationError,
-//   logger,
-//   getReservedRoomCountByHotels,
-//   accepted: REQUEST_RESPONSE.ACCEPTED
-// });
+const getRecommendedUnits = makeGetRecommendedUnits({
+  ApplicationError,
+  logger,
+  getUnits
+});
 
 // const editUnitRooms = makeEditUnitRooms({
 //   ApplicationError,
@@ -186,10 +179,10 @@ const unitsUseCases = {
   getUnits,
   setFull,
   setNotFull,
-  editUnitRequest
+  editUnitRequest,
+  getRecommendedUnits
   //   addUnitRooms,
   //   deleteUnit,
-  //   getRecommendedUnits,
   //   editUnit,
   //   editUnitRooms,
   //   editUnitAvailability,

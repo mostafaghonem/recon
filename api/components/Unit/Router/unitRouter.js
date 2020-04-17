@@ -21,6 +21,9 @@ const {
   // editUnitAvailability,
   // rateUnit
 } = require('../Validation');
+const {
+  PaginationValidtion
+} = require('../../../shared/constants/validations');
 
 const router = express.Router();
 
@@ -190,15 +193,11 @@ router.get(
   controllers.getUnits
 );
 
-// router.get(
-//     '/recommended',
-//     [
-//         validateMiddleware(getRecommendedUnits),
-//         authenticateMiddleware,
-//         authorizeMiddleware([PERMISSIONS.RENTER])
-//     ],
-//     controllers.getRecommendedUnits
-// );
+router.get(
+  '/recommended',
+  [validateMiddleware(PaginationValidtion), visaMiddleware],
+  controllers.getRecommendedUnits
+);
 
 // router.get(
 //     '/:id',

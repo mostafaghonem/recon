@@ -86,7 +86,7 @@ module.exports = ({
     const hostelsIds = hostels && hostels.length ? hostels.map(o => o._id) : [];
     hostelsFavorability = await getHostelsFavorability({
       userId,
-      hostelsIds: [...checkExistence._id, ...hostelsIds]
+      hostelsIds: [checkExistence._id, ...hostelsIds]
     });
     const favoriteExistance =
       hostelsFavorability[checkExistence._id.toString()];

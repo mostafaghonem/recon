@@ -14,9 +14,9 @@ const makeSetFullCtrl = require('./set-full');
 const makeSetNotFullCtrl = require('./set-not-full');
 const makeEditUnitCtrl = require('./edit-unit');
 const makeGetUnit = require('./get-unit');
+const makeGetRecommendedCtrl = require('./get-recommended-units');
 const makeExternalGetUnit = require('./external-get-unit');
 const makeExternalGetUnitWithOwner = require('./external-get-unit-with-owner');
-// const makeAddUnitRoomsCtrl = require('./add-unit-rooms');
 
 // const makeGetUnitsCtrl = require('./get-units');
 // const makeGetRecommendedUnitsCtrl = require('./get-recommended-units');
@@ -39,7 +39,7 @@ const editUnit = makeEditUnitCtrl({});
 const getUnit = makeGetUnit({});
 const externalGetUnit = makeExternalGetUnit({});
 const externalGetUnitWithOwner = makeExternalGetUnitWithOwner({});
-// const getRecommendedUnits = makeGetRecommendedUnitsCtrl({ pagination });
+const getRecommendedUnits = makeGetRecommendedCtrl({ pagination });
 // const editUnit = makeEditUnitCtrl({});
 // const editUnitAvailability = makeEditUnitAvailabilityCtrl({});
 // const getUnit = makeGetUnitCtrl({});
@@ -59,10 +59,8 @@ const unitsCtrl = Object.freeze({
   externalGetUnitWithOwner,
   getUnits,
   setFull,
-  setNotFull
-
-  // getUnits,
-  // getRecommendedUnits,
+  setNotFull,
+  getRecommendedUnits
   // editUnit,
   // editUnitAvailability,
   // getUnit,

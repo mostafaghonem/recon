@@ -27,6 +27,7 @@ module.exports = ({
   numberOfPeople,
   services,
   available,
+  recommended,
   priceFrom,
   priceTo,
   rate,
@@ -120,6 +121,10 @@ module.exports = ({
     });
 
     if (available === 1) {
+      filteredUnits.filter(unit => unit.available);
+    }
+
+    if (recommended) {
       filteredUnits.filter(unit => unit.available);
     }
 
