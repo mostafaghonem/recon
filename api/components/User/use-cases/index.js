@@ -27,7 +27,8 @@ const {
 const { PERMISSIONS } = require('../../../shared/constants/defaults');
 const {
   GetSortObj,
-  GetSearchObj
+  GetSearchObj,
+  GetUnitsAvailbility
 } = require('../../../shared/constants/methods');
 // const emailService = require('../../../shared/services').emailService;
 
@@ -199,9 +200,11 @@ const removeUnitFromFavorites = makRemoveUnitFromFavorites({
   ApplicationError
 });
 const getFavoriteUnits = makeGetFavoriteUnits({
+  moment,
   ApplicationError,
   GetSearchObj,
-  GetSortObj
+  GetSortObj,
+  GetUnitsAvailbility
 });
 
 const addHostelToFavorites = makeAddHostelToFavorites({
