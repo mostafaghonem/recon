@@ -90,7 +90,7 @@ router.get(
 // !access  anonymous
 router.get(
   '/unit/:id',
-  [validateMiddleware(getUnitValidation)],
+  [validateMiddleware(getUnitValidation), visaMiddleware],
   controllers.getUnit
 );
 

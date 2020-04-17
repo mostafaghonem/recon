@@ -103,8 +103,20 @@ const GetSearchObj = ({ key }) => {
   }
   return false;
 };
+
+const GetUnitsAvailbility = ({ unitsIds, availableFrom, availableTo }) => {
+  const results = {};
+  unitsIds.map(o => {
+    results[o] = {
+      _id: o,
+      value: true
+    };
+  });
+  return results;
+};
 module.exports = {
   GetBaseDomain,
   GetSortObj,
-  GetSearchObj
+  GetSearchObj,
+  GetUnitsAvailbility
 };

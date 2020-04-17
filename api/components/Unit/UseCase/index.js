@@ -4,6 +4,7 @@
  * ! if you need to throw Error use throw new ApplicationError() and will handle the rest in express catcher
  */
 
+const moment = require('moment');
 const logger = require('../../../startup/logger');
 const { ApplicationError } = require('../../../shared/errors');
 const {
@@ -11,7 +12,10 @@ const {
   EVENTS_TYPES,
   REQUEST_STATUS
 } = require('../../../shared/constants/defaults');
-const { GetSortObj } = require('../../../shared/constants/methods');
+const {
+  GetSortObj,
+  GetUnitsAvailbility
+} = require('../../../shared/constants/methods');
 
 const makeAddUnit = require('./add-unit');
 const makeDeleteUnit = require('./delete-unit');
@@ -59,18 +63,22 @@ const deleteUnit = makeDeleteUnit({
 });
 
 const getUnit = makeGetUnit({
+  moment,
   ApplicationError,
   logger,
   accepted: REQUEST_RESPONSE.ACCEPTED,
-  getUnitsFavorability
+  getUnitsFavorability,
+  GetUnitsAvailbility
 });
 
 const getUnits = makeGetUnits({
+  moment,
   ApplicationError,
   logger,
   accepted: REQUEST_RESPONSE.ACCEPTED,
   GetSortObj,
-  getUnitsFavorability
+  getUnitsFavorability,
+  GetUnitsAvailbility
 });
 
 const getMyUnits = makeGetMyUnits({

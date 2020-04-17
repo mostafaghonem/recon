@@ -1,13 +1,6 @@
 /* eslint-disable no-param-reassign */
 const model = require('../Models');
 
-const getUnitsAvailbility = ({ unitsIds, availableFrom, availableTo }) => {
-  return unitsIds.map(o => ({
-    _id: o,
-    value: true
-  }));
-};
-
 /**
  * @description check user login data and return login token if user is exist and verified
  * @param {Object} of {String} phone, {String} password, {String} agent
@@ -19,13 +12,15 @@ const getUnitsAvailbility = ({ unitsIds, availableFrom, availableTo }) => {
 module.exports = ({
   ApplicationError,
   logger,
+  moment,
   GetSortObj,
   getUnitsFavorability,
+  GetUnitsAvailbility,
   accepted
 }) => async ({
   userId,
-  availableFrom,
-  availableTo,
+  availableFrom = moment().toDate(),
+  availableTo = moment(),
   type,
   rentersType,
   government,
@@ -42,6 +37,7 @@ module.exports = ({
   sortValue
 }) => {
   let unitsFavorability = {};
+  let unitsAvailbility = {};
   const sortObj = GetSortObj({
     sortIndex,
     sortKey,
@@ -109,18 +105,22 @@ module.exports = ({
   if (units && units.length !== 0) {
     const unitsIds = [];
     units.map(unit => unitsIds.push(unit._id));
-    const unitsAvailbility = await getUnitsAvailbility({
+    unitsAvailbility = await GetUnitsAvailbility({
       unitsIds,
       availableFrom,
       availableTo
     });
 
     let filteredUnits = units;
+    filteredUnits = units.map(o => {
+      const unitAvailbility = unitsAvailbility[o._id.toString()];
+      const unit = JSON.parse(JSON.stringify(o));
+      unit.available = unitAvailbility ? unitAvailbility.value : true;
+      return unit;
+    });
 
     if (available === 1) {
-      filteredUnits = unitsAvailbility
-        .map(o => ({ ...units.find(p => p._id === o._id), available: o.value }))
-        .filter(unit => unit.available);
+      filteredUnits.filter(unit => unit.available);
     }
 
     if (userId) {
@@ -137,7 +137,7 @@ module.exports = ({
           favorite = true;
         }
         return {
-          ...JSON.parse(JSON.stringify(o)),
+          ...o,
           favorite,
           displayFavorite
         };
