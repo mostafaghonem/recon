@@ -8,9 +8,11 @@ module.exports = ({
   ApplicationError,
   logger,
   getReservedRoomCountByHotels,
+  getHostelsFavorability,
   accepted
-}) => async id => {
-  const query = { _id: id, status: accepted, isArchived: false };
+}) => async ({ hostelId, userId }) => {
+  let hostelsFavorability = {};
+  const query = { _id: hostelId, status: accepted, isArchived: false };
   const select =
     'name description image currency address isHidden freeServices generalServices hostelServices entertainmentServices foodServices rooms rate totalUsersRated';
   const checkExistence = await model.getOne({ query, select });
@@ -19,7 +21,7 @@ module.exports = ({
   const availableFrom = new Date().getTime();
   const availableTo = new Date().setDate(new Date().getDate() + 1);
   const getHostelReservation = await getReservedRoomCountByHotels(
-    [id],
+    [hostelId],
     availableFrom,
     new Date(availableTo).getTime()
   );
@@ -80,6 +82,17 @@ module.exports = ({
     skip: 0,
     limit: 4
   });
+  if (userId) {
+    const hostelsIds = hostels && hostels.length ? hostels.map(o => o._id) : [];
+    hostelsFavorability = await getHostelsFavorability({
+      userId,
+      hostelsIds: [...checkExistence._id, ...hostelsIds]
+    });
+    const favoriteExistance =
+      hostelsFavorability[checkExistence._id.toString()];
+    checkExistence.favorite = !!favoriteExistance;
+    checkExistence.displayFavorite = true;
+  }
   if (hostels && hostels.length !== 0) {
     const hostelsIds = [];
     hostels.map(hostel => hostelsIds.push(hostel._id));
@@ -129,6 +142,8 @@ module.exports = ({
           }
         });
       }
+      hostel.favorite = !!hostelsFavorability[hostel._id.toString()];
+      hostel.displayFavorite = true;
       checkExistence.similarHostels.push(hostel);
     });
   }

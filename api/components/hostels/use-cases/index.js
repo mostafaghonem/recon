@@ -79,6 +79,7 @@ const getRecommendedHostels = makeGetRecommendedHostels({
   ApplicationError,
   logger,
   getReservedRoomCountByHotels,
+  getHostelsFavorability,
   accepted: REQUEST_RESPONSE.ACCEPTED
 });
 
@@ -111,6 +112,7 @@ const getHostel = makeGetHostel({
   ApplicationError,
   logger,
   getReservedRoomCountByHotels,
+  getHostelsFavorability,
   accepted: REQUEST_RESPONSE.ACCEPTED
 });
 
