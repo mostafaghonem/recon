@@ -27,6 +27,7 @@ module.exports = ({
   numberOfPeople,
   services,
   available,
+  furniture,
   recommended,
   priceFrom,
   priceTo,
@@ -86,11 +87,12 @@ module.exports = ({
     }
   }
 
-  if (available && parseInt(available, 10) === 1) {
+  if (available && available !== '') {
     query.isFull = false;
-  } else if (available && parseInt(available, 10) === 2) {
+  }
+  if (furniture && parseInt(furniture, 10) === 1) {
     query.hasFurniture = true;
-  } else if (available && parseInt(available, 10) === 3) {
+  } else if (furniture && parseInt(furniture, 10) === 2) {
     query.hasFurniture = false;
   }
 
@@ -120,7 +122,7 @@ module.exports = ({
       return unit;
     });
 
-    if (available === 1) {
+    if (available) {
       filteredUnits.filter(unit => unit.available);
     }
 
