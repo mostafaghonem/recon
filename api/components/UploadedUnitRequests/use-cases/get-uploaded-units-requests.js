@@ -46,6 +46,11 @@ module.exports = ({
   if (type) {
     query.type = type;
   }
+  const unitQuery = { isArchived: false };
+  const searchObj = GetSearchObj({ key });
+  if (searchObj) {
+    unitQuery.$or = searchObj;
+  }
   const populate = [
     {
       path: 'userId',
@@ -54,7 +59,7 @@ module.exports = ({
     },
     {
       path: 'unitId',
-      match: { isArchived: false, $or: GetSearchObj({ key }) },
+      match: unitQuery,
       select: '_id address type'
     }
   ];
