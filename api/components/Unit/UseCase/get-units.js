@@ -122,12 +122,12 @@ module.exports = ({
       return unit;
     });
 
-    if (available) {
-      filteredUnits.filter(unit => unit.available);
+    if (available && available !== '') {
+      filteredUnits = filteredUnits.filter(unit => unit.available);
     }
 
     if (recommended) {
-      filteredUnits.filter(unit => unit.available);
+      filteredUnits = filteredUnits.filter(unit => unit.available);
     }
 
     if (userId) {
