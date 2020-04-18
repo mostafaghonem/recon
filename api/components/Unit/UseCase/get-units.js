@@ -87,9 +87,10 @@ module.exports = ({
     }
   }
 
-  if (available && available !== '') {
+  if (available) {
     query.isFull = false;
   }
+
   if (furniture && parseInt(furniture, 10) === 1) {
     query.hasFurniture = true;
   } else if (furniture && parseInt(furniture, 10) === 2) {
@@ -122,7 +123,7 @@ module.exports = ({
       return unit;
     });
 
-    if (available && available !== '') {
+    if (available) {
       filteredUnits = filteredUnits.filter(unit => unit.available);
     }
 
