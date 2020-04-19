@@ -62,21 +62,21 @@ module.exports = ({
       value: body.address ? String(body.address.street).trim() : '',
       rules: new Builder()
         .required()
-        .minLength(10)
+        .minLength(2)
         .maxLength(200).rules
     },
     'address.nearTo': {
       value: body.address ? String(body.address.nearTo).trim() : '',
       rules: new Builder()
         .required()
-        .minLength(10)
+        .minLength(2)
         .maxLength(200).rules
     },
     'address.highlight': {
       value: body.address ? String(body.address.highlight).trim() : '',
       rules: new Builder()
         .required()
-        .minLength(10)
+        .minLength(2)
         .maxLength(200).rules
     },
     'address.houseNumber': {
