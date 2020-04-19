@@ -65,9 +65,13 @@ module.exports = ({
       value: query.limit,
       rules: new Builder().rules
     },
+    furniture: {
+      value: query.furniture,
+      rules: new Builder().isNumber().isMember([1, 2]).rules
+    },
     available: {
       value: query.available,
-      rules: new Builder().isNumber().isMember([1, 2, 3]).rules
+      rules: new Builder().isBoolean().rules
     },
     priceFrom: {
       value: query.priceFrom,
