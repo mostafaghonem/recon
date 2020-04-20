@@ -67,9 +67,49 @@ module.exports = ({
   const filter = {
     _id: { $ne: checkExistence._id },
     status: accepted,
-    'address.government': String(
-      checkExistence.address.government
-    ).toLowerCase(),
+    $or: [
+      {
+        'address.government': String(
+          checkExistence.address.government
+        ).toLowerCase()
+      },
+      {
+        'address.street': {
+          $regex: new RegExp(checkExistence.address.street),
+          $options: 'i'
+        }
+      },
+      {
+        'address.highlight': String(
+          checkExistence.address.highlight
+        ).toLowerCase()
+      },
+      {
+        'address.nearTo': {
+          $regex: new RegExp(checkExistence.address.nearTo),
+          $options: 'i'
+        }
+      },
+      {
+        name: {
+          $regex: new RegExp(checkExistence.name),
+          $options: 'i'
+        }
+      },
+      { freeServices: checkExistence.freeServices },
+      {
+        generalServices: checkExistence.generalServices
+      },
+      {
+        hostelServices: checkExistence.hostelServices
+      },
+      {
+        entertainmentServices: checkExistence.entertainmentServices
+      },
+      {
+        foodServices: checkExistence.foodServices
+      }
+    ],
     isHidden: false,
     isArchived: false
   };
