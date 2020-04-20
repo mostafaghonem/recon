@@ -80,21 +80,21 @@ module.exports = ({
       value: body.address ? body.address.street : '',
       rules: new Builder()
         .required('يجب ادخال الشارع')
-        .minLength(10)
+        .minLength(2)
         .maxLength(200).rules
     },
     'address.nearTo': {
       value: body.address ? body.address.nearTo : '',
       rules: new Builder()
         .required('يجب ادخال قريباً من')
-        .minLength(10)
+        .minLength(2)
         .maxLength(200).rules
     },
     'address.highlight': {
       value: body.address ? body.address.highlight : '',
       rules: new Builder()
         .required('يجب ادخال علامة مميزة')
-        .minLength(10)
+        .minLength(2)
         .maxLength(200).rules
     },
     'address.houseNumber': {
