@@ -26,6 +26,7 @@ const makeHideHostel = require('./hide-hostel');
 const makeUnhideHostel = require('./unhide-hostel');
 const makeDeleteHostel = require('./delete-hostel');
 const makeGetHostels = require('./get-hostels');
+const makeGetSimilarHostels = require('./get-similar-hostels');
 const makeGetRecommendedHostels = require('./get-recommended-hostels');
 const makeEditHostel = require('./edit-hostel');
 const makeEditHostelRooms = require('./edit-hostel-rooms');
@@ -108,11 +109,20 @@ const editHostelAvailability = makeEditHostelAvailability({
   roomsStatus: ROOMS_STATUS
 });
 
+const getSimilarHostels = makeGetSimilarHostels({
+  ApplicationError,
+  logger,
+  getReservedRoomCountByHotels,
+  getHostelsFavorability,
+  accepted: REQUEST_RESPONSE.ACCEPTED
+});
+
 const getHostel = makeGetHostel({
   ApplicationError,
   logger,
   getReservedRoomCountByHotels,
   getHostelsFavorability,
+  getSimilarHostels,
   accepted: REQUEST_RESPONSE.ACCEPTED
 });
 
@@ -135,7 +145,8 @@ const hostelsUseCases = {
   editHostelRooms,
   editHostelAvailability,
   getHostel,
-  rateHostel
+  rateHostel,
+  getSimilarHostels
 };
 
 module.exports = hostelsUseCases;
