@@ -1,6 +1,7 @@
+const staticFile = require('connect-static-file');
 const favicon = require('serve-favicon');
 const path = require('path');
-
+const express = require('express');
 const nuxtConfig = require('./nuxt');
 
 const ErrorHandler = require('../middlewares/errorHandlerMiddleware');
@@ -18,7 +19,7 @@ const Payment = require('../components/Payment');
 const reservationRouter = require('../components/UnitReservation/Router');
 
 module.exports = async app => {
-  // app.use('/admindashboard/', express.static(path.join(__dirname, '../../public')));
+  app.get('/sw.js', express.static(path.join(__dirname, '../../public/sw.js')));
   app.use('/api/uploader', uploader.Router);
   app.use('/api/users', User.Router);
   app.use('/api/identityRequests', identityRequests.Router);
@@ -33,6 +34,7 @@ module.exports = async app => {
   app.use('/api/events', EventManager.Router);
 
   app.use(favicon(path.resolve('./public/favicon.ico')));
+  app.use('/sw.js', staticFile(path.resolve('./public/sw.js')));
   // ! nuxt config
   await nuxtConfig(app);
 
