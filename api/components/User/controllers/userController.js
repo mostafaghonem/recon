@@ -4,7 +4,7 @@ const {
   googleLoginSetter,
   loginService,
   faceBookData,
-  googleLoginGetter
+  googleLoginGetter,
 } = require('../use-cases');
 
 const { GetBaseDomain } = require('../../../shared/constants');
@@ -26,7 +26,7 @@ exports.googleUserData = async (req, res) => {
 exports.facebookAuthBackController = [
   facebookAuth.authenticate('facebook', {
     failureRedirect: '/login',
-    scope: ['email']
+    scope: ['email'],
   }),
   async (req, res) => {
     const domain = GetBaseDomain();
@@ -40,12 +40,12 @@ exports.facebookAuthBackController = [
     res.cookie('sknToken', token, {
       domain,
       maxAge,
-      httpOnly: true
+      httpOnly: true,
     });
 
     // need to set cookie then redirect to home
-    return res.redirect(`/registration?token=${token}`);
-  }
+    return res.redirect(`/?token=${token}`);
+  },
 ];
 
 exports.googleAuthCallback = [
@@ -63,12 +63,12 @@ exports.googleAuthCallback = [
     res.cookie('sknToken', token, {
       domain,
       maxAge,
-      httpOnly: true
+      httpOnly: true,
     });
 
     // need to set cookie then redirect to home
-    return res.redirect(`/registration?token=${token}`);
-  }
+    return res.redirect(`/?token=${token}`);
+  },
 ];
 
 // Login with gmail section
@@ -76,6 +76,6 @@ exports.googleAuthCallback = [
 exports.googleAuthController = googleAuth.authenticate('google', {
   scope: [
     'https://www.googleapis.com/auth/userinfo.email',
-    'https://www.googleapis.com/auth/userinfo.profile'
-  ]
+    'https://www.googleapis.com/auth/userinfo.profile',
+  ],
 });
