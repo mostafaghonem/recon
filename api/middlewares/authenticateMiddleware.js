@@ -5,11 +5,12 @@ const jwt = Promise.promisifyAll(jsonwebtoken);
 
 const isAuthenticated = async (req, res, next) => {
   const token =
+    req.cookies.sknToken ||
+    req.signedCookies.sknToken ||
     req.body['access-token'] ||
     req.query['access-token'] ||
-    req.headers['access-token'] ||
-    req.cookies.sknToken ||
-    req.signedCookies.sknToken;
+    req.headers['access-token'];
+
   if (token) {
     try {
       const decoded = await jwt.verify(token, process.env.jwtPrivateKey);
