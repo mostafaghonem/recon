@@ -1,3 +1,5 @@
+const ApplicationError = require('../errors/ApplicationError');
+
 module.exports = {
   ObjectIdPattern: /^[0-9a-fA-F]{24}$/,
   PAGINATION: {
@@ -201,5 +203,28 @@ module.exports = {
   SORT_VALUES: {
     ASC: 1,
     DESC: -1
+  },
+  PAYMENT: {
+    PAYMOB: {
+      AUTHENTICATE_TOKEN_URL:
+        'https://accept.paymobsolutions.com/api/auth/tokens',
+      ORDER_REGISTERATION_URL:
+        'https://accept.paymobsolutions.com/api/ecommerce/orders',
+      PAYMENT_KEY_URL:
+        'https://accept.paymobsolutions.com/api/acceptance/payment_keys',
+      MERCHANT_ID: process.env.PAYMOB_MERCHANT_ID,
+      TOKEN: process.env.PAYMOB_TOKEN,
+      INTEGRATION_ID: process.env.PAYMOB_INTEGRATION_ID
+        ? parseInt(process.env.PAYMOB_INTEGRATION_ID, 10)
+        : undefined
+    }
   }
 };
+const PayMobToken = process.env.PAYMOB_TOKEN;
+const MerchantID = process.env.PAYMOB_MERCHANT_ID;
+const IntegrationID = process.env.PAYMOB_INTEGRATION_ID;
+if (!PayMobToken || !MerchantID || !IntegrationID) {
+  throw new ApplicationError(
+    'You must provide the env variables PAYMOB_TOKEN, PAYMOB_MERCHANT_ID and PAYMOB_INTEGRATION_ID for payment solutions, check https://accept.paymobsolutions.com/docs/guide/online-guide/'
+  );
+}

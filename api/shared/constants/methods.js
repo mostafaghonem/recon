@@ -114,6 +114,8 @@ const GetUnitsAvailbility = ({ unitsIds, availableFrom, availableTo }) => {
   });
   return results;
 };
+
+const GetCostOfOperation = ({ reservationId, reservationType, voucher }) => {};
 module.exports = {
   GetBaseDomain,
   GetSortObj,

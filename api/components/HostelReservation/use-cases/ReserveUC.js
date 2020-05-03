@@ -44,16 +44,23 @@ module.exports = ({
 
   const paymentId = uuid();
 
+  let extras = (2.75 / 100) * reservationCost + 3;
+  extras = Math.round((extras + Number.EPSILON) * 100) / 100;
+  const shouldPayPrice = reservationCost;
+  const shouldPayPriceAfterExtras = reservationCost + extras;
   const reservationData = {
     renterId,
     hostelId,
-    fromts,
-    tots,
-    totalPrice,
-    shouldPayPrice: reservationCost,
+    fromTs: fromts,
+    toTs: tots,
+    current: totalPrice,
     totalReservedCount,
+    total: shouldPayPrice,
+    totalAfterExtras: shouldPayPriceAfterExtras,
     rooms,
-    reserveDatets
+    reserveDateTs: reserveDatets,
+    extras,
+    method: paymentMethod
   };
 
   await redis.setexAsync(
@@ -63,14 +70,15 @@ module.exports = ({
   );
 
   if (paymentMethod === 'credit') {
-    return { paymentId, shouldPay: reservationData.shouldPayPrice };
+    return { paymentId, shouldPay: reservationData.total };
   }
 
   const paymentSent = await processPayment({
     paymentId,
+    userId: renterId,
+    reservationId: newReservation.id,
     payload: reservationData,
-    timeLimit: 5 * 60,
-    shouldPay: reservationCost
+    timeLimit: 5 * 60
   });
 
   if (!paymentSent)

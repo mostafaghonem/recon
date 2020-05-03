@@ -6,11 +6,6 @@ const makeRenterViewController = require('./renterViewController');
 const makeHostelViewController = require('./hostelViewController');
 
 // eslint-disable-next-line no-unused-vars
-const Working = (req, res, next) => {
-  logger.info(
-    `HostelReservation is working${JSON.stringify(req.user, undefined, 4)}`
-  );
-};
 
 const reserveController = makeReserveController({});
 const adminViewController = makeAdminViewController({});

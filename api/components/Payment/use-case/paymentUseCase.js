@@ -4,74 +4,162 @@ const paymentMethodMaker = ({
   axios,
   ObjectId,
   completePayment,
-  costOfOperation
+  costOfOperation,
+  paymentDefaults,
+  getUsersByIds,
+  ApplicationError
 }) => {
-  const getPaymentOperationToken = async reservationId => {
-    {
-      /** **********step1************** */
-      // console.log('start step1');
-      const token =
-        'ZXlKMGVYQWlPaUpLVjFRaUxDSmhiR2NpT2lKSVV6VXhNaUo5LmV5SndjbTltYVd4bFgzQnJJam8wTlRBeExDSmpiR0Z6Y3lJNklrMWxjbU5vWVc1MElpd2libUZ0WlNJNklqRTFOelV5TVRJNU9EZ3VORFU0TlRFM0luMC5TSFdLRlBnWFVBOENxWTRadWw0YnFWeEZkQzdDVU51N1MwSVlrdENIYW9MdS01NEFlR1RYMUs1aFlxTVliTVk2X0xvWXhSQ0NsSmFMdGMyY1gwOW9iQQ==';
-      const responseStep1 = await axios.default.post(
-        'https://accept.paymobsolutions.com/api/auth/tokens',
-        {
-          api_key: token
-        }
-      );
-      // console.log('done step1');
-      const tokenFromStep1 = responseStep1.data.token;
-      const cost = await costOfOperation(reservationId);
+  const getPaymentOperationToken = async (reservationId, currency = 'EGP') => {
+    /** **********step1************** */
+    // console.log('start step1');
+    const responseStep1 = await axios.default.post(
+      paymentDefaults.PAYMOB.AUTHENTICATE_TOKEN_URL,
+      {
+        api_key: paymentDefaults.PAYMOB.TOKEN
+      }
+    );
+    // console.log('done step1');
+    const paymentAuthToken = responseStep1.data.token;
+    const cost = await costOfOperation(reservationId);
 
-      /** **********step2************** */
-      const bodyStep2 = {
-        auth_token: tokenFromStep1,
-        delivery_needed: 'false',
-        merchant_id: '4501',
-        amount_cents: cost * 100,
-        currency: 'EGP',
-        merchant_order_id: ObjectId(),
-        items: []
-      };
-      const responseStep2 = await axios.default.post(
-        'https://accept.paymobsolutions.com/api/ecommerce/orders',
-        bodyStep2
+    /** **********step2************** */
+    const bodyStep2 = {
+      currency,
+      auth_token: paymentAuthToken,
+      delivery_needed: 'false',
+      merchant_id: paymentDefaults.PAYMOB.MERCHANT_ID,
+      amount_cents: cost * 100,
+      merchant_order_id: ObjectId(),
+      items: []
+    };
+    const responseStep2 = await axios.default.post(
+      paymentDefaults.PAYMOB.ORDER_REGISTERATION_URL,
+      bodyStep2
+    );
+    const orderResponseId = responseStep2.data.id;
+    await Model.createOne({
+      document: { orderId: orderResponseId, reservationId }
+    });
+    // console.log('done step2');
+    /** **********step3************** */
+    const bodyStep3 = {
+      auth_token: paymentAuthToken,
+      amount_cents: cost * 100,
+      expiration: 3600,
+      order_id: orderResponseId,
+      currency,
+      billing_data: {
+        apartment: '803',
+        email: 'claudette09@exa.com',
+        floor: '42',
+        first_name: 'Clifford',
+        street: 'Ethan Land',
+        building: '8028',
+        phone_number: '+86(8)9135210487',
+        shipping_method: 'PKG',
+        postal_code: '01898',
+        city: 'Jaskolskiburgh',
+        country: 'CR',
+        last_name: 'Nicolas',
+        state: 'Utah'
+      },
+      integration_id: paymentDefaults.PAYMOB.INTEGRATION_ID // number of integration
+    };
+    const responseStep3 = await axios.default.post(
+      paymentDefaults.PAYMOB.PAYMENT_KEY_URL,
+      bodyStep3
+    );
+    const paymentKey = responseStep3.data.token;
+    return paymentKey;
+  };
+  const getPaymentToken = async ({
+    userId,
+    reservationId,
+    paymentId,
+    payload,
+    currency,
+    timeLimit
+  }) => {
+    const usersData = await getUsersByIds([userId]);
+    const userData = usersData[userId];
+    if (!userData) {
+      throw new ApplicationError(
+        'عذراً ولكن حدث خطا ما فى محاولة الدفع الرجاء التأكد من تسجيل الدخول والمحاولة مرة أخرى '
       );
-      const orderResponseId = responseStep2.data.id;
-      await Model.createOne({
-        document: { orderId: orderResponseId, reservationId }
-      });
-      // console.log('done step2');
-      /** **********step3************** */
-      const bodyStep3 = {
-        auth_token: tokenFromStep1,
-        amount_cents: cost * 100,
-        expiration: 3600,
-        order_id: orderResponseId,
-        billing_data: {
-          apartment: '803',
-          email: 'claudette09@exa.com',
-          floor: '42',
-          first_name: 'Clifford',
-          street: 'Ethan Land',
-          building: '8028',
-          phone_number: '+86(8)9135210487',
-          shipping_method: 'PKG',
-          postal_code: '01898',
-          city: 'Jaskolskiburgh',
-          country: 'CR',
-          last_name: 'Nicolas',
-          state: 'Utah'
-        },
-        currency: 'EGP',
-        integration_id: 8310 // number of integration
-      };
-      const responseStep3 = await axios.default.post(
-        'https://accept.paymobsolutions.com/api/acceptance/payment_keys',
-        bodyStep3
-      );
-      const tokenFromStep3 = responseStep3.data.token;
-      return tokenFromStep3;
     }
+    /** **********step1************** */
+    // console.log('start step1');
+    const responseStep1 = await axios.default.post(
+      paymentDefaults.PAYMOB.AUTHENTICATE_TOKEN_URL,
+      {
+        api_key: paymentDefaults.PAYMOB.TOKEN
+      }
+    );
+    // console.log('done step1');
+    const paymentAuthToken = responseStep1.data.token;
+    const cost = await costOfOperation(reservationId, reservationType);
+
+    /** **********step2************** */
+    const bodyStep2 = {
+      currency,
+      auth_token: paymentAuthToken,
+      delivery_needed: 'false',
+      merchant_id: paymentDefaults.PAYMOB.MERCHANT_ID,
+      amount_cents: cost * 100,
+      merchant_order_id: ObjectId(),
+      items: []
+    };
+    const responseStep2 = await axios.default.post(
+      paymentDefaults.PAYMOB.ORDER_REGISTERATION_URL,
+      bodyStep2
+    );
+    const orderResponseId = responseStep2.data.id;
+    let reservationType = payload.hostelId ? 'hostel' : '';
+    reservationType = payload.unitId && reservationType === '' ? 'unit' : '';
+    reservationType =
+      payload.officeId && reservationType === '' ? 'office' : '';
+    await Model.createOne({
+      document: {
+        reservationId,
+        reservationType,
+        paymentId,
+        orderId: orderResponseId,
+        method: payload.method,
+        reservation: payload,
+        timeLimit
+      }
+    });
+    // console.log('done step2');
+    /** **********step3************** */
+    const bodyStep3 = {
+      auth_token: paymentAuthToken,
+      amount_cents: cost * 100,
+      expiration: 3600,
+      order_id: orderResponseId,
+      currency,
+      billing_data: {
+        // apartment: '803',
+        email: userData.email,
+        // floor: '42',
+        first_name: userData.fullName.split(/\s+/)[0],
+        street: userData.address,
+        // building: '8028',
+        phone_number: userData.phone || '+86(8)9135210487',
+        shipping_method: 'PKG',
+        // postal_code: '12566',
+        city: userData.government,
+        country: 'EG',
+        last_name: userData.fullName.split(/\s+/)[1] || '',
+        state: userData.government
+      },
+      integration_id: paymentDefaults.PAYMOB.INTEGRATION_ID // number of integration
+    };
+    const responseStep3 = await axios.default.post(
+      paymentDefaults.PAYMOB.PAYMENT_KEY_URL,
+      bodyStep3
+    );
+    const paymentKey = responseStep3.data.token;
+    return paymentKey;
   };
   const confirmPayment = async orderId => {
     const find = await Model.getOne({ query: { orderId } });
@@ -79,7 +167,7 @@ const paymentMethodMaker = ({
       completePayment(find.reservationId);
     }
   };
-  return { getPaymentOperationToken, confirmPayment };
+  return { getPaymentToken, getPaymentOperationToken, confirmPayment };
 };
 
 module.exports = paymentMethodMaker;

@@ -18,7 +18,7 @@ const {
   getUsersByPhone
 } = require('../../User/user-external-use-cases');
 
-const { processPayment } = require('./__mocks');
+const { processPayment } = require('../../Payment/external-use-case');
 
 module.exports.ReserveUC = makeReserveUC({
   ApplicationError,
