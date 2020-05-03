@@ -74,7 +74,9 @@ const paymentMethodMaker = ({
   };
   const getPaymentToken = async ({
     userId,
-    reservationId,
+    hostelReservationId,
+    unitReservationId,
+    officeReservationId,
     paymentId,
     payload,
     currency,
@@ -97,7 +99,7 @@ const paymentMethodMaker = ({
     );
     // console.log('done step1');
     const paymentAuthToken = responseStep1.data.token;
-    const cost = await costOfOperation(reservationId, reservationType);
+    // const cost = await costOfOperation(reservationId, reservationType);
 
     /** **********step2************** */
     const bodyStep2 = {
@@ -105,7 +107,7 @@ const paymentMethodMaker = ({
       auth_token: paymentAuthToken,
       delivery_needed: 'false',
       merchant_id: paymentDefaults.PAYMOB.MERCHANT_ID,
-      amount_cents: cost * 100,
+      amount_cents: payload.totalAfterExtras * 100,
       merchant_order_id: ObjectId(),
       items: []
     };
@@ -115,12 +117,15 @@ const paymentMethodMaker = ({
     );
     const orderResponseId = responseStep2.data.id;
     let reservationType = payload.hostelId ? 'hostel' : '';
-    reservationType = payload.unitId && reservationType === '' ? 'unit' : '';
     reservationType =
-      payload.officeId && reservationType === '' ? 'office' : '';
+      payload.unitId && reservationType === '' ? 'unit' : reservationType;
+    reservationType =
+      payload.officeId && reservationType === '' ? 'office' : reservationType;
     await Model.createOne({
       document: {
-        reservationId,
+        hostelReservationId,
+        unitReservationId,
+        officeReservationId,
         reservationType,
         paymentId,
         orderId: orderResponseId,
@@ -133,17 +138,17 @@ const paymentMethodMaker = ({
     /** **********step3************** */
     const bodyStep3 = {
       auth_token: paymentAuthToken,
-      amount_cents: cost * 100,
+      amount_cents: payload.totalAfterExtras * 100,
       expiration: 3600,
       order_id: orderResponseId,
       currency,
       billing_data: {
-        // apartment: '803',
+        apartment: '803',
         email: userData.email,
-        // floor: '42',
+        floor: '42',
         first_name: userData.fullName.split(/\s+/)[0],
-        street: userData.address,
-        // building: '8028',
+        street: userData.fullName,
+        building: '8028',
         phone_number: userData.phone || '+86(8)9135210487',
         shipping_method: 'PKG',
         // postal_code: '12566',
@@ -158,6 +163,7 @@ const paymentMethodMaker = ({
       paymentDefaults.PAYMOB.PAYMENT_KEY_URL,
       bodyStep3
     );
+
     const paymentKey = responseStep3.data.token;
     return paymentKey;
   };

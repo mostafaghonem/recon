@@ -9,9 +9,13 @@ module.exports = () => {
         type: String,
         required: true
       },
-      reservationId: {
+      hostelReservationId: {
         type: ObjectId,
-        required: true
+        ref: 'HostelReservation'
+      },
+      unitReservationId: {
+        type: ObjectId,
+        ref: 'unitReservation'
       },
       reservationType: {
         type: String,

@@ -16,9 +16,10 @@ module.exports = ({ ApplicationError }) => async ids => {
   users.forEach(u => {
     result[u._id.toString()] = {
       renterId: u._id,
+      email: u.email,
+      address: u.address,
       phone: u.phone,
       fullName: u.fullName,
-      address: u.address,
       government: u.government,
       image: u.image,
       birthDateTs: u.birthDateTs,

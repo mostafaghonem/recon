@@ -1,5 +1,7 @@
 module.exports = ({ getPaymentToken, logger }) => async ({
-  reservationId,
+  hostelReservationId,
+  unitReservationId,
+  officeReservationId,
   userId,
   paymentId,
   payload,
@@ -15,7 +17,9 @@ module.exports = ({ getPaymentToken, logger }) => async ({
       : 'EGP';
 
   const params = {
-    reservationId,
+    hostelReservationId,
+    unitReservationId,
+    officeReservationId,
     userId,
     paymentId,
     payload,
@@ -32,4 +36,5 @@ module.exports = ({ getPaymentToken, logger }) => async ({
     )}`
   );
   //   const iframe = await getIframe()
+  return true;
 };

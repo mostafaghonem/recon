@@ -19,6 +19,7 @@ module.exports = ({
   hostelId,
   fromts,
   tots,
+  currency,
   totalPrice,
   totalReservedCount,
   rooms,
@@ -44,10 +45,10 @@ module.exports = ({
 
   const paymentId = uuid();
 
-  let extras = (2.75 / 100) * reservationCost + 3;
+  let extras = (2.75 / 100) * totalPrice + 3;
   extras = Math.round((extras + Number.EPSILON) * 100) / 100;
-  const shouldPayPrice = reservationCost;
-  const shouldPayPriceAfterExtras = reservationCost + extras;
+  const shouldPayPrice = totalPrice;
+  const shouldPayPriceAfterExtras = totalPrice + extras;
   const reservationData = {
     renterId,
     hostelId,
@@ -60,6 +61,7 @@ module.exports = ({
     rooms,
     reserveDateTs: reserveDatets,
     extras,
+    currency,
     method: paymentMethod
   };
 
@@ -69,14 +71,13 @@ module.exports = ({
     JSON.stringify(reservationData)
   );
 
-  if (paymentMethod === 'credit') {
-    return { paymentId, shouldPay: reservationData.total };
-  }
+  // if (paymentMethod === 'credit') {
+  //   return { paymentId, shouldPay: reservationData.total };
+  // }
 
   const paymentSent = await processPayment({
     paymentId,
     userId: renterId,
-    reservationId: newReservation.id,
     payload: reservationData,
     timeLimit: 5 * 60
   });
@@ -84,48 +85,50 @@ module.exports = ({
   if (!paymentSent)
     throw new ApplicationError(`This Reservation can't be processed`, 500);
 
+  return { paymentId, shouldPay: reservationData.total };
+
   // return 'payment request is sent';
 
   // !After payment processed successfully should call the following code in another external use-case passing paymentId
 
-  let reservationCachedData = await redis.getAsync(`${paymentId}-paymentId`);
+  // let reservationCachedData = await redis.getAsync(`${paymentId}-paymentId`);
 
-  reservationCachedData = JSON.parse(reservationCachedData);
+  // reservationCachedData = JSON.parse(reservationCachedData);
 
-  // logger.info(reservationCachedData);
-  const newReservation = new HostelReservationEntity({
-    fromts: reservationCachedData.fromts,
-    hostelId: reservationCachedData.hostelId,
-    renterId: reservationCachedData.renterId,
-    reserveDatets: reservationCachedData.reserveDatets,
-    rooms: reservationCachedData.rooms,
-    shouldPayPrice: reservationCachedData.shouldPayPrice,
-    totalPrice: reservationCachedData.totalPrice,
-    totalReservedCount: reservationCachedData.totalReservedCount,
-    tots: reservationCachedData.tots
-  });
+  // // logger.info(reservationCachedData);
+  // const newReservation = new HostelReservationEntity({
+  //   fromts: reservationCachedData.fromts,
+  //   hostelId: reservationCachedData.hostelId,
+  //   renterId: reservationCachedData.renterId,
+  //   reserveDatets: reservationCachedData.reserveDatets,
+  //   rooms: reservationCachedData.rooms,
+  //   shouldPayPrice: reservationCachedData.shouldPayPrice,
+  //   totalPrice: reservationCachedData.totalPrice,
+  //   totalReservedCount: reservationCachedData.totalReservedCount,
+  //   tots: reservationCachedData.tots
+  // });
 
-  await newReservation.save();
+  // await newReservation.save();
 
-  publisherClient.publish(
-    'hostel-reservation-complete-payment',
-    JSON.stringify({
-      hostelId: newReservation.hostelId,
-      totalOnlineBooking: 1,
-      totalRevenue: newReservation.shouldPayPrice
-    })
-  );
+  // publisherClient.publish(
+  //   'hostel-reservation-complete-payment',
+  //   JSON.stringify({
+  //     hostelId: newReservation.hostelId,
+  //     totalOnlineBooking: 1,
+  //     totalRevenue: newReservation.shouldPayPrice
+  //   })
+  // );
 
-  publisherClient.quit();
+  // publisherClient.quit();
 
-  // ! call Farid method after saving the reservation
+  // // ! call Farid method after saving the reservation
 
-  logger.info(
-    `new Hostel reservation is waiting for payment to be completed${JSON.stringify(
-      newReservation.TO_JSON(),
-      undefined,
-      4
-    )}`
-  );
-  return { paymentId, shouldPay: reservationData.shouldPayPrice };
+  // logger.info(
+  //   `new Hostel reservation is waiting for payment to be completed${JSON.stringify(
+  //     newReservation.TO_JSON(),
+  //     undefined,
+  //     4
+  //   )}`
+  // );
+  // return { paymentId, shouldPay: reservationData.shouldPayPrice };
 };
