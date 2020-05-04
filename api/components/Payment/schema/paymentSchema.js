@@ -86,6 +86,7 @@ module.exports = () => {
           default: 0
         }
       },
+      pay_request: Schema.Types.Mixed,
       method: {
         type: String,
         default: 'credit'

@@ -1,13 +1,18 @@
-module.exports = ({ getPaymentToken, logger }) => async ({
+module.exports = ({
+  getPaymentToken,
+  createAmanPayRequest,
+  paymentDefaults,
+  logger
+}) => async ({
   hostelReservationId,
   unitReservationId,
   officeReservationId,
   userId,
   paymentId,
   payload,
-  timeLimit,
-  paymentDefaults
+  timeLimit
 }) => {
+  const response = {};
   // eslint-disable-next-line no-nested-ternary
   const currency =
     // eslint-disable-next-line no-nested-ternary
@@ -36,6 +41,20 @@ module.exports = ({ getPaymentToken, logger }) => async ({
       4
     )}`
   );
-  const iframeSrc = `${paymentDefaults.PAYMOB.IFRAME_URL}${paymentDefaults.PAYMOB.DEFAULT_FORM_ID}?payment_key=${paymentKey}`;
-  return { iframeSrc, paymentKey };
+
+  response.paymentKey = paymentKey;
+  if (payload.method === 'credit') {
+    response.iframeSrc = `${paymentDefaults.PAYMOB.IFRAME_URL}${paymentDefaults.PAYMOB.DEFAULT_FORM_ID}?payment_key=${paymentKey}`;
+    return response;
+  }
+
+  if (payload.method === 'kiosk') {
+    const payRequest = await createAmanPayRequest({ paymentKey });
+    if (payRequest.pending === true && payRequest.success === false) {
+      response.billReference = payRequest.data.bill_reference;
+      return response;
+    }
+  }
+
+  return false;
 };

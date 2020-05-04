@@ -86,7 +86,23 @@ const paymentMethodMaker = ({
     const userData = usersData[userId];
     if (!userData) {
       throw new ApplicationError(
-        'عذراً ولكن حدث خطا ما فى محاولة الدفع الرجاء التأكد من تسجيل الدخول والمحاولة مرة أخرى '
+        'عذراً ولكن حدث خطا ما فى محاولة الدفع الرجاء التأكد من تسجيل الدخول والمحاولة مرة أخرى ',
+        403
+      );
+    }
+
+    let IntegrationId;
+
+    if (payload.method === 'credit')
+      IntegrationId = paymentDefaults.PAYMOB.CARD_INTEGRATION_ID;
+
+    if (payload.method === 'kiosk')
+      IntegrationId = paymentDefaults.PAYMOB.KIOSK_INTEGRATION_ID;
+
+    if (!IntegrationId) {
+      throw new ApplicationError(
+        'عذراً ولكن حدث خطا ما فى محاولة الدفع الرجاء التأكد من إختيار طريقة الدفع الصحيحة',
+        403
       );
     }
     /** **********step1************** */
@@ -157,7 +173,7 @@ const paymentMethodMaker = ({
         last_name: userData.fullName.split(/\s+/)[1] || '',
         state: userData.government
       },
-      integration_id: paymentDefaults.PAYMOB.INTEGRATION_ID // number of integration
+      integration_id: IntegrationId // number of integration
     };
     const responseStep3 = await axios.default.post(
       paymentDefaults.PAYMOB.PAYMENT_KEY_URL,
