@@ -7,12 +7,16 @@
  */
 const logger = require('../../../startup/logger');
 const { ApplicationError } = require('../../../shared/errors');
+const {
+  PAYMENT: paymentDefaults
+} = require('../../../shared/constants/defaults');
 const { getPaymentToken } = require('../use-case');
 
 const makeProcessPayment = require('./process-payment');
 
 const processPayment = makeProcessPayment({
   getPaymentToken,
+  paymentDefaults,
   ApplicationError,
   logger
 });
