@@ -5,7 +5,8 @@ module.exports = ({ getPaymentToken, logger }) => async ({
   userId,
   paymentId,
   payload,
-  timeLimit
+  timeLimit,
+  paymentDefaults
 }) => {
   // eslint-disable-next-line no-nested-ternary
   const currency =
@@ -26,15 +27,15 @@ module.exports = ({ getPaymentToken, logger }) => async ({
     currency,
     timeLimit
   };
-  const paymentToken = await getPaymentToken(params);
+  const paymentKey = await getPaymentToken(params);
 
   logger.info(
-    `New Payment Token: ${paymentToken}\n\nIt has been generated for payment, now to generate paying form to be completed${JSON.stringify(
+    `New Payment Token: ${paymentKey}\n\nIt has been generated for payment, now to generate paying form to be completed${JSON.stringify(
       params,
       undefined,
       4
     )}`
   );
-  //   const iframe = await getIframe()
-  return true;
+  const iframeSrc = `${paymentDefaults.PAYMOB.IFRAME_URL}${paymentDefaults.PAYMOB.DEFAULT_FORM_ID}?payment_key=${paymentKey}`;
+  return { iframeSrc, paymentKey };
 };

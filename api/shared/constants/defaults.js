@@ -212,6 +212,8 @@ module.exports = {
         'https://accept.paymobsolutions.com/api/ecommerce/orders',
       PAYMENT_KEY_URL:
         'https://accept.paymobsolutions.com/api/acceptance/payment_keys',
+      IFRAME_URL: 'https://accept.paymobsolutions.com/api/acceptance/iframes/',
+      DEFAULT_FORM_ID: process.env.PAYMOB_DEFAULT_FORM_ID,
       MERCHANT_ID: process.env.PAYMOB_MERCHANT_ID,
       TOKEN: process.env.PAYMOB_TOKEN,
       INTEGRATION_ID: process.env.PAYMOB_INTEGRATION_ID

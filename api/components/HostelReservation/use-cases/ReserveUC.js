@@ -85,7 +85,11 @@ module.exports = ({
   if (!paymentSent)
     throw new ApplicationError(`This Reservation can't be processed`, 500);
 
-  return { paymentId, shouldPay: reservationData.total };
+  return {
+    paymentId,
+    shouldPay: reservationData.total,
+    ...paymentSent
+  };
 
   // return 'payment request is sent';
 
