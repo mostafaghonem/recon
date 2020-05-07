@@ -43,18 +43,20 @@ module.exports = ({
   if (!reservationCost)
     throw new ApplicationError(`This Reservation can't be processed`, 400);
 
+  if (reservationCost !== totalPrice)
+    throw new ApplicationError(`This Reservation can't be processed`, 400);
   const paymentId = uuid();
 
-  let extras = (2.75 / 100) * totalPrice + 3;
+  let extras = (2.75 / 100) * reservationCost + 3;
   extras = Math.round((extras + Number.EPSILON) * 100) / 100;
-  const shouldPayPrice = totalPrice;
-  const shouldPayPriceAfterExtras = totalPrice + extras;
+  const shouldPayPrice = reservationCost;
+  const shouldPayPriceAfterExtras = reservationCost + extras;
   const reservationData = {
     renterId,
     hostelId,
     fromTs: fromts,
     toTs: tots,
-    current: totalPrice,
+    current: reservationCost,
     totalReservedCount,
     total: shouldPayPrice,
     totalAfterExtras: shouldPayPriceAfterExtras,
