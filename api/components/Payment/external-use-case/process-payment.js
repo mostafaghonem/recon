@@ -44,7 +44,7 @@ module.exports = ({
 
   response.paymentKey = paymentKey;
   if (payload.method === 'credit') {
-    response.iframeSrc = `${paymentDefaults.PAYMOB.IFRAME_URL}${paymentDefaults.PAYMOB.DEFAULT_FORM_ID}?payment_key=${paymentKey}`;
+    response.iframeSrc = `${paymentDefaults.PAYMOB.IFRAME_URL}${paymentDefaults.PAYMOB.DEFAULT_FORM_ID}?payment_token=${paymentKey}`;
     return response;
   }
 
