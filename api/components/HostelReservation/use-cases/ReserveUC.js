@@ -43,8 +43,8 @@ module.exports = ({
   if (!reservationCost)
     throw new ApplicationError(`This Reservation can't be processed`, 400);
 
-  if (reservationCost !== totalPrice)
-    throw new ApplicationError(`This Reservation can't be processed`, 400);
+  // if (reservationCost !== totalPrice)
+  //   throw new ApplicationError(`This Reservation can't be processed`, 400);
   const paymentId = uuid();
 
   let extras = (2.75 / 100) * reservationCost + 3;

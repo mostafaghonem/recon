@@ -234,6 +234,6 @@ const CardIntegrationID = process.env.PAYMOB_CARD_INTEGRATION_ID;
 const KioskIntegrationID = process.env.PAYMOB_KIOSK_INTEGRATION_ID;
 if (!PayMobToken || !MerchantID || !CardIntegrationID || !KioskIntegrationID) {
   throw new ApplicationError(
-    'You must provide the env variables PAYMOB_TOKEN, PAYMOB_MERCHANT_ID, PAYMOB_CARD_INTEGRATION_ID and PAYMOB_KIOSK_INTEGRATION_ID for payment solutions, check https://accept.paymobsolutions.com/docs/guide/online-guide/'
+    'You must provide the env variables PAYMOB_TOKEN, PAYMOB_MERCHANT_ID, PAYMOB_CARD_INTEGRATION_ID and PAYMOB_KIOSK_INTEGRATION_ID for payment solutions, check https://captain.dev.sknhost.com for values'
   );
 }
