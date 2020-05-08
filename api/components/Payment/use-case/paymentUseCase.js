@@ -183,13 +183,7 @@ const paymentMethodMaker = ({
     const paymentKey = responseStep3.data.token;
     return paymentKey;
   };
-  const confirmPayment = async orderId => {
-    const find = await Model.getOne({ query: { orderId } });
-    if (find) {
-      completePayment(find.reservationId);
-    }
-  };
-  return { getPaymentToken, getPaymentOperationToken, confirmPayment };
+  return { getPaymentToken, getPaymentOperationToken };
 };
 
 module.exports = paymentMethodMaker;

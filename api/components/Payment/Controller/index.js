@@ -1,22 +1,23 @@
-const useCase = require('../use-case');
+const logger = require('../../../startup/logger');
+const { ApplicationError } = require('../../../shared/errors');
 
-exports.paymentToken = async (req, res) => {
-  const reservationId = req.params.reservationId;
-  const tokenForOperation = await useCase.getPaymentOperationToken(
-    reservationId
-  );
-  return res.status(200).json({ token: tokenForOperation });
-};
+const makeTransactionProcess = require('./transaction-process');
+const makeTransactionResponse = require('./transaction-response');
 
-exports.transactionProcess = async (req, res) => {
-  res.status(400).json('test');
-};
+// exports.paymentToken = async (req, res) => {
+//   const reservationId = req.params.reservationId;
+//   const tokenForOperation = await useCase.getPaymentOperationToken(
+//     reservationId
+//   );
+//   return res.status(200).json({ token: tokenForOperation });
+// };
 
-exports.transactionProcessCallBack = async (req, res) => {
-  if (req.query.success === 'true') {
-    useCase.confirmPayment(req.query.order);
-    // TODO need to redirect to home to refer that payment is success
-  }
-  // TODO need to redirect to home to refer that payment is fail
-  res.status(200).json('test');
-};
+exports.transactionProcess = makeTransactionProcess({
+  ApplicationError,
+  logger
+});
+
+exports.transactionResponse = makeTransactionResponse({
+  ApplicationError,
+  logger
+});

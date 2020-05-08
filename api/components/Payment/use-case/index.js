@@ -1,42 +1,49 @@
 const axios = require('axios');
 const mongoose = require('mongoose');
-const {
-  PAYMENT: paymentDefaults
-} = require('../../../shared/constants/defaults');
+const { paymentDefaults } = require('../../../shared/constants');
 const logger = require('../../../startup/logger');
 const { ApplicationError } = require('../../../shared/errors');
 
 const { getUsersByIds } = require('../../User/user-external-use-cases');
 const {
-  completePayment
+  completeHostelPayment
 } = require('../../HostelReservation/hostel-reservation-external-use-cases');
 
 const { ObjectId } = mongoose.Types;
 
 const makeTransactionProcess = require('./transaction-process');
 const makeTransactionResponse = require('./transaction-response');
+const makeConfirmPayment = require('./confirm-payment');
 const paymentUseCaseMaker = require('./paymentUseCase');
 
-const {
-  getPaymentToken,
-  getPaymentOperationToken,
-  confirmPayment
-} = paymentUseCaseMaker({
+const { getPaymentToken, getPaymentOperationToken } = paymentUseCaseMaker({
   axios,
   ObjectId,
-  completePayment,
+  completeHostelPayment,
+  completeUnitPayment: () => {},
+  completeOfficePayment: () => {},
   getUsersByIds,
   paymentDefaults,
   ApplicationError
 });
 
+const confirmPayment = makeConfirmPayment({ ApplicationError, logger });
+
 const transactionProcess = makeTransactionProcess({
   ApplicationError,
-  logger
+  logger,
+  paymentDefaults,
+  completeHostelPayment,
+  completeUnitPayment: () => {},
+  completeOfficePayment: () => {}
 });
 const transactionResponse = makeTransactionResponse({
   ApplicationError,
-  logger
+  logger,
+  paymentDefaults,
+  completeHostelPayment,
+  completeUnitPayment: () => {},
+  completeOfficePayment: () => {}
 });
 
 module.exports = {
