@@ -1,33 +1,14 @@
-const { transactionProcess } = require('../use-case');
+// const { transactionResponse } = require('../use-case');
 
-module.exports = ({ logger }) => {
+module.exports = () => {
   return async (req, res, next) => {
     try {
-      logger.info(
-        `The Request body for transaction process => \n${JSON.stringify(
-          req.body,
-          undefined,
-          6
-        )}`
-      );
-
-      logger.info(
-        `The Request query for transaction process => \n${JSON.stringify(
-          req.query,
-          undefined,
-          6
-        )}`
-      );
-      const response = await transactionProcess({
-        ...req.body
-      });
-
-      return res.status(200).json({
-        message: 'Transaction process happended successfully!',
-        response
-      });
+      // const response = await transactionResponse({
+      //   data: req.body.obj
+      // });
+      return res.status(200).json({});
     } catch (e) {
-      return next(e);
+      return res.redirect(`/error?message=${encodeURIComponent(e.message)}`);
     }
   };
 };

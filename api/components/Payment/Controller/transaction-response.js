@@ -1,25 +1,10 @@
 const { transactionResponse } = require('../use-case');
 
-module.exports = ({ logger }) => {
-  return async (req, res, next) => {
+module.exports = () => {
+  return async (req, res) => {
     try {
-      logger.info(
-        `The Request body for transaction response => \n${JSON.stringify(
-          req.body,
-          undefined,
-          6
-        )}`
-      );
-
-      logger.info(
-        `The Request query for transaction response => \n${JSON.stringify(
-          req.query,
-          undefined,
-          6
-        )}`
-      );
       const response = await transactionResponse({
-        ...req.query
+        data: req.query
       });
 
       return res.status(200).json({
@@ -27,7 +12,7 @@ module.exports = ({ logger }) => {
         response
       });
     } catch (e) {
-      return next(e);
+      return res.redirect(`/error?message=${encodeURIComponent(e.message)}`);
     }
   };
 };

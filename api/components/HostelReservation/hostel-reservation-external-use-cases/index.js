@@ -45,7 +45,7 @@ const getReservedRoomCountByHotels = makeGetReservedRoomCountByHotel({});
  */
 const isGroupBusyInDateTs = makeIsGroupBusyInDateTs({});
 
-const completePayment = makeCompletePayment({
+const completeHostelPayment = makeCompletePayment({
   logger,
   redis: redisClient,
   publisher: redis
@@ -63,7 +63,7 @@ const HostelReservationExternals = Object.freeze({
   getReservedRoomCountByHotels,
   isGroupBusyInDateTs,
   getReservationCostById,
-  completePayment
+  completeHostelPayment
 });
 
 module.exports = HostelReservationExternals;

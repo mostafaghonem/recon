@@ -6,7 +6,7 @@ const { ApplicationError } = require('../../../shared/errors');
 
 const { getUsersByIds } = require('../../User/user-external-use-cases');
 const {
-  completePayment
+  completeHostelPayment
 } = require('../../HostelReservation/hostel-reservation-external-use-cases');
 
 const { ObjectId } = mongoose.Types;
@@ -19,7 +19,9 @@ const paymentUseCaseMaker = require('./paymentUseCase');
 const { getPaymentToken, getPaymentOperationToken } = paymentUseCaseMaker({
   axios,
   ObjectId,
-  completePayment,
+  completeHostelPayment,
+  completeUnitPayment: () => {},
+  completeOfficePayment: () => {},
   getUsersByIds,
   paymentDefaults,
   ApplicationError
@@ -30,12 +32,18 @@ const confirmPayment = makeConfirmPayment({ ApplicationError, logger });
 const transactionProcess = makeTransactionProcess({
   ApplicationError,
   logger,
-  confirmPayment
+  paymentDefaults,
+  completeHostelPayment,
+  completeUnitPayment: () => {},
+  completeOfficePayment: () => {}
 });
 const transactionResponse = makeTransactionResponse({
   ApplicationError,
   logger,
-  confirmPayment
+  paymentDefaults,
+  completeHostelPayment,
+  completeUnitPayment: () => {},
+  completeOfficePayment: () => {}
 });
 
 module.exports = {
