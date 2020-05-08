@@ -20,6 +20,7 @@ const buildUserEntity = (
     ApplicationError: AppError,
     ObjectId: __ObjectId,
     jwt: _jwt,
+    // eslint-disable-next-line no-undef
     _
   }
 ) => {
@@ -169,7 +170,7 @@ const buildUserEntity = (
         {
           id: this.id,
           exp: Math.floor(new Date().getTime() / 1000) + 7 * 24 * 60 * 60 * 30, // Note: in seconds!
-          permissions: permissions
+          permissions
         },
         jwtPrivateKey
       );

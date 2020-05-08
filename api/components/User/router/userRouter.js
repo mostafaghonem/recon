@@ -57,6 +57,15 @@ router.post(
 );
 
 // @route
+// @ POST api/users/login-admin
+// !access  anonymous
+router.post(
+  '/login-admin',
+  [validateMiddleware(userLoginValidation)],
+  controllers.loginAdmin
+);
+
+// @route
 // @ POST api/users/logout
 // !access  anonymous
 router.get('/logout', [authenticateMiddleware], controllers.logOutUser);

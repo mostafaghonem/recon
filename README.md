@@ -115,3 +115,10 @@
 - Do the last steps in setting up `local.env` file but change the `DB_PORT` to `27017`
 
 - Happy coding via `npm run local`/ debug mode by `F5`
+
+### Configuration environment
+
+#### ADMIN CREDENTIALS
+
+- ADMIN_PHONE: is the admin login phone number and must to be a valid mobile
+- ADMIN_PASSWORD: is the admin login password

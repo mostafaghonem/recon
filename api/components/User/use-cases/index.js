@@ -34,6 +34,7 @@ const {
 
 const makeRegisterUserUC = require('./register-user');
 const makeLoginUser = require('./login-user');
+const makeLoginAdmin = require('./login-admin');
 const makeUpdateIdentification = require('./update-identification');
 const makeGoogleAuthService = require('./googleAuthService');
 const makeFaceBookAuthService = require('./facebookAuthService');
@@ -174,6 +175,11 @@ const loginUser = makeLoginUser({
   logger
 });
 
+const loginAdmin = makeLoginAdmin({
+  ApplicationError,
+  logger
+});
+
 const facebookAuth = makeFaceBookAuthService({
   passport,
   FacebookStrategy
@@ -226,6 +232,7 @@ const userUseCases = {
   registerUser,
   googleAuth,
   loginUser,
+  loginAdmin,
   googleLoginGetter,
   googleLoginSetter,
   facebookAuth,
