@@ -1,8 +1,6 @@
 const axios = require('axios');
 const mongoose = require('mongoose');
-const {
-  PAYMENT: paymentDefaults
-} = require('../../../shared/constants/defaults');
+const { paymentDefaults } = require('../../../shared/constants');
 const logger = require('../../../startup/logger');
 const { ApplicationError } = require('../../../shared/errors');
 
@@ -15,13 +13,10 @@ const { ObjectId } = mongoose.Types;
 
 const makeTransactionProcess = require('./transaction-process');
 const makeTransactionResponse = require('./transaction-response');
+const makeConfirmPayment = require('./confirm-payment');
 const paymentUseCaseMaker = require('./paymentUseCase');
 
-const {
-  getPaymentToken,
-  getPaymentOperationToken,
-  confirmPayment
-} = paymentUseCaseMaker({
+const { getPaymentToken, getPaymentOperationToken } = paymentUseCaseMaker({
   axios,
   ObjectId,
   completePayment,
@@ -30,13 +25,17 @@ const {
   ApplicationError
 });
 
+const confirmPayment = makeConfirmPayment({ ApplicationError, logger });
+
 const transactionProcess = makeTransactionProcess({
   ApplicationError,
-  logger
+  logger,
+  confirmPayment
 });
 const transactionResponse = makeTransactionResponse({
   ApplicationError,
-  logger
+  logger,
+  confirmPayment
 });
 
 module.exports = {

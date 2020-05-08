@@ -8,9 +8,7 @@
 const axios = require('axios');
 const logger = require('../../../startup/logger');
 const { ApplicationError } = require('../../../shared/errors');
-const {
-  PAYMENT: paymentDefaults
-} = require('../../../shared/constants/defaults');
+const { paymentDefaults } = require('../../../shared/constants');
 const { getPaymentToken } = require('../use-case');
 
 const makeProcessPayment = require('./process-payment');

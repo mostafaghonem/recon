@@ -7,17 +7,17 @@ const router = express.Router({ mergeParams: true });
 // const validateMiddleware = require('../../../middlewares/validateMiddleware');
 const controller = require('../Controller');
 
-// @route
-// @ POST api/hostel-reservation
-// !access  renter
-router.post(
-  '/get-token-form-payment-operation/:reservationId',
-  // [authenticateMiddleware, validateMiddleware(reserveValidations)],
-  controller.paymentToken
-);
+// // @route
+// // @ POST api/hostel-reservation
+// // !access  renter
+// router.post(
+//   '/get-token-form-payment-operation/:reservationId',
+//   // [authenticateMiddleware, validateMiddleware(reserveValidations)],
+//   controller.paymentToken
+// );
 
 router.post('/transaction', controller.transactionProcess);
 
-router.get('/transaction/call-back', controller.transactionProcessCallBack);
+router.get('/transaction/call-back', controller.transactionResponse);
 
 module.exports = router;
