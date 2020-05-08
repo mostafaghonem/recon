@@ -1,5 +1,6 @@
 const makeUserRegisterCtrl = require('./user-register');
-const makeUserLoginCtrl = require('./user-login');
+const makeUserLoginUserCtrl = require('./user-login');
+const makeUserLoginAdminCtrl = require('./admin-login');
 const makeUserLogOutCtrl = require('./user-logout');
 const makePhoneVerification = require('./sms-verification');
 const makeForgetPassword = require('./forget-password');
@@ -41,7 +42,8 @@ const pagination = Object.freeze(defaultConstants.PAGINATION);
 
 // ->
 const registerUser = makeUserRegisterCtrl({});
-const loginUser = makeUserLoginCtrl({ GetBaseDomain });
+const loginUser = makeUserLoginUserCtrl({ GetBaseDomain });
+const loginAdmin = makeUserLoginAdminCtrl({ GetBaseDomain });
 const logOutUser = makeUserLogOutCtrl({ GetBaseDomain });
 const verifyPhone = makePhoneVerification({});
 const forgetPassword = makeForgetPassword({});
@@ -69,6 +71,7 @@ const getFavoriteHostels = makeGetFavoriteHostels({ pagination });
 const userCtrl = Object.freeze({
   registerUser,
   loginUser,
+  loginAdmin,
   logOutUser,
   verifyPhone,
   forgetPassword,
