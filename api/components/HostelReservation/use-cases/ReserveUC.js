@@ -7,7 +7,6 @@ const { HostelReservationEntity } = require('../Entity');
 
 // should have no implementation for any specific orm
 module.exports = ({
-  redis,
   ApplicationError,
   publisher,
   logger,
@@ -63,20 +62,11 @@ module.exports = ({
     rooms,
     reserveDateTs: reserveDatets,
     extras,
-    currency,
-    method: paymentMethod
+    currency, // ['le', 'USD']
+    method: paymentMethod // ['credit' || 'kiosk']
   };
 
-  await redis.setexAsync(
-    `${paymentId}-paymentId`,
-    20 * 60,
-    JSON.stringify(reservationData)
-  );
-
-  // if (paymentMethod === 'credit') {
-  //   return { paymentId, shouldPay: reservationData.total };
-  // }
-
+  // Should receive [iframeSrc]
   const paymentSent = await processPayment({
     paymentId,
     userId: renterId,

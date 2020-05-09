@@ -1,6 +1,6 @@
 const Model = require('../Model');
 
-module.exports = ({ axios, paymentDefaults, logger }) => async ({
+module.exports = ({ axios, paymentDefaults }) => async ({
   paymentKey,
   paymentId
 }) => {
@@ -20,7 +20,7 @@ module.exports = ({ axios, paymentDefaults, logger }) => async ({
       paymentId
     },
     update: {
-      order: response.data
+      pay_request: response.data
     }
   });
   return response.data;

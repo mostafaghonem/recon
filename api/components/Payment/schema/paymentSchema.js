@@ -89,7 +89,8 @@ module.exports = () => {
       pay_request: Schema.Types.Mixed,
       method: {
         type: String,
-        default: 'credit'
+        default: 'credit',
+        enum: ['credit', 'kiosk']
       },
       timeLimit: {
         type: Number

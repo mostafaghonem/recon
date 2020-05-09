@@ -16,7 +16,7 @@ module.exports = ({
   const success = data.success;
   if (success && success === 'true') {
     const orderId = data.merchant_order_id;
-    const order = Model.find({ orderId });
+    const order = await Model.find({ orderId });
     if (order && order.hostelId) {
       completeHostelPayment({ payload: order });
     }
