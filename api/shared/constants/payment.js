@@ -42,6 +42,7 @@ module.exports = {
       'source_data.sub_type',
       'source_data.type',
       'success'
+      // order
     ]
   },
   ERRORS: {

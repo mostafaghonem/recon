@@ -160,7 +160,7 @@ const paymentMethodMaker = ({
       currency,
       billing_data: {
         apartment: '803',
-        email: userData.email,
+        email: userData.email || 'sknegy1@gmail.com',
         floor: '42',
         first_name: userData.fullName.split(/\s+/)[0],
         street: userData.fullName,
