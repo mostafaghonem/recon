@@ -1,0 +1,25 @@
+const express = require('express');
+const { requestDetailsController } = require('../Controller');
+
+const authorizeMiddleware = require('../../../middlewares/authorizeMiddleware');
+const authenticateMiddleware = require('../../../middlewares/authenticateMiddleware');
+const { PERMISSIONS } = require('../../../shared/constants/defaults');
+const { reservationDetailsValidation } = require('../Validation');
+
+const { houseOwnerPendingRequests } = reservationDetailsValidation;
+module.exports = ({ validation }) => {
+  // before routes /api/unit-reservation/reservation-details
+  const router = express.Router({ mergeParams: true });
+
+  router.get(
+    '/house-owner-pending-request/:unitId',
+    [
+      authenticateMiddleware,
+      authorizeMiddleware([PERMISSIONS.HOUSE_OWNER]),
+      validation(houseOwnerPendingRequests, 'params')
+    ],
+    requestDetailsController.getHouseOwnerRequests
+  );
+
+  return router;
+};

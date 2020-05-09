@@ -32,7 +32,10 @@ module.exports = (
    if this monthly you need to cal amount of 
    */
   const returnAllCostForUnit = async (unitId, from, to) => {
-    const result = await calculateCost(unitId, from, to);
+    const result = await calculateCost({ unitId, from, to });
+    if (!result) {
+      return new Error("can't get the cost of this unit.");
+    }
     return result;
   };
 
@@ -47,24 +50,20 @@ module.exports = (
     renderId,
     comingOne /** {unit, from , to} */
   ) => {
-    // console.log(renderId);
-    // console.log(comingOne);
     const checkValid = await Model.checkAddingNewReservation(
       comingOne.unit,
       comingOne
     );
+
     if (checkValid && comingOne.from < comingOne.to) {
-      const cost = calculateCost(comingOne.unit);
+      const cost = await calculateCost({
+        unitId: comingOne.unit,
+        from: comingOne.from,
+        to: comingOne.to
+      });
+
       const unitDetail = await getUnitDetail(comingOne.unit);
-      // console.log(unitDetail);
-      // console.log('888888888888888');
-      // console.log({
-      //   ...comingOne,
-      //   renter: renderId,
-      //   cost,
-      //   owner: unitDetail.userId
-      // });
-      // throw new Error();
+
       const result = await Model.createOne({
         document: {
           ...comingOne,

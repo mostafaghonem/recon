@@ -1,3 +1,4 @@
 const reserveUnitController = require('./reserveUnitController');
+const requestDetailsController = require('./requestDetailsController');
 
-module.exports = { reserveUnitController };
+module.exports = { reserveUnitController, requestDetailsController };

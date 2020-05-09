@@ -6,6 +6,7 @@ const authenticateMiddleware = require('../../../middlewares/authenticateMiddlew
 const { PERMISSIONS } = require('../../../shared/constants/defaults');
 
 module.exports = ({ validation }) => {
+  // before routes /api/unit-reservation/reservation
   const router = express.Router({ mergeParams: true });
 
   router.post(

@@ -6,9 +6,10 @@
 const Models = require('../Models');
 const { UnitReservationState } = require('../../../shared/constants/defaults');
 const { UnitReservationEntity } = require('../Entity');
+const ApplicationError = require('../../../shared/errors/ApplicationError');
 
-module.exports = (/* but your inject here */) => {
-  const acceptRequestFromAdmin = async requestId => {
+module.exports = (/* but your inject here */ { getUnitDetails }) => {
+  const passRequestToHouseOwner = async requestId => {
     const result = await Models.updateOneById({
       id: requestId,
       update: { state: UnitReservationState.ACCEPT_BY_ADMIN }
@@ -23,7 +24,7 @@ module.exports = (/* but your inject here */) => {
         Done: update its state to pending 
 
   */
-  const acceptRequestFromOwner = async requestId => {
+  const acceptRequestForPay = async requestId => {
     await Models.updateOneById({
       id: requestId,
       update: { state: UnitReservationState.ACCEPT_BY_OWNER }
@@ -44,7 +45,7 @@ module.exports = (/* but your inject here */) => {
         Done: getting all request that is pending 
         TODO need to debug:and have no intersect with accepted request and made it "send"
   */
-  const refuseActionFromOwner = async (requestId, note) => {
+  const refuseAction = async (requestId, note) => {
     await Models.updateOneById({
       id: requestId,
       update: {
@@ -99,10 +100,34 @@ module.exports = (/* but your inject here */) => {
     return { result: 'Payed success' };
   };
 
+  const acceptRequestFromHouseOwner = async (owner, requestId) => {
+    const request = await Models.getOne({ query: { _id: requestId } });
+    const unit = await getUnitDetails(request.unit);
+    if (owner.toString() === unit.owner.toString()) {
+      return acceptRequestForPay(requestId);
+    }
+    throw new ApplicationError(
+      'the owner of this unit not the acceptance of request',
+      403
+    );
+  };
+
+  const refuseRequestFromHouseOwner = async (owner, requestId) => {
+    const request = await Models.getOne({ query: { _id: requestId } });
+    const unit = await getUnitDetails(request.unit);
+    if (owner.toString() === unit.userId.toString()) {
+      return refuseAction(requestId);
+    }
+
+    throw new ApplicationError(
+      'the owner of this unit not the refuser of request',
+      403
+    );
+  };
   return {
-    acceptRequestFromAdmin,
-    acceptRequestFromOwner,
-    refuseActionFromOwner,
+    passRequestToHouseOwner,
+    acceptRequestFromHouseOwner,
+    refuseRequestFromHouseOwner,
     renterPayRequest
   };
 };
