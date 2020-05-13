@@ -6,9 +6,10 @@
 const Models = require('../Models');
 const { UnitReservationState } = require('../../../shared/constants/defaults');
 const { UnitReservationEntity } = require('../Entity');
+const ApplicationError = require('../../../shared/errors/ApplicationError');
 
-module.exports = (/* but your inject here */) => {
-  const acceptRequestFromAdmin = async requestId => {
+module.exports = (/* but your inject here */ { getUnitDetails }) => {
+  const passRequestToHouseOwner = async requestId => {
     const result = await Models.updateOneById({
       id: requestId,
       update: { state: UnitReservationState.ACCEPT_BY_ADMIN }
@@ -23,7 +24,7 @@ module.exports = (/* but your inject here */) => {
         Done: update its state to pending 
 
   */
-  const acceptRequestFromOwner = async requestId => {
+  const acceptRequestWaitingPay = async requestId => {
     await Models.updateOneById({
       id: requestId,
       update: { state: UnitReservationState.ACCEPT_BY_OWNER }
@@ -32,9 +33,17 @@ module.exports = (/* but your inject here */) => {
       requestId
     );
     await reservationRequest.gettingIntersectAndUpdateState(
-      {},
-      UnitReservationState.PENDING
+      {
+        state: {
+          $in: [UnitReservationState.SEND, UnitReservationState.ACCEPT_BY_ADMIN]
+        }
+      },
+      {
+        pending: true,
+        note: 'هذا الطلب معلق بسبب الموافقة على طلب اخر متضارب معه فى التوقيت.'
+      }
     );
+
     return { result: 'success' };
   };
 
@@ -44,44 +53,48 @@ module.exports = (/* but your inject here */) => {
         Done: getting all request that is pending 
         TODO need to debug:and have no intersect with accepted request and made it "send"
   */
-  const refuseActionFromOwner = async (requestId, note) => {
+  const refuseAction = async (requestId, note) => {
     await Models.updateOneById({
       id: requestId,
       update: {
-        state: UnitReservationState.refuseActionFromOwner,
+        state: UnitReservationState.REFUSED,
         note
       }
     });
     const request = await UnitReservationEntity.loadEntityFromDbById(requestId);
 
-    const intersectedWithPendingState = request.gettingIntersectWithFilter({
-      state: UnitReservationState.PENDING
-    });
+    const intersectedWithPendingState = await request.gettingIntersectWithFilter(
+      {
+        pending: true
+      }
+    );
     const lengthOfInvalidResultPromises = [];
+
     intersectedWithPendingState.forEach(request_ => {
       lengthOfInvalidResultPromises.push(
         request_.gettingIntersectWithFilter({
           state: {
             $in: [
-              UnitReservationState.ACCEPT_BY_OWNER,
-              UnitReservationState.PAYED,
-              UnitReservationState.RECEIVED
+              UnitReservationState.ACCEPT_BY_OWNER
+              // UnitReservationState.PAYED,
+              // UnitReservationState.RECEIVED
             ]
           }
         })
       );
     });
+
     const resultOfInvalidResult = await Promise.all(
       lengthOfInvalidResultPromises
     );
     resultOfInvalidResult.forEach((el, indx) => {
       if (el.length <= 0) {
-        intersectedWithPendingState[indx].state = UnitReservationState.SEND;
-        intersectedWithPendingState[indx].update();
+        intersectedWithPendingState[indx].pending = false;
+        intersectedWithPendingState[indx].updateState();
       }
     });
 
-    return { result: 'success' };
+    return { result: 'refuse success' };
   };
   /*
  8 - renter accept pay
@@ -94,15 +107,49 @@ module.exports = (/* but your inject here */) => {
     await request.updateState();
     await request.gettingIntersectAndUpdateState(
       {},
-      UnitReservationState.REFUSED
+      { state: UnitReservationState.REFUSED }
     );
     return { result: 'Payed success' };
   };
 
+  const acceptRequestFromHouseOwner = async (requestId, owner) => {
+    const request = await Models.getOne({ query: { _id: requestId } });
+    if (!request) {
+      throw new ApplicationError('there is no request with this id', 404);
+    }
+    const unit = await getUnitDetails(request.unit);
+    if (owner.toString() === unit.userId.toString()) {
+      const result = await acceptRequestWaitingPay(requestId);
+      return result;
+    }
+    throw new ApplicationError(
+      'the owner of this unit not the acceptance of request',
+      403
+    );
+  };
+
+  const refuseRequestFromHouseOwner = async (requestId, owner, note) => {
+    const request = await Models.getOne({ query: { _id: requestId } });
+    if (!request) {
+      throw new ApplicationError('there is no request with this id', 404);
+    }
+
+    const unit = await getUnitDetails(request.unit);
+
+    if (owner.toString() === unit.userId.toString()) {
+      const result = await refuseAction(requestId, note);
+      return result;
+    }
+
+    throw new ApplicationError(
+      'the owner of this unit not the refuser of request',
+      403
+    );
+  };
   return {
-    acceptRequestFromAdmin,
-    acceptRequestFromOwner,
-    refuseActionFromOwner,
+    passRequestToHouseOwner,
+    acceptRequestFromHouseOwner,
+    refuseRequestFromHouseOwner,
     renterPayRequest
   };
 };

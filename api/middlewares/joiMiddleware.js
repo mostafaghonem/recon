@@ -6,6 +6,7 @@ const validate = (validationSchema, reqPart = 'body') => {
     const validation = Joi.validate(req[reqPart], validationSchema, {
       abortEarly: false
     });
+
     if (validation.error) {
       const errors = [];
       validation.error.details.forEach(elem => {

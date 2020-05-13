@@ -2,7 +2,11 @@ const unitReservationSchema = require('../Schema');
 const _GenericModel = require('../../shared/models/GenericModel');
 const { UnitReservationState } = require('../../../shared/constants');
 
-module.exports = ({ GenericModel = _GenericModel }) => {
+module.exports = ({
+  GenericModel = _GenericModel,
+  ObjectId,
+  unitReservationState
+}) => {
   class UserModel extends GenericModel {
     // constructor(DbAccess = scheme) {
     //   super(DbAccess);
@@ -32,6 +36,43 @@ module.exports = ({ GenericModel = _GenericModel }) => {
           unit: unitId,
           from: { $lte: +start }
         }
+      });
+    }
+
+    async gettingRequestForUnit(unitId) {
+      return this.getAggregate({
+        arrayOfFilter: [
+          {
+            $match: {
+              unit: ObjectId(unitId),
+              state: {
+                $nin: [
+                  UnitReservationState.SEND,
+                  UnitReservationState.REFUSED,
+                  UnitReservationState.CANCEL
+                ]
+              }
+            }
+          },
+          {
+            $lookup: {
+              from: 'users',
+              localField: 'renter',
+              foreignField: '_id',
+              as: 'renter'
+            }
+          },
+          { $unwind: '$renter' },
+          {
+            $lookup: {
+              from: 'units',
+              localField: 'unit',
+              foreignField: '_id',
+              as: 'unit'
+            }
+          },
+          { $unwind: '$unit' }
+        ]
       });
     }
   }

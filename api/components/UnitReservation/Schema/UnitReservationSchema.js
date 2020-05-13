@@ -35,8 +35,11 @@ module.exports = ({ requestStates }) => {
         default: requestStates.SEND
       },
       note: {
-        type: String,
-        default: 'there is an request accept in your time before'
+        type: String
+      },
+      pending: {
+        type: Boolean,
+        default: false
       }
     },
     {

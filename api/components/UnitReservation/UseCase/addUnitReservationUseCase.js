@@ -1,5 +1,7 @@
 // const UnitReservationModel = require('../Models/UnitReservationModel');
 const Model = require('../Models');
+const { UnitReservationEntity } = require('../Entity');
+const { UnitReservationState } = require('../../../shared/constants/defaults');
 
 /**
     1 - getting un-available times over single unit
@@ -32,7 +34,10 @@ module.exports = (
    if this monthly you need to cal amount of 
    */
   const returnAllCostForUnit = async (unitId, from, to) => {
-    const result = await calculateCost(unitId, from, to);
+    const result = await calculateCost({ unitId, from, to });
+    if (!result) {
+      return new Error("can't get the cost of this unit.");
+    }
     return result;
   };
 
@@ -47,24 +52,20 @@ module.exports = (
     renderId,
     comingOne /** {unit, from , to} */
   ) => {
-    // console.log(renderId);
-    // console.log(comingOne);
     const checkValid = await Model.checkAddingNewReservation(
       comingOne.unit,
       comingOne
     );
+
     if (checkValid && comingOne.from < comingOne.to) {
-      const cost = calculateCost(comingOne.unit);
+      const cost = await calculateCost({
+        unitId: comingOne.unit,
+        from: comingOne.from,
+        to: comingOne.to
+      });
+
       const unitDetail = await getUnitDetail(comingOne.unit);
-      // console.log(unitDetail);
-      // console.log('888888888888888');
-      // console.log({
-      //   ...comingOne,
-      //   renter: renderId,
-      //   cost,
-      //   owner: unitDetail.userId
-      // });
-      // throw new Error();
+
       const result = await Model.createOne({
         document: {
           ...comingOne,
@@ -78,9 +79,54 @@ module.exports = (
     return { error: { message: 'not valid time', statusCode: 401 } };
   };
 
+  const cancelRequest = async requestId => {
+    const request = await UnitReservationEntity.loadEntityFromDbById(requestId);
+    if (request.state === UnitReservationState.ACCEPT_BY_OWNER) {
+      const intersectedWithPendingState = await request.gettingIntersectWithFilter(
+        {
+          pending: true
+        }
+      );
+      const lengthOfInvalidResultPromises = [];
+
+      intersectedWithPendingState.forEach(request_ => {
+        lengthOfInvalidResultPromises.push(
+          request_.gettingIntersectWithFilter({
+            state: {
+              $in: [
+                UnitReservationState.ACCEPT_BY_OWNER
+                // UnitReservationState.PAYED,
+                // UnitReservationState.RECEIVED
+              ]
+            }
+          })
+        );
+      });
+
+      const resultOfInvalidResult = await Promise.all(
+        lengthOfInvalidResultPromises
+      );
+
+      resultOfInvalidResult.forEach((el, indx) => {
+        if (el.length <= 0) {
+          intersectedWithPendingState[indx].pending = false;
+          intersectedWithPendingState[indx].updateState();
+        }
+      });
+    }
+    await Model.updateOneById({
+      id: requestId,
+      update: {
+        state: UnitReservationState.CANCEL
+      }
+    });
+    return 'cancel success';
+  };
+
   return {
     returnAllUnAvailableTimesForUnit,
     returnAllCostForUnit,
-    addingRequestToUnit
+    addingRequestToUnit,
+    cancelRequest
   };
 };

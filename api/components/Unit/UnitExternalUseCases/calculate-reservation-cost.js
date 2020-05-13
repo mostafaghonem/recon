@@ -1,24 +1,37 @@
 /* eslint-disable no-unused-vars */
+const moment = require('moment');
+
 //! only require Entity/model
 const model = require('../Models');
+const { PRICE_PER } = require('../../../shared/constants/defaults');
 
 // should have no implementation for any specific orm
 
 module.exports = ({ ApplicationError, logger, _ }) => async ({
-  hostelId,
-  fromts,
-  tots,
-  rooms
+  unitId,
+  from,
+  to
 }) => {
   try {
-    let cost = 0;
     const query = {
-      _id: hostelId,
+      _id: unitId,
       isArchived: false
     };
-    const select = 'rooms';
-    const checkExistence = await model.getOne({ query, select });
-    return 0;
+
+    const checkExistence = await model.getOne({ query });
+
+    if (checkExistence) {
+      const fromDate = moment(from, 'x');
+      const toDate = moment(to, 'x');
+      const numberOfPeriod =
+        toDate.diff(
+          fromDate,
+          checkExistence.dailyOrMonthly === PRICE_PER.DAY ? 'days' : 'months'
+        ) + 1;
+
+      return numberOfPeriod * checkExistence.pricePerPerson;
+    }
+    return undefined;
   } catch (error) {
     return false;
   }

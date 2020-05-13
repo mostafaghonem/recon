@@ -41,13 +41,21 @@
 
 */
 const addingUnitReservationMaker = require('./addUnitReservationUseCase');
-const { getUnit } = require('../../Unit/UnitExternalUseCases');
+const getUnitReservationUseCase = require('./getUnitReservationUseCase');
+const actionOverUnitReservationUseCaseMaker = require('./actionOverUnitReservationUseCase');
+
+const {
+  getUnit,
+  calculateReservationCost
+} = require('../../Unit/UnitExternalUseCases');
 
 module.exports = {
   addUnitReservationUseCase: addingUnitReservationMaker({
-    calculateCost: (from, to, unit) => {
-      return 0;
-    },
+    calculateCost: calculateReservationCost,
     getUnitDetail: getUnit
+  }),
+  getUnitReservationUseCase: getUnitReservationUseCase(),
+  reservationUnitAction: actionOverUnitReservationUseCaseMaker({
+    getUnitDetails: getUnit
   })
 };
