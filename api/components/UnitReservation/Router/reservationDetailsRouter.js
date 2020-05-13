@@ -12,7 +12,7 @@ module.exports = ({ validation }) => {
   const router = express.Router({ mergeParams: true });
 
   router.get(
-    '/house-owner-pending-request/:unitId',
+    '/house-owner-requests/:unitId',
     [
       authenticateMiddleware,
       authorizeMiddleware([PERMISSIONS.HOUSE_OWNER]),

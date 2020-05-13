@@ -1,5 +1,7 @@
 // const UnitReservationModel = require('../Models/UnitReservationModel');
 const Model = require('../Models');
+const { UnitReservationEntity } = require('../Entity');
+const { UnitReservationState } = require('../../../shared/constants/defaults');
 
 /**
     1 - getting un-available times over single unit
@@ -77,9 +79,54 @@ module.exports = (
     return { error: { message: 'not valid time', statusCode: 401 } };
   };
 
+  const cancelRequest = async requestId => {
+    const request = await UnitReservationEntity.loadEntityFromDbById(requestId);
+    if (request.state === UnitReservationState.ACCEPT_BY_OWNER) {
+      const intersectedWithPendingState = await request.gettingIntersectWithFilter(
+        {
+          pending: true
+        }
+      );
+      const lengthOfInvalidResultPromises = [];
+
+      intersectedWithPendingState.forEach(request_ => {
+        lengthOfInvalidResultPromises.push(
+          request_.gettingIntersectWithFilter({
+            state: {
+              $in: [
+                UnitReservationState.ACCEPT_BY_OWNER
+                // UnitReservationState.PAYED,
+                // UnitReservationState.RECEIVED
+              ]
+            }
+          })
+        );
+      });
+
+      const resultOfInvalidResult = await Promise.all(
+        lengthOfInvalidResultPromises
+      );
+
+      resultOfInvalidResult.forEach((el, indx) => {
+        if (el.length <= 0) {
+          intersectedWithPendingState[indx].pending = false;
+          intersectedWithPendingState[indx].updateState();
+        }
+      });
+    }
+    await Model.updateOneById({
+      id: requestId,
+      update: {
+        state: UnitReservationState.CANCEL
+      }
+    });
+    return 'cancel success';
+  };
+
   return {
     returnAllUnAvailableTimesForUnit,
     returnAllCostForUnit,
-    addingRequestToUnit
+    addingRequestToUnit,
+    cancelRequest
   };
 };

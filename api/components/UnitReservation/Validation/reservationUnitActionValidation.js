@@ -7,7 +7,8 @@ const houserOwnerDissection = {
   reservationRequestId: Joi.string()
     .regex(ObjectIdPattern, 'Object Id')
     .required(),
-  acceptRefuseFlag: Joi.bool().required()
+  acceptRefuseFlag: Joi.bool().required(),
+  note: Joi.string()
 };
 
 module.exports = {

@@ -1,5 +1,5 @@
 const express = require('express');
-const { requestDetailsController } = require('../Controller');
+const { reservationUnitActionController } = require('../Controller');
 
 const authorizeMiddleware = require('../../../middlewares/authorizeMiddleware');
 const authenticateMiddleware = require('../../../middlewares/authenticateMiddleware');
@@ -8,7 +8,7 @@ const { reservationUnitActionValidation } = require('../Validation');
 
 const { houserOwnerDissection } = reservationUnitActionValidation;
 module.exports = ({ validation }) => {
-  // before routes /api/unit-reservation/reservation-actions
+  // before routes /api/unit-reservation/reservation-action
   const router = express.Router({ mergeParams: true });
 
   router.post(
@@ -18,7 +18,7 @@ module.exports = ({ validation }) => {
       authorizeMiddleware([PERMISSIONS.HOUSE_OWNER]),
       validation(houserOwnerDissection, 'body')
     ],
-    requestDetailsController.getHouseOwnerRequests
+    reservationUnitActionController.houseOwnerDissection
   );
 
   return router;

@@ -9,7 +9,7 @@ const Model = require('../Models/index');
 // Inject dependency !no-requires
 const buildUserEntity = () => {
   class UnitReservation {
-    constructor(
+    constructor({
       renter = '',
       owner = '',
       unit = '',
@@ -17,8 +17,10 @@ const buildUserEntity = () => {
       to = '',
       cost = '',
       state = '',
+      pending = false,
       _id = ObjectId()
-    ) {
+    }) {
+      this.pending = pending;
       this.id = _id;
       this.renter = renter;
       this.owner = owner;
@@ -31,7 +33,8 @@ const buildUserEntity = () => {
 
     static async loadEntityFromDbById(id) {
       const exists = await Model.getOneById({ id });
-      if (exists) return new UnitReservation({ ...exists });
+
+      if (exists) return new UnitReservation(exists);
       return undefined;
     }
 
@@ -51,18 +54,19 @@ const buildUserEntity = () => {
     // here you need to adding shared method
     // like:
     // 1 - getting all request intersect with the same request
-    async gettingIntersectAndUpdateState(filter, newState) {
+    async gettingIntersectAndUpdateState(filter, updateObj) {
       const newFilter = {
         ...{
+          _id: { $ne: this.id },
           unit: this.unit,
-          from: { $lte: this.from },
-          to: { $gte: this.to }
+          from: { $lte: this.to },
+          to: { $gte: this.from }
         },
         ...filter
       };
       const ret = await Model.updateManyByFilter({
         filter: newFilter,
-        update: { state: newState }
+        update: updateObj
       });
       return ret;
     }
@@ -70,28 +74,35 @@ const buildUserEntity = () => {
     async gettingIntersectWithFilter(filter) {
       const newFilter = {
         ...{
+          _id: { $ne: this.id },
           unit: this.unit,
-          from: { $lte: this.from },
-          to: { $gte: this.to }
+          from: { $lte: this.to },
+          to: { $gte: this.from }
         },
         ...filter
       };
+
       let ret = await Model.getMany({
-        filter: newFilter
+        query: newFilter
       });
-      ret = ret.forEach(request => {
+
+      ret = ret.map(request => {
         return new UnitReservation(request);
       });
       return ret;
     }
 
     async updateState() {
-      Model.updateOneById({ id: this.id, update: this.toJson() });
+      await Model.updateOneById({
+        id: this.id,
+        update: this.toJson()
+      });
     }
 
     toJson() {
       return {
-        state: this.state
+        state: this.state,
+        pending: this.pending
       };
     }
   }

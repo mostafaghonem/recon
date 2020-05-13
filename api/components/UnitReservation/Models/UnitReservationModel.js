@@ -43,7 +43,16 @@ module.exports = ({
       return this.getAggregate({
         arrayOfFilter: [
           {
-            $match: { unit: ObjectId(unitId), state: unitReservationState.SEND }
+            $match: {
+              unit: ObjectId(unitId),
+              state: {
+                $nin: [
+                  UnitReservationState.SEND,
+                  UnitReservationState.REFUSED,
+                  UnitReservationState.CANCEL
+                ]
+              }
+            }
           },
           {
             $lookup: {
