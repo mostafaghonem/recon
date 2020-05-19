@@ -65,14 +65,27 @@ module.exports = (
       });
 
       const unitDetail = await getUnitDetail(comingOne.unit);
-
-      const result = await Model.createOne({
-        document: {
-          ...comingOne,
-          renter: renderId,
-          cost,
-          owner: unitDetail.userId
+      const requestData = {
+        ...comingOne,
+        renter: renderId,
+        cost,
+        owner: unitDetail.userId
+      };
+      const request = new UnitReservationEntity(requestData);
+      const intersectRequest = await request.gettingIntersectWithFilter({
+        state: {
+          $in: [
+            UnitReservationState.ACCEPT_BY_OWNER,
+            UnitReservationState.PAYED
+          ]
         }
+      });
+      // check if have intersect with request ABO or PAYED and made it pending
+      if (intersectRequest) {
+        requestData.pending = true;
+      }
+      const result = await Model.createOne({
+        document: requestData
       });
       return { result };
     }

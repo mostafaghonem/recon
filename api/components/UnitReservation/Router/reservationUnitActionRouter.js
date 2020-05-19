@@ -6,19 +6,59 @@ const authenticateMiddleware = require('../../../middlewares/authenticateMiddlew
 const { PERMISSIONS } = require('../../../shared/constants/defaults');
 const { reservationUnitActionValidation } = require('../Validation');
 
-const { houserOwnerDissection } = reservationUnitActionValidation;
+const { houserOwnerDissection, requestId } = reservationUnitActionValidation;
 module.exports = ({ validation }) => {
   // before routes /api/unit-reservation/reservation-action
   const router = express.Router({ mergeParams: true });
 
   router.post(
-    '/house-owner-dissection',
+    '/house-owner-decision',
     [
       authenticateMiddleware,
       authorizeMiddleware([PERMISSIONS.HOUSE_OWNER]),
       validation(houserOwnerDissection, 'body')
     ],
-    reservationUnitActionController.houseOwnerDissection
+    reservationUnitActionController.houseOwnerDecision
+  );
+
+  router.post(
+    '/admin-decision',
+    [
+      authenticateMiddleware,
+      authorizeMiddleware([PERMISSIONS.ADMIN]),
+      validation(houserOwnerDissection, 'body')
+    ],
+    reservationUnitActionController.houseOwnerDecision
+  );
+
+  router.post(
+    '/admin-pass-request-to-house-owner/:requestId',
+    [
+      authenticateMiddleware,
+      authorizeMiddleware([PERMISSIONS.ADMIN]),
+      validation(requestId, 'params')
+    ],
+    reservationUnitActionController.adminAcceptPassRequestToHouseOwner
+  );
+
+  router.post(
+    '/renter-cancel/:requestId',
+    [
+      authenticateMiddleware,
+      authorizeMiddleware([PERMISSIONS.RENTER]),
+      validation(requestId, 'params')
+    ],
+    reservationUnitActionController.renterCancelRequest
+  );
+
+  router.post(
+    '/receive-unit/:requestId',
+    [
+      authenticateMiddleware,
+      authorizeMiddleware([PERMISSIONS.RENTER]),
+      validation(requestId, 'params')
+    ],
+    reservationUnitActionController.renterReceivedUnit
   );
 
   return router;
