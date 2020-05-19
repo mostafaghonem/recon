@@ -10,13 +10,30 @@
 const moment = require('moment');
 const UnitReservationModel = require('../Models');
 
-const { PRICE_PER } = require('../../../shared/constants/defaults');
+const {
+  PRICE_PER,
+  UnitReservationState
+} = require('../../../shared/constants/defaults');
 
 module.exports = (/* but your inject here */) => {
   const returnAllRequestForAdmin = async () => {};
   // this one should be external ----------------one---------------
   const returnNumberOfRequestForAdmin = async (/* unitId, from, to */) => {};
-  const returnRequestForRenter = async (/* renterId */) => {};
+
+  const returnRequestForRenter = async renterId => {
+    const arr = await UnitReservationModel.gettingRequestOfRenter(renterId);
+    for (let i = 0; i < arr.length; i++) {
+      const request = arr[i];
+      if (
+        request.state !== UnitReservationState.PAYED ||
+        request.state !== UnitReservationState.RECEIVED
+      ) {
+        delete request.owner;
+      }
+    }
+    return arr;
+  };
+
   const getPendingRequestForHouseOwner = async unitId => {
     let arr = await UnitReservationModel.gettingRequestForUnit(unitId);
 

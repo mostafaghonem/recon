@@ -11,6 +11,13 @@ const houserOwnerDissection = {
   note: Joi.string()
 };
 
+const requestId = {
+  requestId: Joi.string()
+    .regex(ObjectIdPattern, 'Object Id')
+    .required()
+};
+
 module.exports = {
-  houserOwnerDissection
+  houserOwnerDissection,
+  requestId
 };

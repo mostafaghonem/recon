@@ -21,5 +21,11 @@ module.exports = ({ validation }) => {
     requestDetailsController.getHouseOwnerRequests
   );
 
+  router.get(
+    '/renter-requests',
+    [authenticateMiddleware, authorizeMiddleware([PERMISSIONS.RENTER])],
+    requestDetailsController.getRenterRequests
+  );
+
   return router;
 };
