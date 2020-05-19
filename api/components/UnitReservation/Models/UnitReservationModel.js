@@ -78,7 +78,8 @@ module.exports = ({ GenericModel = _GenericModel, ObjectId }) => {
         arrayOfFilter: [
           {
             $match: {
-              renter: ObjectId(renterId)
+              renter: ObjectId(renterId),
+              state: { $nin: [UnitReservationState.CANCEL] }
             }
           },
           {
