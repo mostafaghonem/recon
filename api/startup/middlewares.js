@@ -54,7 +54,9 @@ module.exports = app => {
             .replace('www.', '')
             .replace('http://', '')
             .replace('https://', '');
-          const origins = new RegExp(`\\.${base.replace(/\./g, '\\.')}$`);
+          const origins = new RegExp(
+            `\\.${base.replace(/\./g, '\\.')} | localhost:*$`
+          );
           return callback(null, origins);
         }
         return callback(null, true);
