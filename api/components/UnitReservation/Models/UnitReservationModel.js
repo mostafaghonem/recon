@@ -103,6 +103,55 @@ module.exports = ({ GenericModel = _GenericModel, ObjectId }) => {
         ]
       });
     }
+
+    async gettingRequestForAmin(limit, skip, search, states) {
+      return this.getAggregate({
+        arrayOfFilter: [
+          {
+            $match: {
+              state: { $in: states }
+            }
+          },
+
+          {
+            $lookup: {
+              from: 'users',
+              localField: 'owner',
+              foreignField: '_id',
+              as: 'owner'
+            }
+          },
+          { $unwind: '$owner' },
+          {
+            $lookup: {
+              from: 'units',
+              localField: 'unit',
+              foreignField: '_id',
+              as: 'unit'
+            }
+          },
+          { $unwind: '$unit' },
+          {
+            $lookup: {
+              from: 'users',
+              localField: 'renter',
+              foreignField: '_id',
+              as: 'renter'
+            }
+          },
+
+          {
+            $match: { ...search }
+          },
+          {
+            $sort: { updatedAt: -1 }
+          },
+          { $unwind: '$renter' },
+          { $limit: skip + limit },
+          { $skip: skip }
+        ]
+      });
+    }
   }
   return new UserModel(unitReservationSchema);
 };

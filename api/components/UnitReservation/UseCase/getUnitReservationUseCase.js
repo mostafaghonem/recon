@@ -9,6 +9,7 @@
 */
 const moment = require('moment');
 const UnitReservationModel = require('../Models');
+const sharedSearch = require('../../../shared/services/sharedSearch');
 
 const {
   PRICE_PER,
@@ -34,10 +35,8 @@ module.exports = (/* but your inject here */) => {
     return arr;
   };
 
-  const getPendingRequestForHouseOwner = async unitId => {
-    let arr = await UnitReservationModel.gettingRequestForUnit(unitId);
-
-    arr = arr.map(result => {
+  const changePeriod = arr => {
+    return arr.map(result => {
       const fromDate = moment(result.from, 'x');
       const toDate = moment(result.to, 'x');
       const numberOfPeriod =
@@ -47,13 +46,37 @@ module.exports = (/* but your inject here */) => {
         ) + 1;
       return { ...result, numberOfPeriod, per: result.unit.dailyOrMonthly };
     });
+  };
+
+  const getPendingRequestForHouseOwner = async unitId => {
+    let arr = await UnitReservationModel.gettingRequestForUnit(unitId);
+    arr = changePeriod(arr);
     return arr;
+  };
+
+  const getAdminRequest = async (limit, skip, search, stateArray) => {
+    console.log(stateArray, '444444444');
+    const searchQuery = sharedSearch(search, [
+      { value: 'renter.fullName' },
+      { value: 'owner.fullName' },
+      { value: 'unit.address.street' }
+    ]);
+    let arr = await UnitReservationModel.gettingRequestForAmin(
+      limit,
+      skip,
+      searchQuery,
+      stateArray
+    );
+    arr = changePeriod(arr);
+    const total = await UnitReservationModel.count({ filter: {} });
+    return { total, result: arr };
   };
 
   return {
     returnAllRequestForAdmin,
     returnNumberOfRequestForAdmin,
     returnRequestForRenter,
-    getPendingRequestForHouseOwner
+    getPendingRequestForHouseOwner,
+    getAdminRequest
   };
 };

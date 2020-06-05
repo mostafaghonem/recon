@@ -28,7 +28,7 @@ module.exports = ({ validation }) => {
       authorizeMiddleware([PERMISSIONS.ADMIN]),
       validation(houserOwnerDissection, 'body')
     ],
-    reservationUnitActionController.houseOwnerDecision
+    reservationUnitActionController.adminDecision
   );
 
   router.post(
