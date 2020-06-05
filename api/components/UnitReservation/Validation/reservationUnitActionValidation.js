@@ -8,7 +8,7 @@ const houserOwnerDissection = {
     .regex(ObjectIdPattern, 'Object Id')
     .required(),
   acceptRefuseFlag: Joi.bool().required(),
-  note: Joi.string()
+  note: Joi.string().optional()
 };
 
 const requestId = {

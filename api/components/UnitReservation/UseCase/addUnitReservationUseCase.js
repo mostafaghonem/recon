@@ -81,7 +81,7 @@ module.exports = (
         }
       });
       // check if have intersect with request ABO or PAYED and made it pending
-      if (intersectRequest) {
+      if (intersectRequest && intersectRequest.length) {
         requestData.pending = true;
       }
       const result = await Model.createOne({

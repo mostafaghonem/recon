@@ -6,7 +6,10 @@ const authenticateMiddleware = require('../../../middlewares/authenticateMiddlew
 const { PERMISSIONS } = require('../../../shared/constants/defaults');
 const { reservationDetailsValidation } = require('../Validation');
 
-const { houseOwnerPendingRequests } = reservationDetailsValidation;
+const {
+  houseOwnerPendingRequests,
+  stateValidation
+} = reservationDetailsValidation;
 module.exports = ({ validation }) => {
   // before routes /api/unit-reservation/reservation-details
   const router = express.Router({ mergeParams: true });
@@ -25,6 +28,16 @@ module.exports = ({ validation }) => {
     '/renter-requests',
     [authenticateMiddleware, authorizeMiddleware([PERMISSIONS.RENTER])],
     requestDetailsController.getRenterRequests
+  );
+
+  router.get(
+    '/admin-requests',
+    [
+      authenticateMiddleware,
+      authorizeMiddleware([PERMISSIONS.ADMIN]),
+      validation(stateValidation, 'query')
+    ],
+    requestDetailsController.getAdminRequests
   );
 
   return router;
