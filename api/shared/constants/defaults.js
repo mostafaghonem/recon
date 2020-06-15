@@ -144,6 +144,13 @@ module.exports = {
     DOUBLE: 'double',
     TRIPLE: 'triple'
   },
+  OFFICES_TYPES: {
+    FULL: 'full',
+    DECK: 'deck',
+    PRIVATE: 'private',
+    SHARED: 'shared',
+    VIRTUAL: 'virtual'
+  },
   PRICE_PER: {
     DAY: 'day',
     MONTH: 'month'
@@ -153,6 +160,10 @@ module.exports = {
     USD: 'usd'
   },
   ROOMS_STATUS: {
+    AVAILABLE: 'available',
+    BOOKED: 'booked'
+  },
+  OFFICES_STATUS: {
     AVAILABLE: 'available',
     BOOKED: 'booked'
   },
@@ -201,5 +212,46 @@ module.exports = {
   SORT_VALUES: {
     ASC: 1,
     DESC: -1
+  },
+  OFFICEFREESERVICES: {
+    FREE_PARKING: 'free_parking',
+    TEA_COFFEE: 'tea_coffee',
+    FREE_WIFI: 'free_wifi',
+    TOWELS_INCLUDED: 'towels_included',
+    CALL_CENTER: 'call_center'
+  },
+  OFFICEGENERALSERVICES: {
+    SECURITY_LOCKERS: 'security_lockers',
+    SAFE_DEPOSIT_BOX: 'safe_deposit_box',
+    FRIDGE_FREEZER: 'fridge_freezer',
+    AIR_CONDITIONING: 'air_conditioning',
+    COOKER: 'cooker',
+    MINI_SUPERMARKET: 'mini_supermarket',
+    TEA_COFFEE: 'tea_coffee',
+    SELF_CATERING_FACILITIES: 'self_catering_facilities'
+  },
+  OFFICESERVICES: {
+    OFFICE_CLEANING_AND_MAINTENANCE: 'office_cleaning_and_maintenance',
+    COMMUNAL_KITCHEN_WITH_TEA_AND_COFFEE:
+      'communal_kitchen_with_tea_and_coffee',
+    BUSINESS_LOUNGE_AND_SMALLER_BREAK_OUT_AREA:
+      'business_lounge_and_smaller_break_out_area',
+    ACCESS_TO_A_PRINTER: 'access_to_a_printer',
+    SCANNER_AND_PHOTOCOPIER: 'scanner_and_photocopier',
+    STAFFED_RECEPTION_AND_MAIL_HANDLING_INCLUDED:
+      'staffed_reception_and_mail_handling_included',
+    SELF_CATERING_FACILITIES: 'self_catering_facilities',
+    RECEPTIONIST_TO_GREET_GUESTS: 'receptionist_to_greet_guests',
+    ALL_UTILITY_COSTS_INCLUDED: 'all_utility_costs_included',
+    Convenient_locations_in_the_places_you_do_business:
+      'convenient_locations_in_the_places_you_do_business',
+    USE_OF_COMMUNITY_MEETING_ROOMS_BY_THE_HOUR:
+      'use_of_community_meeting_rooms_by_the_hour'
+  },
+  OFFICEENTERTAINMENTSERVICES: {
+    BOARD_GAMES: 'board_games',
+    GAMES_ROOM: 'games_room',
+    DVDS: 'dvds',
+    POOL_TABLE: 'pool_table'
   }
 };

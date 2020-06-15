@@ -20,6 +20,5 @@ module.exports = permissions => (req, res, next) => {
       .status(403)
       .json({ message: 'unAuthorized to access this api ' });
   }
-
   return next();
 };

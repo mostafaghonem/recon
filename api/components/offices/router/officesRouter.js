@@ -1,18 +1,18 @@
 const express = require('express');
 const {
-  addHostelValidation,
-  addHostelRoomsValidation,
-  hideHostelValidation,
-  unhideHostelValidation,
+  addOfficeValidation,
+  addOfficeOfficesValidation,
+  hideOfficeValidation,
+  unhideOfficeValidation,
   getAvailabilityData,
-  deleteHostelValidation,
-  getHostels,
-  getRecommendedHostels,
-  getHostel,
-  editHostel,
-  editHostelRooms,
-  editHostelAvailability,
-  rateHostel
+  deleteOfficeValidation,
+  getOffices,
+  getRecommendedOffices,
+  getOffice,
+  editOffice,
+  editOfficeOffices,
+  editOfficeAvailability,
+  rateOffice
 } = require('../validations');
 
 const router = express.Router();
@@ -33,19 +33,20 @@ router.post(
   [
     authenticateMiddleware,
     authorizeMiddleware([PERMISSIONS.HOUSE_OWNER]),
-    validateMiddleware(addHostelValidation)
+    validateMiddleware(addOfficeValidation)
   ],
-  controllers.addHostel
+  controllers.addOffice
 );
 
 router.post(
-  '/rooms',
+  '/offices',
   [
     authenticateMiddleware,
     authorizeMiddleware([PERMISSIONS.HOUSE_OWNER]),
-    validateMiddleware(addHostelRoomsValidation)
+    validateMiddleware(addOfficeOfficesValidation)
+    // authorizeMiddleware([PERMISSIONS.HOUSE_OWNER])
   ],
-  controllers.addHostelRooms
+  controllers.addOfficeOffices
 );
 
 router.put(
@@ -53,9 +54,10 @@ router.put(
   [
     authenticateMiddleware,
     authorizeMiddleware([PERMISSIONS.HOUSE_OWNER]),
-    validateMiddleware(hideHostelValidation)
+    validateMiddleware(hideOfficeValidation)
+    // authorizeMiddleware([PERMISSIONS.HOUSE_OWNER])
   ],
-  controllers.hideHostel
+  controllers.hideOffice
 );
 
 router.put(
@@ -63,9 +65,10 @@ router.put(
   [
     authenticateMiddleware,
     authorizeMiddleware([PERMISSIONS.HOUSE_OWNER]),
-    validateMiddleware(unhideHostelValidation)
+    validateMiddleware(unhideOfficeValidation)
+    // authorizeMiddleware([PERMISSIONS.HOUSE_OWNER])
   ],
-  controllers.unhideHostel
+  controllers.unhideOffice
 );
 
 router.delete(
@@ -73,35 +76,36 @@ router.delete(
   [
     authenticateMiddleware,
     authorizeMiddleware([PERMISSIONS.HOUSE_OWNER]),
-    validateMiddleware(deleteHostelValidation)
+    validateMiddleware(deleteOfficeValidation)
+    // authorizeMiddleware([PERMISSIONS.HOUSE_OWNER])
   ],
-  controllers.deleteHostel
+  controllers.deleteOffice
 );
 
 router.get(
   '/',
-  [validateMiddleware(getHostels), visaMiddleware],
-  controllers.getHostels
+  [validateMiddleware(getOffices), visaMiddleware],
+  controllers.getOffices
 );
 
 router.get(
   '/recommended',
   [
-    validateMiddleware(getRecommendedHostels)
+    validateMiddleware(getRecommendedOffices)
     // authenticateMiddleware,
     // authorizeMiddleware([PERMISSIONS.RENTER])
   ],
-  controllers.getRecommendedHostels
+  controllers.getRecommendedOffices
 );
 
 router.get(
   '/:id',
   [
-    validateMiddleware(getHostel),
+    validateMiddleware(getOffice),
     visaMiddleware
     // authorizeMiddleware([PERMISSIONS.RENTER])
   ],
-  controllers.getHostel
+  controllers.getOffice
 );
 
 router.post(
@@ -109,9 +113,9 @@ router.post(
   [
     authenticateMiddleware,
     authorizeMiddleware([PERMISSIONS.RENTER]),
-    validateMiddleware(rateHostel)
+    validateMiddleware(rateOffice)
   ],
-  controllers.ratehostel
+  controllers.rateoffice
 );
 
 router.put(
@@ -119,9 +123,9 @@ router.put(
   [
     authenticateMiddleware,
     authorizeMiddleware([PERMISSIONS.HOUSE_OWNER, PERMISSIONS.ADMIN]),
-    validateMiddleware(editHostel)
+    validateMiddleware(editOffice)
   ],
-  controllers.editHostel
+  controllers.editOffice
 );
 
 router.put(
@@ -129,9 +133,9 @@ router.put(
   [
     authenticateMiddleware,
     authorizeMiddleware([PERMISSIONS.HOUSE_OWNER, PERMISSIONS.ADMIN]),
-    validateMiddleware(editHostelAvailability)
+    validateMiddleware(editOfficeAvailability)
   ],
-  controllers.editHostelAvailability
+  controllers.editOfficeAvailability
 );
 
 router.get(
@@ -145,13 +149,13 @@ router.get(
 );
 
 router.put(
-  '/rooms',
+  '/offices',
   [
     authenticateMiddleware,
     authorizeMiddleware([PERMISSIONS.HOUSE_OWNER, PERMISSIONS.ADMIN]),
-    validateMiddleware(editHostelRooms)
+    validateMiddleware(editOfficeOffices)
   ],
-  controllers.editHostelRooms
+  controllers.editOfficeOffices
 );
 
 module.exports = router;
