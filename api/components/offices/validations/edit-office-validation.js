@@ -14,9 +14,9 @@ module.exports = ({
 }) => ({ body }) => {
   const error = {};
   const scheme = {
-    hostelId: {
-      value: body.hostelId,
-      rules: new Builder().required('you should provide hostelId').rules
+    officeId: {
+      value: body.officeId,
+      rules: new Builder().required('you should provide officeId').rules
     },
     name: {
       value: body.name,
@@ -160,8 +160,8 @@ module.exports = ({
     const ele = scheme[key];
     const { errors, isValid } = ValidatorHelper(ele.value, ele.rules);
     if (!isValid) error[key] = errors;
-    if (key === 'hostelId' && ele.value && !ObjectId.isValid(ele.value))
-      error[key] = ['hostelId should be a valid ObjectId'];
+    if (key === 'officeId' && ele.value && !ObjectId.isValid(ele.value))
+      error[key] = ['officeId should be a valid ObjectId'];
   });
 
   return {
