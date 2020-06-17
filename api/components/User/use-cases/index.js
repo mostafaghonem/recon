@@ -21,6 +21,12 @@ const {
   getHouseOwnerHostel,
   getUserHostelsCount
 } = require('../../hostels/hostels-external-use-cases');
+
+const {
+  getUserOffices,
+  getHouseOwnerOffice,
+  getUserOfficesCount
+} = require('../../offices/offices-external-use-cases');
 const {
   getReservedRoomCountByHotels
 } = require('../../HostelReservation/hostel-reservation-external-use-cases');
@@ -55,6 +61,9 @@ const makeGetHouseOwnerInfo = require('./houseOwner-info');
 const makeGetUploadedHostelsCount = require('./get-uploaded-hostels-count');
 const makeGetUploadedHostels = require('./get-uploaded-hostels');
 const makeGetUploadedHostelDetails = require('./get-uploaded-hostel-details');
+const makeGetUploadedOfficesCount = require('./get-uploaded-offices-count');
+const makeGetUploadedOffices = require('./get-uploaded-offices');
+const makeGetUploadedOfficeDetails = require('./get-uploaded-office-details');
 const makeGoogleLogin = require('./googleLogin');
 
 const makeAddUnitToFavorites = require('./add-unit-to-favorite');
@@ -144,6 +153,24 @@ const getUploadedHostelDetails = makeGetUploadedHostelDetails({
   ApplicationError,
   logger,
   getHouseOwnerHostel
+});
+
+const getUploadedOffices = makeGetUploadedOffices({
+  ApplicationError,
+  logger,
+  getUserOffices
+});
+
+const getUploadedOfficesCount = makeGetUploadedOfficesCount({
+  ApplicationError,
+  logger,
+  getUserOfficesCount
+});
+
+const getUploadedOfficeDetails = makeGetUploadedOfficeDetails({
+  ApplicationError,
+  logger,
+  getHouseOwnerOffice
 });
 
 const updateUserProfile = makeUpdateUserProfile({
@@ -248,6 +275,9 @@ const userUseCases = {
   getUploadedHostels,
   getUploadedHostelsCount,
   getUploadedHostelDetails,
+  getUploadedOffices,
+  getUploadedOfficesCount,
+  getUploadedOfficeDetails,
   phoneUpdateVerification,
   updateUserPhone,
   updateIdentification,

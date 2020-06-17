@@ -18,6 +18,9 @@ const makeGetHouseOwnerInfoWithCi = require('./houseOwner-info-with-ci');
 const makeGetUploadedHostelsCount = require('./get-uploaded-hostels-count');
 const makeGetUploadedHostels = require('./get-uploaded-hostels');
 const makeGetUploadedHostelDetails = require('./get-uploaded-hostel-details');
+const makeGetUploadedOfficesCount = require('./get-uploaded-offices-count');
+const makeGetUploadedOffices = require('./get-uploaded-offices');
+const makeGetUploadedOfficeDetails = require('./get-uploaded-office-details');
 const makeAddUnitToFavorites = require('./add-unit-to-favorite');
 const makeRemoveUnitFromFavorites = require('./remove-unit-from-favorite');
 const makeGetFavoriteUnits = require('./get-favorite-units');
@@ -61,6 +64,9 @@ const getHouseOwnerInfoWithCi = makeGetHouseOwnerInfoWithCi({});
 const getUploadedHostelsCount = makeGetUploadedHostelsCount({});
 const getUploadedHostels = makeGetUploadedHostels({ pagination });
 const getUploadedHostelDetails = makeGetUploadedHostelDetails({});
+const getUploadedOfficesCount = makeGetUploadedOfficesCount({});
+const getUploadedOffices = makeGetUploadedOffices({ pagination });
+const getUploadedOfficeDetails = makeGetUploadedOfficeDetails({});
 const addUnitToFavorites = makeAddUnitToFavorites({});
 const removeUnitFromFavorites = makeRemoveUnitFromFavorites({});
 const getFavoriteUnits = makeGetFavoriteUnits({ pagination });
@@ -89,6 +95,9 @@ const userCtrl = Object.freeze({
   getUploadedHostelsCount,
   getUploadedHostels,
   getUploadedHostelDetails,
+  getUploadedOfficesCount,
+  getUploadedOffices,
+  getUploadedOfficeDetails,
   googleAuthController,
   googleAuthCallback,
   getGoogleUserData: googleUserData,

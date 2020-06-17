@@ -264,6 +264,44 @@ router.get(
 );
 
 // @route
+// @ GET api/users/uploaded/offices/count
+// !access  anonymous
+router.get(
+  '/uploaded/offices/count',
+  [
+    authenticateMiddleware
+    // authorizeMiddleware([PERMISSIONS.HOUSE_OWNER])
+  ],
+  controllers.getUploadedOfficesCount
+);
+
+// @route
+// @ GET api/users/uploaded/offices
+// !access  anonymous
+router.get(
+  '/uploaded/offices',
+  [
+    validateMiddleware(getUploadedHostels),
+    authenticateMiddleware
+    // authorizeMiddleware([PERMISSIONS.HOUSE_OWNER])
+  ],
+  controllers.getUploadedOffices
+);
+
+// @route
+// @ GET api/users/uploaded/office/:id
+// !access  anonymous
+router.get(
+  '/uploaded/office/:id',
+  [
+    validateMiddleware(getUploadedHostelDetails),
+    authenticateMiddleware
+    // authorizeMiddleware([PERMISSIONS.HOUSE_OWNER])
+  ],
+  controllers.getUploadedOfficeDetails
+);
+
+// @route
 // @ POST api/users/favorite/units/:id
 // !access  anonymous
 router.post(
