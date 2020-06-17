@@ -1,4 +1,4 @@
-const HostelReservationSchema = require('../Schema');
+const OfficeReservationSchema = require('../Schema');
 const _GenericModel = require('../../shared/models/GenericModel');
 
 const getQueryFromStatus = status => {
@@ -32,15 +32,15 @@ const getQueryFromStatus = status => {
 };
 
 module.exports = ({ GenericModel = _GenericModel }) => {
-  class HostelReservationModel extends GenericModel {
+  class OfficeReservationModel extends GenericModel {
     async getReservationsWithStatus(status, skip, limit) {
       const query = getQueryFromStatus(status);
       return this.getManyWithMapping(skip, limit, query);
     }
 
-    async getHostelReservationsWithStatus(hostelId, status, skip, limit) {
+    async getOfficeReservationsWithStatus(officeId, status, skip, limit) {
       let query = getQueryFromStatus(status);
-      query = { ...query, hostelId };
+      query = { ...query, officeId };
       return this.getManyWithMapping(skip, limit, query);
     }
 
@@ -50,15 +50,15 @@ module.exports = ({ GenericModel = _GenericModel }) => {
       return this.getManyWithMapping(skip, limit, query);
     }
 
-    getHostelReservationsWithStatusForUsers(
-      hostelId,
+    getOfficeReservationsWithStatusForUsers(
+      officeId,
       users,
       status,
       skip,
       limit
     ) {
       let query = getQueryFromStatus(status);
-      query = { ...query, renterId: { $in: users }, hostelId };
+      query = { ...query, renterId: { $in: users }, officeId };
       return this.getManyWithMapping(skip, limit, query);
     }
 
@@ -68,27 +68,27 @@ module.exports = ({ GenericModel = _GenericModel }) => {
       return dbRet.map(r => ({
         ...r,
         renterId: r.renterId.toString(),
-        hostelId: r.hostelId.toString()
+        officeId: r.officeId.toString()
       }));
     }
 
     isGroupBusyInDate(
       data = {
-        hostelIds: [String],
+        officeIds: [String],
         groupIds: [String],
         datets: Number
       }
     ) {
-      const { hostelIds, groupIds, datets } = data;
+      const { officeIds, groupIds, datets } = data;
 
       return this.getAggregate({
         arrayOfFilter: [
           {
             $match: {
-              hostelId: {
-                $in: hostelIds
+              officeId: {
+                $in: officeIds
               },
-              'rooms.groupId': {
+              'offices.groupId': {
                 $in: groupIds
               },
               fromts: { $lte: datets },
@@ -97,44 +97,44 @@ module.exports = ({ GenericModel = _GenericModel }) => {
           },
           {
             $project: {
-              'rooms.groupId': 1,
-              // 'rooms.roomName': 1,
-              'rooms.totalReservedCount': 1
+              'offices.groupId': 1,
+              // 'offices.officeName': 1,
+              'offices.totalReservedCount': 1
             }
           },
-          { $unwind: '$rooms' },
+          { $unwind: '$offices' },
           {
             $match: {
-              'rooms.groupId': {
+              'offices.groupId': {
                 $in: groupIds
               }
             }
           },
           {
             $group: {
-              _id: '$rooms.groupId',
-              // name: { $first: '$rooms.roomName' },
-              totalReservedCount: { $sum: '$rooms.totalReservedCount' }
+              _id: '$offices.groupId',
+              // name: { $first: '$offices.officeName' },
+              totalReservedCount: { $sum: '$offices.totalReservedCount' }
             }
           }
         ]
       });
     }
 
-    getReservationDetailsForHostelsByDateRangeAgg(
+    getReservationDetailsForOfficesByDateRangeAgg(
       data = {
-        hostelsId: String,
+        officesId: String,
         startDatets: Number,
         endDatets: Number
       }
     ) {
-      const { hostelsId, startDatets, endDatets } = data;
+      const { officesId, startDatets, endDatets } = data;
 
       return this.getAggregate({
         arrayOfFilter: [
           {
             $match: {
-              hostelId: { $in: hostelsId },
+              officeId: { $in: officesId },
               $or: [
                 {
                   fromts: { $lte: startDatets },
@@ -153,40 +153,40 @@ module.exports = ({ GenericModel = _GenericModel }) => {
           },
           {
             $project: {
-              'rooms.groupId': 1,
-              'rooms.roomType': 1,
-              'rooms.totalReservedCount': 1,
-              hostelId: 1
+              'offices.groupId': 1,
+              'offices.officeType': 1,
+              'offices.totalReservedCount': 1,
+              officeId: 1
             }
           },
-          { $unwind: '$rooms' },
+          { $unwind: '$offices' },
           {
             $group: {
               _id: {
-                hostelId: '$hostelId',
-                groupId: '$rooms.groupId'
+                officeId: '$officeId',
+                groupId: '$offices.groupId'
               },
-              roomType: { $first: '$rooms.roomType' },
-              totalReservedCount: { $max: '$rooms.totalReservedCount' }
+              officeType: { $first: '$offices.officeType' },
+              totalReservedCount: { $max: '$offices.totalReservedCount' }
             }
           },
           {
             $project: {
-              hostelId: '$_id.hostelId',
+              officeId: '$_id.officeId',
               groupId: '$_id.groupId',
-              roomType: '$roomType',
+              officeType: '$officeType',
               totalReservedCount: 1
             }
           },
           {
             $group: {
               _id: {
-                hostelId: '$hostelId'
+                officeId: '$officeId'
               },
-              rooms: {
+              offices: {
                 $push: {
                   groupId: '$groupId',
-                  roomType: '$roomType',
+                  officeType: '$officeType',
                   totalReservedCount: '$totalReservedCount'
                 }
               }
@@ -194,8 +194,8 @@ module.exports = ({ GenericModel = _GenericModel }) => {
           },
           {
             $project: {
-              hostelId: '$_id.hostelId',
-              rooms: 1,
+              officeId: '$_id.officeId',
+              offices: 1,
               _id: 0
             }
           }
@@ -203,5 +203,5 @@ module.exports = ({ GenericModel = _GenericModel }) => {
       });
     }
   }
-  return new HostelReservationModel(HostelReservationSchema);
+  return new OfficeReservationModel(OfficeReservationSchema);
 };

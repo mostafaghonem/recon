@@ -1,6 +1,6 @@
-const makeHostelReservationModel = require('./HostelReservationModel');
+const makeOfficeReservationModel = require('./OfficeReservationModel');
 const GenericModel = require('../../shared/models/GenericModel');
 
-module.exports = makeHostelReservationModel({
+module.exports = makeOfficeReservationModel({
   GenericModel
 });
