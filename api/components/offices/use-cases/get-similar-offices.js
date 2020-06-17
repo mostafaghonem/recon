@@ -76,10 +76,6 @@ module.exports = ({
   });
   if (userId) {
     const officesIds = offices && offices.length ? offices.map(o => o._id) : [];
-    console.log('bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb');
-    console.log(officesIds);
-    console.log([checkExistence._id, ...officesIds]);
-    console.log('bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb');
     officesFavorability = await getOfficesFavorability({
       userId,
       officesIds: [checkExistence._id, ...officesIds]

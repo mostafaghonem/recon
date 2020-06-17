@@ -3,6 +3,9 @@ const Model = require('../models/UserFavoriteOfficesIndex');
 // eslint-disable-next-line no-unused-vars
 module.exports = ({ ApplicationError }) => async ({ userId, OfficesIds }) => {
   if (!userId) throw new ApplicationError('You should pass userId');
+  console.log('bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb');
+  console.log(OfficesIds);
+  console.log('bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb');
   if (!Array.isArray(OfficesIds))
     throw new ApplicationError(
       'You should pass ids as array to getOfficesFavorability (User external service)'
