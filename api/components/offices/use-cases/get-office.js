@@ -64,9 +64,6 @@ module.exports = ({
     });
   }
   checkExistence.similarOffices = [];
-  console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
-  console.log(checkExistence);
-  console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
   const response = await getSimilarOffices({ checkExistence, userId });
   return response;
 };
