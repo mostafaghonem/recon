@@ -11,8 +11,8 @@ module.exports = ({
 }) => ({ body }) => {
   const error = {};
   const scheme = {
-    hostelId: {
-      value: body.hostelId,
+    officeId: {
+      value: body.officeId,
       rules: new Builder().required().rules
     },
     name: {
@@ -35,11 +35,11 @@ module.exports = ({
     },
     Type: {
       value: body.Type,
-      rules: new Builder().required('يجب ادخال نوع الوحدة').isMember(roomsTypes)
+      rules: new Builder().required('يجب ادخال نوع المكتب').isMember(roomsTypes)
         .rules
     },
-    totalRooms: {
-      value: body.totalRooms,
+    totalOffices: {
+      value: body.totalOffices,
       rules: new Builder()
         .required('يجب ادخال عدد الاماكن')
         .isNumber('يجب ان يكون عدد الاماكن رقم')
@@ -52,8 +52,8 @@ module.exports = ({
         .isNumber('يجب ان يكون الدور رقم')
         .min(1, 'يجب ان يكون الدور 1 علي الاقل').rules
     },
-    totalAvailableRooms: {
-      value: body.totalAvailableRooms,
+    totalAvailableOffices: {
+      value: body.totalAvailableOffices,
       rules: new Builder()
         .required('يجب ادخال عدد الاماكن المتاحة')
         .isNumber('يجب ان يكون عدد الاماكن المتاحة رقم')
@@ -81,11 +81,11 @@ module.exports = ({
   //   });
   // }
   if (
-    body.totalRooms &&
-    body.totalAvailableRooms &&
-    Number(body.totalRooms) < Number(body.totalAvailableRooms)
+    body.totalOffices &&
+    body.totalAvailableOffices &&
+    Number(body.totalOffices) < Number(body.totalAvailableOffices)
   )
-    error.totalAvailableRooms = [
+    error.totalAvailableOffices = [
       'لا يمكن ان يكون عدد الاماكن المتاحة اكبر من عدد الاماكن الكلى'
     ];
 
@@ -93,8 +93,8 @@ module.exports = ({
     const ele = scheme[key];
     const { errors, isValid } = ValidatorHelper(ele.value, ele.rules);
     if (!isValid) error[key] = errors;
-    if (key === 'hostelId' && ele.value && !ObjectId.isValid(ele.value))
-      error[key] = ['hostelId should be a valid ObjectId'];
+    if (key === 'officeId' && ele.value && !ObjectId.isValid(ele.value))
+      error[key] = ['officeId should be a valid ObjectId'];
   });
 
   return {
