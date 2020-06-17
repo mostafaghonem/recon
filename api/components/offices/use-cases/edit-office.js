@@ -43,7 +43,7 @@ module.exports = ({
   const select =
     'name phone email managerEmail description image currency address freeServices generalServices officeServices entertainmentServices';
   console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
-  console.log(query);
+  console.log(filter);
   console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
   const checkExistence = await model.getOne({ query: filter });
   if (!checkExistence)
