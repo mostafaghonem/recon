@@ -5,7 +5,7 @@ module.exports = ({
   Builder,
   ValidatorHelper,
   ObjectId,
-  roomsTypes,
+  officesTypes,
   freeServices,
   generalServices,
   officeServices,
@@ -45,7 +45,7 @@ module.exports = ({
     Type: {
       value: query.Type,
       // .required('You should provide Type')
-      rules: new Builder().isMember(roomsTypes).rules
+      rules: new Builder().isMember(officesTypes).rules
     },
     government: {
       value: query.government,

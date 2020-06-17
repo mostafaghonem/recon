@@ -6,7 +6,7 @@ module.exports = ({
   Builder,
   ValidatorHelper,
   ObjectId,
-  roomsTypes,
+  officesTypes,
   pricePer
 }) => ({ body }) => {
   const error = {};
@@ -35,8 +35,9 @@ module.exports = ({
     },
     Type: {
       value: body.Type,
-      rules: new Builder().required('يجب ادخال نوع المكتب').isMember(roomsTypes)
-        .rules
+      rules: new Builder()
+        .required('يجب ادخال نوع المكتب')
+        .isMember(officesTypes).rules
     },
     totalOffices: {
       value: body.totalOffices,
