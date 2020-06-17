@@ -14,6 +14,7 @@ const makeGetUsersByPhone = require('./get-users-data-with-phone');
 const makeGetUsersByPermissions = require('./get-users-with-permissions');
 const makeGetUnitsFavorability = require('./get-units-favorability');
 const makeGetHostelsFavorability = require('./get-hostels-favorability');
+const makeGetOfficesFavorability = require('./get-offices-favorability');
 
 const updateIdentification = makeUpdateIdentification({
   ApplicationError,
@@ -45,13 +46,19 @@ const getHostelsFavorability = makeGetHostelsFavorability({
   ApplicationError
 });
 
+const getOfficesFavorability = makeGetOfficesFavorability({
+  logger,
+  ApplicationError
+});
+
 const UsersExternalService = Object.freeze({
   getUsersByPhone,
   getUsersByIds,
   getUsersByPermissions,
   updateIdentification,
   getUnitsFavorability,
-  getHostelsFavorability
+  getHostelsFavorability,
+  getOfficesFavorability
 });
 
 module.exports = UsersExternalService;
