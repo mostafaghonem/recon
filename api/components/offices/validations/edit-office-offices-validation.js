@@ -43,8 +43,8 @@ module.exports = ({
         .required('يجب ادخال نوع الوحدة')
         .isMember(officesTypes).rules
     },
-    totalRooms: {
-      value: body.totalRooms,
+    totalOffices: {
+      value: body.totalOffices,
       rules: new Builder()
         .required('يجب ادخال عدد الاماكن')
         .isNumber('يجب ان يكون عدد الاماكن رقم')
@@ -57,8 +57,8 @@ module.exports = ({
         .isNumber('يجب ان يكون الدور رقم')
         .min(1, 'يجب ان يكون الدور 1 علي الاقل').rules
     },
-    totalAvailableRooms: {
-      value: body.totalAvailableRooms,
+    totalAvailableOffices: {
+      value: body.totalAvailableOffices,
       rules: new Builder()
         .required('يجب ادخال عدد الاماكن المتاحة')
         .isNumber('يجب ان يكون عدد الاماكن المتاحة رقم')
@@ -86,11 +86,11 @@ module.exports = ({
   //   });
   // }
   if (
-    body.totalRooms &&
-    body.totalAvailableRooms &&
-    Number(body.totalRooms) < Number(body.totalAvailableRooms)
+    body.totalOffices &&
+    body.totalAvailableOffices &&
+    Number(body.totalOffices) < Number(body.totalAvailableOffices)
   )
-    error.totalAvailableRooms = [
+    error.totalAvailableOffices = [
       'لا يمكن ان يكون عدد الاماكن المتاحة اكبر من عدد الاماكن الكلى'
     ];
 

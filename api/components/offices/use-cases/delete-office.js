@@ -12,7 +12,7 @@ module.exports = ({ ApplicationError, logger }) => async id => {
     throw new ApplicationError('.نأسف ، لا يمكننا العثور على هذا المكتب', 403);
   else {
     const checkAvailability = checkExistence.offices.filter(
-      office => office.totalRooms !== office.totalAvailableRooms
+      office => office.totalOffices !== office.totalAvailableOffices
     );
     if (checkAvailability[0])
       throw new ApplicationError(

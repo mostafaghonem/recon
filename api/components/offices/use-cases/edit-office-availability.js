@@ -9,7 +9,7 @@ module.exports = ({
   logger,
   isGroupBusyInDateTs,
   officesStatus
-}) => async ({ userId, officeId, groupId, totalRooms, status }) => {
+}) => async ({ userId, officeId, groupId, totalOffices, status }) => {
   const query = {
     _id: officeId,
     userId,
@@ -21,7 +21,7 @@ module.exports = ({
   if (!checkExistence)
     throw new ApplicationError('.نأسف ، لا يمكننا العثور على هذا المكتب', 403);
 
-  let totalOnlineBookedRooms = 0;
+  let totalOnlineBookedOffices = 0;
   const checkOnlineBookings = await isGroupBusyInDateTs(
     [officeId],
     [groupId],
@@ -32,25 +32,25 @@ module.exports = ({
       group => String(group._id) === String(groupId)
     );
     if (checkGroup[0])
-      totalOnlineBookedRooms = Number(checkGroup[0].totalReservedCount) || 0;
+      totalOnlineBookedOffices = Number(checkGroup[0].totalReservedCount) || 0;
   }
-  let totalAvailableRooms = 0;
-  let allowedRoomsCount = 0;
+  let totalAvailableOffices = 0;
+  let allowedOfficesCount = 0;
   if (status === officesStatus.AVAILABLE) {
-    allowedRoomsCount =
-      checkExistence.offices[0].totalRooms -
-      checkExistence.offices[0].totalAvailableRooms -
-      Number(totalOnlineBookedRooms);
-    totalAvailableRooms =
-      checkExistence.offices[0].totalAvailableRooms + Number(totalRooms);
+    allowedOfficesCount =
+      checkExistence.offices[0].totalOffices -
+      checkExistence.offices[0].totalAvailableOffices -
+      Number(totalOnlineBookedOffices);
+    totalAvailableOffices =
+      checkExistence.offices[0].totalAvailableOffices + Number(totalOffices);
   } else {
-    allowedRoomsCount =
-      checkExistence.offices[0].totalAvailableRooms -
-      Number(totalOnlineBookedRooms);
-    totalAvailableRooms =
-      checkExistence.offices[0].totalAvailableRooms - Number(totalRooms);
+    allowedOfficesCount =
+      checkExistence.offices[0].totalAvailableOffices -
+      Number(totalOnlineBookedOffices);
+    totalAvailableOffices =
+      checkExistence.offices[0].totalAvailableOffices - Number(totalOffices);
   }
-  if (Number(totalRooms) > allowedRoomsCount)
+  if (Number(totalOffices) > allowedOfficesCount)
     throw new ApplicationError(
       'لا يمكن ان يكون عدد الاماكن المتاحة اكبر من او يساوى العدد المسموح به',
       400
@@ -62,12 +62,12 @@ module.exports = ({
   };
   const update = {
     $set: {
-      'offices.$.totalAvailableRooms': totalAvailableRooms
+      'offices.$.totalAvailableOffices': totalAvailableOffices
     }
   };
   await model.update({ filter, update });
 
   logger.info(
-    `${groupId} group in ${officeId} Office Rooms availability updated Successfully`
+    `${groupId} group in ${officeId} Office Offices availability updated Successfully`
   );
 };

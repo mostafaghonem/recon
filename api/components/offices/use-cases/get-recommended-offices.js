@@ -11,7 +11,7 @@ const model = require('../models');
 module.exports = ({
   ApplicationError,
   logger,
-  getReservedRoomCountByOffices,
+  getReservedOfficeCountByOffices,
   accepted
 }) => async ({ limit }) => {
   const query = {
@@ -35,15 +35,15 @@ module.exports = ({
     offices.map(office => officesIds.push(office._id));
     const availableFrom = new Date().getTime();
     const availableTo = new Date().setDate(new Date().getDate() + 1);
-    const reservedOffices = await getReservedRoomCountByOffices(
+    const reservedOffices = await getReservedOfficeCountByOffices(
       officesIds,
       availableFrom,
       new Date(availableTo).getTime()
     );
     let filteredOffices = [];
     offices.forEach(office => {
-      office.totalRooms = 0;
-      office.totalAvailableRooms = 0;
+      office.totalOffices = 0;
+      office.totalAvailableOffices = 0;
       office.available = false;
       if (office.offices[0]) {
         const getOfficeData = reservedOffices.filter(
@@ -55,23 +55,23 @@ module.exports = ({
               officeee => String(officeee.groupId) === String(group._id)
             );
             if (getGroupData[0]) {
-              office.totalRooms += Number(group.totalRooms);
-              office.totalAvailableRooms +=
-                Number(group.totalRooms) -
+              office.totalOffices += Number(group.totalOffices);
+              office.totalAvailableOffices +=
+                Number(group.totalOffices) -
                 Number(getGroupData[0].totalReservedCount);
-              group.availableRooms =
-                Number(group.totalRooms) -
+              group.availableOffices =
+                Number(group.totalOffices) -
                 Number(getGroupData[0].totalReservedCount);
-              if (group.availableRooms > 0) {
+              if (group.availableOffices > 0) {
                 group.available = true;
                 office.available = true;
               }
             }
           } else {
-            office.totalRooms += Number(group.totalRooms);
-            office.totalAvailableRooms += Number(group.totalAvailableRooms);
-            group.availableRooms = Number(group.totalAvailableRooms);
-            if (group.availableRooms > 0) {
+            office.totalOffices += Number(group.totalOffices);
+            office.totalAvailableOffices += Number(group.totalAvailableOffices);
+            group.availableOffices = Number(group.totalAvailableOffices);
+            if (group.availableOffices > 0) {
               group.available = true;
               office.available = true;
             } else group.available = false;

@@ -1,9 +1,13 @@
 // const { Builder } = require('validation-helpers');
 // const { defaultConstants } = require('../../../shared/constants');
 
-module.exports = ({ _, Builder, ValidatorHelper, ObjectId, roomsStatus }) => ({
-  body
-}) => {
+module.exports = ({
+  _,
+  Builder,
+  ValidatorHelper,
+  ObjectId,
+  officesStatus
+}) => ({ body }) => {
   const error = {};
   const scheme = {
     officeId: {
@@ -14,8 +18,8 @@ module.exports = ({ _, Builder, ValidatorHelper, ObjectId, roomsStatus }) => ({
       value: body.groupId,
       rules: new Builder().required().rules
     },
-    totalRooms: {
-      value: body.totalRooms,
+    totalOffices: {
+      value: body.totalOffices,
       rules: new Builder()
         .required('يجب ادخال عدد الاماكن')
         .isNumber('يجب ان يكون عدد الاماكن رقم')
@@ -23,7 +27,7 @@ module.exports = ({ _, Builder, ValidatorHelper, ObjectId, roomsStatus }) => ({
     },
     status: {
       value: body.status,
-      rules: new Builder().required('يجب ادخال الحالة').isMember(roomsStatus)
+      rules: new Builder().required('يجب ادخال الحالة').isMember(officesStatus)
         .rules
     }
   };

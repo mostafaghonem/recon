@@ -7,9 +7,9 @@ module.exports = ({ _, Builder, ValidatorHelper, ObjectId }) => ({ query }) => {
       value: query.id,
       rules: new Builder().required('You should provide id').rules
     },
-    roomId: {
-      value: query.roomId,
-      rules: new Builder().required('You should provide roomId').rules
+    officeId: {
+      value: query.officeId,
+      rules: new Builder().required('You should provide officeId').rules
     }
   };
 
@@ -19,8 +19,8 @@ module.exports = ({ _, Builder, ValidatorHelper, ObjectId }) => ({ query }) => {
     if (!isValid) error[key] = errors;
     if (key === 'id' && !ObjectId.isValid(ele.value))
       error[key] = ['id should be a valid ObjectId'];
-    if (key === 'roomId' && !ObjectId.isValid(ele.value))
-      error[key] = ['roomId should be a valid ObjectId'];
+    if (key === 'officeId' && !ObjectId.isValid(ele.value))
+      error[key] = ['officeId should be a valid ObjectId'];
   });
 
   return { error: _.isEmpty(error) ? undefined : error };
