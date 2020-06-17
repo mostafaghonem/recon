@@ -4,6 +4,7 @@ const Model = require('../models/UserFavoriteOfficesIndex');
 module.exports = ({ ApplicationError }) => async ({ userId, OfficesIds }) => {
   if (!userId) throw new ApplicationError('You should pass userId');
   console.log('bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb');
+  console.log(userId);
   console.log(OfficesIds);
   console.log('bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb');
   if (!Array.isArray(OfficesIds))
