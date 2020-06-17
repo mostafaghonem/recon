@@ -42,9 +42,6 @@ module.exports = ({
   const filter = { _id: officeId, userId, isArchived: false };
   const select =
     'name phone email managerEmail description image currency address freeServices generalServices officeServices entertainmentServices';
-  console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
-  console.log(filter);
-  console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
   const checkExistence = await model.getOne({ query: filter });
   if (!checkExistence)
     throw new ApplicationError('.نأسف ، لا يمكننا العثور على هذا المكتب', 403);
