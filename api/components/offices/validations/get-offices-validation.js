@@ -8,7 +8,7 @@ module.exports = ({
   roomsTypes,
   freeServices,
   generalServices,
-  hostelServices,
+  officeServices,
   entertainmentServices
 }) => ({ query }) => {
   const error = {};
@@ -16,8 +16,8 @@ module.exports = ({
     query.freeServices = String(query.freeServices).split(',');
   if (query.generalServices)
     query.generalServices = String(query.generalServices).split(',');
-  if (query.hostelServices)
-    query.hostelServices = String(query.hostelServices).split(',');
+  if (query.officeServices)
+    query.officeServices = String(query.officeServices).split(',');
   if (query.entertainmentServices)
     query.entertainmentServices = String(query.entertainmentServices).split(
       ','
@@ -67,8 +67,8 @@ module.exports = ({
       value: query.generalServices,
       rules: new Builder().isArray().rules
     },
-    hostelServices: {
-      value: query.hostelServices,
+    officeServices: {
+      value: query.officeServices,
       rules: new Builder().isArray().rules
     },
     entertainmentServices: {
@@ -128,11 +128,11 @@ module.exports = ({
       };
     });
   }
-  if (query.hostelServices) {
-    query.hostelServices.forEach((url, index) => {
-      scheme[`query.hostelServices.${index}`] = {
+  if (query.officeServices) {
+    query.officeServices.forEach((url, index) => {
+      scheme[`query.officeServices.${index}`] = {
         value: url,
-        rules: new Builder().isMember(hostelServices).rules
+        rules: new Builder().isMember(officeServices).rules
       };
     });
   }
