@@ -12,6 +12,7 @@ module.exports = ({
   payload,
   timeLimit
 }) => {
+  console.log('heeeeeeeereeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee');
   const response = {};
   // eslint-disable-next-line no-nested-ternary
   const currency =
@@ -49,6 +50,7 @@ module.exports = ({
   }
 
   if (payload.method === 'kiosk') {
+    console.log('here kiosk ---------------- ', paymentKey);
     const payRequest = await createAmanPayRequest({ paymentKey });
     if (payRequest.pending === true && payRequest.success === false) {
       response.billReference = payRequest.data.bill_reference;

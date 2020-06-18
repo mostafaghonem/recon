@@ -21,7 +21,7 @@ module.exports = ({
       completeHostelPayment({ payload: order });
     }
 
-    if (order && order.unitId) {
+    if (order && order.unitReservationId) {
       completeUnitPayment({ payload: order });
     }
 

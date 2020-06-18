@@ -17,7 +17,14 @@ const requestId = {
     .required()
 };
 
+const paymentMethod = {
+  method: Joi.string()
+    .valid(['credit', 'kiosk'])
+    .required()
+};
+
 module.exports = {
   houserOwnerDissection,
-  requestId
+  requestId,
+  paymentMethod
 };

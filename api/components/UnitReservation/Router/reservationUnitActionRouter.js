@@ -6,7 +6,11 @@ const authenticateMiddleware = require('../../../middlewares/authenticateMiddlew
 const { PERMISSIONS } = require('../../../shared/constants/defaults');
 const { reservationUnitActionValidation } = require('../Validation');
 
-const { houserOwnerDissection, requestId } = reservationUnitActionValidation;
+const {
+  houserOwnerDissection,
+  requestId,
+  paymentMethod
+} = reservationUnitActionValidation;
 module.exports = ({ validation }) => {
   // before routes /api/unit-reservation/reservation-action
   const router = express.Router({ mergeParams: true });
@@ -49,6 +53,17 @@ module.exports = ({ validation }) => {
       validation(requestId, 'params')
     ],
     reservationUnitActionController.renterCancelRequest
+  );
+
+  router.get(
+    '/pay-for-unit/:requestId',
+    [
+      authenticateMiddleware,
+      authorizeMiddleware([PERMISSIONS.RENTER]),
+      validation(requestId, 'params'),
+      validation(paymentMethod, 'query')
+    ],
+    reservationUnitActionController.renterPayForUnit
   );
 
   router.post(
