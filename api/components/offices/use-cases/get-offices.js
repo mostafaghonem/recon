@@ -72,14 +72,12 @@ module.exports = ({
       office.totalOffices = 0;
       office.totalAvailableOffices = 0;
       office.available = false;
-      office.offices = office.offices.filter(group => {
-        console.log('bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb');
-        console.log(group.numberOfPersons);
-        console.log('bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb');
-        group.numberOfPersons >= (Number(numberOfPersons) || 0) &&
+      office.offices = office.offices.filter(
+        group =>
+          group.numberOfPersons >= (Number(numberOfPersons) || 0) &&
           group.pricePerPerson >= (Number(priceFrom) || 0) &&
-          group.pricePerPerson <= (Number(priceTo) || 10000000000);
-      });
+          group.pricePerPerson <= (Number(priceTo) || 10000000000)
+      );
       if (Type)
         office.offices = office.offices.filter(
           group =>
