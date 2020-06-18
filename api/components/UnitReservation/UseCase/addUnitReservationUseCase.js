@@ -58,7 +58,7 @@ module.exports = (
     );
 
     if (checkValid && comingOne.from < comingOne.to) {
-      const cost = await calculateCost({
+      const { total: cost, totalAfterExtras } = await calculateCost({
         unitId: comingOne.unit,
         from: comingOne.from,
         to: comingOne.to
@@ -69,6 +69,7 @@ module.exports = (
         ...comingOne,
         renter: renderId,
         cost,
+        totalAfterExtras,
         owner: unitDetail.userId
       };
       const request = new UnitReservationEntity(requestData);

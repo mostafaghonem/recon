@@ -51,6 +51,22 @@ exports.renterReceivedUnit = async (req, res, next) => {
   }
 };
 
+exports.renterPayForUnit = async (req, res, next) => {
+  try {
+    const requestId = req.params.requestId;
+    const renterId = req.user.id;
+    const method = req.query.method;
+    const result = await reservationUnitAction.renterWantPayForUnit(
+      requestId,
+      renterId,
+      method
+    );
+    return res.status(200).json(result);
+  } catch (err) {
+    return next(err);
+  }
+};
+
 exports.adminAcceptPassRequestToHouseOwner = async (req, res, next) => {
   try {
     const requestId = req.params.requestId;

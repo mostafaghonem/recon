@@ -40,9 +40,11 @@
 
 
 */
+const uuid = require('uuid').v4;
 const addingUnitReservationMaker = require('./addUnitReservationUseCase');
 const getUnitReservationUseCase = require('./getUnitReservationUseCase');
 const actionOverUnitReservationUseCaseMaker = require('./actionOverUnitReservationUseCase');
+const { processPayment } = require('../../Payment/external-use-case');
 
 const {
   getUnit,
@@ -56,6 +58,8 @@ module.exports = {
   }),
   getUnitReservationUseCase: getUnitReservationUseCase(),
   reservationUnitAction: actionOverUnitReservationUseCaseMaker({
-    getUnitDetails: getUnit
+    getUnitDetails: getUnit,
+    uuid,
+    processPayment
   })
 };

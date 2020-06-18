@@ -29,6 +29,10 @@ module.exports = ({ requestStates }) => {
         type: Number,
         required: true
       },
+      totalAfterExtras: {
+        type: Number,
+        required: true
+      },
       state: {
         type: String,
         enum: Object.values(requestStates),

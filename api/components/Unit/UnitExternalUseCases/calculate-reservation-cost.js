@@ -28,8 +28,12 @@ module.exports = ({ ApplicationError, logger, _ }) => async ({
           fromDate,
           checkExistence.dailyOrMonthly === PRICE_PER.DAY ? 'days' : 'months'
         ) + 1;
-
-      return numberOfPeriod * checkExistence.pricePerPerson;
+      const total = numberOfPeriod * checkExistence.pricePerPerson;
+      const totalAfterExtras =
+        checkExistence.dailyOrMonthly === PRICE_PER.DAY
+          ? total * 0.3
+          : checkExistence.pricePerPerson * 0.3;
+      return { total, totalAfterExtras };
     }
     return undefined;
   } catch (error) {

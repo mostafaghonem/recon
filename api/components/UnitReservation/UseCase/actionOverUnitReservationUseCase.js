@@ -9,7 +9,9 @@ const { UnitReservationState } = require('../../../shared/constants/defaults');
 const { UnitReservationEntity } = require('../Entity');
 const ApplicationError = require('../../../shared/errors/ApplicationError');
 
-module.exports = (/* but your inject here */ { getUnitDetails }) => {
+module.exports = (
+  /* but your inject here */ { getUnitDetails, processPayment, uuid }
+) => {
   const acceptRequestWaitingPay = async requestId => {
     const reservationRequest = await UnitReservationEntity.loadEntityFromDbById(
       requestId
@@ -145,22 +147,6 @@ module.exports = (/* but your inject here */ { getUnitDetails }) => {
     return 'success';
   };
 
-  const renterPayRequest = async requestId => {
-    const request = await UnitReservationEntity.loadEntityFromDbById(requestId);
-    if (!request) {
-      throw new ApplicationError('this request not found', 404);
-    }
-    if (request.state !== UnitReservationState.ACCEPT_BY_OWNER) {
-      throw new ApplicationError(
-        'this request not accepted by house owner',
-        404
-      );
-    }
-    request.state = UnitReservationState.PAYED;
-    await request.updateState();
-    return { result: 'Payed success' };
-  };
-
   const renterReceivedUnit = async (requestId, renterId) => {
     const request = await UnitReservationEntity.loadEntityFromDbById(requestId);
     if (!request) {
@@ -183,6 +169,32 @@ module.exports = (/* but your inject here */ { getUnitDetails }) => {
     );
     return 'Received Success';
   };
+
+  const renterWantPayForUnit = async (requestId, renterId, method) => {
+    const request = await UnitReservationEntity.loadEntityFromDbById(requestId);
+    if (!request) {
+      throw new ApplicationError('this request not found', 404);
+    }
+    if (renterId.toString() !== request.renter.toString()) {
+      throw new ApplicationError('action not from the renter of request', 404);
+    }
+
+    const paymentId = uuid();
+    const tokenForPayment = await processPayment({
+      userId: request.renter,
+      unitReservationId: request.id,
+      paymentId,
+      payload: {
+        unitId: request.unit,
+        method,
+        totalAfterExtras: request.totalAfterExtras,
+        currency: 'le'
+      },
+      timeLimit: 100000
+    });
+    return { message: 'process request done', payload: tokenForPayment };
+  };
+
   // ----------------------house owner action ---------------------
 
   const acceptRequestFromHouseOwner = async (requestId, owner) => {
@@ -248,9 +260,9 @@ module.exports = (/* but your inject here */ { getUnitDetails }) => {
   return {
     acceptRequestFromHouseOwner,
     refuseRequestFromHouseOwner,
-    renterPayRequest,
     renterCancelRequest,
     renterReceivedUnit,
+    renterWantPayForUnit,
     adminAcceptPassRequestToHouseOwner,
     adminAcceptRequestAsHouseOwner,
     adminRefuseRequestAsHouseOwner
