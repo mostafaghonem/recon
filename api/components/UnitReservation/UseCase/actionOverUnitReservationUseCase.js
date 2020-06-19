@@ -187,7 +187,7 @@ module.exports = (
       payload: {
         unitId: request.unit,
         method,
-        totalAfterExtras: request.totalAfterExtras,
+        totalAfterExtras: request.totalAfterExtras + 3,
         currency: 'le'
       },
       timeLimit: 100000
