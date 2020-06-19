@@ -4,15 +4,15 @@ const mongoose = require('mongoose');
 
 const { ObjectId } = mongoose.Types;
 
-const makeGetUploadedHostelsRequests = require('./get-uploaded-offices-requests');
-const makeUpdateUploadedHostelsRequests = require('./update-uploaded-offices-request');
+const makeGetUploadedOfficesRequests = require('./get-uploaded-offices-requests');
+const makeUpdateUploadedOfficesRequests = require('./update-uploaded-offices-request');
 const { defaultConstants } = require('../../../shared/constants');
 
 const requestStatus = Object.values(defaultConstants.REQUEST_STATUS);
 const requestResponse = Object.values(defaultConstants.REQUEST_RESPONSE);
 const { REQUEST_RESPONSE } = require('../../../shared/constants/defaults');
 
-module.exports.getUploadedHostelsRequests = makeGetUploadedHostelsRequests({
+module.exports.getUploadedOfficesRequests = makeGetUploadedOfficesRequests({
   _,
   Builder,
   ValidatorHelper,
@@ -20,7 +20,7 @@ module.exports.getUploadedHostelsRequests = makeGetUploadedHostelsRequests({
   requestStatus
 });
 
-module.exports.updateUploadedHostelRequest = makeUpdateUploadedHostelsRequests({
+module.exports.updateUploadedOfficeRequest = makeUpdateUploadedOfficesRequests({
   _,
   Builder,
   ValidatorHelper,
