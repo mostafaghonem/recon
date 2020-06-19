@@ -18,7 +18,8 @@ const buildUserEntity = () => {
       cost = '',
       state = '',
       pending = false,
-      _id = ObjectId()
+      _id = ObjectId(),
+      totalAfterExtras = 0
     }) {
       this.pending = pending;
       this.id = _id;
@@ -29,6 +30,7 @@ const buildUserEntity = () => {
       this.to = to;
       this.cost = cost;
       this.state = state;
+      this.totalAfterExtras = totalAfterExtras;
     }
 
     static async loadEntityFromDbById(id) {
