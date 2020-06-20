@@ -17,6 +17,7 @@ const makeGetHouseOwnerHostel = require('./get-houseOwner-hostel');
 const makeCalculateReservationCost = require('./calculate-reservation-cost');
 const makeGetHostelsDataFromIds = require('./get-hostels-data-from-Ids');
 const makeUpdateHostelTotalRevenue = require('./update-hostels-totalRevenue');
+const moment = require('moment');
 
 const { ObjectId } = mongoose.Types;
 
@@ -51,6 +52,7 @@ const updateHostelTotalRevenue = makeUpdateHostelTotalRevenue({
 });
 
 const calculateReservationCost = makeCalculateReservationCost({
+  moment,
   ApplicationError,
   logger,
   _,

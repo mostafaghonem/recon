@@ -5,12 +5,15 @@ const model = require('../models');
 // should have no implementation for any specific orm
 
 module.exports = ({
+  moment,
   ApplicationError,
   logger,
   _,
   getReservedRoomCountByHotels
 }) => async ({ hostelId, fromts, tots, rooms }) => {
   try {
+    const numberOfNights = moment(tots).diff(moment(fromts), 'days');
+
     const query = {
       _id: hostelId,
       isArchived: false
@@ -51,7 +54,8 @@ module.exports = ({
           else
             cost +=
               Number(room.totalReservedCount) *
-              Number(checkRoom.pricePerPerson);
+              Number(checkRoom.pricePerPerson) *
+              numberOfNights;
         }
       });
       if (allRoomsWereFound && validAvailability) return cost;
