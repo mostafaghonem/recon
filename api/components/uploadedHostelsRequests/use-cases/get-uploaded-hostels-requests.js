@@ -29,7 +29,8 @@ module.exports = ({ ApplicationError, logger }) => async ({
   const anotherPopulate = {
     path: 'hostelId',
     match: { isArchived: false },
-    select: '_id name'
+    select:
+      '_id name description image currency address isHidden freeServices generalServices hostelServices entertainmentServices foodServices rooms rate totalUsersRated'
   };
   const filter = {
     status,

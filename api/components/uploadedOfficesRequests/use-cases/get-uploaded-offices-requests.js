@@ -29,7 +29,8 @@ module.exports = ({ ApplicationError, logger }) => async ({
   const anotherPopulate = {
     path: 'officeId',
     match: { isArchived: false },
-    select: '_id name'
+    select:
+      '_id name description image currency address isHidden freeServices generalServices officeServices entertainmentServices offices rate totalUsersRated'
   };
   const filter = {
     status,

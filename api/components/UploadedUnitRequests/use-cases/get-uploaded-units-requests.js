@@ -60,7 +60,8 @@ module.exports = ({
     {
       path: 'unitId',
       match: unitQuery,
-      select: '_id address type'
+      select:
+        '_id type description userId image currency rentersType numberOfPeople numberOfRooms hasFurniture availableCountNow pricePerPerson dailyOrMonthly highlight availability available gallery address isEditing isFull isHidden services conditions status rate totalUsersRated'
     }
   ];
 
