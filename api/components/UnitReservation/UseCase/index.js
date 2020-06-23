@@ -45,6 +45,7 @@ const addingUnitReservationMaker = require('./addUnitReservationUseCase');
 const getUnitReservationUseCase = require('./getUnitReservationUseCase');
 const actionOverUnitReservationUseCaseMaker = require('./actionOverUnitReservationUseCase');
 const { processPayment } = require('../../Payment/external-use-case');
+const { createEvent } = require('../../EventManager/ExternalUseCases');
 
 const {
   getUnit,
@@ -54,12 +55,14 @@ const {
 module.exports = {
   addUnitReservationUseCase: addingUnitReservationMaker({
     calculateCost: calculateReservationCost,
-    getUnitDetail: getUnit
+    getUnitDetail: getUnit,
+    createEvent
   }),
   getUnitReservationUseCase: getUnitReservationUseCase(),
   reservationUnitAction: actionOverUnitReservationUseCaseMaker({
     getUnitDetails: getUnit,
     uuid,
-    processPayment
+    processPayment,
+    createEvent
   })
 };
