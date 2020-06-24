@@ -11,7 +11,7 @@ module.exports = ({
   createUnitEvent,
   events
 }) => async ({
-  userId,
+  user,
   type,
   description,
   image,
@@ -46,7 +46,8 @@ module.exports = ({
   isHidden,
   isArchived
 }) => {
-  const newUnit = new UnitEntity({
+  const userId = user.id;
+  const unit = {
     userId,
     type,
     description,
@@ -72,9 +73,15 @@ module.exports = ({
     isFull,
     isHidden,
     isArchived
-  });
+  };
+  if (user && user.permissions && user.permissions.includes('admin')) {
+    unit.status = 'accepted';
+  }
+  const newUnit = new UnitEntity(unit);
+  if (user && user.permissions && !user.permissions.includes('admin')) {
+    await addUploadedUnitsRequests({ userId, unitId: newUnit.id });
+  }
   await newUnit.save();
-  await addUploadedUnitsRequests({ userId, unitId: newUnit.id });
   await createUnitEvent({
     userId,
     unitId: newUnit.id,

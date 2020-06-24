@@ -44,7 +44,7 @@ router.post(
   [
     validateMiddleware(addUnitValidation),
     authenticateMiddleware,
-    authorizeMiddleware([PERMISSIONS.HOUSE_OWNER])
+    authorizeMiddleware([PERMISSIONS.HOUSE_OWNER, PERMISSIONS.ADMIN])
   ],
   controllers.addUnit
 );
@@ -102,7 +102,7 @@ router.put(
   [
     validateMiddleware(hideUnitValidation),
     authenticateMiddleware,
-    authorizeMiddleware([PERMISSIONS.HOUSE_OWNER])
+    authorizeMiddleware([PERMISSIONS.HOUSE_OWNER, PERMISSIONS.ADMIN])
   ],
   controllers.hideUnit
 );
@@ -112,7 +112,7 @@ router.put(
   [
     validateMiddleware(unhideUnitValidation),
     authenticateMiddleware,
-    authorizeMiddleware([PERMISSIONS.HOUSE_OWNER])
+    authorizeMiddleware([PERMISSIONS.HOUSE_OWNER, PERMISSIONS.ADMIN])
   ],
   controllers.unhideUnit
 );
@@ -122,7 +122,7 @@ router.put(
   [
     validateMiddleware(hideUnitValidation),
     authenticateMiddleware,
-    authorizeMiddleware([PERMISSIONS.HOUSE_OWNER])
+    authorizeMiddleware([PERMISSIONS.HOUSE_OWNER, PERMISSIONS.ADMIN])
   ],
   controllers.setFull
 );
@@ -132,7 +132,7 @@ router.put(
   [
     validateMiddleware(unhideUnitValidation),
     authenticateMiddleware,
-    authorizeMiddleware([PERMISSIONS.HOUSE_OWNER])
+    authorizeMiddleware([PERMISSIONS.HOUSE_OWNER, PERMISSIONS.ADMIN])
   ],
   controllers.setNotFull
 );
@@ -142,7 +142,7 @@ router.delete(
   [
     validateMiddleware(deleteUnitValidation),
     authenticateMiddleware,
-    authorizeMiddleware([PERMISSIONS.HOUSE_OWNER])
+    authorizeMiddleware([PERMISSIONS.HOUSE_OWNER, PERMISSIONS.ADMIN])
   ],
   controllers.deleteUnit
 );

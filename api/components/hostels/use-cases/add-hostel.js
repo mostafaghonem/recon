@@ -10,7 +10,7 @@ module.exports = ({
   addUploadedHostelsRequests,
   pending
 }) => async ({
-  userId,
+  user,
   name,
   phone,
   email,
@@ -33,7 +33,8 @@ module.exports = ({
   entertainmentServices,
   foodServices
 }) => {
-  const newHostel = new HostelsEntity({
+  const userId = user.id;
+  const hostel = {
     userId,
     name,
     phone,
@@ -57,9 +58,15 @@ module.exports = ({
     entertainmentServices,
     foodServices,
     status: pending
-  });
+  };
+  if (user && user.permissions && user.permissions.includes('admin')) {
+    hostel.status = 'accepted';
+  }
+  const newHostel = new HostelsEntity(hostel);
+  if (user && user.permissions && !user.permissions.includes('admin')) {
+    await addUploadedHostelsRequests({ userId, hostelId: newHostel.id });
+  }
   await newHostel.save();
-  await addUploadedHostelsRequests({ userId, hostelId: newHostel.id });
 
   logger.info(
     `new Hostel just been added with data => \n${JSON.stringify(

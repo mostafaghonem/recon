@@ -10,7 +10,7 @@ module.exports = ({
   addUploadedOfficesRequests,
   pending
 }) => async ({
-  userId,
+  user,
   name,
   phone,
   email,
@@ -32,7 +32,8 @@ module.exports = ({
   officeServices,
   entertainmentServices
 }) => {
-  const newOffice = new OfficesEntity({
+  const userId = user.id;
+  const office = {
     userId,
     name,
     phone,
@@ -55,9 +56,15 @@ module.exports = ({
     officeServices,
     entertainmentServices,
     status: pending
-  });
+  };
+  if (user && user.permissions && user.permissions.includes('admin')) {
+    office.status = 'accepted';
+  }
+  const newOffice = new OfficesEntity(office);
+  if (user && user.permissions && !user.permissions.includes('admin')) {
+    await addUploadedOfficesRequests({ userId, officeId: newOffice.id });
+  }
   await newOffice.save();
-  await addUploadedOfficesRequests({ userId, officeId: newOffice.id });
 
   logger.info(
     `new Office just been added with data => \n${JSON.stringify(

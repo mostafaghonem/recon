@@ -32,7 +32,7 @@ router.post(
   '/',
   [
     authenticateMiddleware,
-    authorizeMiddleware([PERMISSIONS.HOUSE_OWNER]),
+    authorizeMiddleware([PERMISSIONS.HOUSE_OWNER, PERMISSIONS.ADMIN]),
     validateMiddleware(addHostelValidation)
   ],
   controllers.addHostel
@@ -42,7 +42,7 @@ router.post(
   '/rooms',
   [
     authenticateMiddleware,
-    authorizeMiddleware([PERMISSIONS.HOUSE_OWNER]),
+    authorizeMiddleware([PERMISSIONS.HOUSE_OWNER, PERMISSIONS.ADMIN]),
     validateMiddleware(addHostelRoomsValidation)
   ],
   controllers.addHostelRooms
@@ -52,7 +52,7 @@ router.put(
   '/hide/:id',
   [
     authenticateMiddleware,
-    authorizeMiddleware([PERMISSIONS.HOUSE_OWNER]),
+    authorizeMiddleware([PERMISSIONS.HOUSE_OWNER, PERMISSIONS.ADMIN]),
     validateMiddleware(hideHostelValidation)
   ],
   controllers.hideHostel
@@ -62,7 +62,7 @@ router.put(
   '/unhide/:id',
   [
     authenticateMiddleware,
-    authorizeMiddleware([PERMISSIONS.HOUSE_OWNER]),
+    authorizeMiddleware([PERMISSIONS.HOUSE_OWNER, PERMISSIONS.ADMIN]),
     validateMiddleware(unhideHostelValidation)
   ],
   controllers.unhideHostel
@@ -72,7 +72,7 @@ router.delete(
   '/:id',
   [
     authenticateMiddleware,
-    authorizeMiddleware([PERMISSIONS.HOUSE_OWNER]),
+    authorizeMiddleware([PERMISSIONS.HOUSE_OWNER, PERMISSIONS.ADMIN]),
     validateMiddleware(deleteHostelValidation)
   ],
   controllers.deleteHostel
