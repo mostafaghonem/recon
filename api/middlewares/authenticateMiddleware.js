@@ -4,12 +4,14 @@ const Promise = require('bluebird');
 const jwt = Promise.promisifyAll(jsonwebtoken);
 
 const isAuthenticated = async (req, res, next) => {
-  const token =
+  let token =
     req.cookies.sknToken ||
     req.signedCookies.sknToken ||
     req.body['access-token'] ||
     req.query['access-token'] ||
     req.headers['access-token'];
+  if (req.cookies.sknToken && req.headers['access-token'])
+    token = req.headers['access-token'];
 
   if (token) {
     try {
