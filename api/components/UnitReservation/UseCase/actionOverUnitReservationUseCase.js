@@ -5,12 +5,24 @@
  */
 const moment = require('moment');
 const Models = require('../Models');
-const { UnitReservationState } = require('../../../shared/constants/defaults');
+const {
+  UnitReservationState,
+  EVENTS_TYPES,
+  OBJECTS_TYPES,
+  PERMISSIONS
+} = require('../../../shared/constants/defaults');
+
 const { UnitReservationEntity } = require('../Entity');
 const ApplicationError = require('../../../shared/errors/ApplicationError');
 
 module.exports = (
-  /* but your inject here */ { getUnitDetails, processPayment, uuid }
+  /* but your inject here */ {
+    getUnitDetails,
+    processPayment,
+    uuid,
+    createEvent,
+    getUsersByIds
+  }
 ) => {
   const acceptRequestWaitingPay = async requestId => {
     const reservationRequest = await UnitReservationEntity.loadEntityFromDbById(
@@ -144,6 +156,50 @@ module.exports = (
     }
     request.state = UnitReservationState.CANCEL;
     await request.updateState();
+    // notification part
+    if (
+      request.state === UnitReservationState.ACCEPT_BY_ADMIN ||
+      request.state === UnitReservationState.ACCEPT_BY_OWNER ||
+      request.state === UnitReservationState.PAYED
+    ) {
+      const owner = await getUsersByIds([request.owner]);
+      const unit = await getUnitDetails(request.unit);
+      if (owner[`${request.renter}`] && unit) {
+        const obj = {};
+        obj[`${request.owner}`] = {
+          userId: request.owner
+        };
+
+        createEvent({
+          type: EVENTS_TYPES.RENTER_CANCEL_UNIT_RESERVATION_REQUEST,
+          userId: request.renter,
+          username: owner[`${request.renter}`].fullName,
+          message: 'قام بإلغاء طلب ايجاره ل',
+          objectId: request._id || request.id,
+          objectName: `${unit.address.government} ${unit.address.street}`,
+          objectType: OBJECTS_TYPES.UNIT_REQUEST,
+          targets: obj
+        });
+      }
+    }
+
+    // if (
+    //   request.state === UnitReservationState.ACCEPT_BY_ADMIN ||
+    //   request.state === UnitReservationState.ACCEPT_BY_OWNER ||
+    //   request.state === UnitReservationState.PAYED ||
+    //   request.state === UnitReservationState.PAYED
+    // )
+    //   createEvent({
+    //     type: EVENTS_TYPES.RENTER_CANCEL_UNIT_RESERVATION_REQUEST,
+    //     userId: request.renter,
+    //     username: 'xx',
+    //     message: 'cancel reservation unit',
+    //     objectId: request.id,
+    //     objectName: OBJECTS_TYPES.UNIT_REQUEST,
+    //     permissions: [PERMISSIONS.ADMIN]
+    //   });
+
+    // end  notification part
     return 'success';
   };
 
@@ -205,6 +261,38 @@ module.exports = (
     const unit = await getUnitDetails(request.unit);
     if (owner.toString() === unit.userId.toString()) {
       const result = await acceptRequestWaitingPay(requestId);
+
+      // notification part
+      // createEvent({
+      //   type: EVENTS_TYPES.HOUSE_OWNER_ACCEPT_UNIT_RESERVATION_REQUEST,
+      //   userId: request.owner,
+      //   username: 'house owner',
+      //   message: 'house owner accept unit reservation request',
+      //   objectId: request.id,
+      //   objectName: OBJECTS_TYPES.UNIT_REQUEST,
+      //   permissions: [PERMISSIONS.ADMIN]
+      // });
+      const renter = await getUsersByIds([request.renter]);
+      // const unit = await getUnitDetails(request.unit);
+      if (renter[`${request.renter}`] && unit) {
+        const obj = {};
+        obj[`${request.renter}`] = {
+          userId: request.renter
+        };
+
+        createEvent({
+          type: EVENTS_TYPES.HOUSE_OWNER_ACCEPT_UNIT_RESERVATION_REQUEST,
+          userId: request.owner,
+          username: renter[`${request.renter}`].fullName,
+          message: 'وافق على تأجير الوحدة',
+          objectId: request._id,
+          objectName: `${unit.address.government} ${unit.address.street}`,
+          objectType: OBJECTS_TYPES.UNIT_REQUEST,
+          targets: obj
+        });
+      }
+
+      // end  notification part
       return result;
     }
     throw new ApplicationError(
@@ -221,6 +309,39 @@ module.exports = (
     const unit = await getUnitDetails(request.unit);
     if (owner.toString() === unit.userId.toString()) {
       const result = await refuseAction(requestId, note);
+      // notification part
+
+      // createEvent({
+      //   type: EVENTS_TYPES.HOUSE_OWNER_REFUSE_UNIT_RESERVATION_REQUEST,
+      //   userId: request.owner,
+      //   username: 'house owner',
+      //   message: 'house owner refuse unit reservation request',
+      //   objectId: request.id,
+      //   objectName: OBJECTS_TYPES.UNIT_REQUEST,
+      //   permissions: [PERMISSIONS.ADMIN]
+      // });
+
+      const renter = await getUsersByIds([request.renter]);
+      // const unit = await getUnitDetails(request.unit);
+      if (renter[`${request.renter}`] && unit) {
+        const obj = {};
+        obj[`${request.renter}`] = {
+          userId: request.renter
+        };
+
+        createEvent({
+          type: EVENTS_TYPES.HOUSE_OWNER_REFUSE_UNIT_RESERVATION_REQUEST,
+          userId: request.owner,
+          username: renter[`${request.renter}`].fullName,
+          message: 'رفض تأجير الوحدة',
+          objectId: request._id,
+          objectName: `${unit.address.government} ${unit.address.street}`,
+          objectType: OBJECTS_TYPES.UNIT_REQUEST,
+          targets: obj
+        });
+      }
+
+      // end  notification part
       return result;
     }
 
@@ -231,30 +352,94 @@ module.exports = (
   };
   // --------------------- admin action----------------------------
 
-  const adminAcceptPassRequestToHouseOwner = async requestId => {
+  const adminAcceptPassRequestToHouseOwner = async (requestId, adminId) => {
     const result = await Models.updateOneById({
       id: requestId,
       update: { state: UnitReservationState.ACCEPT_BY_ADMIN }
     });
+    // notification part
+    const obj = {};
+    obj[`${result.owner}`] = {
+      userId: result.owner
+    };
+    const renter = await getUsersByIds([result.renter]);
+    const unit = await getUnitDetails(result.unit);
+    if (renter[`${result.renter}`] && unit)
+      createEvent({
+        type: EVENTS_TYPES.ADMIN_ACCEPT_UNIT_RESERVATION_REQUEST,
+        userId: adminId,
+        username: renter[`${result.renter}`].fullName,
+        message: 'يريد تأجير الوحدة',
+        objectId: result._id,
+        objectName: `${unit.address.government} ${unit.address.street}`,
+        objectType: OBJECTS_TYPES.UNIT_REQUEST,
+        targets: obj
+      });
+    // end notification part
     return { result };
   };
 
-  const adminAcceptRequestAsHouseOwner = async requestId => {
+  const adminAcceptRequestAsHouseOwner = async (requestId, adminId) => {
     const request = await Models.getOne({ query: { _id: requestId } });
     if (!request) {
       throw new ApplicationError('there is no request with this id', 404);
     }
+
     const result = await acceptRequestWaitingPay(requestId);
+    // notification part
+
+    const renter = await getUsersByIds([request.renter]);
+    const unit = await getUnitDetails(request.unit);
+    if (renter[`${request.renter}`] && unit) {
+      const obj = {};
+      obj[`${request.renter}`] = {
+        userId: request.renter
+      };
+
+      createEvent({
+        type: EVENTS_TYPES.HOUSE_OWNER_ACCEPT_UNIT_RESERVATION_REQUEST,
+        userId: adminId,
+        username: renter[`${request.renter}`].fullName,
+        message: 'وافق على تأجير الوحدة',
+        objectId: request._id,
+        objectName: `${unit.address.government} ${unit.address.street}`,
+        objectType: OBJECTS_TYPES.UNIT_REQUEST,
+        targets: obj
+      });
+    }
+    // end notification part
     return result;
   };
 
-  const adminRefuseRequestAsHouseOwner = async (requestId, note) => {
+  const adminRefuseRequestAsHouseOwner = async (requestId, note, adminId) => {
     const request = await Models.getOne({ query: { _id: requestId } });
     if (!request) {
       throw new ApplicationError('there is no request with this id', 404);
     }
-
     const result = await refuseAction(requestId, note);
+    // notification part
+
+    const renter = await getUsersByIds([request.renter]);
+    const unit = await getUnitDetails(request.unit);
+    if (renter[`${request.renter}`] && unit) {
+      const obj = {};
+      obj[`${request.renter}`] = {
+        userId: request.renter
+      };
+
+      createEvent({
+        type: EVENTS_TYPES.HOUSE_OWNER_REFUSE_UNIT_RESERVATION_REQUEST,
+        userId: adminId,
+        username: renter[`${request.renter}`].fullName,
+        message: 'رفض تأجير الوحدة',
+        objectId: request._id,
+        objectName: `${unit.address.government} ${unit.address.street}`,
+        objectType: OBJECTS_TYPES.UNIT_REQUEST,
+        targets: obj
+      });
+    }
+
+    // end notification part
     return result;
   };
   return {

@@ -194,7 +194,19 @@ module.exports = {
     HOSTELS_REQUEST_ADD_HOSTEL_REJECTED: 'hostels_request_add_hostel_rejected',
     HOSTELS_REQUEST_EDIT_HOSTEL_ACCEPTED:
       'hostels_request_edit_hostel_accepted',
-    HOSTELS_REQUEST_EDIT_HOSTEL_REJECTED: 'hostels_request_edit_hostel_rejected'
+    HOSTELS_REQUEST_EDIT_HOSTEL_REJECTED:
+      'hostels_request_edit_hostel_rejected',
+    RENTER_SEND_UNIT_RESERVATION_REQUEST:
+      'renter_send_unit_reservation_request',
+    RENTER_CANCEL_UNIT_RESERVATION_REQUEST:
+      'renter_cancel_unit_reservation_request',
+    RENTER_PAY_UNIT_RESERVATION_REQUEST: 'renter_pay_unit_reservation_request',
+    ADMIN_ACCEPT_UNIT_RESERVATION_REQUEST:
+      'admin_accept_unit_reservation_request',
+    HOUSE_OWNER_ACCEPT_UNIT_RESERVATION_REQUEST:
+      'house_owner_accept_unit_reservation_request',
+    HOUSE_OWNER_REFUSE_UNIT_RESERVATION_REQUEST:
+      'house_owner_refuse_unit_reservation_request'
   },
   OBJECTS_TYPES: {
     UNIT: 'unit',

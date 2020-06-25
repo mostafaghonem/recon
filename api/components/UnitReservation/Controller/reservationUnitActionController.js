@@ -71,7 +71,8 @@ exports.adminAcceptPassRequestToHouseOwner = async (req, res, next) => {
   try {
     const requestId = req.params.requestId;
     const result = await reservationUnitAction.adminAcceptPassRequestToHouseOwner(
-      requestId
+      requestId,
+      req.user.id
     );
     return res.status(200).json(result);
   } catch (err) {
@@ -86,12 +87,14 @@ exports.adminDecision = async (req, res, next) => {
     let result = null;
     if (decision === 'true') {
       result = await reservationUnitAction.adminAcceptRequestAsHouseOwner(
-        requestId
+        requestId,
+        req.user.id
       );
     } else {
       result = await reservationUnitAction.adminRefuseRequestAsHouseOwner(
         requestId,
-        req.body.note || ''
+        req.body.note || '',
+        req.user.id
       );
     }
     return res.status(200).json(result);

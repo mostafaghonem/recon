@@ -1,7 +1,12 @@
 // const UnitReservationModel = require('../Models/UnitReservationModel');
 const Model = require('../Models');
 const { UnitReservationEntity } = require('../Entity');
-const { UnitReservationState } = require('../../../shared/constants/defaults');
+const {
+  UnitReservationState,
+  EVENTS_TYPES,
+  OBJECTS_TYPES,
+  PERMISSIONS
+} = require('../../../shared/constants/defaults');
 
 /**
     1 - getting un-available times over single unit
@@ -16,7 +21,12 @@ const { UnitReservationState } = require('../../../shared/constants/defaults');
  */
 
 module.exports = (
-  { calculateCost, getUnitDetail } /* but your inject here */
+  {
+    calculateCost,
+    getUnitDetail,
+    createEvent,
+    getUsersByIds
+  } /* but your inject here */
 ) => {
   /**
     Here you should return array of times like [{from:--, to:--}]
@@ -88,6 +98,24 @@ module.exports = (
       const result = await Model.createOne({
         document: requestData
       });
+      // notification part
+
+      // const renter = await getUsersByIds([requestData.renter]);
+      // const unit = await getUnitDetail(requestData.unit);
+
+      // if (renter[`${requestData.renter}`] && unit)
+      //   createEvent({
+      //     type: EVENTS_TYPES.RENTER_SEND_UNIT_RESERVATION_REQUEST,
+      //     userId: requestData.renter,
+      //     username: renter[`${requestData.renter}`].fullName,
+      //     message: 'يريد تأجير الوحدة',
+      //     objectId: result._id,
+      //     objectName: `${unit.address.government} ${unit.address.street}`,
+      //     permissions: [PERMISSIONS.ADMIN],
+      //     objectType: OBJECTS_TYPES.UNIT_REQUEST
+      //   });
+
+      // end notification part
       return { result };
     }
     return { error: { message: 'not valid time', statusCode: 401 } };
