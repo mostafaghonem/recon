@@ -21,7 +21,12 @@ const {
  */
 
 module.exports = (
-  { calculateCost, getUnitDetail, createEvent } /* but your inject here */
+  {
+    calculateCost,
+    getUnitDetail,
+    createEvent,
+    getUsersByIds
+  } /* but your inject here */
 ) => {
   /**
     Here you should return array of times like [{from:--, to:--}]
@@ -94,15 +99,22 @@ module.exports = (
         document: requestData
       });
       // notification part
-      createEvent({
-        type: EVENTS_TYPES.RENTER_SEND_UNIT_RESERVATION_REQUEST,
-        userId: requestData.renter,
-        username: 'xx',
-        message: 'send unit reservation request',
-        objectId: result._id,
-        objectName: OBJECTS_TYPES.UNIT_REQUEST,
-        permissions: [PERMISSIONS.ADMIN]
-      });
+
+      // const renter = await getUsersByIds([requestData.renter]);
+      // const unit = await getUnitDetail(requestData.unit);
+
+      // if (renter[`${requestData.renter}`] && unit)
+      //   createEvent({
+      //     type: EVENTS_TYPES.RENTER_SEND_UNIT_RESERVATION_REQUEST,
+      //     userId: requestData.renter,
+      //     username: renter[`${requestData.renter}`].fullName,
+      //     message: 'يريد تأجير الوحدة',
+      //     objectId: result._id,
+      //     objectName: `${unit.address.government} ${unit.address.street}`,
+      //     permissions: [PERMISSIONS.ADMIN],
+      //     objectType: OBJECTS_TYPES.UNIT_REQUEST
+      //   });
+
       // end notification part
       return { result };
     }

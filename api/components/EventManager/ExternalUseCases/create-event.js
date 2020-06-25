@@ -33,6 +33,7 @@ module.exports = ({
       targets = targetsObj;
     }
   }
+
   const Event = new EventEntity({
     type,
     userId,
@@ -46,10 +47,11 @@ module.exports = ({
     targets,
     createdAt
   });
+
   await Event.save();
 
   logger.info(
-    `new Unit just been added with data => \n${JSON.stringify(
+    `new event just been added with data => \n${JSON.stringify(
       Event.toJson(),
       undefined,
       6
