@@ -42,7 +42,7 @@ module.exports = ({
         userId: users[`${request.renter}`],
         username: users[`${request.renter}`].fullName,
         message: 'قام بدفع طلب ايجاره ل',
-        objectId: request._id || request.id,
+        objectId: request.unit,
         objectName: `${unit.address.government} ${unit.address.street}`,
         objectType: OBJECTS_TYPES.UNIT_REQUEST,
         targets: obj
