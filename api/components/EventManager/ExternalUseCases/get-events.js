@@ -25,14 +25,14 @@ module.exports = ({ ApplicationError, logger, AdminEventTypes }) => async ({
     _id: { $gt: lastId }
   };
 
-  if (admin) {
-    query.type = {
-      $in: AdminEventTypes
-    };
-  }
-  query.type = {
-    $nin: AdminEventTypes
-  };
+  // if (admin) {
+  //   query.type = {
+  //     $in: AdminEventTypes
+  //   };
+  // }
+  // query.type = {
+  //   $nin: AdminEventTypes
+  // };
   if (type) query.type = type;
   if (userId) query.userId = userId;
   if (objectId) query.objectId = objectId;

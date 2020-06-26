@@ -25,18 +25,22 @@ module.exports = ({
 
     // notification part
 
-    const owner = await getUsersByIds([request.owner]);
+    const users = await getUsersByIds([request.owner, request.request]);
     const unit = await getUnitDetails(request.unit);
-    if (owner[`${request.renter}`] && unit) {
+    if (
+      users[request.renter.toString()] &&
+      users[request.owner.toString()] &&
+      unit
+    ) {
       const obj = {};
-      obj[`${request.owner}`] = {
+      obj[request.owner.toString()] = {
         userId: request.owner
       };
 
       createEvent({
         type: EVENTS_TYPES.RENTER_PAY_UNIT_RESERVATION_REQUEST,
-        userId: request.renter,
-        username: owner[`${request.renter}`].fullName,
+        userId: users[`${request.renter}`],
+        username: users[`${request.renter}`].fullName,
         message: 'قام بدفع طلب ايجاره ل',
         objectId: request._id || request.id,
         objectName: `${unit.address.government} ${unit.address.street}`,

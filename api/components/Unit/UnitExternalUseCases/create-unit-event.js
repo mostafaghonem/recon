@@ -29,7 +29,7 @@ module.exports = ({
     throw new ApplicationError('unable to find the event creator');
   }
   const event = {
-    userId,
+    userId: users[userId.toString()],
     username: users[userId.toString()].fullName,
     type: eventType,
     objectId: unitId,

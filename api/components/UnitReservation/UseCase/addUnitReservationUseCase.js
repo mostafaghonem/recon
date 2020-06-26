@@ -23,7 +23,7 @@ const {
 module.exports = (
   {
     calculateCost,
-    getUnitDetail,
+    getUnitDetails,
     createEvent,
     getUsersByIds
   } /* but your inject here */
@@ -74,7 +74,7 @@ module.exports = (
         to: comingOne.to
       });
 
-      const unitDetail = await getUnitDetail(comingOne.unit);
+      const unitDetail = await getUnitDetails(comingOne.unit);
       const requestData = {
         ...comingOne,
         renter: renderId,
