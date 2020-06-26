@@ -8,6 +8,7 @@ module.exports = ({ ApplicationError, logger }) => async ({
   targetId,
   events
 }) => {
+  console.log(targetId, events);
   const filter = {
     _id: {
       $in: events

@@ -11,7 +11,7 @@ module.exports = ({ eventsTypes, objectsTypes }) => {
       index: true
     },
     userId: {
-      type: String
+      type: Object
     },
     username: {
       type: String

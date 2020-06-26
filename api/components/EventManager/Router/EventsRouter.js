@@ -48,6 +48,16 @@ router.get('/unseen', [authenticateMiddleware], controllers.getUnseen);
 // @ GET api/events/unseen
 // Description: Get Events for Renter
 // !access  user
+router.get(
+  '/unseen-event-count',
+  [authenticateMiddleware],
+  controllers.getUnSeenEventsCount
+);
+
+// @route
+// @ GET api/events/unseen
+// Description: Get Events for Renter
+// !access  user
 router.post('/mark-seen', [authenticateMiddleware], controllers.markSeen);
 // @route
 // @ GET api/events/unseen

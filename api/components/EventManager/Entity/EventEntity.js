@@ -36,7 +36,7 @@ const buildEventEntity = (
     constructor(
       data = {
         type: String,
-        userId: String,
+        userId: Object,
         username: String,
         message: String,
         objectId: String,
@@ -50,7 +50,7 @@ const buildEventEntity = (
     ) {
       this.id = data.id || data._id || new ObjectId();
       this.type = data.type || '';
-      this.userId = data.userId || '';
+      this.userId = data.userId || {};
       this.username = data.username || '';
       this.message = data.message || '';
       this.objectId = data.objectId || '';

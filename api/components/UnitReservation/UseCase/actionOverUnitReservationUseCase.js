@@ -162,9 +162,9 @@ module.exports = (
       request.state === UnitReservationState.ACCEPT_BY_OWNER ||
       request.state === UnitReservationState.PAYED
     ) {
-      const owner = await getUsersByIds([request.owner]);
+      const users = await getUsersByIds([request.renter]);
       const unit = await getUnitDetails(request.unit);
-      if (owner[`${request.renter}`] && unit) {
+      if (users[`${request.renter}`] && unit) {
         const obj = {};
         obj[`${request.owner}`] = {
           userId: request.owner
@@ -172,8 +172,8 @@ module.exports = (
 
         createEvent({
           type: EVENTS_TYPES.RENTER_CANCEL_UNIT_RESERVATION_REQUEST,
-          userId: request.renter,
-          username: owner[`${request.renter}`].fullName,
+          userId: users[`${request.renter}`],
+          username: users[`${request.renter}`].fullName,
           message: 'قام بإلغاء طلب ايجاره ل',
           objectId: request._id || request.id,
           objectName: `${unit.address.government} ${unit.address.street}`,
@@ -272,9 +272,9 @@ module.exports = (
       //   objectName: OBJECTS_TYPES.UNIT_REQUEST,
       //   permissions: [PERMISSIONS.ADMIN]
       // });
-      const renter = await getUsersByIds([request.renter]);
+      const users = await getUsersByIds([request.renter, request.owner]);
       // const unit = await getUnitDetails(request.unit);
-      if (renter[`${request.renter}`] && unit) {
+      if (users[`${request.owner}`] && unit) {
         const obj = {};
         obj[`${request.renter}`] = {
           userId: request.renter
@@ -282,8 +282,8 @@ module.exports = (
 
         createEvent({
           type: EVENTS_TYPES.HOUSE_OWNER_ACCEPT_UNIT_RESERVATION_REQUEST,
-          userId: request.owner,
-          username: renter[`${request.renter}`].fullName,
+          userId: users[`${request.owner}`],
+          username: users[`${request.owner}`].fullName,
           message: 'وافق على تأجير الوحدة',
           objectId: request._id,
           objectName: `${unit.address.government} ${unit.address.street}`,
@@ -321,9 +321,9 @@ module.exports = (
       //   permissions: [PERMISSIONS.ADMIN]
       // });
 
-      const renter = await getUsersByIds([request.renter]);
+      const users = await getUsersByIds([request.renter, request.owner]);
       // const unit = await getUnitDetails(request.unit);
-      if (renter[`${request.renter}`] && unit) {
+      if (users[`${request.owner}`] && unit) {
         const obj = {};
         obj[`${request.renter}`] = {
           userId: request.renter
@@ -331,8 +331,8 @@ module.exports = (
 
         createEvent({
           type: EVENTS_TYPES.HOUSE_OWNER_REFUSE_UNIT_RESERVATION_REQUEST,
-          userId: request.owner,
-          username: renter[`${request.renter}`].fullName,
+          userId: users[`${request.owner}`],
+          username: users[`${request.owner}`].fullName,
           message: 'رفض تأجير الوحدة',
           objectId: request._id,
           objectName: `${unit.address.government} ${unit.address.street}`,
@@ -362,13 +362,13 @@ module.exports = (
     obj[`${result.owner}`] = {
       userId: result.owner
     };
-    const renter = await getUsersByIds([result.renter]);
+    const users = await getUsersByIds([result.renter, result.owner]);
     const unit = await getUnitDetails(result.unit);
-    if (renter[`${result.renter}`] && unit)
+    if (users[`${result.renter}`] && unit)
       createEvent({
         type: EVENTS_TYPES.ADMIN_ACCEPT_UNIT_RESERVATION_REQUEST,
-        userId: adminId,
-        username: renter[`${result.renter}`].fullName,
+        userId: users[`${result.renter}`],
+        username: users[`${result.renter}`].fullName,
         message: 'يريد تأجير الوحدة',
         objectId: result._id,
         objectName: `${unit.address.government} ${unit.address.street}`,
@@ -388,9 +388,9 @@ module.exports = (
     const result = await acceptRequestWaitingPay(requestId);
     // notification part
 
-    const renter = await getUsersByIds([request.renter]);
+    const users = await getUsersByIds([request.renter, request.owner]);
     const unit = await getUnitDetails(request.unit);
-    if (renter[`${request.renter}`] && unit) {
+    if (users[`${request.owner}`] && unit && users[`${request.owner}`]) {
       const obj = {};
       obj[`${request.renter}`] = {
         userId: request.renter
@@ -398,8 +398,8 @@ module.exports = (
 
       createEvent({
         type: EVENTS_TYPES.HOUSE_OWNER_ACCEPT_UNIT_RESERVATION_REQUEST,
-        userId: adminId,
-        username: renter[`${request.renter}`].fullName,
+        userId: users[`${request.owner}`],
+        username: users[`${request.owner}`].fullName,
         message: 'وافق على تأجير الوحدة',
         objectId: request._id,
         objectName: `${unit.address.government} ${unit.address.street}`,
@@ -419,9 +419,9 @@ module.exports = (
     const result = await refuseAction(requestId, note);
     // notification part
 
-    const renter = await getUsersByIds([request.renter]);
+    const users = await getUsersByIds([request.renter, request.owner]);
     const unit = await getUnitDetails(request.unit);
-    if (renter[`${request.renter}`] && unit) {
+    if (users[`${request.renter}`] && unit && users[`${request.owner}`]) {
       const obj = {};
       obj[`${request.renter}`] = {
         userId: request.renter
@@ -429,8 +429,8 @@ module.exports = (
 
       createEvent({
         type: EVENTS_TYPES.HOUSE_OWNER_REFUSE_UNIT_RESERVATION_REQUEST,
-        userId: adminId,
-        username: renter[`${request.renter}`].fullName,
+        userId: users[`${request.renter}`],
+        username: users[`${request.renter}`].fullName,
         message: 'رفض تأجير الوحدة',
         objectId: request._id,
         objectName: `${unit.address.government} ${unit.address.street}`,

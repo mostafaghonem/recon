@@ -5,12 +5,14 @@ module.exports = ({ pagination }) => {
     try {
       const userId = req.user.id;
       const lastId = req.query.lastId || pagination.LAST_ID;
-      const limit = Number(req.query.limit) || Number(pagination.LIMIT);
+      // TODO made pagination
+      const limit = 10000000000;
       const events = await getEvents({
         ...req.query,
         limit,
         lastId,
-        targetId: userId
+        targetId: userId,
+        seen: true
       });
 
       return res.status(200).json({

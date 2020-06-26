@@ -1,12 +1,12 @@
-const { getEvents, markSeen } = require('../ExternalUseCases');
+const { getEvents } = require('../ExternalUseCases');
 
 module.exports = ({ pagination }) => {
   return async (req, res, next) => {
     try {
       const userId = req.user.id;
-      const lastId = pagination.LAST_ID;
+      const lastId = req.query.lastId || pagination.LAST_ID;
       // TODO made pagination
-      const limit = 100000000000000;
+      const limit = 10000000000;
       const events = await getEvents({
         ...req.query,
         limit,
@@ -14,15 +14,10 @@ module.exports = ({ pagination }) => {
         targetId: userId,
         seen: false
       });
-      // any event go throw then it seen
-
-      if (events.length)
-        markSeen({ targetId: userId, events: events.map(ev => ev._id) });
 
       return res.status(200).json({
         success: true,
-        count: events.length || 0,
-        unseen: events || []
+        eventsCount: events.length || 0
       });
     } catch (e) {
       return next(e);
