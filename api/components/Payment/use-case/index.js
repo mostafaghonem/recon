@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const { paymentDefaults } = require('../../../shared/constants');
 const logger = require('../../../startup/logger');
 const { ApplicationError } = require('../../../shared/errors');
+
 const { getUsersByIds } = require('../../User/user-external-use-cases');
 const {
   unitCompletePayment
