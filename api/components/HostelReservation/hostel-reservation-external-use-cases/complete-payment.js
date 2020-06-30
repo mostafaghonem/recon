@@ -31,7 +31,9 @@ module.exports = ({ logger, publisher }) => async ({ payload }) => {
     JSON.stringify({
       hostelId: newReservation.hostelId,
       totalOnlineBooking: newReservation.totalReservedCount,
-      totalRevenue: newReservation.total
+      totalRevenue: newReservation.total,
+      renterId: reservationCachedData.renterId,
+      totalReservedCount: reservationCachedData.totalReservedCount
     })
   );
 

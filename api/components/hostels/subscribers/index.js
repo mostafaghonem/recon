@@ -9,6 +9,8 @@ const subscriper = redis.createClient({
 });
 
 // const makeUpdateHostelBookingData = require('./update-hostel-bookingData');
+const { getUsersByIds } = require('../../User/user-external-use-cases');
+const { createEvent } = require('../../EventManager/ExternalUseCases');
 const makeUpdateHostelTotalRevenue = require('./update-hostels-totalRevenue');
 const logger = require('../../../startup/logger');
 
@@ -25,6 +27,8 @@ module.exports = () => {
 
   makeUpdateHostelTotalRevenue({
     logger,
-    redis: subscriper
+    redis: subscriper,
+    getUsersByIds,
+    createEvent
   });
 };

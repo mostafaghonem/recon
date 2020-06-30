@@ -206,7 +206,8 @@ module.exports = {
     HOUSE_OWNER_ACCEPT_UNIT_RESERVATION_REQUEST:
       'house_owner_accept_unit_reservation_request',
     HOUSE_OWNER_REFUSE_UNIT_RESERVATION_REQUEST:
-      'house_owner_refuse_unit_reservation_request'
+      'house_owner_refuse_unit_reservation_request',
+    HOSTELS_RESERVATION_COMPLETE_PAYMENT: 'hostels_reservation_complete_payment'
   },
   OBJECTS_TYPES: {
     UNIT: 'unit',
