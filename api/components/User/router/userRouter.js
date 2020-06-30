@@ -181,7 +181,11 @@ router.get(
   '/profile',
   [
     authenticateMiddleware,
-    authorizeMiddleware([PERMISSIONS.RENTER, PERMISSIONS.HOUSE_OWNER])
+    authorizeMiddleware([
+      PERMISSIONS.RENTER,
+      PERMISSIONS.HOUSE_OWNER,
+      PERMISSIONS.ADMIN
+    ])
   ],
   controllers.getUserProfile
 );
