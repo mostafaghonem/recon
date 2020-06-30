@@ -21,7 +21,7 @@ router.get(
   [
     authenticateMiddleware,
     validateMiddleware(getEditHostelsRequests),
-    authorizeMiddleware([PERMISSIONS.ADMIN])
+    authorizeMiddleware([PERMISSIONS.HOUSE_OWNER, PERMISSIONS.ADMIN])
   ],
   controllers.getEditHostelsRequests
 );
