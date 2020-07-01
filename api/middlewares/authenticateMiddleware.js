@@ -12,6 +12,12 @@ const isAuthenticated = async (req, res, next) => {
     req.headers['access-token'];
   if (req.cookies.sknToken && req.headers['access-token'])
     token = req.headers['access-token'];
+  if (
+    req.cookies.sknAppToken &&
+    req.cookies.sknToken &&
+    !req.headers['access-token']
+  )
+    token = req.cookies.sknAppToken;
 
   if (token) {
     try {

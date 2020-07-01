@@ -4,12 +4,22 @@ const Promise = require('bluebird');
 const jwt = Promise.promisifyAll(jsonwebtoken);
 
 const visa = async (req, res, next) => {
-  const token =
+  let token =
     req.body['access-token'] ||
     req.query['access-token'] ||
     req.headers['access-token'] ||
     req.cookies.sknToken ||
     req.signedCookies.sknToken;
+
+  if (req.cookies.sknToken && req.headers['access-token'])
+    token = req.headers['access-token'];
+  if (
+    req.cookies.sknAppToken &&
+    req.cookies.sknToken &&
+    !req.headers['access-token']
+  )
+    token = req.cookies.sknAppToken;
+
   if (token) {
     try {
       const decoded = await jwt.verify(token, process.env.jwtPrivateKey);
