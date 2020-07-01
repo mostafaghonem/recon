@@ -17,6 +17,12 @@ module.exports = ({ GetBaseDomain }) => {
         httpOnly: true
       });
 
+      res.cookie('sknAppToken', result, {
+        domain,
+        maxAge,
+        httpOnly: true
+      });
+
       return res
         .status(200)
         .json({ message: 'User logged in successfully!', token: result });
