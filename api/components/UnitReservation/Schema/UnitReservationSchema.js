@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const { Schema } = mongoose;
 const { ObjectId } = mongoose.Types;
-module.exports = ({ requestStates }) => {
+module.exports = ({ requestStates, PricePer }) => {
   const User = new Schema(
     {
       renter: {
@@ -44,6 +44,10 @@ module.exports = ({ requestStates }) => {
       pending: {
         type: Boolean,
         default: false
+      },
+      dailyOrMonthly: {
+        type: String,
+        enum: PricePer
       }
     },
     {

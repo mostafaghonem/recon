@@ -45,9 +45,15 @@ const buildEventEntity = (
         timestamp: Number,
         eventCounter: Number,
         targets: [],
-        createdAt: Date
+        createdAt: Date,
+        from: Number,
+        to: Number,
+        dailyOrMonthly: String
       }
     ) {
+      this.dailyOrMonthly = data.dailyOrMonthly || 'day';
+      this.from = data.from || 0;
+      this.to = data.to || 0;
       this.id = data.id || data._id || new ObjectId();
       this.type = data.type || '';
       this.userId = data.userId || {};
@@ -108,13 +114,19 @@ const buildEventEntity = (
         timestamp: this.timestamp,
         eventCounter: this.eventCounter,
         targets: this.targets,
-        createdAt: this.createdAt
+        createdAt: this.createdAt,
+        from: this.from,
+        to: this.from,
+        dailyOrMonthly: this.dailyOrMonthly
       };
     }
 
     // ! need to be private
     mapToDb() {
       return {
+        from: this.from,
+        to: this.to,
+        dailyOrMonthly: this.dailyOrMonthly,
         userId: this.userId,
         type: this.type,
         username: this.username,
