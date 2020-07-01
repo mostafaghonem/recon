@@ -40,6 +40,9 @@ module.exports = ({
       createEvent({
         type: EVENTS_TYPES.RENTER_PAY_UNIT_RESERVATION_REQUEST,
         userId: users[`${request.renter}`],
+        from: request.from,
+        dailyOrMonthly: request.dailyOrMonthly,
+        to: request.to,
         username: users[`${request.renter}`].fullName,
         message: 'قام بدفع طلب ايجاره ل',
         objectId: request.unit,

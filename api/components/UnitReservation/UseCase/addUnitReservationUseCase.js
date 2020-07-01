@@ -80,7 +80,8 @@ module.exports = (
         renter: renderId,
         cost,
         totalAfterExtras,
-        owner: unitDetail.userId
+        owner: unitDetail.userId,
+        dailyOrMonthly: unitDetail.dailyOrMonthly
       };
       const request = new UnitReservationEntity(requestData);
       const intersectRequest = await request.gettingIntersectWithFilter({

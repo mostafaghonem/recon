@@ -55,6 +55,14 @@ module.exports = ({ eventsTypes, objectsTypes }) => {
         { _id: false }
       )
     },
+    from: {
+      type: Number,
+      default: 0
+    },
+    to: {
+      type: Number,
+      default: 0
+    },
     createdAt: {
       type: Date,
       default: Date.now()

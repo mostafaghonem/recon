@@ -21,7 +21,10 @@ module.exports = ({
   eventCounter,
   targets = {},
   permissions = [],
-  createdAt
+  createdAt,
+  from,
+  to,
+  dailyOrMonthly
 }) => {
   if (permissions && permissions.length) {
     const targetsObj = await getUsersByPermissions(permissions);
@@ -45,7 +48,10 @@ module.exports = ({
     timestamp,
     eventCounter,
     targets,
-    createdAt
+    createdAt,
+    from,
+    to,
+    dailyOrMonthly
   });
 
   await Event.save();
