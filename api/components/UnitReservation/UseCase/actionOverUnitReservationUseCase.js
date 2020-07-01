@@ -285,6 +285,7 @@ module.exports = (
         createEvent({
           from: request.from,
           to: request.to,
+          dailyOrMonthly: request.dailyOrMonthly,
           type: EVENTS_TYPES.HOUSE_OWNER_ACCEPT_UNIT_RESERVATION_REQUEST,
           userId: users[`${request.owner}`],
           username: users[`${request.owner}`].fullName,
@@ -336,6 +337,7 @@ module.exports = (
         createEvent({
           from: request.from,
           to: request.to,
+          dailyOrMonthly: request.dailyOrMonthly,
           type: EVENTS_TYPES.HOUSE_OWNER_REFUSE_UNIT_RESERVATION_REQUEST,
           userId: users[`${request.owner}`],
           username: users[`${request.owner}`].fullName,
@@ -374,6 +376,7 @@ module.exports = (
       createEvent({
         from: result.from,
         to: result.to,
+        dailyOrMonthly: result.dailyOrMonthly,
         type: EVENTS_TYPES.ADMIN_ACCEPT_UNIT_RESERVATION_REQUEST,
         userId: users[`${result.renter}`],
         username: users[`${result.renter}`].fullName,
@@ -408,6 +411,7 @@ module.exports = (
         type: EVENTS_TYPES.HOUSE_OWNER_ACCEPT_UNIT_RESERVATION_REQUEST,
         from: request.from,
         to: request.to,
+        dailyOrMonthly: request.dailyOrMonthly,
         userId: users[`${request.owner}`],
         username: users[`${request.owner}`].fullName,
         message: 'وافق على تأجير الوحدة',
@@ -440,6 +444,7 @@ module.exports = (
       createEvent({
         from: request.from,
         to: request.to,
+        dailyOrMonthly: request.dailyOrMonthly,
         type: EVENTS_TYPES.HOUSE_OWNER_REFUSE_UNIT_RESERVATION_REQUEST,
         userId: users[`${request.renter}`],
         username: users[`${request.renter}`].fullName,
