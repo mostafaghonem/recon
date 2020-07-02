@@ -15,13 +15,11 @@ module.exports = ({
   const request = await model.getOne({ query, select });
   if (request) {
     const params = { unitId: request.unitId, isEditing: false, note };
-    if (request.update && status === accepted) {
-      params.update = request.update;
-    }
     const update = {
       status,
       note
     };
+    params.update = update;
     await updateUnitEditStatus(params);
     await setRequestsProcessedStatus({ requestId, unitId: request.unitId });
     await model.updateOneById({
