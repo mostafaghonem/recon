@@ -11,6 +11,7 @@ const model = require('../models');
 module.exports = ({ ApplicationError, logger }) => async ({ userId }) => {
   const query = {
     userId,
+    $or: [{ status: 'accepted' }, { status: 'pending' }],
     isArchived: false
   };
   const officesData = {

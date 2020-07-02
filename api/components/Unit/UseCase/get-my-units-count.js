@@ -9,7 +9,9 @@ const model = require('../Models');
 
 // should have no implementation for any specific orm
 module.exports = ({ ApplicationError }) => async ({ userId }) => {
-  const units = await model.getMyUnits(userId);
+  const units = await model.getMyUnits(userId, 0, {
+    $or: [{ status: 'accepted' }, { status: 'pending' }]
+  });
 
   if (!units || (units && typeof units.total === 'undefined')) {
     throw new ApplicationError('Unable to get user own units');

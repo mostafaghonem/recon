@@ -11,7 +11,8 @@ const model = require('../models');
 module.exports = ({ ApplicationError, logger }) => async ({ userId }) => {
   const query = {
     userId,
-    isArchived: false
+    isArchived: false,
+    $or: [{ status: 'accepted' }, { status: 'pending' }]
   };
   const hostelsData = {
     count: 0,
