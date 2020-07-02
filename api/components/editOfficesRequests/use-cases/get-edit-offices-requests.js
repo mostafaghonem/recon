@@ -9,6 +9,7 @@ const model = require('../models');
 
 // should have no implementation for any specific orm
 module.exports = ({ ApplicationError, logger }) => async ({
+  user,
   skip,
   status,
   key,
@@ -18,6 +19,7 @@ module.exports = ({ ApplicationError, logger }) => async ({
     status,
     isArchived: false
   };
+  if (!user.permissions.includes('admin')) query.userId = user.id;
   const select = 'userId status officeId office note createdAt';
   let sort = { createdAt: 1 };
   if (status !== 'pending') sort = { updatedAt: -1 };

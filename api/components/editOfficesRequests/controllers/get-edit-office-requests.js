@@ -6,6 +6,7 @@ module.exports = ({ pagination }) => {
       const limit = Number(req.query.limit) || Number(pagination.LIMIT);
       const key = req.query.key || '';
       const editOfficesRequests = await getEditOfficesRequests({
+        user: req.user,
         ...req.query,
         key,
         limit
