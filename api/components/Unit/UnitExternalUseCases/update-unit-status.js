@@ -21,7 +21,6 @@ module.exports = ({ ApplicationError, logger }) => async ({
 
   if (update) {
     delete update._id;
-    delete update.status;
     delete update.note;
     delete update.isEditing;
     delete update.isFull;

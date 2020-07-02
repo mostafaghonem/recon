@@ -20,8 +20,14 @@ module.exports = ({
       note
     };
     params.update = update;
+    console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaa');
+    console.log(params);
+    console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaa');
     await updateUnitEditStatus(params);
     await setRequestsProcessedStatus({ requestId, unitId: request.unitId });
+    console.log('cccccccccccccccccccccccccccc');
+    console.log(update);
+    console.log('cccccccccccccccccccccccccccc');
     await model.updateOneById({
       id: requestId,
       update
