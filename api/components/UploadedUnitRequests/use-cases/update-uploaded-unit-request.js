@@ -15,19 +15,17 @@ module.exports = ({
   const request = await model.getOne({ query, select });
   if (request) {
     const params = { unitId: request.unitId, isEditing: false, note };
+    if (request.update && status === accepted) {
+      params.update = request.update;
+    } else if (!request.update) {
+      params.status = accepted;
+    }
     const update = {
       status,
       note
     };
-    params.update = update;
-    console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaa');
-    console.log(params);
-    console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaa');
     await updateUnitEditStatus(params);
     await setRequestsProcessedStatus({ requestId, unitId: request.unitId });
-    console.log('cccccccccccccccccccccccccccc');
-    console.log(update);
-    console.log('cccccccccccccccccccccccccccc');
     await model.updateOneById({
       id: requestId,
       update

@@ -12,21 +12,24 @@ module.exports = ({ ApplicationError, logger }) => async ({
   unitId,
   isEditing,
   note,
+  status,
   update
 }) => {
   let obj = {
     isEditing,
-    note
+    note,
+    status
   };
 
   if (update) {
     delete update._id;
     delete update.note;
+    delete update.status;
     delete update.isEditing;
     delete update.isFull;
     delete update.isHidden;
     delete update.isArchived;
-    obj = { isEditing, note, ...update };
+    obj = { isEditing, note, status, ...update };
   }
   const units = await model.updateOneById({
     id: unitId,
