@@ -18,7 +18,7 @@ module.exports = ({
     if (request.update && status === accepted) {
       params.update = request.update;
     } else if (!request.update) {
-      params.status = accepted;
+      params.status = status;
     }
     const update = {
       status,
