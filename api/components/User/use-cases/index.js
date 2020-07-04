@@ -28,7 +28,8 @@ const {
   getUserOfficesCount
 } = require('../../offices/offices-external-use-cases');
 const {
-  getReservedRoomCountByHotels
+  getReservedRoomCountByHotels,
+  checkHostelReservationRequests
 } = require('../../HostelReservation/hostel-reservation-external-use-cases');
 const { PERMISSIONS } = require('../../../shared/constants/defaults');
 const {
@@ -152,7 +153,8 @@ const getUploadedHostelsCount = makeGetUploadedHostelsCount({
 const getUploadedHostelDetails = makeGetUploadedHostelDetails({
   ApplicationError,
   logger,
-  getHouseOwnerHostel
+  getHouseOwnerHostel,
+  checkHostelReservationRequests
 });
 
 const getUploadedOffices = makeGetUploadedOffices({

@@ -14,6 +14,7 @@ const makeGetReservedRoomCountByHotel = require('./get-reserved-room-count-by-ho
 const makeIsGroupBusyInDateTs = require('./is-group-busy-in-this-date');
 const makeCompletePayment = require('./complete-payment');
 const makeGetReservationCostById = require('./get-reservation-cost-by-id');
+const makeCheckHostelReservationRequests = require('./check-hostel-reservation-requests');
 // const { updateHostelBookingData } = require('./__mocks');
 
 /**
@@ -44,6 +45,7 @@ const getReservedRoomCountByHotels = makeGetReservedRoomCountByHotel({});
   ]
  */
 const isGroupBusyInDateTs = makeIsGroupBusyInDateTs({});
+const checkHostelReservationRequests = makeCheckHostelReservationRequests({});
 
 const completeHostelPayment = makeCompletePayment({
   logger,
@@ -63,7 +65,8 @@ const HostelReservationExternals = Object.freeze({
   getReservedRoomCountByHotels,
   isGroupBusyInDateTs,
   getReservationCostById,
-  completeHostelPayment
+  completeHostelPayment,
+  checkHostelReservationRequests
 });
 
 module.exports = HostelReservationExternals;
