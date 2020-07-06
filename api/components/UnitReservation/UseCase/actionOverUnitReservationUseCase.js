@@ -149,16 +149,17 @@ module.exports = (
       throw new ApplicationError('action not from the renter of request', 404);
     }
     // you should cancel request first then un-pending another requests...
-    request.state = UnitReservationState.CANCEL;
-    await request.updateState();
 
     if (
       request.state === UnitReservationState.PAYED ||
       request.state === UnitReservationState.ACCEPT_BY_OWNER
     ) {
+      request.state = UnitReservationState.CANCEL;
+      await request.updateState();
       await unPendingRequest(request);
     }
-
+    request.state = UnitReservationState.CANCEL;
+    await request.updateState();
     // notification part
     if (
       request.state === UnitReservationState.ACCEPT_BY_ADMIN ||
