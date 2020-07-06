@@ -31,7 +31,7 @@ module.exports = ({ GenericModel = _GenericModel, ObjectId }) => {
         query: {
           unit: unitId,
           from: { $lte: +start },
-          state: UnitReservationState.REFUSED
+          state: UnitReservationState.RECEIVED
         }
       });
     }
