@@ -6,21 +6,21 @@ const nuxtConfig = require('./nuxt');
 
 const ErrorHandler = require('../middlewares/errorHandlerMiddleware');
 const User = require('../components/User');
-const identityRequests = require('../components/identityRequests');
-const hostels = require('../components/hostels');
-const offices = require('../components/offices');
-const uploadedHostelsRequests = require('../components/uploadedHostelsRequests');
-const editHostelsRequests = require('../components/editHostelsRequests');
-const uploadedOfficesRequests = require('../components/uploadedOfficesRequests');
-const editOfficesRequests = require('../components/editOfficesRequests');
-const UploadedUnitRequests = require('../components/UploadedUnitRequests');
-const HostelReservation = require('../components/HostelReservation');
-const uploader = require('../components/uploader');
-// const OfficeReservation = require('../components/OfficeReservation');
-const Units = require('../components/Unit');
-const EventManager = require('../components/EventManager');
-const Payment = require('../components/Payment');
-const reservationRouter = require('../components/UnitReservation/Router');
+// const identityRequests = require('../components/identityRequests');
+// const hostels = require('../components/hostels');
+// const offices = require('../components/offices');
+// const uploadedHostelsRequests = require('../components/uploadedHostelsRequests');
+// const editHostelsRequests = require('../components/editHostelsRequests');
+// const uploadedOfficesRequests = require('../components/uploadedOfficesRequests');
+// const editOfficesRequests = require('../components/editOfficesRequests');
+// const UploadedUnitRequests = require('../components/UploadedUnitRequests');
+// const HostelReservation = require('../components/HostelReservation');
+// const uploader = require('../components/uploader');
+// // const OfficeReservation = require('../components/OfficeReservation');
+// const Units = require('../components/Unit');
+// const EventManager = require('../components/EventManager');
+// const Payment = require('../components/Payment');
+// const reservationRouter = require('../components/UnitReservation/Router');
 
 module.exports = async app => {
   app.get('/sw.js', express.static(path.join(__dirname, '../../public/sw.js')));
