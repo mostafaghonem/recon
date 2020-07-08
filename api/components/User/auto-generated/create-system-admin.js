@@ -1,11 +1,7 @@
 /* eslint-disable no-unused-vars */
 //! only require Entity/model
 const { UserEntity } = require('../Entity');
-const {
-  GENDER_TYPES,
-  JOB_TYPES,
-  PERMISSIONS
-} = require('../../../shared/constants/defaults');
+const { PERMISSIONS } = require('../../../shared/constants/defaults');
 
 // should have no implementation for any specific orm
 module.exports = ({ logger }) => async ({ username, password, fullName }) => {
@@ -15,21 +11,9 @@ module.exports = ({ logger }) => async ({ username, password, fullName }) => {
     // # create scenario (if no admin user, then create new one)
     if (!user) {
       user = new UserEntity({
-        permissions: [
-          PERMISSIONS.ADMIN,
-          PERMISSIONS.HOUSE_OWNER,
-          PERMISSIONS.RENTER,
-          PERMISSIONS.SALES
-        ],
-        birthDateTs: new Date().getTime(),
-        gender: GENDER_TYPES.MALE,
-        job: {
-          type: JOB_TYPES.EMPLOYEE,
-          description: 'System Admin'
-        },
-        government: 'Cairo',
+        permissions: [PERMISSIONS.ADMIN],
         fullName,
-        phone
+        username
       });
 
       user.setPassword(password);
@@ -49,7 +33,7 @@ module.exports = ({ logger }) => async ({ username, password, fullName }) => {
     }
 
     logger.info(
-      `ADMIN User created with username:password => ${phone}:${password}`
+      `ADMIN User created with username:password => ${username}:${password}`
     );
   } catch (error) {
     logger.info('### ERROR ### while creating ADMIN USER');

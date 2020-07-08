@@ -56,42 +56,15 @@ const buildUserEntity = (
     constructor(
       data = {
         fullName: String,
-        phone: String,
+        username: String,
         email: String,
-        birthDateTs: Number,
-        gender: String,
-        job: { type: String, description: String },
-        government: String,
-        image: String,
         permissions: Array
       }
     ) {
-      this.facebookId = data.facebookId || '';
-      this.googleId = data.googleId || '';
       this.id = data.id || data._id || new ObjectId();
       this.fullName = data.fullName || '';
-      this.phone = data.phone || '';
-      this.email = data.email || '';
       this.password = data.password || '';
-      this.verifyEmail = data.verifyEmail || false;
-      this.birthDateTs = data.birthDateTs || '';
-      this.gender = data.gender || '';
-      if (data.job) {
-        this.job = {
-          type: data.job.type || '',
-          description: data.job.description || ''
-        };
-      } else {
-        this.job = {
-          type: '',
-          description: ''
-        };
-      }
-      this.government = data.government || '';
-      this.image = data.image || '';
-      this.identificationImages = data.identificationImages || [];
-      this.identificationStatus = data.identificationStatus || false;
-      let userPermissions = [PERMISSIONS.RENTER];
+      let userPermissions = [PERMISSIONS.SOLDIER];
       if (data.permissions && _.isArray(data.permissions))
         userPermissions = data.permissions;
       this.permissions = userPermissions;
@@ -125,45 +98,25 @@ const buildUserEntity = (
       return {
         id: this.id,
         fullName: this.fullName,
-        phone: this.phone,
-        email: this.email,
-        verifyEmail: this.verifyEmail,
-        birthDateTs: this.birthDateTs,
-        gender: this.gender,
-        job: { type: this.job.type, description: this.job.description },
-        government: this.government,
-        image: this.image,
-        facebookId: this.facebookId,
-        identificationImages: this.identificationImages,
-        identificationStatus: this.identificationStatus
+        username: this.username
       };
     }
 
     // ! need to be private
     mapToDb() {
       return {
-        facebookId: this.facebookId,
-        googleId: this.googleId,
         fullName: this.fullName,
-        phone: this.phone,
+        username: this.username,
         email: this.email,
         password: this.password,
-        verifyEmail: this.verifyEmail,
-        birthDateTs: this.birthDateTs,
-        gender: this.gender,
-        job: { type: this.job.type, description: this.job.description },
-        government: this.government,
-        image: this.image,
-        identificationImages: this.identificationImages,
-        identificationStatus: this.identificationStatus,
-        permissions: this.permissions || [PERMISSIONS.RENTER],
+        permissions: this.permissions || [PERMISSIONS.SOLDIER],
         isArchived: this.isArchived
       };
     }
 
     generateToken() {
       const jwtPrivateKey = process.env.jwtPrivateKey || '';
-      let permissions = [PERMISSIONS.RENTER];
+      let permissions = [PERMISSIONS.SOLDIER];
       if (this.permissions && _.isArray(this.permissions))
         permissions = this.permissions;
       return jwt.sign(

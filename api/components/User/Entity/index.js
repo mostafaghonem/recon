@@ -11,8 +11,6 @@ const jwt = Promise.promisifyAll(jsonwebtoken);
 const { ApplicationError } = require('../../../shared/errors');
 
 const makeUserEntity = require('./UserEntity');
-const makeUserFavoriteUnitsEntity = require('./UserFavoriteUnitsEntity');
-const makeUserFavoriteHostelsEntity = require('./UserFavoriteHostelsEntity');
 
 const Entity = makeUserEntity({
   bcrypt: bcjs,
@@ -22,13 +20,4 @@ const Entity = makeUserEntity({
   _
 });
 
-const FavoriteUnitsEntity = makeUserFavoriteUnitsEntity({
-  ObjectId
-});
-const FavoriteHostelsEntity = makeUserFavoriteHostelsEntity({
-  ObjectId
-});
-
 module.exports.UserEntity = Entity;
-module.exports.UserFavoriteUnitsEntity = FavoriteUnitsEntity;
-module.exports.UserFavoriteHostelsEntity = FavoriteHostelsEntity;

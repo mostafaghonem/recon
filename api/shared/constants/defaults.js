@@ -5,9 +5,11 @@ module.exports = {
     LAST_ID: '000000000000'
   },
   PERMISSIONS: {
-    RENTER: 'renter',
-    HOUSE_OWNER: 'houseOwner',
-    SALES: 'sales',
+    SOLDIER: 'renter',
+    STAFF_SEARGENT: 'houseOwner',
+    OFFICER: 'sales',
+    BRANCH_HEAD: 'branch_head',
+    MASTER_HEAD: 'master_head',
     ADMIN: 'admin'
   },
   GENDER_TYPES: {

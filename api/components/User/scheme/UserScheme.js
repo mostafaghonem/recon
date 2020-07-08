@@ -18,20 +18,6 @@ module.exports = ({ permissions }) => {
         trim: true,
         required: true
       },
-      email: {
-        type: String,
-        unique: true,
-        trim: true
-        // required: true
-      },
-      government: {
-        type: String,
-        required: true
-      },
-      image: {
-        type: String
-        // required: true
-      },
       password: {
         type: String,
         required: true

@@ -84,7 +84,7 @@ router.get(
   '/password/edit/code',
   [
     authenticateMiddleware,
-    authorizeMiddleware([PERMISSIONS.RENTER, PERMISSIONS.HOUSE_OWNER])
+    authorizeMiddleware([PERMISSIONS.SOLDIER, PERMISSIONS.HOUSE_OWNER])
   ],
   controllers.updatePasswordCode
 );
@@ -93,7 +93,7 @@ router.post(
   [
     validateMiddleware(confirmUpdatePasswordValidation),
     authenticateMiddleware,
-    authorizeMiddleware([PERMISSIONS.RENTER, PERMISSIONS.HOUSE_OWNER])
+    authorizeMiddleware([PERMISSIONS.SOLDIER, PERMISSIONS.HOUSE_OWNER])
   ],
   controllers.confirmUpdatePassword
 );
@@ -102,7 +102,7 @@ router.put(
   [
     validateMiddleware(updateUserPasswordValidation),
     authenticateMiddleware,
-    authorizeMiddleware([PERMISSIONS.RENTER, PERMISSIONS.HOUSE_OWNER])
+    authorizeMiddleware([PERMISSIONS.SOLDIER, PERMISSIONS.HOUSE_OWNER])
   ],
   controllers.updateUserPassword
 );
@@ -115,7 +115,7 @@ router.get(
   [
     authenticateMiddleware,
     authorizeMiddleware([
-      PERMISSIONS.RENTER,
+      PERMISSIONS.SOLDIER,
       PERMISSIONS.HOUSE_OWNER,
       PERMISSIONS.ADMIN
     ])
@@ -131,7 +131,7 @@ router.put(
   [
     validateMiddleware(updateProfile),
     authenticateMiddleware,
-    authorizeMiddleware([PERMISSIONS.RENTER, PERMISSIONS.HOUSE_OWNER])
+    authorizeMiddleware([PERMISSIONS.SOLDIER, PERMISSIONS.HOUSE_OWNER])
   ],
   controllers.updateUserProfile
 );
