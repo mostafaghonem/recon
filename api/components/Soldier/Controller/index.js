@@ -2,34 +2,34 @@ const { defaultConstants } = require('../../../shared/constants');
 
 const pagination = Object.freeze(defaultConstants.PAGINATION);
 
-const makeAddUnitCtrl = require('./add-soldier');
-const makeDeleteUnitCtrl = require('./delete-soldier');
-const makeGetUnitsCtrl = require('./get-units');
-const makeHideUnitCtrl = require('./hide-unit');
-const makeUnhideUnitCtrl = require('./unhide-unit');
-const makeEditUnitCtrl = require('./edit-soldier');
-const makeGetUnit = require('./get-unit');
+const makeAddSoldierCtrl = require('./add-soldier');
+const makeDeleteSoldierCtrl = require('./delete-soldier');
+const makeGetSoldiersCtrl = require('./get-soldiers');
+const makeHideSoldierCtrl = require('./hide-soldier');
+const makeUnhideSoldierCtrl = require('./unhide-soldier');
+const makeEditSoldierCtrl = require('./edit-soldier');
+const makeGetSoldier = require('./get-soldier');
 // ->
-const addUnit = makeAddUnitCtrl({});
-const deleteUnit = makeDeleteUnitCtrl({});
-const getUnits = makeGetUnitsCtrl({ pagination });
-const hideUnit = makeHideUnitCtrl({});
-const unhideUnit = makeUnhideUnitCtrl({});
-const editUnit = makeEditUnitCtrl({});
-const getUnit = makeGetUnit({});
-// const editUnit = makeEditUnitCtrl({});
-// const editUnitAvailability = makeEditUnitAvailabilityCtrl({});
-// const getUnit = makeGetUnitCtrl({});
-// const rateUnit = makeRateUnitCtrl({});
+const addSoldier = makeAddSoldierCtrl({});
+const deleteSoldier = makeDeleteSoldierCtrl({});
+const getSoldiers = makeGetSoldiersCtrl({ pagination });
+const hideSoldier = makeHideSoldierCtrl({});
+const unhideSoldier = makeUnhideSoldierCtrl({});
+const editSoldier = makeEditSoldierCtrl({});
+const getSoldier = makeGetSoldier({});
+// const editSoldier = makeEditSoldierCtrl({});
+// const editSoldierAvailability = makeEditSoldierAvailabilityCtrl({});
+// const getSoldier = makeGetSoldierCtrl({});
+// const rateSoldier = makeRateSoldierCtrl({});
 
-const unitsCtrl = Object.freeze({
-  addUnit,
-  deleteUnit,
-  hideUnit,
-  unhideUnit,
-  editUnit,
-  getUnit,
-  getUnits
+const soldiersCtrl = Object.freeze({
+  addSoldier,
+  deleteSoldier,
+  hideSoldier,
+  unhideSoldier,
+  editSoldier,
+  getSoldier,
+  getSoldiers
 });
 
-module.exports = unitsCtrl;
+module.exports = soldiersCtrl;

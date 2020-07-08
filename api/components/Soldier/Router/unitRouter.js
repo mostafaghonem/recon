@@ -1,12 +1,12 @@
 const express = require('express');
 const {
-  addUnitValidation,
-  deleteUnitValidation,
-  hideUnitValidation,
-  unhideUnitValidation,
-  editUnitValidation,
-  getUnitValidation,
-  getUnitsValidation
+  addSoldierValidation,
+  deleteSoldierValidation,
+  hideSoldierValidation,
+  unhideSoldierValidation,
+  editSoldierValidation,
+  getSoldierValidation,
+  getSoldiersValidation
 } = require('../Validation');
 // const {
 //   PaginationValidtion
@@ -23,81 +23,81 @@ const validateMiddleware = require('../../../middlewares/validateMiddleware');
 const controllers = require('../Controller');
 
 // @route
-// @ POST api/units/
-// Description: Add new unit
+// @ POST api/soldiers/
+// Description: Add new soldier
 // !access  anonymous
 router.post(
   '/',
   [
-    validateMiddleware(addUnitValidation),
+    validateMiddleware(addSoldierValidation),
     authenticateMiddleware,
     authorizeMiddleware([PERMISSIONS.HOUSE_OWNER, PERMISSIONS.ADMIN])
   ],
-  controllers.addUnit
+  controllers.addSoldier
 );
 
 // @route
-// @ GET api/units/unit/:id
-// Description: Get unit details for renter
+// @ GET api/soldiers/soldier/:id
+// Description: Get soldier details for renter
 // !access  anonymous
 router.get(
-  '/unit/:id',
-  [validateMiddleware(getUnitValidation), visaMiddleware],
-  controllers.getUnit
+  '/soldier/:id',
+  [validateMiddleware(getSoldierValidation), visaMiddleware],
+  controllers.getSoldier
 );
 
 router.put(
   '/hide/:id',
   [
-    validateMiddleware(hideUnitValidation),
+    validateMiddleware(hideSoldierValidation),
     authenticateMiddleware,
     authorizeMiddleware([PERMISSIONS.HOUSE_OWNER, PERMISSIONS.ADMIN])
   ],
-  controllers.hideUnit
+  controllers.hideSoldier
 );
 
 router.put(
   '/unhide/:id',
   [
-    validateMiddleware(unhideUnitValidation),
+    validateMiddleware(unhideSoldierValidation),
     authenticateMiddleware,
     authorizeMiddleware([PERMISSIONS.HOUSE_OWNER, PERMISSIONS.ADMIN])
   ],
-  controllers.unhideUnit
+  controllers.unhideSoldier
 );
 
 router.delete(
   '/:id',
   [
-    validateMiddleware(deleteUnitValidation),
+    validateMiddleware(deleteSoldierValidation),
     authenticateMiddleware,
     authorizeMiddleware([PERMISSIONS.HOUSE_OWNER, PERMISSIONS.ADMIN])
   ],
-  controllers.deleteUnit
+  controllers.deleteSoldier
 );
 
 // @route
-// @ PUT api/units/edit/:id
-// Description: Edit unit by Admin or House Owner
+// @ PUT api/soldiers/edit/:id
+// Description: Edit soldier by Admin or House Owner
 // !access  anonymous
 router.put(
   '/edit/:id',
   [
-    validateMiddleware(editUnitValidation),
+    validateMiddleware(editSoldierValidation),
     authenticateMiddleware,
     authorizeMiddleware([PERMISSIONS.HOUSE_OWNER, PERMISSIONS.ADMIN])
   ],
-  controllers.editUnit
+  controllers.editSoldier
 );
 
 // @route
-// @ GET api/units/
-// Description: Get Units for Renter
+// @ GET api/soldiers/
+// Description: Get Soldiers for Renter
 // !access  anonymous
 router.get(
   '/',
-  [validateMiddleware(getUnitsValidation), visaMiddleware],
-  controllers.getUnits
+  [validateMiddleware(getSoldiersValidation), visaMiddleware],
+  controllers.getSoldiers
 );
 
 module.exports = router;

@@ -1,8 +1,8 @@
-const makeUnitScheme = require('./UnitSchema');
+const makeSoldierScheme = require('./SoldierSchema');
 const { defaultConstants } = require('../../../shared/constants');
 
-const unitTypes = Object.values(defaultConstants.UNIT_TYPES);
-const unitServices = Object.values(defaultConstants.UNIT_SERVICES);
+const soldierTypes = Object.values(defaultConstants.UNIT_TYPES);
+const soldierServices = Object.values(defaultConstants.UNIT_SERVICES);
 const rentersType = Object.values(defaultConstants.RENTERS_TYPES);
 
 const currencies = Object.values(defaultConstants.CURRENCIES);
@@ -11,12 +11,12 @@ const PricePer = Object.values(defaultConstants.PRICE_PER);
 const pendingStatus = require('../../../shared/constants/defaults')
   .REQUEST_STATUS;
 
-module.exports = makeUnitScheme({
+module.exports = makeSoldierScheme({
   rentersType,
-  unitTypes,
+  soldierTypes,
   PricePer,
   requestStatus,
   pendingStatus: pendingStatus.PENDING,
   currencies,
-  unitServices
+  soldierServices
 });

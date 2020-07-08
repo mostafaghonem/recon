@@ -7,7 +7,7 @@ module.exports = ({ ApplicationError, logger, redis }) => async ({
   password,
   code
 }) => {
-  const user = await UserEntity.loadEntityFromDbByPhone(phone);
+  const user = await UserEntity.loadEntityFromDbByUsername(phone);
   if (user) {
     const checkExistence = await redis.getAsync(`${phone}-RecoveryCode`);
     if (checkExistence) {

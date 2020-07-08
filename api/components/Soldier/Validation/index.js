@@ -5,95 +5,67 @@ const mongoose = require('mongoose');
 const { ObjectId } = mongoose.Types;
 const { defaultConstants } = require('../../../shared/constants');
 
-const makeAddunitValidation = require('./add-unit-validation');
-const makeDeleteUnitValidation = require('./delete-unit-validation');
-const makeGetMyUnitsValidation = require('./get-my-units-validation');
-const makeGetMyUnitValidation = require('./get-my-unit-validation');
-const makeEditUnitValidation = require('./edit-unit-validation');
-const makeHideUnitValidation = require('./hide-unit-validation');
-const makeUnhideUnitValidation = require('./unhide-unit-validation');
-const makeGetValidation = require('./get-unit-validation');
-const makeGetUnitsValidation = require('./get-units-validation');
+const makeAddsoldierValidation = require('./add-soldier-validation');
+const makeDeleteSoldierValidation = require('./delete-soldier-validation');
+const makeEditSoldierValidation = require('./edit-soldier-validation');
+const makeHideSoldierValidation = require('./hide-soldier-validation');
+const makeUnhideSoldierValidation = require('./unhide-soldier-validation');
+const makeGetValidation = require('./get-soldier-validation');
+const makeGetSoldiersValidation = require('./get-soldiers-validation');
 
-// const makeAddunitRoomsValidation = require('./add-unit-rooms-validation');
-// const makeDeleteunitValidation = require('./delete-unit-validation');
-// const makeGetunitsValidation = require('./get-units-validation');
-// const makeEditunitRoomsValidation = require('./edit-unit-rooms-validation');
-// const makeEditunitAvailabilityValidation = require('./edit-unit-availability-validation');
-// const makeGetunitValidation = require('./get-unit-validation');
-// const makeRateunitValidation = require('./rate-unit-validation');
-
-const unitTypes = Object.values(defaultConstants.UNIT_TYPES);
-const unitServices = Object.values(defaultConstants.UNIT_SERVICES);
+const soldierTypes = Object.values(defaultConstants.UNIT_TYPES);
+const soldierServices = Object.values(defaultConstants.UNIT_SERVICES);
 const PricePer = Object.values(defaultConstants.PRICE_PER);
 const currencies = Object.values(defaultConstants.CURRENCIES);
 const rentersType = Object.values(defaultConstants.RENTERS_TYPES);
-const requestStatus = Object.values(defaultConstants.REQUEST_STATUS);
 const sortValues = Object.values(defaultConstants.SORT_VALUES);
 const sortKeys = Object.values(defaultConstants.SORT_KEYS);
 
-module.exports.addUnitValidation = makeAddunitValidation({
+module.exports.addSoldierValidation = makeAddsoldierValidation({
   _,
   ValidatorHelper,
   Builder,
   rentersType,
-  unitTypes,
+  soldierTypes,
   PricePer,
   currencies,
-  unitServices
+  soldierServices
 });
 
-module.exports.deleteUnitValidation = makeDeleteUnitValidation({
+module.exports.deleteSoldierValidation = makeDeleteSoldierValidation({
   _,
   ValidatorHelper,
   Builder,
   ObjectId
 });
 
-module.exports.getMyUnitsValidation = makeGetMyUnitsValidation({
-  _,
-  ValidatorHelper,
-  Builder,
-  ObjectId,
-  requestStatus,
-  sortValues,
-  sortKeys
-});
-
-module.exports.getMyUnitValidation = makeGetMyUnitValidation({
+module.exports.hideSoldierValidation = makeHideSoldierValidation({
   _,
   ValidatorHelper,
   Builder,
   ObjectId
 });
 
-module.exports.hideUnitValidation = makeHideUnitValidation({
+module.exports.unhideSoldierValidation = makeUnhideSoldierValidation({
   _,
   ValidatorHelper,
   Builder,
   ObjectId
 });
 
-module.exports.unhideUnitValidation = makeUnhideUnitValidation({
-  _,
-  ValidatorHelper,
-  Builder,
-  ObjectId
-});
-
-module.exports.editUnitValidation = makeEditUnitValidation({
+module.exports.editSoldierValidation = makeEditSoldierValidation({
   _,
   ValidatorHelper,
   Builder,
   ObjectId,
   rentersType,
-  unitTypes,
+  soldierTypes,
   PricePer,
   currencies,
-  unitServices
+  soldierServices
 });
 
-module.exports.getUnitValidation = makeGetValidation({
+module.exports.getSoldierValidation = makeGetValidation({
   _,
   ValidatorHelper,
   Builder,
@@ -102,16 +74,16 @@ module.exports.getUnitValidation = makeGetValidation({
   sortKeys
 });
 
-module.exports.getUnitsValidation = makeGetUnitsValidation({
+module.exports.getSoldiersValidation = makeGetSoldiersValidation({
   _,
   ValidatorHelper,
   Builder,
   ObjectId,
   rentersType,
-  unitTypes,
+  soldierTypes,
   PricePer,
   currencies,
-  unitServices,
+  soldierServices,
   sortValues,
   sortKeys
 });

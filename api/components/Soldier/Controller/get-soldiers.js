@@ -1,4 +1,4 @@
-const { getUnits } = require('../UseCase');
+const { getSoldiers } = require('../UseCase');
 
 module.exports = ({ pagination }) => {
   return async (req, res, next) => {
@@ -7,7 +7,7 @@ module.exports = ({ pagination }) => {
       const lastId = req.query.lastId || String(pagination.LAST_ID);
       const userId = req.user ? req.user.id : undefined;
       const key = req.query.key || '';
-      const result = await getUnits({
+      const result = await getSoldiers({
         ...req.query,
         userId,
         key,

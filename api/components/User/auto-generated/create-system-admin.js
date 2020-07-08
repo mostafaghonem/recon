@@ -8,9 +8,9 @@ const {
 } = require('../../../shared/constants/defaults');
 
 // should have no implementation for any specific orm
-module.exports = ({ logger }) => async ({ phone, password, fullName }) => {
+module.exports = ({ logger }) => async ({ username, password, fullName }) => {
   try {
-    let user = await UserEntity.loadEntityFromDbByPhone(phone);
+    let user = await UserEntity.loadEntityFromDbyUsername(username);
 
     // # create scenario (if no admin user, then create new one)
     if (!user) {

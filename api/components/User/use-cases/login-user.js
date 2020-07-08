@@ -15,7 +15,7 @@ module.exports = ({ ApplicationError, logger }) => async ({
   password,
   agent
 }) => {
-  const user = await UserEntity.loadEntityFromDbByPhone(phone);
+  const user = await UserEntity.loadEntityFromDbByUsername(phone);
   if (user) {
     const checkPassword = user.comparePassword(password);
     if (!checkPassword)

@@ -10,18 +10,18 @@ const jwt = Promise.promisifyAll(jsonwebtoken);
 
 const { ApplicationError } = require('../../../shared/errors');
 
-const makeUnitEntity = require('./UnitEntity');
+const makeSoldierEntity = require('./SoldierEntity');
 
 const pendingStatus = require('../../../shared/constants/defaults')
-    .REQUEST_STATUS;
+  .REQUEST_STATUS;
 
-const Entity = makeUnitEntity({
-    bcrypt: bcjs,
-    ApplicationError,
-    ObjectId,
-    jwt,
-    _,
-    pendingStatus: pendingStatus.PENDING
+const Entity = makeSoldierEntity({
+  bcrypt: bcjs,
+  ApplicationError,
+  ObjectId,
+  jwt,
+  _,
+  pendingStatus: pendingStatus.PENDING
 });
 
-module.exports.UnitEntity = Entity;
+module.exports.SoldierEntity = Entity;

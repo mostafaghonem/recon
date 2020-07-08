@@ -45,7 +45,7 @@ const buildUnitEntity = (
       return undefined;
     }
 
-    static async loadEntityFromDbByPhone(phone) {
+    static async loadEntityFromDbByUsername(phone) {
       const exists = await Model.getOne({
         query: { phone }
       });

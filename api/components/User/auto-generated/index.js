@@ -6,12 +6,12 @@ const createSystemAdmin = makeCreateSystemAdmin({
   logger
 });
 
-const { ADMIN_PHONE, ADMIN_PASSWORD } = process.env;
+const { ADMIN_USERNAME, ADMIN_PASSWORD } = process.env;
 
 module.exports = () => {
   createSystemAdmin({
-    fullName: 'SKN ADMIN',
-    phone: ADMIN_PHONE,
+    fullName: 'RECON ADMIN',
+    username: ADMIN_USERNAME,
     password: ADMIN_PASSWORD
   });
 };

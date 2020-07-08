@@ -1,9 +1,9 @@
-const { hideUnit } = require('../UseCase');
+const { hideSoldier } = require('../UseCase');
 
 module.exports = () => {
   return async (req, res, next) => {
     try {
-      await hideUnit(req.params.id);
+      await hideSoldier(req.params.id);
 
       return res.status(200).json({ message: 'تم إخفاء الوحدة بنجاح' });
     } catch (e) {

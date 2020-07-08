@@ -1,3 +1,3 @@
-const unitRouter = require('./Router/unitRouter');
+const soldierRouter = require('./Router/soldierRouter');
 
-module.exports.Router = unitRouter;
+module.exports.Router = soldierRouter;

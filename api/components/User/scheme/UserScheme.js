@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const { Schema } = mongoose;
 
-module.exports = ({ genderEnum, jobTypeEnum, permissions }) => {
+module.exports = ({ permissions }) => {
   const User = new Schema(
     {
       fullName: {
@@ -12,7 +12,7 @@ module.exports = ({ genderEnum, jobTypeEnum, permissions }) => {
         trim: true,
         required: true
       },
-      phone: {
+      username: {
         type: String,
         unique: true,
         trim: true,
@@ -23,37 +23,6 @@ module.exports = ({ genderEnum, jobTypeEnum, permissions }) => {
         unique: true,
         trim: true
         // required: true
-      },
-      verifyEmail: {
-        type: Boolean,
-        default: false
-      },
-      birthDateTs: {
-        type: Number,
-        required: true
-      },
-      gender: {
-        type: String,
-        required: true,
-        enum: genderEnum
-      },
-      job: {
-        type: new Schema(
-          {
-            type: {
-              type: String,
-              required: true,
-              enum: jobTypeEnum
-            },
-            description: {
-              type: String
-            }
-          },
-          {
-            _id: false
-          }
-        ),
-        required: true
       },
       government: {
         type: String,
@@ -67,19 +36,7 @@ module.exports = ({ genderEnum, jobTypeEnum, permissions }) => {
         type: String,
         required: true
       },
-      address: {
-        type: String,
-        default: ''
-      },
-      tempVerificationCode: String,
-      facebookId: String,
-      googleId: String,
       isArchived: {
-        type: Boolean,
-        default: false
-      },
-      identificationImages: [String],
-      identificationStatus: {
         type: Boolean,
         default: false
       },

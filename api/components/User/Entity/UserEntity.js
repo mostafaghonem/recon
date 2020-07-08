@@ -45,9 +45,9 @@ const buildUserEntity = (
       return undefined;
     }
 
-    static async loadEntityFromDbByPhone(phone) {
+    static async loadEntityFromDbByUsername(username) {
       const exists = await Model.getOne({
-        query: { phone }
+        query: { username }
       });
       if (exists) return new UserEntity(exists);
       return undefined;

@@ -1,10 +1,10 @@
 const mongoose = require('mongoose');
 
 const ObjectId = mongoose.Types.ObjectId;
-const makeUnitModel = require('./UnitModel');
+const makeSoldierModel = require('./SoldierModel');
 const GenericModel = require('../../shared/models/GenericModel');
 
-module.exports = makeUnitModel({
+module.exports = makeSoldierModel({
   GenericModel,
   ObjectId
 });

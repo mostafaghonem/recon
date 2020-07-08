@@ -14,42 +14,41 @@ const { ApplicationError: AppError } = require('../../../shared/errors');
 const Model = require('../Models');
 
 // Inject dependency !no-requires
-const buildUnitEntity = (
+const buildSoldierEntity = (
   obj = {
     bcrypt: bcjs,
     ApplicationError: AppError,
     ObjectId: __ObjectId,
     jwt: _jwt,
-    _,
-    pendingStatus
+    _
   }
 ) => {
   // eslint-disable-next-line no-unused-vars
   const { bcrypt, ApplicationError, ObjectId, jwt, _, pendingStatus } = obj;
-  class UnitEntity {
+  class SoldierEntity {
     static async loadEntityFromDbById(id) {
       const exists = await Model.getOneById({ id });
-      if (exists) return new UnitEntity(exists);
+      if (exists) return new SoldierEntity(exists);
       return undefined;
     }
 
     static async loadEntityFromDbByFacebookId(facebookId) {
       const exists = await Model.getOne({ query: { facebookId } });
-      if (exists) return new UnitEntity(exists);
+      if (exists) return new SoldierEntity(exists);
       return undefined;
     }
 
     static async loadEntityFromDbByGoogleId(googleId) {
       const exists = await Model.getOne({ query: { googleId } });
-      if (exists) return new UnitEntity(exists);
+      if (exists) return new SoldierEntity(exists);
       return undefined;
     }
 
-    static async loadEntityFromDbByPhone(phone) {
+    static async loadEntityFromDbByUsername(phone) {
       const exists = await Model.getOne({
         query: { phone }
       });
-      if (exists) return new UnitEntity(exists);
+      if (exists) return new SoldierEntity(exists);
       return undefined;
     }
 
@@ -217,7 +216,7 @@ const buildUnitEntity = (
     }
   }
 
-  return UnitEntity;
+  return SoldierEntity;
 };
 
-module.exports = buildUnitEntity;
+module.exports = buildSoldierEntity;

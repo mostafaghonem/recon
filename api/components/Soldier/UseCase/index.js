@@ -12,76 +12,72 @@ const {
   EVENTS_TYPES,
   REQUEST_STATUS
 } = require('../../../shared/constants/defaults');
+const {
+  GetSortObj,
+  GetSoldiersAvailbility
+} = require('../../../shared/constants/methods');
 
-const makeAddUnit = require('./add-unit');
-const makeDeleteUnit = require('./delete-unit');
-const makeGetUnit = require('./get-unit');
-const makeGetUnits = require('./get-units');
-const makeHideUnit = require('./hide-unit');
-const makeUnhideUnit = require('./unhide-unit');
-const makeEditUnit = require('./edit-unit');
+const makeAddSoldier = require('./add-soldier');
+const makeDeleteSoldier = require('./delete-soldier');
+const makeGetSoldier = require('./get-soldier');
+const makeGetSoldiers = require('./get-soldiers');
+const makeHideSoldier = require('./hide-soldier');
+const makeUnhideSoldier = require('./unhide-soldier');
+const makeEditSoldier = require('./edit-soldier');
 
-const { getUnitsFavorability } = require('../../User/user-external-use-cases');
-const { createUnitEvent } = require('../UnitExternalUseCases');
-
-const addUnit = makeAddUnit({
+const addSoldier = makeAddSoldier({
   ApplicationError,
   logger,
-  createUnitEvent,
   events: EVENTS_TYPES
 });
 
-const deleteUnit = makeDeleteUnit({
+const deleteSoldier = makeDeleteSoldier({
   ApplicationError,
   logger
 });
 
-const getUnit = makeGetUnit({
+const getSoldier = makeGetSoldier({
   moment,
   ApplicationError,
   logger,
   accepted: REQUEST_RESPONSE.ACCEPTED,
-  getUnitsFavorability,
-  GetUnitsAvailbility
+  GetSoldiersAvailbility
 });
 
-const getUnits = makeGetUnits({
+const getSoldiers = makeGetSoldiers({
   moment,
   ApplicationError,
   logger,
   accepted: REQUEST_RESPONSE.ACCEPTED,
   GetSortObj,
-  getUnitsFavorability,
-  GetUnitsAvailbility
+  GetSoldiersAvailbility
 });
 
-const hideUnit = makeHideUnit({
+const hideSoldier = makeHideSoldier({
   ApplicationError,
   logger
 });
 
-const unhideUnit = makeUnhideUnit({
+const unhideSoldier = makeUnhideSoldier({
   ApplicationError,
   logger
 });
 
-const editUnit = makeEditUnit({
+const editSoldier = makeEditSoldier({
   ApplicationError,
   logger,
-  createUnitEvent,
-  setRequestsProcessedStatus,
   events: EVENTS_TYPES,
   pending: REQUEST_STATUS.PENDING
 });
 
-const unitsUseCases = {
-  addUnit,
-  deleteUnit,
-  hideUnit,
-  unhideUnit,
-  editUnit,
-  getUnit,
-  getUnits
+const soldiersUseCases = {
+  addSoldier,
+  deleteSoldier,
+  hideSoldier,
+  unhideSoldier,
+  editSoldier,
+  getSoldier,
+  getSoldiers
 };
 
-module.exports = unitsUseCases;
+module.exports = soldiersUseCases;
