@@ -4,20 +4,10 @@
 // const _genderEnum = Object.values(defaultConstants.GENDER_TYPES);
 // const _jobTypeEnum = Object.values(defaultConstants.JOB_TYPES);
 
-module.exports = ({
-  _,
-  ValidatorHelper,
-  Builder,
-  genderEnum,
-  jobTypeEnum
-}) => ({ body }) => {
+module.exports = ({ _, ValidatorHelper, Builder }) => ({ body }) => {
   const error = {};
 
   const scheme = {
-    image: {
-      value: body.image,
-      rules: new Builder().required().rules
-    },
     fullName: {
       value: body.fullName,
       rules: new Builder()
@@ -27,38 +17,7 @@ module.exports = ({
     },
     username: {
       value: body.username,
-      rules: new Builder()
-        .required('يجب ادخال رقم الهاتف')
-        .isMobile('رقم هاتف غير صالح').rules
-    },
-    email: {
-      value: body.email,
-      rules: new Builder()
-        .required('يجب ادخال البريد الإلكتروني')
-        .isEmail('بريد إلكتروني غير صالح').rules
-    },
-    birthDateTs: {
-      value: body.birthDateTs,
-      rules: new Builder().required().isNumber().rules
-    },
-    gender: {
-      value: body.gender,
-      rules: new Builder().required().isMember(genderEnum).rules
-    },
-    'job.type': {
-      value: body.job ? body.job.type : '',
-      rules: new Builder().required().isMember(jobTypeEnum).rules
-    },
-    'job.description': {
-      value: body.job ? body.job.description : '',
-      rules: new Builder().minLength(5).maxLength(500).rules
-    },
-    government: {
-      value: body.government,
-      rules: new Builder()
-        .required()
-        .minLength(3)
-        .maxLength(100).rules
+      rules: new Builder().required('يجب ادخال username').rules
     },
     password: {
       value: body.password,
@@ -66,13 +25,6 @@ module.exports = ({
         .required()
         .minLength(5)
         .maxLength(60).rules
-    },
-    code: {
-      value: body.code,
-      rules: new Builder()
-        .required()
-        .min(1000)
-        .max(9999).rules
     }
     // TODO: Edit error messages
   };
@@ -81,16 +33,6 @@ module.exports = ({
     const ele = scheme[key];
     const { errors, isValid } = ValidatorHelper(ele.value, ele.rules);
     if (!isValid) error[key] = errors;
-    if (
-      key === 'job.description' &&
-      ele.value === '' &&
-      body.job &&
-      body.job.type &&
-      body.job.type !== 'renter'
-    ) {
-      error[key] = ['يجب إدخال اسم الشركة'];
-      if (body.job.type === 'student') error[key] = ['يجب إدخال اسم الكلية'];
-    }
   });
 
   return {

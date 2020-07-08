@@ -3,9 +3,6 @@ const express = require('express');
 const {
   userRegisterValidation,
   userLoginValidation,
-  forgetPasswordValidation,
-  confirmForgetPasswordValidation,
-  confirmUpdatePasswordValidation,
   changePasswordValidation,
   updateUserPasswordValidation,
   updateProfile
@@ -19,14 +16,28 @@ const { PERMISSIONS } = require('../../../shared/constants/defaults');
 
 const validateMiddleware = require('../../../middlewares/validateMiddleware');
 const controllers = require('../controllers');
+const userCtrl = require('../controllers');
 
 // @route
 // @ GET api/users/register
 // !access  anonymous
 router.post(
-  '/register',
-  [validateMiddleware(userRegisterValidation)],
+  '/create-user',
+  [
+    validateMiddleware(userRegisterValidation),
+    authenticateMiddleware,
+    authorizeMiddleware([PERMISSIONS.ADMIN])
+  ],
   controllers.registerUser
+);
+
+// @route
+// @ GET api/users/
+// !access  ADMIN
+router.get(
+  '/',
+  [authenticateMiddleware, authorizeMiddleware([PERMISSIONS.ADMIN])],
+  (req, res) => userCtrl.getUsers)
 );
 
 // @route
@@ -47,56 +58,18 @@ router.post(
   controllers.loginUser
 );
 
-// @route
-// @ POST api/users/login-admin
-// !access  anonymous
-router.post(
-  '/login-admin',
-  [validateMiddleware(userLoginValidation)],
-  controllers.loginAdmin
-);
 
 // @route
 // @ POST api/users/logout
 // !access  anonymous
 router.get('/logout', [authenticateMiddleware], controllers.logOutUser);
 
-// reset password
-router.post(
-  '/password/forget',
-  [validateMiddleware(forgetPasswordValidation)],
-  controllers.forgetPassword
-);
-router.post(
-  '/password/confirmForget',
-  [validateMiddleware(confirmForgetPasswordValidation)],
-  controllers.confirmForgetPassword
-);
 router.put(
   '/password/change',
   [validateMiddleware(changePasswordValidation)],
   controllers.changePassword
 );
 
-// change password
-
-router.get(
-  '/password/edit/code',
-  [
-    authenticateMiddleware,
-    authorizeMiddleware([PERMISSIONS.SOLDIER, PERMISSIONS.HOUSE_OWNER])
-  ],
-  controllers.updatePasswordCode
-);
-router.post(
-  '/password/edit/confirmCode',
-  [
-    validateMiddleware(confirmUpdatePasswordValidation),
-    authenticateMiddleware,
-    authorizeMiddleware([PERMISSIONS.SOLDIER, PERMISSIONS.HOUSE_OWNER])
-  ],
-  controllers.confirmUpdatePassword
-);
 router.put(
   '/password',
   [

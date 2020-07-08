@@ -4,9 +4,7 @@ module.exports = ({ _, Builder, ValidatorHelper }) => ({ body }) => {
   const scheme = {
     username: {
       value: body.username,
-      rules: new Builder()
-        .required('يجب ادخال رقم الهاتف')
-        .isMobile('رقم هاتف غير صالح').rules
+      rules: new Builder().required('يجب ادخال اسم المستخدم').rules
     },
     password: {
       value: body.password,
@@ -14,13 +12,6 @@ module.exports = ({ _, Builder, ValidatorHelper }) => ({ body }) => {
         .required()
         .minLength(5)
         .maxLength(60).rules
-    },
-    code: {
-      value: body.code,
-      rules: new Builder()
-        .required()
-        .min(1000)
-        .max(9999).rules
     }
   };
 
@@ -30,8 +21,6 @@ module.exports = ({ _, Builder, ValidatorHelper }) => ({ body }) => {
     if (!isValid) {
       error[key] = errors;
     }
-    if (key === 'username' && ele.value && !String(ele.value).startsWith('01'))
-      error[key] = ['رقم هاتف غير صالح'];
   });
 
   return { error: _.isEmpty(error) ? undefined : error };

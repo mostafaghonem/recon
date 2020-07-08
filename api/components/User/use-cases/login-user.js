@@ -29,7 +29,7 @@ module.exports = ({ ApplicationError, logger }) => async ({
     return token;
   }
   throw new ApplicationError(
-    '.نأسف ، لا يمكننا العثور على حساب بهذا الرقم',
+    '.نأسف ، لا يمكننا العثور على حساب بهذا الاسم المستخدم',
     403
   );
 };

@@ -6,7 +6,7 @@ const { PERMISSIONS } = require('../../../shared/constants/defaults');
 // should have no implementation for any specific orm
 module.exports = ({ logger }) => async ({ username, password, fullName }) => {
   try {
-    let user = await UserEntity.loadEntityFromDbyUsername(username);
+    let user = await UserEntity.loadEntityFromDbByUsername(username);
 
     // # create scenario (if no admin user, then create new one)
     if (!user) {

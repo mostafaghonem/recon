@@ -4,7 +4,7 @@ module.exports = ({ _, ValidatorHelper, Builder }) => ({ body }) => {
   const scheme = {
     username: {
       value: body.username,
-      rules: new Builder().required('يجب ادخال رقم الهاتف').rules
+      rules: new Builder().required('يجب ادخال اسم المستخدم').rules
     },
     password: {
       value: body.password,

@@ -57,13 +57,13 @@ const buildUserEntity = (
       data = {
         fullName: String,
         username: String,
-        email: String,
         permissions: Array
       }
     ) {
       this.id = data.id || data._id || new ObjectId();
       this.fullName = data.fullName || '';
       this.password = data.password || '';
+      this.username = data.username;
       let userPermissions = [PERMISSIONS.SOLDIER];
       if (data.permissions && _.isArray(data.permissions))
         userPermissions = data.permissions;
@@ -107,7 +107,6 @@ const buildUserEntity = (
       return {
         fullName: this.fullName,
         username: this.username,
-        email: this.email,
         password: this.password,
         permissions: this.permissions || [PERMISSIONS.SOLDIER],
         isArchived: this.isArchived
