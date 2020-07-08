@@ -6,40 +6,19 @@ const { UserEntity } = require('../Entity');
 const Models = require('../models');
 
 // should have no implementation for any specific orm
-module.exports = ({ redis, ApplicationError, logger }) => async ({
-  image,
+module.exports = ({ ApplicationError, logger }) => async ({
   fullName,
-  phone,
-  email,
-  birthDateTs,
-  gender,
-  job = { type: String, description: String },
-  government,
-  password,
-  facebookId,
-  googleId,
-  code: candidateCode
+  username,
+  password
 }) => {
-  const code = await redis.getAsync(`${phone}-register-user`);
-  logger.info(`the otp is => ${code}`);
+  const isDuplicate = await Models.checkExistenceBy({ username });
 
-  if (code !== candidateCode) throw new ApplicationError('Invalid code', 400);
-
-  const isDuplicate = await Models.checkExistenceBy({ email, phone });
-
-  if (isDuplicate) throw new ApplicationError('Duplicate email or phone', 400);
+  if (isDuplicate)
+    throw new ApplicationError('Duplicate email or username', 400);
 
   const newUser = new UserEntity({
-    image,
     fullName,
-    phone,
-    email,
-    birthDateTs,
-    gender,
-    job: { type: job.type, description: job.description },
-    government,
-    facebookId,
-    googleId
+    username
   });
 
   newUser.setPassword(password);

@@ -25,8 +25,8 @@ module.exports = ({
         .minLength(2, 'يجب ان يكون الاسم 2 احرف علي الاقل')
         .maxLength(50, 'يجب ان يكون الاسم 50 حرف كحد اقصي').rules
     },
-    phone: {
-      value: body.phone,
+    username: {
+      value: body.username,
       rules: new Builder()
         .required('يجب ادخال رقم الهاتف')
         .isMobile('رقم هاتف غير صالح').rules

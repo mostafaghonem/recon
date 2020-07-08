@@ -3,40 +3,26 @@ const { UserEntity } = require('../Entity');
 const Models = require('../models');
 
 // should have no implementation for any specific orm
-module.exports = ({ ApplicationError, logger, redis }) => async ({
+module.exports = ({ ApplicationError, logger }) => async ({
   userId,
-  password,
-  code
+  password
 }) => {
   const query = {
     _id: userId,
     isArchived: false
   };
-  const select = 'phone';
+  const select = 'username';
   const checkUser = await Models.getOne({
     query,
     select
   });
   const user = await UserEntity.loadEntityFromDbById(userId);
   if (user) {
-    const checkExistence = await redis.getAsync(
-      `${checkUser.phone}-changePassword`
+    user.setPassword(password);
+    await user.save();
+    logger.info(
+      `"${checkUser.username}" just changed his password successfully`
     );
-    if (checkExistence) {
-      if (Number(checkExistence) !== Number(code))
-        throw new ApplicationError('رمز التحقق غير صالح', 400);
-      user.setPassword(password);
-      await user.save();
-      await redis.deleteAsync(`${checkUser.phone}-changePassword`);
-
-      logger.info(
-        `"${checkUser.phone}" just changed his password successfully`
-      );
-    } else
-      throw new ApplicationError(
-        'يجب أن تحصل على رمز التحقق أولاً أو حاول مرة أخرى',
-        400
-      );
   } else
     throw new ApplicationError(
       '.نأسف ، لا يمكننا العثور على حساب بهذا الرقم',

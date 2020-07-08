@@ -10,7 +10,7 @@ const { ApplicationError } = require('../../../shared/errors');
 
 const makeUpdateIdentification = require('./update-identification');
 const makeGetUsersByIds = require('./get-users-data-with-ids');
-const makeGetUsersByPhone = require('./get-users-data-with-phone');
+const makeGetUsersByusername = require('./get-users-data-with-username');
 const makeGetUsersByPermissions = require('./get-users-with-permissions');
 const makeGetUnitsFavorability = require('./get-units-favorability');
 const makeGetHostelsFavorability = require('./get-hostels-favorability');
@@ -26,7 +26,7 @@ const getUsersByIds = makeGetUsersByIds({
   ApplicationError
 });
 
-const getUsersByPhone = makeGetUsersByPhone({
+const getUsersByusername = makeGetUsersByusername({
   logger,
   ApplicationError
 });
@@ -52,7 +52,7 @@ const getOfficesFavorability = makeGetOfficesFavorability({
 });
 
 const UsersExternalService = Object.freeze({
-  getUsersByPhone,
+  getUsersByusername,
   getUsersByIds,
   getUsersByPermissions,
   updateIdentification,

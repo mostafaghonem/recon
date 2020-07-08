@@ -12,7 +12,7 @@ module.exports = ({
     isArchived: false
   };
   const select =
-    'fullName phone email birthDateTs gender job government image identificationImages identificationStatus permissions';
+    'fullName username email birthDateTs gender job government image identificationImages identificationStatus permissions';
   const user = await model.getOne({ query, select });
   if (user) {
     user.userIdentityStatus = await getUserIdentityStatus(userId);

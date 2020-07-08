@@ -9,7 +9,7 @@ module.exports = ({ GenericModel = _GenericModel }) => {
     //   super(DbAccess);
     // }
 
-    checkExistenceBy(data = { email: String, phone: String }) {
+    checkExistenceBy(data = { email: String, username: String }) {
       const orOp = Object.keys(data)
         .filter(k => data[k])
         .map(k => ({ [k]: data[k] }));
@@ -23,9 +23,9 @@ module.exports = ({ GenericModel = _GenericModel }) => {
       });
     }
 
-    getUsersWithPhoneSearch(phone) {
+    getUsersWithusernameSearch(username) {
       return this.getMany({
-        query: { phone: { $in: [new RegExp(`^${phone}`, 'i')] } }
+        query: { username: { $in: [new RegExp(`^${username}`, 'i')] } }
       });
     }
 

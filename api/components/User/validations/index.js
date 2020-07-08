@@ -12,7 +12,7 @@ const requestStatus = Object.values(defaultConstants.REQUEST_STATUS);
 
 const makeUserRegisterValidation = require('./user-register-validation');
 const makeUserLoginValidation = require('./user-login-validation');
-const makeUserPhoneVerificationValidation = require('./phone-verification-validation');
+const makeUserusernameVerificationValidation = require('./username-verification-validation');
 const makeUserSmsVerificationValidation = require('./sms-verification-validation');
 const makeForgetPasswordValidation = require('./forget-password-validation');
 const makeConfirmForgetPasswordValidation = require('./confirm-forget-password-validation');
@@ -20,7 +20,7 @@ const makeConfirmUpdatePasswordValidation = require('./confirm-update-password-v
 const makeChangePasswordValidation = require('./change-password');
 const makeUpdateUserPasswordValidation = require('./update-user-password');
 const makeUpdateProfileValidation = require('./update-profile');
-const makeUpdatePhoneValidation = require('./update-phone');
+const makeUpdateusernameValidation = require('./update-username');
 const makeGetHouseOwnerInfoValidation = require('./houseOwner-info');
 const makeGetUploadedHostelsValidation = require('./get-uploaded-hostels');
 const makeGetUploadedHostelDetailsValidation = require('./get-uploaded-hostel-details');
@@ -59,7 +59,7 @@ module.exports.changePasswordValidation = makeChangePasswordValidation({
   ValidatorHelper
 });
 
-module.exports.phoneVerificationValidation = makeUserPhoneVerificationValidation(
+module.exports.usernameVerificationValidation = makeUserusernameVerificationValidation(
   {
     _,
     Builder,
@@ -95,7 +95,7 @@ module.exports.updateProfile = makeUpdateProfileValidation({
   jobTypeEnum
 });
 
-module.exports.updatePhone = makeUpdatePhoneValidation({
+module.exports.updateusername = makeUpdateusernameValidation({
   _,
   Builder,
   ValidatorHelper

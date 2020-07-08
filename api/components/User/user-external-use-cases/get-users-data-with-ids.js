@@ -18,7 +18,7 @@ module.exports = ({ ApplicationError }) => async ids => {
       renterId: u._id,
       email: u.email,
       address: u.address,
-      phone: u.phone,
+      username: u.username,
       fullName: u.fullName,
       government: u.government,
       image: u.image,

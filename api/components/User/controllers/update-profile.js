@@ -3,7 +3,7 @@ const { updateUserProfile } = require('../use-cases');
 module.exports = () => {
   return async (req, res, next) => {
     try {
-      if (req.body.phone) delete req.body.phone;
+      if (req.body.username) delete req.body.username;
       if (req.body.password) delete req.body.password;
       await updateUserProfile(req.user.id || '', req.body);
 

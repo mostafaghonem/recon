@@ -2,8 +2,8 @@ module.exports = ({ _, Builder, ValidatorHelper }) => ({ body }) => {
   const error = {};
 
   const scheme = {
-    phone: {
-      value: body.phone,
+    username: {
+      value: body.username,
       rules: new Builder()
         .required('يجب ادخال رقم الهاتف')
         .isMobile('رقم هاتف غير صالح').rules
@@ -23,7 +23,7 @@ module.exports = ({ _, Builder, ValidatorHelper }) => ({ body }) => {
     if (!isValid) {
       error[key] = errors;
     }
-    if (key === 'phone' && ele.value && !String(ele.value).startsWith('01'))
+    if (key === 'username' && ele.value && !String(ele.value).startsWith('01'))
       error[key] = ['رقم هاتف غير صالح'];
   });
 
