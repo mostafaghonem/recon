@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const mongoosePaginate = require('mongoose-paginate-v2');
 
 const { Schema } = mongoose;
 
@@ -26,6 +27,10 @@ module.exports = ({ permissions }) => {
         type: Boolean,
         default: false
       },
+      isHidden: {
+        type: Boolean,
+        default: false
+      },
       permissions: [
         {
           type: String,
@@ -38,6 +43,6 @@ module.exports = ({ permissions }) => {
       autoIndex: true
     }
   );
-
+  User.plugin(mongoosePaginate);
   return mongoose.model('User', User);
 };

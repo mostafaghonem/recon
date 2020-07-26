@@ -7,7 +7,12 @@ const makeGetUserProfile = require('./get-profile');
 const makeUpdateUserProfile = require('./update-profile');
 const makeGetUsers = require('./get-users');
 
-const { GetBaseDomain } = require('../../../shared/constants');
+const {
+  GetBaseDomain,
+  defaultConstants
+} = require('../../../shared/constants');
+
+const pagination = Object.freeze(defaultConstants.PAGINATION);
 
 // ->
 const registerUser = makeUserRegisterCtrl({});
@@ -17,7 +22,7 @@ const logOutUser = makeUserLogOutCtrl({ GetBaseDomain });
 const changePassword = makeChangePassword({});
 const getUserProfile = makeGetUserProfile({});
 const updateUserProfile = makeUpdateUserProfile({});
-const getUsers = makeGetUsers({});
+const getUsers = makeGetUsers({ pagination });
 
 const userCtrl = Object.freeze({
   registerUser,

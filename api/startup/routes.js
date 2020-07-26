@@ -6,6 +6,7 @@ const nuxtConfig = require('./nuxt');
 
 const ErrorHandler = require('../middlewares/errorHandlerMiddleware');
 const User = require('../components/User');
+const Soldier = require('../components/Soldier');
 
 module.exports = async app => {
   app.get('/sw.js', express.static(path.join(__dirname, '../../public/sw.js')));

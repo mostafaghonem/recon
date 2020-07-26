@@ -6,8 +6,8 @@ module.exports = ({
   ValidatorHelper,
   ObjectId,
   rentersType,
-  soldierTypes,
-  soldierServices,
+  divisionTypes,
+  divisionServices,
   sortKeys,
   sortValues
 }) => ({ query }) => {
@@ -39,7 +39,7 @@ module.exports = ({
     // },
     // type: {
     //   value: query.type,
-    //   rules: new Builder().isMember(soldierTypes).rules
+    //   rules: new Builder().isMember(divisionTypes).rules
     // },
     // rentersType: {
     //   value: query.rentersType,
@@ -108,7 +108,7 @@ module.exports = ({
     query.services.forEach((url, index) => {
       scheme[`query.services.${index}`] = {
         value: url,
-        rules: new Builder().isMember(soldierServices).rules
+        rules: new Builder().isMember(divisionServices).rules
       };
     });
   }

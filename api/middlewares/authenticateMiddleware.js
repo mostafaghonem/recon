@@ -5,16 +5,16 @@ const jwt = Promise.promisifyAll(jsonwebtoken);
 
 const isAuthenticated = async (req, res, next) => {
   let token =
-    req.cookies.sknToken ||
-    req.signedCookies.sknToken ||
+    req.cookies.reconToken ||
+    req.signedCookies.reconToken ||
     req.body['access-token'] ||
     req.query['access-token'] ||
     req.headers['access-token'];
-  if (req.cookies.sknToken && req.headers['access-token'])
+  if (req.cookies.reconToken && req.headers['access-token'])
     token = req.headers['access-token'];
   if (
     req.cookies.sknAppToken &&
-    req.cookies.sknToken &&
+    req.cookies.reconToken &&
     !req.headers['access-token']
   )
     token = req.cookies.sknAppToken;

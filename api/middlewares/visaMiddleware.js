@@ -8,14 +8,14 @@ const visa = async (req, res, next) => {
     req.body['access-token'] ||
     req.query['access-token'] ||
     req.headers['access-token'] ||
-    req.cookies.sknToken ||
-    req.signedCookies.sknToken;
+    req.cookies.reconToken ||
+    req.signedCookies.reconToken;
 
-  if (req.cookies.sknToken && req.headers['access-token'])
+  if (req.cookies.reconToken && req.headers['access-token'])
     token = req.headers['access-token'];
   if (
     req.cookies.sknAppToken &&
-    req.cookies.sknToken &&
+    req.cookies.reconToken &&
     !req.headers['access-token']
   )
     token = req.cookies.sknAppToken;

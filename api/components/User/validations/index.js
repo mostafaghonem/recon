@@ -6,8 +6,6 @@ const { ObjectId } = mongoose.Types;
 
 const { defaultConstants } = require('../../../shared/constants');
 
-const genderEnum = Object.values(defaultConstants.GENDER_TYPES);
-const jobTypeEnum = Object.values(defaultConstants.JOB_TYPES);
 const requestStatus = Object.values(defaultConstants.REQUEST_STATUS);
 
 const makeUserRegisterValidation = require('./user-register-validation');
@@ -23,9 +21,7 @@ const makeUpdateProfileValidation = require('./update-profile');
 module.exports.userRegisterValidation = makeUserRegisterValidation({
   _,
   Builder,
-  ValidatorHelper,
-  genderEnum,
-  jobTypeEnum
+  ValidatorHelper
 });
 
 module.exports.userLoginValidation = makeUserLoginValidation({
@@ -71,7 +67,5 @@ module.exports.confirmUpdatePasswordValidation = makeConfirmUpdatePasswordValida
 module.exports.updateProfile = makeUpdateProfileValidation({
   _,
   Builder,
-  ValidatorHelper,
-  genderEnum,
-  jobTypeEnum
+  ValidatorHelper
 });

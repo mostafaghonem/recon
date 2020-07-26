@@ -14,33 +14,33 @@ const {
 } = require('../../../shared/constants/defaults');
 const { GetSortObj } = require('../../../shared/constants/methods');
 
-const makeAddSoldier = require('./add-soldier');
-const makeDeleteSoldier = require('./delete-soldier');
-const makeGetSoldier = require('./get-soldier');
-const makeGetSoldiers = require('./get-soldiers');
-const makeHideSoldier = require('./hide-soldier');
-const makeUnhideSoldier = require('./unhide-soldier');
-const makeEditSoldier = require('./edit-soldier');
+const makeAddDivision = require('./add-division');
+const makeDeleteDivision = require('./delete-division');
+const makeGetDivision = require('./get-division');
+const makeGetDivisions = require('./get-divisions');
+const makeHideDivision = require('./hide-division');
+const makeUnhideDivision = require('./unhide-division');
+const makeEditDivision = require('./edit-division');
 
-const addSoldier = makeAddSoldier({
+const addDivision = makeAddDivision({
   ApplicationError,
   logger,
   events: EVENTS_TYPES
 });
 
-const deleteSoldier = makeDeleteSoldier({
+const deleteDivision = makeDeleteDivision({
   ApplicationError,
   logger
 });
 
-const getSoldier = makeGetSoldier({
+const getDivision = makeGetDivision({
   moment,
   ApplicationError,
   logger,
   accepted: REQUEST_RESPONSE.ACCEPTED
 });
 
-const getSoldiers = makeGetSoldiers({
+const getDivisions = makeGetDivisions({
   moment,
   ApplicationError,
   logger,
@@ -48,31 +48,31 @@ const getSoldiers = makeGetSoldiers({
   GetSortObj
 });
 
-const hideSoldier = makeHideSoldier({
+const hideDivision = makeHideDivision({
   ApplicationError,
   logger
 });
 
-const unhideSoldier = makeUnhideSoldier({
+const unhideDivision = makeUnhideDivision({
   ApplicationError,
   logger
 });
 
-const editSoldier = makeEditSoldier({
+const editDivision = makeEditDivision({
   ApplicationError,
   logger,
   events: EVENTS_TYPES,
   pending: REQUEST_STATUS.PENDING
 });
 
-const soldiersUseCases = {
-  addSoldier,
-  deleteSoldier,
-  hideSoldier,
-  unhideSoldier,
-  editSoldier,
-  getSoldier,
-  getSoldiers
+const divisionsUseCases = {
+  addDivision,
+  deleteDivision,
+  hideDivision,
+  unhideDivision,
+  editDivision,
+  getDivision,
+  getDivisions
 };
 
-module.exports = soldiersUseCases;
+module.exports = divisionsUseCases;

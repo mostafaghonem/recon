@@ -8,7 +8,7 @@ module.exports = ({ _, ValidatorHelper, Builder }) => ({ body }) => {
     //   value: body.type,
     //   rules: new Builder()
     //     .required('يجب ادخال نوع الوحدة')
-    //     .isMember(soldierTypes).rules
+    //     .isMember(divisionTypes).rules
     // },
     // rentersType: {
     //   value: body.rentersType,

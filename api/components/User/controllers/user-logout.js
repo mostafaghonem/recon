@@ -8,7 +8,7 @@ module.exports = ({ GetBaseDomain }) => {
       const domain = GetBaseDomain();
       await req.logout();
       req.session = null;
-      await res.clearCookie('sknToken', { domain });
+      await res.clearCookie('reconToken', { domain });
       await res.clearCookie('sknAppToken', { domain });
       return res.redirect('/');
     } catch (e) {

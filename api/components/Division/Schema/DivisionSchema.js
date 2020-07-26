@@ -5,7 +5,7 @@ const { governates } = require('../../../shared/constants/locations');
 const { Schema } = mongoose;
 const { ObjectId } = mongoose.Types;
 module.exports = ({ requestStatus, pendingStatus }) => {
-  const Soldier = new Schema(
+  const Division = new Schema(
     {
       militaryId: {
         type: ObjectId,
@@ -72,7 +72,7 @@ module.exports = ({ requestStatus, pendingStatus }) => {
     }
   );
 
-  Soldier.path('address').required(true);
-  Soldier.plugin(mongoosePaginate);
-  return mongoose.model('Soldier', Soldier);
+  Division.path('address').required(true);
+  Division.plugin(mongoosePaginate);
+  return mongoose.model('Division', Division);
 };

@@ -1,14 +1,14 @@
 // const { Builder } = require('validation-helpers');
 // const { defaultConstants } = require('../../../shared/constants');
 
-module.exports = ({ _, ValidatorHelper, Builder }) => ({ body }) => {
+module.exports = ({ _, ValidatorHelper }) => ({ body }) => {
   const error = {};
   const scheme = {
     // type: {
     //   value: body.type,
     //   rules: new Builder()
     //     .required('يجب ادخال نوع الوحدة')
-    //     .isMember(soldierTypes).rules
+    //     .isMember(divisionTypes).rules
     // },
     // rentersType: {
     //   value: body.rentersType,
@@ -46,7 +46,8 @@ module.exports = ({ _, ValidatorHelper, Builder }) => ({ body }) => {
     // },
     // image: {
     //   value: body.image,
-    //   rules: new Builder().required('يجب ادخال صورة أساسية للوحدة').rules
+    //   rules: new Builder().required('يجب ادخال عدد الحجز صورة أساسية للوحدة')
+    //     .rules
     // },
     // description: {
     //   value: body.description,
@@ -64,7 +65,7 @@ module.exports = ({ _, ValidatorHelper, Builder }) => ({ body }) => {
     // 'address.government': {
     //   value: body.address ? body.address.government : '',
     //   rules: new Builder()
-    //     .required('يجب ادخال المحافظة')
+    //     .required()
     //     .minLength(3)
     //     .maxLength(100).rules
     // },
@@ -113,7 +114,7 @@ module.exports = ({ _, ValidatorHelper, Builder }) => ({ body }) => {
     // body.services.forEach((url, index) => {
     //   scheme[`body.services.${index}`] = {
     //     value: url,
-    //     rules: new Builder().isMember([]).rules
+    //     rules: new Builder().isMember(divisionServices).rules
     //   };
     // });
   }

@@ -13,23 +13,13 @@ const makeUnhideSoldierValidation = require('./unhide-soldier-validation');
 const makeGetValidation = require('./get-soldier-validation');
 const makeGetSoldiersValidation = require('./get-soldiers-validation');
 
-const soldierTypes = Object.values(defaultConstants.UNIT_TYPES);
-const soldierServices = Object.values(defaultConstants.UNIT_SERVICES);
-const PricePer = Object.values(defaultConstants.PRICE_PER);
-const currencies = Object.values(defaultConstants.CURRENCIES);
-const rentersType = Object.values(defaultConstants.RENTERS_TYPES);
 const sortValues = Object.values(defaultConstants.SORT_VALUES);
 const sortKeys = Object.values(defaultConstants.SORT_KEYS);
 
 module.exports.addSoldierValidation = makeAddsoldierValidation({
   _,
   ValidatorHelper,
-  Builder,
-  rentersType,
-  soldierTypes,
-  PricePer,
-  currencies,
-  soldierServices
+  Builder
 });
 
 module.exports.deleteSoldierValidation = makeDeleteSoldierValidation({
@@ -57,12 +47,7 @@ module.exports.editSoldierValidation = makeEditSoldierValidation({
   _,
   ValidatorHelper,
   Builder,
-  ObjectId,
-  rentersType,
-  soldierTypes,
-  PricePer,
-  currencies,
-  soldierServices
+  ObjectId
 });
 
 module.exports.getSoldierValidation = makeGetValidation({
@@ -79,11 +64,6 @@ module.exports.getSoldiersValidation = makeGetSoldiersValidation({
   ValidatorHelper,
   Builder,
   ObjectId,
-  rentersType,
-  soldierTypes,
-  PricePer,
-  currencies,
-  soldierServices,
   sortValues,
   sortKeys
 });

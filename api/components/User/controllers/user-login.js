@@ -11,7 +11,7 @@ module.exports = ({ GetBaseDomain }) => {
       const domain = GetBaseDomain();
       const maxAge = 365 * 24 * 60 * 60 * 1000;
       const result = await loginUser({ ...req.body, agent });
-      res.cookie('sknToken', result, {
+      res.cookie('reconToken', result, {
         domain,
         maxAge,
         httpOnly: true

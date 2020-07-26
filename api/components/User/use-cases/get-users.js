@@ -39,14 +39,14 @@ module.exports = ({ GetSortObj }) => async ({
 
   const select = 'fullName username permissions isFull createdAt updatedAt';
   const sort = sortObj.sort;
-  const { soldiers, total, hasNext } = await model.getSoldiers({
+  const { users, total, hasNext } = await model.getUsers({
     query,
     select,
     sort,
     limit
   });
-  if (soldiers && soldiers.length !== 0) {
-    return { total, hasNext, soldiers };
+  if (users && users.length !== 0) {
+    return { total, hasNext, users };
   }
-  return { total: 0, hasNext: false, soldiers: [] };
+  return { total: 0, hasNext: false, users: [] };
 };

@@ -37,7 +37,7 @@ exports.facebookAuthBackController = [
       return res.redirect(`/registration?faceId=${user.id}`);
     }
 
-    res.cookie('sknToken', token, {
+    res.cookie('reconToken', token, {
       domain,
       maxAge,
       httpOnly: true
@@ -66,7 +66,7 @@ exports.googleAuthCallback = [
       return res.redirect(`/registration?googleId=${user.id}`);
     }
 
-    res.cookie('sknToken', token, {
+    res.cookie('reconToken', token, {
       domain,
       maxAge,
       httpOnly: true

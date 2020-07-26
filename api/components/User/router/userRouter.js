@@ -16,7 +16,6 @@ const { PERMISSIONS } = require('../../../shared/constants/defaults');
 
 const validateMiddleware = require('../../../middlewares/validateMiddleware');
 const controllers = require('../controllers');
-const userCtrl = require('../controllers');
 
 // @route
 // @ GET api/users/register
@@ -29,15 +28,6 @@ router.post(
     authorizeMiddleware([PERMISSIONS.ADMIN])
   ],
   controllers.registerUser
-);
-
-// @route
-// @ GET api/users/
-// !access  ADMIN
-router.get(
-  '/',
-  [authenticateMiddleware, authorizeMiddleware([PERMISSIONS.ADMIN])],
-  (req, res) => userCtrl.getUsers)
 );
 
 // @route
@@ -58,7 +48,6 @@ router.post(
   controllers.loginUser
 );
 
-
 // @route
 // @ POST api/users/logout
 // !access  anonymous
@@ -68,16 +57,6 @@ router.put(
   '/password/change',
   [validateMiddleware(changePasswordValidation)],
   controllers.changePassword
-);
-
-router.put(
-  '/password',
-  [
-    validateMiddleware(updateUserPasswordValidation),
-    authenticateMiddleware,
-    authorizeMiddleware([PERMISSIONS.SOLDIER, PERMISSIONS.HOUSE_OWNER])
-  ],
-  controllers.updateUserPassword
 );
 
 // @route
@@ -97,16 +76,12 @@ router.get(
 );
 
 // @route
-// @ PUT api/users/profile/edit
-// !access  anonymous
-router.put(
-  '/profile',
-  [
-    validateMiddleware(updateProfile),
-    authenticateMiddleware,
-    authorizeMiddleware([PERMISSIONS.SOLDIER, PERMISSIONS.HOUSE_OWNER])
-  ],
-  controllers.updateUserProfile
+// @ GET api/users/
+// !access  ADMIN
+router.get(
+  '/',
+  [authenticateMiddleware, authorizeMiddleware([PERMISSIONS.ADMIN])],
+  controllers.getUsers
 );
 
 module.exports = router;

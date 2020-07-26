@@ -35,6 +35,31 @@ module.exports = ({ GenericModel = _GenericModel }) => {
       });
     }
 
+    async getUsers(
+      params = {
+        query: {},
+        select: '',
+        sort: { _id: 1 },
+        skip: 0,
+        limit: 10000000000,
+        populate: []
+      }
+    ) {
+      const { limit, query, select, sort, populate } = params;
+      const response = await this.DbAccess.paginate(query, {
+        select,
+        sort,
+        limit,
+        populate
+      });
+
+      return {
+        hasNext: response.hasNextPage,
+        users: response.docs,
+        total: response.totalDocs
+      };
+    }
+
     anotherSpecificModelFunc() {
       return this.getAggregate([
         {
