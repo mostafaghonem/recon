@@ -13,8 +13,7 @@ module.exports = ({ GetBaseDomain }) => {
       const result = await loginAdmin({ ...req.body, agent });
       res.cookie('reconToken', result, {
         domain,
-        maxAge,
-        httpOnly: true
+        maxAge
       });
 
       return res

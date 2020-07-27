@@ -1,11 +1,16 @@
 const mongoose = require('mongoose');
 const mongoosePaginate = require('mongoose-paginate-v2');
 
+const { ObjectId } = mongoose.Types;
 const { Schema } = mongoose;
 
 module.exports = ({ permissions }) => {
   const User = new Schema(
     {
+      userId: {
+        type: ObjectId,
+        ref: 'User'
+      },
       fullName: {
         type: String,
         minlength: 2,

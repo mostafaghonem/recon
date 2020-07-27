@@ -9,37 +9,21 @@ const model = require('../Models');
  */
 
 // should have no implementation for any specific orm
-module.exports = ({
-  ApplicationError,
-  logger,
-  moment,
-  GetSortObj,
-  getDivisionsFavorability,
-  GetDivisionsAvailbility,
-  accepted
-}) => async ({
+module.exports = ({ GetSortObj }) => async ({
   userId,
-  availableFrom = moment().toDate(),
-  availableTo = moment(),
+  divisionId,
+  brigadeId,
+  battalionId,
+  companyId,
   type,
-  rentersType,
-  government,
-  numberOfPeople,
-  services,
-  available,
-  furniture,
-  recommended,
-  priceFrom,
-  priceTo,
-  rate,
+  army,
+  force,
   key,
   limit,
   sortIndex,
   sortKey,
   sortValue
 }) => {
-  let divisionsFavorability = {};
-  let divisionsAvailbility = {};
   const sortObj = GetSortObj({
     sortIndex,
     sortKey,
@@ -47,118 +31,63 @@ module.exports = ({
   });
   const query = {
     ...sortObj.query,
-    status: accepted,
     isHidden: false,
     isArchived: false
   };
   if (key && key !== '') {
     query.$or = [
       {
-        'address.street': { $regex: key, $options: 'i' }
-      },
-      {
-        'address.nearTo': { $regex: key, $options: 'i' }
-      },
-      {
-        'address.highlight': { $regex: key, $options: 'i' }
+        name: { $regex: key, $options: 'i' }
       }
     ];
   }
-  if (government) query['address.government'] = String(government);
-  if (services) query.services = { $in: services };
-  if (rate) query.rate = { $gte: parseInt(rate, 10) };
-  if (type) query.type = type;
-  if (rentersType) query.rentersType = rentersType;
-  if (numberOfPeople) {
-    query.numberOfPeople = { $gte: parseInt(numberOfPeople, 10) };
-  }
+  if (army) query.army = String(army);
+  if (force) query.force = String(force);
+  if (type) query.type = String(force);
+  if (userId) query.userId = userId;
+  if (divisionId) query.divisionId = divisionId;
+  if (battalionId) query.battalionId = battalionId;
+  if (companyId) query.divisionId = companyId;
+  if (brigadeId) query.brigadeId = brigadeId;
 
-  if (typeof priceFrom !== 'undefined') {
-    query.pricePerPerson = { $gte: parseInt(priceFrom, 10) };
-  }
-
-  if (typeof priceTo !== 'undefined') {
-    // eslint-disable-next-line no-restricted-globals
-    const from = isNaN(priceFrom) ? 0 : parseInt(priceFrom, 10);
-    // eslint-disable-next-line no-restricted-globals
-    const validTo = !isNaN(priceTo) && parseInt(priceTo, 10) > from;
-    if (validTo) {
-      query.pricePerPerson = { $lte: parseInt(priceTo, 10), $gte: from };
-    }
-  }
-
-  if (available) {
-    query.isFull = false;
-  }
-
-  if (furniture && parseInt(furniture, 10) === 1) {
-    query.hasFurniture = true;
-  } else if (furniture && parseInt(furniture, 10) === 2) {
-    query.hasFurniture = false;
-  }
-
-  const select =
-    'type image gallery dailyOrMonthly pricePerPerson status note rates totalRate totalUsersRated address totalRate totalUsersRated totalOnlineBooking totalRevenue numberOfPeople numberOfRooms availableCountNow hasFurniture rentersType isEditing isFull createdAt updatedAt';
+  // #! Added for the poc case
+  limit = 1000000000;
+  const divisionMatch = { isHidden: false, isArchived: false };
+  const divisionSelct = 'name force army type';
+  const select = '';
   const sort = sortObj.sort;
+  const populate = [
+    {
+      path: 'divisionId',
+      match: divisionMatch,
+      select: divisionSelct
+    },
+    {
+      path: 'brigadeId',
+      match: divisionMatch,
+      select: divisionSelct
+    },
+    {
+      path: 'battalionId',
+      match: divisionMatch,
+      select: divisionSelct
+    },
+    {
+      path: 'companyId',
+      match: divisionMatch,
+      select: divisionSelct
+    }
+  ];
   const { divisions, total, hasNext } = await model.getDivisions({
     query,
     select,
     sort,
-    limit
+    limit,
+    populate
   });
+
   if (divisions && divisions.length !== 0) {
-    const divisionsIds = [];
-    divisions.map(division => divisionsIds.push(division._id));
-    divisionsAvailbility = await GetDivisionsAvailbility({
-      divisionsIds,
-      availableFrom,
-      availableTo
-    });
-
-    let filteredDivisions = divisions;
-    filteredDivisions = divisions.map(o => {
-      const divisionAvailbility = divisionsAvailbility[o._id.toString()];
-      const division = JSON.parse(JSON.stringify(o));
-      division.available = divisionAvailbility
-        ? divisionAvailbility.value
-        : true;
-      return division;
-    });
-
-    if (available) {
-      filteredDivisions = filteredDivisions.filter(
-        division => division.available
-      );
-    }
-
-    if (recommended) {
-      filteredDivisions = filteredDivisions.filter(
-        division => division.available
-      );
-    }
-
-    if (userId) {
-      divisionsFavorability = await getDivisionsFavorability({
-        userId,
-        divisionsIds
-      });
-
-      filteredDivisions = filteredDivisions.map(o => {
-        const displayFavorite = true;
-        let favorite = false;
-
-        if (divisionsFavorability[o._id.toString()]) {
-          favorite = true;
-        }
-        return {
-          ...o,
-          favorite,
-          displayFavorite
-        };
-      });
-    }
-
-    return { total, hasNext, divisions: filteredDivisions };
+    return { total, hasNext, divisions };
   }
   return { total: 0, hasNext: false, divisions: [] };
 };

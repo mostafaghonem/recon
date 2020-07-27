@@ -59,7 +59,7 @@ const buildDivisionEntity = (
         image: String,
         currency: String,
         address: {
-          government: String,
+          governate: String,
           street: String,
           nearTo: String,
           highlight: String,
@@ -104,7 +104,7 @@ const buildDivisionEntity = (
       this.status = data.status || '';
       if (data.address) {
         this.address = {
-          government: data.address.government || '',
+          governate: data.address.governate || '',
           street: data.address.street || '',
           nearTo: data.address.nearTo || '',
           highlight: data.address.highlight || '',
@@ -114,7 +114,7 @@ const buildDivisionEntity = (
         };
       } else {
         this.address = {
-          government: '',
+          governate: '',
           street: '',
           nearTo: '',
           highlight: '',
@@ -180,7 +180,7 @@ const buildDivisionEntity = (
         image: this.image,
         currency: this.currency,
         address: {
-          government: this.address.government,
+          governate: this.address.governate,
           street: this.address.street,
           nearTo: this.address.nearTo,
           highlight: this.address.highlight,

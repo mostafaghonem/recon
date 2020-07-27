@@ -5,9 +5,13 @@ module.exports = ({
   Builder,
   ValidatorHelper,
   ObjectId,
-  rentersType,
-  soldierTypes,
-  soldierServices,
+  armyList,
+  forcesList,
+  recruitmentLevels,
+  educationRanks,
+  situations,
+  recruitmentAreas,
+  governates,
   sortKeys,
   sortValues
 }) => ({ query }) => {
@@ -18,78 +22,87 @@ module.exports = ({
   }
 
   const scheme = {
-    // lastId: {
-    //   value: query.lastId,
-    //   rules: new Builder().rules
-    // },
-    // availableFrom: {
-    //   value: query.availableFrom,
-    //   // .required('You should provide availableFrom')
-    //   rules: new Builder().isNumber('availableFrom should be a number').rules
-    // },
-    // availableTo: {
-    //   value: query.availableTo,
-    //   // .required('You should provide lastId')
-    //   rules: new Builder()
-    //     .isNumber('lastId should be a number')
-    //     .min(
-    //       query.availableFrom,
-    //       'availableFrom should be greater than or equal availableTo'
-    //     ).rules
-    // },
-    // type: {
-    //   value: query.type,
-    //   rules: new Builder().isMember(soldierTypes).rules
-    // },
-    // rentersType: {
-    //   value: query.rentersType,
-    //   rules: new Builder().isMember(rentersType).rules
-    // },
-    // government: {
-    //   value: query.government,
-    //   rules: new Builder().minLength(3).maxLength(100).rules
-    // },
-    // numberOfPeople: {
-    //   value: query.numberOfPeople,
-    //   rules: new Builder()
-    //     .isNumber('يجب ان يكون عدد الاشخاص رقم')
-    //     .min(1, 'يجب ان يكون عدد الاشخاص 1 علي الاقل').rules
-    // },
-    // services: {
-    //   value: query.services,
-    //   rules: new Builder().isArray().rules
-    // },
-    // limit: {
-    //   value: query.limit,
-    //   rules: new Builder().rules
-    // },
-    // furniture: {
-    //   value: query.furniture,
-    //   rules: new Builder().isNumber().isMember([1, 2]).rules
-    // },
-    // available: {
-    //   value: query.available,
-    //   rules: new Builder().isBoolean().rules
-    // },
-    // priceFrom: {
-    //   value: query.priceFrom,
-    //   rules: new Builder()
-    //     .isNumber('يجب ان يكون اقل سعر رقم')
-    //     .min(0, 'يجب ان يكون اقل سعر 0 علي الاقل').rules
-    // },
-    // priceTo: {
-    //   value: query.priceTo,
-    //   rules: new Builder()
-    //     .isNumber('يجب ان يكون اكبر سعر الفرد رقم')
-    //     .min(0, 'يجب ان يكون اكبر سعر 0 علي الاقل').rules
-    // },
-    // rate: {
-    //   value: query.rate,
-    //   rules: new Builder()
-    //     .isNumber('يجب ان يكون التقييم رقم')
-    //     .min(1, 'يجب ان يكون التقييم 1 علي الاقل')
-    //     .max(5, 'يجب ان يكون التقييم 5 علي الاكثر').rules
-    // },
+    lastId: {
+      value: query.lastId,
+      rules: new Builder().rules
+    },
+    militaryId: {
+      value: query.militaryId,
+      rules: new Builder().rules
+    },
+    recordId: {
+      value: query.recordId,
+      rules: new Builder().rules
+    },
+    tripleNumber: {
+      value: query.tripleNumber,
+      rules: new Builder().rules
+    },
+    joinDate: {
+      value: query.joinDate,
+      rules: new Builder().rules
+    },
+    birthDate: {
+      value: query.birthDate,
+      rules: new Builder().rules
+    },
+    releaseDate: {
+      value: query.joinDate,
+      rules: new Builder().rules
+    },
+    force: {
+      value: query.force,
+      rules: new Builder().isMember(forcesList).rules
+    },
+    army: {
+      value: query.army,
+      rules: new Builder().isMember(armyList).rules
+    },
+    recruitmentLevel: {
+      value: query.recruitmentLevel,
+      rules: new Builder().isMember(recruitmentLevels).rules
+    },
+    educationRank: {
+      value: query.educationRank,
+      rules: new Builder().isMember(educationRanks).rules
+    },
+    educationRanks: {
+      value: query.educationRank,
+      rules: new Builder().isMember(educationRanks).rules
+    },
+    situation: {
+      value: query.situation,
+      rules: new Builder().isMember(
+        situations,
+        'عذرا ولكن لم اتعرف على حالة المجند هذه'
+      ).rules
+    },
+    recruitmentArea: {
+      value: query.recruitmentArea,
+      rules: new Builder().isMember(
+        recruitmentAreas,
+        'الرجاء التأكد من صحة منطقة التجنيد'
+      ).rules
+    },
+    unit: {
+      value: query.unit,
+      rules: new Builder().rules
+    },
+    governate: {
+      value: query.governate,
+      rules: new Builder().isMember(
+        governates,
+        'عذرا ولكن لا نستطيع إيجاد هذه المحافظة تأكد من صحتها'
+      ).rules
+    },
+    centre: {
+      value: query.centre,
+      rules: new Builder().rules
+    },
+    village: {
+      value: query.village,
+      rules: new Builder().rules
+    },
     sortKey: {
       value: query.sortKey,
       rules: new Builder().isMember(sortKeys).rules
@@ -103,15 +116,6 @@ module.exports = ({
       rules: new Builder().rules
     }
   };
-
-  if (query.services) {
-    query.services.forEach((url, index) => {
-      scheme[`query.services.${index}`] = {
-        value: url,
-        rules: new Builder().isMember(soldierServices).rules
-      };
-    });
-  }
 
   Object.keys(scheme).forEach(key => {
     const ele = scheme[key];
@@ -127,13 +131,6 @@ module.exports = ({
       (Number(ele.value) < 1 || Number(ele.value) > 50)
     )
       error[key] = ['limit should be between 1 and 50'];
-    if (
-      key === 'priceTo' &&
-      query.priceTo &&
-      query.priceFrom &&
-      Number(ele.value) < Number(query.priceFrom)
-    )
-      error[key] = ['priceTo should be greater than priceFrom'];
   });
 
   return { error: _.isEmpty(error) ? undefined : error };

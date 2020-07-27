@@ -1,9 +1,8 @@
 const mongoose = require('mongoose');
-const mongoosePaginate = require('mongoose-paginate-v2');
 
 const { Schema } = mongoose;
 
-const UserFavoriteUnits = new Schema(
+const Settings = new Schema(
   {
     userId: {
       type: String,
@@ -24,10 +23,4 @@ const UserFavoriteUnits = new Schema(
   }
 );
 
-UserFavoriteUnits.index(
-  { userId: 1, unitId: 1 },
-  { unique: true, required: true }
-);
-UserFavoriteUnits.plugin(mongoosePaginate);
-
-module.exports = mongoose.model('UserFavoriteUnits', UserFavoriteUnits);
+module.exports = mongoose.model('Settings', Settings);

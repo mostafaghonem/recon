@@ -9,7 +9,7 @@ module.exports = ({ GetBaseDomain }) => {
       await req.logout();
       req.session = null;
       await res.clearCookie('reconToken', { domain });
-      await res.clearCookie('sknAppToken', { domain });
+      await res.clearCookie('reconAppToken', { domain });
       return res.redirect('/');
     } catch (e) {
       return next(e);

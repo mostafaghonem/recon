@@ -16,7 +16,6 @@ const router = express.Router();
 
 const authenticateMiddleware = require('../../../middlewares/authenticateMiddleware');
 const authorizeMiddleware = require('../../../middlewares/authorizeMiddleware');
-const visaMiddleware = require('../../../middlewares/visaMiddleware');
 const { PERMISSIONS } = require('../../../shared/constants/defaults');
 
 const validateMiddleware = require('../../../middlewares/validateMiddleware');
@@ -31,7 +30,7 @@ router.post(
   [
     validateMiddleware(addSoldierValidation),
     authenticateMiddleware,
-    authorizeMiddleware([PERMISSIONS.HOUSE_OWNER, PERMISSIONS.ADMIN])
+    authorizeMiddleware([PERMISSIONS.ADMIN])
   ],
   controllers.addSoldier
 );
@@ -42,7 +41,11 @@ router.post(
 // !access  anonymous
 router.get(
   '/soldier/:id',
-  [validateMiddleware(getSoldierValidation), visaMiddleware],
+  [
+    validateMiddleware(getSoldierValidation),
+    authenticateMiddleware,
+    authorizeMiddleware([PERMISSIONS.ADMIN])
+  ],
   controllers.getSoldier
 );
 
@@ -51,7 +54,7 @@ router.put(
   [
     validateMiddleware(hideSoldierValidation),
     authenticateMiddleware,
-    authorizeMiddleware([PERMISSIONS.HOUSE_OWNER, PERMISSIONS.ADMIN])
+    authorizeMiddleware([PERMISSIONS.ADMIN])
   ],
   controllers.hideSoldier
 );
@@ -61,7 +64,7 @@ router.put(
   [
     validateMiddleware(unhideSoldierValidation),
     authenticateMiddleware,
-    authorizeMiddleware([PERMISSIONS.HOUSE_OWNER, PERMISSIONS.ADMIN])
+    authorizeMiddleware([PERMISSIONS.ADMIN])
   ],
   controllers.unhideSoldier
 );
@@ -71,7 +74,7 @@ router.delete(
   [
     validateMiddleware(deleteSoldierValidation),
     authenticateMiddleware,
-    authorizeMiddleware([PERMISSIONS.HOUSE_OWNER, PERMISSIONS.ADMIN])
+    authorizeMiddleware([PERMISSIONS.ADMIN])
   ],
   controllers.deleteSoldier
 );
@@ -85,7 +88,7 @@ router.put(
   [
     validateMiddleware(editSoldierValidation),
     authenticateMiddleware,
-    authorizeMiddleware([PERMISSIONS.HOUSE_OWNER, PERMISSIONS.ADMIN])
+    authorizeMiddleware([PERMISSIONS.ADMIN])
   ],
   controllers.editSoldier
 );
@@ -94,9 +97,19 @@ router.put(
 // @ GET api/soldiers/
 // Description: Get Soldiers for Renter
 // !access  anonymous
+router.get('/constants', controllers.getConstants);
+
+// @route
+// @ GET api/soldiers/
+// Description: Get Soldiers for Renter
+// !access  anonymous
 router.get(
   '/',
-  [validateMiddleware(getSoldiersValidation), visaMiddleware],
+  [
+    validateMiddleware(getSoldiersValidation),
+    authenticateMiddleware,
+    authorizeMiddleware([PERMISSIONS.ADMIN])
+  ],
   controllers.getSoldiers
 );
 

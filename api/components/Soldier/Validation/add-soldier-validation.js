@@ -1,122 +1,111 @@
 // const { Builder } = require('validation-helpers');
 // const { defaultConstants } = require('../../../shared/constants');
 
-module.exports = ({ _, ValidatorHelper, Builder }) => ({ body }) => {
+module.exports = ({
+  _,
+  ValidatorHelper,
+  Builder,
+  armyList,
+  forcesList,
+  recruitmentLevels,
+  educationRanks,
+  situations,
+  recruitmentAreas,
+  governates
+}) => ({ body }) => {
   const error = {};
   const scheme = {
-    // type: {
-    //   value: body.type,
-    //   rules: new Builder()
-    //     .required('يجب ادخال نوع الوحدة')
-    //     .isMember(soldierTypes).rules
-    // },
-    // rentersType: {
-    //   value: body.rentersType,
-    //   rules: new Builder()
-    //     .required('يجب ادخال نوع المستأجرين')
-    //     .isMember(rentersType).rules
-    // },
-    // numberOfPeople: {
-    //   value: body.numberOfPeople,
-    //   rules: new Builder()
-    //     .required('يجب ادخال عدد المستأجرين')
-    //     .isNumber()
-    //     .min(1).rules
-    // },
-    // numberOfRooms: {
-    //   value: body.numberOfRooms,
-    //   rules: new Builder()
-    //     .required('يجب ادخال عدد الغرف')
-    //     .isNumber()
-    //     .min(1).rules
-    // },
-    // availableCountNow: {
-    //   value: body.availableCountNow,
-    //   rules: new Builder().isNumber().min(1).rules
-    // },
-    // pricePerPerson: {
-    //   value: body.pricePerPerson,
-    //   rules: new Builder().isNumber().min(1).rules
-    // },
-    // dailyOrMonthly: {
-    //   value: body.dailyOrMonthly,
-    //   rules: new Builder()
-    //     .required('يجب ادخال عدد الحجز اسبوعي ام شهري')
-    //     .isMember(PricePer).rules
-    // },
-    // image: {
-    //   value: body.image,
-    //   rules: new Builder().required('يجب ادخال صورة أساسية للوحدة').rules
-    // },
-    // description: {
-    //   value: body.description,
-    //   rules: new Builder()
-    //     .required('يجب ادخال عدد وصف للوحدة')
-    //     .minLength(5)
-    //     .maxLength(500).rules
-    // },
-    // currency: {
-    //   value: body.currency,
-    //   rules: new Builder()
-    //     .required('يجب ادخال العملة')
-    //     .isMember(currencies, 'يجب ان تختار الدفع يومياً او شهرياً').rules
-    // },
-    // 'address.government': {
-    //   value: body.address ? body.address.government : '',
-    //   rules: new Builder()
-    //     .required('يجب ادخال المحافظة')
-    //     .minLength(3)
-    //     .maxLength(100).rules
-    // },
-    // 'address.street': {
-    //   value: body.address ? body.address.street : '',
-    //   rules: new Builder()
-    //     .required('يجب ادخال الشارع')
-    //     .minLength(2)
-    //     .maxLength(200).rules
-    // },
-    // 'address.nearTo': {
-    //   value: body.address ? body.address.nearTo : '',
-    //   rules: new Builder()
-    //     .required('يجب ادخال قريباً من')
-    //     .minLength(2)
-    //     .maxLength(200).rules
-    // },
-    // 'address.highlight': {
-    //   value: body.address ? body.address.highlight : '',
-    //   rules: new Builder()
-    //     .required('يجب ادخال علامة مميزة')
-    //     .minLength(2)
-    //     .maxLength(200).rules
-    // },
-    // 'address.houseNumber': {
-    //   value: body.address ? body.address.houseNumber : '',
-    //   rules: new Builder().required('يجب ادخال رقم المنزل').rules
-    // },
-    // 'address.apartmentNumber': {
-    //   value: body.address ? body.address.apartmentNumber : '',
-    //   rules: new Builder()
-    //     .required('يجب ادخال رقم الشقة')
-    //     .isNumber()
-    //     .min(1).rules
-    // },
-    // 'address.floorNumber': {
-    //   value: body.address ? body.address.floorNumber : '',
-    //   rules: new Builder()
-    //     .required('يجب ادخال رقم الدور')
-    //     .isNumber()
-    //     .min(1).rules
-    // }
-  };
+    militaryId: {
+      value: body.militaryId,
+      rules: new Builder().required('يجب ادخال الرقم العسكرى').rules
+    },
+    recordId: {
+      value: body.recordId,
+      rules: new Builder().required('يجب ادخال رقم السجل').rules
+    },
+    tripleNumber: {
+      value: body.tripleNumber,
+      rules: new Builder().required('يجب ادخال الرقم المجند').rules
+    },
+    joinDate: {
+      value: body.joinDate,
+      rules: new Builder().required('يجب ادخال تاريخ الالتحاق').rules
+    },
+    birthDate: {
+      value: body.birthDate,
+      rules: new Builder().required('يجب ادخال تاريخ ميلاد المجند').rules
+    },
 
-  if (body.services) {
-    // body.services.forEach((url, index) => {
-    //   scheme[`body.services.${index}`] = {
-    //     value: url,
-    //     rules: new Builder().isMember([]).rules
-    //   };
-    // });
-  }
+    force: {
+      value: body.force,
+      rules: new Builder()
+        .required('يجب ادخال سلاح المجند')
+        .isMember(forcesList).rules
+    },
+    army: {
+      value: body.army,
+      rules: new Builder()
+        .required('يجب ادخال الجيش الموزع به المجند')
+        .isMember(armyList).rules
+    },
+    recruitmentLevel: {
+      value: body.recruitmentLevel,
+      rules: new Builder()
+        .required('يجب ادخال مرحلة تجنيد المجند')
+        .isMember(recruitmentLevels).rules
+    },
+    educationRank: {
+      value: body.educationRank,
+      rules: new Builder()
+        .required('يجب ادخال مؤهل المجند')
+        .isMember(educationRanks).rules
+    },
+    educationRanks: {
+      value: body.educationRank,
+      rules: new Builder()
+        .required('يجب ادخال مؤهل المجند')
+        .isMember(educationRanks).rules
+    },
+    situation: {
+      value: body.situation,
+      rules: new Builder().isMember(
+        situations,
+        'عذرا ولكن لم اتعرف على حالة المجند هذه'
+      ).rules
+    },
+    recruitmentArea: {
+      value: body.recruitmentArea,
+      rules: new Builder().isMember(
+        recruitmentAreas,
+        'الرجاء التأكد من صحة منطقة التجنيد'
+      ).rules
+    },
+    unitId: {
+      value: body.unitId,
+      rules: new Builder().required('يجب إدخال وحدة المجند').rules
+    },
+    divisionId: {
+      value: body.unitId,
+      rules: new Builder().rules
+    },
+    'address.governate': {
+      value: body.address ? body.address.governate : undefined,
+      rules: new Builder()
+        .required('يجب ادخال المحافظة')
+        .isMember(
+          governates,
+          'عذرا ولكن لا نستطيع إيجاد هذه المحافظة تأكد من صحتها'
+        ).rules
+    },
+    'address.centre': {
+      value: body.address ? body.address.centre : undefined,
+      rules: new Builder().required('يجب ادخال المركز').rules
+    },
+    'address.village': {
+      value: body.address ? body.address.village : undefined,
+      rules: new Builder().required('يجب ادخال القرية').rules
+    }
+  };
 
   Object.keys(scheme).forEach(key => {
     const ele = scheme[key];
@@ -128,3 +117,8 @@ module.exports = ({ _, ValidatorHelper, Builder }) => ({ body }) => {
     error: _.isEmpty(error) ? undefined : error
   };
 };
+
+// /  releaseDate: {
+//       value: body.releaseDate,
+//       rules: new Builder().required('يجب ادخال تاريخ إنهاء الخدمة').rules
+//     },

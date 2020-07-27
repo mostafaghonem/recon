@@ -8,7 +8,7 @@ module.exports = ({ ApplicationError, logger }) => async id => {
   const filter = { _id: id, isArchived: false };
   const checkExistence = await model.exists({ filter });
   if (!checkExistence) {
-    throw new ApplicationError('.نأسف ، لا يمكننا العثور على هذه الوحدة', 403);
+    throw new ApplicationError('.نأسف ، لا يمكننا العثور على هذا المجند', 403);
   }
 
   const update = {

@@ -5,7 +5,7 @@ const mongoose = require('mongoose');
 const { ObjectId } = mongoose.Types;
 const { defaultConstants } = require('../../../shared/constants');
 
-const makeAdddivisionValidation = require('./add-division-validation');
+const makeAddDivisionValidation = require('./add-division-validation');
 const makeDeleteDivisionValidation = require('./delete-division-validation');
 const makeEditDivisionValidation = require('./edit-division-validation');
 const makeHideDivisionValidation = require('./hide-division-validation');
@@ -13,13 +13,21 @@ const makeUnhideDivisionValidation = require('./unhide-division-validation');
 const makeGetValidation = require('./get-division-validation');
 const makeGetDivisionsValidation = require('./get-divisions-validation');
 
+const divisionTypes = Object.values(defaultConstants.DIVISION_TYPES);
+const forcesList = defaultConstants.FORCES_LIST.map(o => o.value);
+const armyList = defaultConstants.ARMY_LIST.map(o => o.value);
+
 const sortValues = Object.values(defaultConstants.SORT_VALUES);
 const sortKeys = Object.values(defaultConstants.SORT_KEYS);
 
-module.exports.addDivisionValidation = makeAdddivisionValidation({
+module.exports.addDivisionValidation = makeAddDivisionValidation({
   _,
   ValidatorHelper,
-  Builder
+  Builder,
+  ObjectId,
+  divisionTypes,
+  forcesList,
+  armyList
 });
 
 module.exports.deleteDivisionValidation = makeDeleteDivisionValidation({

@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const moment = require('moment');
 const cities = require('./cities');
+const locations = require('./locations');
 
 const { ObjectId } = mongoose.Types;
 
@@ -18,7 +19,7 @@ const GetBaseDomain = () => {
         process.env.BASE_URL.indexOf('.'),
         process.env.BASE_URL.length
       )
-    : 'localhost';
+    : undefined;
 };
 
 const GetSortValue = (key, val) => {
@@ -104,21 +105,19 @@ const GetSearchObj = ({ key }) => {
   return false;
 };
 
-const GetUnitsAvailbility = ({ unitsIds, availableFrom, availableTo }) => {
-  const results = {};
-  unitsIds.map(o => {
-    results[o] = {
-      _id: o,
-      value: true
-    };
-  });
-  return results;
+const GetRecruitmentAreaFromAddress = ({ address }) => {
+  if (!governate || !address.governate) {
+    return undefined;
+  }
+  const governate = locations.governates.find(
+    o => o === address.governate.toLowerCase()
+  );
+  return governate.recruitment_area.value;
 };
 
-const GetCostOfOperation = ({ reservationId, reservationType, voucher }) => {};
 module.exports = {
   GetBaseDomain,
   GetSortObj,
   GetSearchObj,
-  GetUnitsAvailbility
+  GetRecruitmentAreaFromAddress
 };

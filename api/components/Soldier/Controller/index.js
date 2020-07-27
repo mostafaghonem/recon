@@ -1,4 +1,4 @@
-const { defaultConstants } = require('../../../shared/constants');
+const { defaultConstants, locations } = require('../../../shared/constants');
 
 const pagination = Object.freeze(defaultConstants.PAGINATION);
 
@@ -9,6 +9,7 @@ const makeHideSoldierCtrl = require('./hide-soldier');
 const makeUnhideSoldierCtrl = require('./unhide-soldier');
 const makeEditSoldierCtrl = require('./edit-soldier');
 const makeGetSoldier = require('./get-soldier');
+const makeGetConstants = require('./get-constants');
 // ->
 const addSoldier = makeAddSoldierCtrl({});
 const deleteSoldier = makeDeleteSoldierCtrl({});
@@ -17,11 +18,7 @@ const hideSoldier = makeHideSoldierCtrl({});
 const unhideSoldier = makeUnhideSoldierCtrl({});
 const editSoldier = makeEditSoldierCtrl({});
 const getSoldier = makeGetSoldier({});
-// const editSoldier = makeEditSoldierCtrl({});
-// const editSoldierAvailability = makeEditSoldierAvailabilityCtrl({});
-// const getSoldier = makeGetSoldierCtrl({});
-// const rateSoldier = makeRateSoldierCtrl({});
-
+const getConstants = makeGetConstants({ locations, defaultConstants });
 const soldiersCtrl = Object.freeze({
   addSoldier,
   deleteSoldier,
@@ -29,7 +26,8 @@ const soldiersCtrl = Object.freeze({
   unhideSoldier,
   editSoldier,
   getSoldier,
-  getSoldiers
+  getSoldiers,
+  getConstants
 });
 
 module.exports = soldiersCtrl;

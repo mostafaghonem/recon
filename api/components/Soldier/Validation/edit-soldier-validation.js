@@ -7,7 +7,7 @@ module.exports = ({ _, ValidatorHelper }) => ({ body }) => {
     // type: {
     //   value: body.type,
     //   rules: new Builder()
-    //     .required('يجب ادخال نوع الوحدة')
+    //     .required('يجب ادخال نوع المجند')
     //     .isMember(soldierTypes).rules
     // },
     // rentersType: {
@@ -62,8 +62,8 @@ module.exports = ({ _, ValidatorHelper }) => ({ body }) => {
     //     .required('يجب ادخال العملة')
     //     .isMember(currencies, 'يجب ان تختار الدفع يومياً او شهرياً').rules
     // },
-    // 'address.government': {
-    //   value: body.address ? body.address.government : '',
+    // 'address.governate': {
+    //   value: body.address ? body.address.governate : '',
     //   rules: new Builder()
     //     .required()
     //     .minLength(3)

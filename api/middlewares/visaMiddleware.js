@@ -14,11 +14,11 @@ const visa = async (req, res, next) => {
   if (req.cookies.reconToken && req.headers['access-token'])
     token = req.headers['access-token'];
   if (
-    req.cookies.sknAppToken &&
+    req.cookies.reconAppToken &&
     req.cookies.reconToken &&
     !req.headers['access-token']
   )
-    token = req.cookies.sknAppToken;
+    token = req.cookies.reconAppToken;
 
   if (token) {
     try {

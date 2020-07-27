@@ -31,7 +31,7 @@ router.post(
   [
     validateMiddleware(addDivisionValidation),
     authenticateMiddleware,
-    authorizeMiddleware([PERMISSIONS.HOUSE_OWNER, PERMISSIONS.ADMIN])
+    authorizeMiddleware([PERMISSIONS.ADMIN])
   ],
   controllers.addDivision
 );
@@ -51,7 +51,7 @@ router.put(
   [
     validateMiddleware(hideDivisionValidation),
     authenticateMiddleware,
-    authorizeMiddleware([PERMISSIONS.HOUSE_OWNER, PERMISSIONS.ADMIN])
+    authorizeMiddleware([PERMISSIONS.ADMIN])
   ],
   controllers.hideDivision
 );
@@ -61,7 +61,7 @@ router.put(
   [
     validateMiddleware(unhideDivisionValidation),
     authenticateMiddleware,
-    authorizeMiddleware([PERMISSIONS.HOUSE_OWNER, PERMISSIONS.ADMIN])
+    authorizeMiddleware([PERMISSIONS.ADMIN])
   ],
   controllers.unhideDivision
 );
@@ -71,7 +71,7 @@ router.delete(
   [
     validateMiddleware(deleteDivisionValidation),
     authenticateMiddleware,
-    authorizeMiddleware([PERMISSIONS.HOUSE_OWNER, PERMISSIONS.ADMIN])
+    authorizeMiddleware([PERMISSIONS.ADMIN])
   ],
   controllers.deleteDivision
 );
@@ -85,7 +85,7 @@ router.put(
   [
     validateMiddleware(editDivisionValidation),
     authenticateMiddleware,
-    authorizeMiddleware([PERMISSIONS.HOUSE_OWNER, PERMISSIONS.ADMIN])
+    authorizeMiddleware([PERMISSIONS.ADMIN])
   ],
   controllers.editDivision
 );

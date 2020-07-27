@@ -1,57 +1,52 @@
 const mongoose = require('mongoose');
 const mongoosePaginate = require('mongoose-paginate-v2');
-const { governates } = require('../../../shared/constants/locations');
 
 const { Schema } = mongoose;
 const { ObjectId } = mongoose.Types;
-module.exports = ({ requestStatus, pendingStatus }) => {
+module.exports = ({ divisionTypes, forcesList, armyList }) => {
   const Division = new Schema(
     {
-      militaryId: {
+      userId: {
         type: ObjectId,
-        index: true
+        ref: 'User'
       },
       name: {
         type: String,
-        required: true
+        required: true,
+        unique: true
       },
-      recruitmentArea: {
+      type: {
         type: String,
         required: true,
-        ref: 'Recruitment_Area'
+        enum: divisionTypes
       },
-      tripleNumber: {
-        type: String,
-        required: true
+      divisionId: {
+        // فرقة
+        type: ObjectId,
+        ref: 'Division'
       },
-      address: new Schema(
-        {
-          governate: {
-            type: String,
-            enum: governates.map(o => o.value)
-          },
-          centre: {
-            type: String
-          },
-          village: {
-            type: String
-          }
-        },
-        {
-          _id: false
-        }
-      ),
+      brigadeId: {
+        // لواء
+        type: ObjectId,
+        ref: 'Division'
+      },
+      battalionId: {
+        // كتيبة
+        type: ObjectId,
+        ref: 'Division'
+      },
+      companyId: {
+        // سرية
+        type: ObjectId,
+        ref: 'Division'
+      },
       force: {
-        type: String
-      },
-      totalRate: {
-        type: Number,
-        default: 0
-      },
-      status: {
         type: String,
-        enum: requestStatus,
-        default: pendingStatus
+        enum: forcesList.map(o => o.value)
+      },
+      army: {
+        type: String,
+        enum: armyList.map(o => o.value)
       },
       isEditing: {
         type: Boolean,
@@ -72,7 +67,6 @@ module.exports = ({ requestStatus, pendingStatus }) => {
     }
   );
 
-  Division.path('address').required(true);
   Division.plugin(mongoosePaginate);
   return mongoose.model('Division', Division);
 };

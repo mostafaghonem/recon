@@ -33,8 +33,8 @@ module.exports = ({
         type: checkExistence.type
       },
       {
-        'address.government': String(
-          checkExistence.address.government
+        'address.governate': String(
+          checkExistence.address.governate
         ).toLowerCase()
       },
       {

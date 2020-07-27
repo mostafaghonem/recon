@@ -1,100 +1,118 @@
 /* eslint-disable no-unused-vars */
 //! only require Entity/model
 const { SoldierEntity } = require('../Entity');
+const model = require('../Models');
 
 // should have no implementation for any specific orm
 
 module.exports = ({
   ApplicationError,
   logger,
+  GetRecruitmentAreaFromAddress,
   addUploadedSoldiersRequests,
   createSoldierEvent,
   events
 }) => async ({
   user,
-  type,
-  description,
-  image,
-  currency,
-  address = {
-    government: String,
-    street: String,
-    nearTo: String,
-    highlight: String,
-    houseNumber: Number,
-    apartmentNumber: Number,
-    floorNumber: Number
-  },
-  rentersType,
-  numberOfPeople,
-  numberOfRooms,
-  hasFurniture,
-  availableCountNow,
-  pricePerPerson,
-  dailyOrMonthly,
-  highlight,
-  availability = [],
-  services = [],
-  conditions = [],
-  gallery = [],
-  status,
-  note,
-  totalOnlineBooking,
-  totalRevenue,
-  isEditing,
-  isFull,
+  tripleNumber,
+  recruitmentArea,
+  address,
+  militaryId,
+  recordId,
+  name,
+  fullName,
+  force,
+  army,
+  joinDate,
+  birthDate,
+  releaseDate,
+  recruitmentLevel,
+  educationRank,
+  influences,
+  unitId,
+  divisionId,
+  units,
+  situation,
   isHidden,
   isArchived
 }) => {
   const userId = user.id;
+
   const soldier = {
-    userId,
-    type,
-    description,
-    image,
-    currency,
+    tripleNumber: {
+      year: tripleNumber.substr(0, 4),
+      value: tripleNumber
+    },
     address,
-    rentersType,
-    numberOfPeople,
-    numberOfRooms,
-    hasFurniture,
-    availableCountNow,
-    pricePerPerson,
-    dailyOrMonthly,
-    highlight,
-    availability,
-    services,
-    conditions,
-    gallery,
-    note,
-    totalOnlineBooking,
-    totalRevenue,
-    isEditing,
-    isFull,
+    militaryId,
+    recordId,
+    fullName,
+    name,
+    force,
+    army,
+    joinDate,
+    birthDate,
+    releaseDate,
+    recruitmentLevel,
+    educationRank,
+    influences,
+    unit: {
+      unitId,
+      divisionId
+    },
+    units,
+    situation,
     isHidden,
     isArchived
   };
+
+  if (!recruitmentArea) {
+    soldier.recruitmentArea = GetRecruitmentAreaFromAddress({ address });
+  } else {
+    soldier.recruitmentArea = recruitmentArea;
+  }
+
+  if (!soldier.recruitmentArea) {
+    throw new ApplicationError(
+      'عذراً ولكن لم نستطع تحديد منطقة تجنيد المجند الرجاء التأكد من صحة العنوان',
+      401
+    );
+  }
   if (user && user.permissions && user.permissions.includes('admin')) {
     soldier.status = 'accepted';
   }
-  const newSoldier = new SoldierEntity(soldier);
-  if (user && user.permissions && !user.permissions.includes('admin')) {
-    await addUploadedSoldiersRequests({ userId, soldierId: newSoldier.id });
-  }
-  await newSoldier.save();
-  await createSoldierEvent({
-    userId,
-    soldierId: newSoldier.id,
-    soldier: newSoldier.toJson(),
-    eventType: events.UNITS_REQUEST_ADD_UNIT
-  });
 
-  logger.info(
-    `new Soldier just been added with data => \n${JSON.stringify(
-      newSoldier.toJson(),
-      undefined,
-      6
-    )}`
-  );
-  return newSoldier.id;
+  try {
+    const newSoldier = await model.createOne({ document: soldier });
+
+    logger.info(
+      `new Soldier just been added with data => \n${JSON.stringify(
+        newSoldier,
+        undefined,
+        6
+      )}`
+    );
+    return newSoldier.id;
+  } catch (err) {
+    if (err.message && err.message.includes('duplicate')) {
+      throw new ApplicationError(
+        'عذراً ولكن هذا المجند مسجل بالفعل فى قاعدة البيانات',
+        401
+      );
+    } else {
+      // eslint-disable-next-line no-console
+      console.log('eror in adding soldier', err.message);
+      throw new ApplicationError(
+        'حدث خطاً ما اثناء ادخال المجند لقاعدة البيانات الرجاء التواصل مع مسئول النظم',
+        401
+      );
+    }
+  }
+
+  // await createSoldierEvent({
+  //   userId,
+  //   soldierId: newSoldier.id,
+  //   soldier: newSoldier.toJson(),
+  //   eventType: events.UNITS_REQUEST_ADD_UNIT
+  // });
 };

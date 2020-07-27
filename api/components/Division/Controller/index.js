@@ -17,10 +17,6 @@ const hideDivision = makeHideDivisionCtrl({});
 const unhideDivision = makeUnhideDivisionCtrl({});
 const editDivision = makeEditDivisionCtrl({});
 const getDivision = makeGetDivision({});
-// const editDivision = makeEditDivisionCtrl({});
-// const editDivisionAvailability = makeEditDivisionAvailabilityCtrl({});
-// const getDivision = makeGetDivisionCtrl({});
-// const rateDivision = makeRateDivisionCtrl({});
 
 const divisionsCtrl = Object.freeze({
   addDivision,

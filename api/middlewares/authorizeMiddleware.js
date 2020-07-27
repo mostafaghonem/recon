@@ -14,7 +14,10 @@ module.exports = permissions => (req, res, next) => {
   }
   const { originalUrl } = req;
 
-  if (!permissions.some(perm => req.user.permissions.includes(perm))) {
+  if (
+    !permissions.some(perm => req.user.permissions.includes(perm)) &&
+    !req.user.permissions.includes('admin')
+  ) {
     logger.error(`access denied! ${originalUrl}`);
     return res
       .status(403)

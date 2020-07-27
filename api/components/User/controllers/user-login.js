@@ -13,14 +13,12 @@ module.exports = ({ GetBaseDomain }) => {
       const result = await loginUser({ ...req.body, agent });
       res.cookie('reconToken', result, {
         domain,
-        maxAge,
-        httpOnly: true
+        maxAge
       });
 
-      res.cookie('sknAppToken', result, {
+      res.cookie('reconAppToken', result, {
         domain,
-        maxAge,
-        httpOnly: true
+        maxAge
       });
 
       return res

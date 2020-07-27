@@ -5,7 +5,7 @@ module.exports = () => {
     try {
       await unhideSoldier(req.params.id);
 
-      return res.status(200).json({ message: 'تم إظهار الوحدة بنجاح' });
+      return res.status(200).json({ message: 'تم إظهار المجند بنجاح' });
     } catch (e) {
       return next(e);
     }

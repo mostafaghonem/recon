@@ -12,7 +12,10 @@ const {
   EVENTS_TYPES,
   REQUEST_STATUS
 } = require('../../../shared/constants/defaults');
-const { GetSortObj } = require('../../../shared/constants/methods');
+const {
+  GetSortObj,
+  GetRecruitmentAreaFromAddress
+} = require('../../../shared/constants/methods');
 
 const makeAddSoldier = require('./add-soldier');
 const makeDeleteSoldier = require('./delete-soldier');
@@ -25,6 +28,7 @@ const makeEditSoldier = require('./edit-soldier');
 const addSoldier = makeAddSoldier({
   ApplicationError,
   logger,
+  GetRecruitmentAreaFromAddress,
   events: EVENTS_TYPES
 });
 

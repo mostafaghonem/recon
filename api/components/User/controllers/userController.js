@@ -39,14 +39,12 @@ exports.facebookAuthBackController = [
 
     res.cookie('reconToken', token, {
       domain,
-      maxAge,
-      httpOnly: true
+      maxAge
     });
 
-    res.cookie('sknAppToken', token, {
+    res.cookie('reconAppToken', token, {
       domain,
-      maxAge,
-      httpOnly: true
+      maxAge
     });
 
     // need to set cookie then redirect to home
@@ -68,14 +66,12 @@ exports.googleAuthCallback = [
 
     res.cookie('reconToken', token, {
       domain,
-      maxAge,
-      httpOnly: true
+      maxAge
     });
 
-    res.cookie('sknAppToken', token, {
+    res.cookie('reconAppToken', token, {
       domain,
-      maxAge,
-      httpOnly: true
+      maxAge
     });
 
     // need to set cookie then redirect to home
