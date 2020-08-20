@@ -9,7 +9,7 @@ module.exports = ({
   ApplicationError,
   logger,
   GetRecruitmentAreaFromAddress,
-  addUploadedSoldiersRequests,
+  CalculateReleaseDate,
   createSoldierEvent,
   events
 }) => async ({
@@ -19,26 +19,33 @@ module.exports = ({
   address,
   militaryId,
   recordId,
+  nationalId,
   name,
   fullName,
   force,
   army,
   joinDate,
   birthDate,
-  releaseDate,
   recruitmentLevel,
   educationRank,
   influences,
   unitId,
   divisionId,
+  treatment,
   units,
   situation,
   isHidden,
   isArchived
 }) => {
   const userId = user.id;
-
+  const releaseDate = CalculateReleaseDate({
+    joinDate,
+    recruitmentLevel,
+    educationRank,
+    treatment
+  });
   const soldier = {
+    userId,
     tripleNumber: {
       year: tripleNumber.substr(0, 4),
       value: tripleNumber
@@ -46,13 +53,13 @@ module.exports = ({
     address,
     militaryId,
     recordId,
+    nationalId,
     fullName,
     name,
     force,
     army,
     joinDate,
     birthDate,
-    releaseDate,
     recruitmentLevel,
     educationRank,
     influences,
@@ -61,7 +68,9 @@ module.exports = ({
       divisionId
     },
     units,
+    treatment,
     situation,
+    releaseDate,
     isHidden,
     isArchived
   };

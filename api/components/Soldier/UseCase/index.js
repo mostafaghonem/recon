@@ -14,7 +14,8 @@ const {
 } = require('../../../shared/constants/defaults');
 const {
   GetSortObj,
-  GetRecruitmentAreaFromAddress
+  GetRecruitmentAreaFromAddress,
+  CalculateReleaseDate
 } = require('../../../shared/constants/methods');
 
 const makeAddSoldier = require('./add-soldier');
@@ -29,6 +30,7 @@ const addSoldier = makeAddSoldier({
   ApplicationError,
   logger,
   GetRecruitmentAreaFromAddress,
+  CalculateReleaseDate,
   events: EVENTS_TYPES
 });
 

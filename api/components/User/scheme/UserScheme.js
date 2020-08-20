@@ -28,6 +28,14 @@ module.exports = ({ permissions }) => {
         type: String,
         required: true
       },
+      rank: {
+        type: String,
+        required: true
+      },
+      branch: {
+        type: String,
+        required: true
+      },
       isArchived: {
         type: Boolean,
         default: false

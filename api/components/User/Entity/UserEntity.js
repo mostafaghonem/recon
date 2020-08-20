@@ -57,13 +57,18 @@ const buildUserEntity = (
       data = {
         fullName: String,
         username: String,
+        password: String,
+        rank: String,
+        branch: String,
         permissions: Array
       }
     ) {
       this.id = data.id || data._id || new ObjectId();
       this.fullName = data.fullName || '';
-      this.password = data.password || '';
       this.username = data.username;
+      this.password = data.password || '';
+      this.rank = data.rank;
+      this.branch = data.branch;
       let userPermissions = [PERMISSIONS.SOLDIER];
       if (data.permissions && _.isArray(data.permissions))
         userPermissions = data.permissions;
@@ -98,7 +103,10 @@ const buildUserEntity = (
       return {
         id: this.id,
         fullName: this.fullName,
-        username: this.username
+        username: this.username,
+        rank: this.rank,
+        branch: this.branch,
+        permissions: this.permissions
       };
     }
 
@@ -108,6 +116,8 @@ const buildUserEntity = (
         fullName: this.fullName,
         username: this.username,
         password: this.password,
+        rank: this.rank,
+        branch: this.branch,
         permissions: this.permissions || [PERMISSIONS.SOLDIER],
         isArchived: this.isArchived
       };
@@ -122,7 +132,8 @@ const buildUserEntity = (
         {
           id: this.id,
           exp: Math.floor(new Date().getTime() / 1000) + 7 * 24 * 60 * 60 * 30, // Note: in seconds!
-          permissions
+          permissions,
+          branch: this.branch
         },
         jwtPrivateKey
       );

@@ -2,6 +2,7 @@
 
 module.exports = ({
   _,
+  ErrorText,
   Builder,
   ValidatorHelper,
   ObjectId,
@@ -52,36 +53,36 @@ module.exports = ({
     },
     force: {
       value: query.force,
-      rules: new Builder().isMember(forcesList).rules
+      rules: new Builder().isMember(forcesList, ErrorText.FORCE_INVALID).rules
     },
     army: {
       value: query.army,
-      rules: new Builder().isMember(armyList).rules
+      rules: new Builder().isMember(armyList, ErrorText.ARMY_INVALID).rules
     },
     recruitmentLevel: {
       value: query.recruitmentLevel,
-      rules: new Builder().isMember(recruitmentLevels).rules
+      rules: new Builder().isMember(
+        recruitmentLevels,
+        ErrorText.RECRUITMENT_LEVEL_INVALID
+      ).rules
     },
     educationRank: {
       value: query.educationRank,
-      rules: new Builder().isMember(educationRanks).rules
-    },
-    educationRanks: {
-      value: query.educationRank,
-      rules: new Builder().isMember(educationRanks).rules
+      rules: new Builder().isMember(
+        educationRanks,
+        ErrorText.EDUCATION_RANK_INVALID
+      ).rules
     },
     situation: {
       value: query.situation,
-      rules: new Builder().isMember(
-        situations,
-        'عذرا ولكن لم اتعرف على حالة المجند هذه'
-      ).rules
+      rules: new Builder().isMember(situations, ErrorText.SITUATION_INVALID)
+        .rules
     },
     recruitmentArea: {
       value: query.recruitmentArea,
       rules: new Builder().isMember(
         recruitmentAreas,
-        'الرجاء التأكد من صحة منطقة التجنيد'
+        ErrorText.RECRUITMENT_AREA_INVALID
       ).rules
     },
     unit: {
@@ -90,10 +91,8 @@ module.exports = ({
     },
     governate: {
       value: query.governate,
-      rules: new Builder().isMember(
-        governates,
-        'عذرا ولكن لا نستطيع إيجاد هذه المحافظة تأكد من صحتها'
-      ).rules
+      rules: new Builder().isMember(governates, ErrorText.GOVERNATE_INVALID)
+        .rules
     },
     centre: {
       value: query.centre,

@@ -44,7 +44,7 @@ module.exports = ({ GetSortObj }) => async ({
   if (army) query.army = String(army);
   if (force) query.force = String(force);
   if (type) query.type = String(force);
-  if (userId) query.userId = userId;
+  // if (userId) query.userId = userId;
   if (divisionId) query.divisionId = divisionId;
   if (battalionId) query.battalionId = battalionId;
   if (companyId) query.divisionId = companyId;

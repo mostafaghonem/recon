@@ -62,18 +62,7 @@ router.put(
 // @route
 // @ GET api/users/profile/view
 // !access  anonymous
-router.get(
-  '/profile',
-  [
-    authenticateMiddleware,
-    authorizeMiddleware([
-      PERMISSIONS.SOLDIER,
-      PERMISSIONS.HOUSE_OWNER,
-      PERMISSIONS.ADMIN
-    ])
-  ],
-  controllers.getUserProfile
-);
+router.get('/profile', [authenticateMiddleware], controllers.getUserProfile);
 
 // @route
 // @ GET api/users/

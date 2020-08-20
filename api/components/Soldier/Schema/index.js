@@ -13,7 +13,10 @@ const requestStatus = Object.values(defaultConstants.REQUEST_STATUS);
 const pendingStatus = require('../../../shared/constants/defaults')
   .REQUEST_STATUS;
 
+const { divSchema } = require('../../../shared/constants/schemas');
+
 module.exports = makeSoldierScheme({
+  divSchema,
   requestStatus,
   armyList,
   forcesList,

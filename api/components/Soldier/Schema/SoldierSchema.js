@@ -4,30 +4,8 @@ const mongoosePaginate = require('mongoose-paginate-v2');
 const { Schema } = mongoose;
 const { ObjectId } = mongoose.Types;
 
-const divSchema = new Schema(
-  {
-    unitId: {
-      type: String,
-      ref: 'Division',
-      required: true
-    },
-    divisionId: {
-      type: String,
-      ref: 'Division'
-    },
-    joinDate: {
-      type: Date
-    },
-    releaseDate: {
-      type: Date
-    }
-  },
-  {
-    _id: false,
-    timestamps: true
-  }
-);
 module.exports = ({
+  divSchema,
   requestStatus,
   pendingStatus,
   recruitmentAreas,
@@ -41,15 +19,26 @@ module.exports = ({
 }) => {
   const Soldier = new Schema(
     {
+      userId: {
+        type: String,
+        ref: 'User'
+      },
       militaryId: {
         type: String,
         index: true,
-        unique: true
+        unique: true,
+        minlength: 13,
+        maxlength: 13
       },
       recordId: {
         type: Number,
         index: true,
         unique: true
+      },
+      nationalId: {
+        type: Number,
+        minlength: 14,
+        maxlength: 14
       },
       name: {
         firstName: String,

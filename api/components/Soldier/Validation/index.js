@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 
 const { ObjectId } = mongoose.Types;
 const { defaultConstants, locations } = require('../../../shared/constants');
+const { ErrorText } = require('../../../shared/errors');
 
 const makeAddsoldierValidation = require('./add-soldier-validation');
 const makeDeleteSoldierValidation = require('./delete-soldier-validation');
@@ -25,6 +26,7 @@ const sortKeys = Object.values(defaultConstants.SORT_KEYS);
 
 module.exports.addSoldierValidation = makeAddsoldierValidation({
   _,
+  ErrorText,
   ValidatorHelper,
   Builder,
   ObjectId,
@@ -39,6 +41,7 @@ module.exports.addSoldierValidation = makeAddsoldierValidation({
 
 module.exports.deleteSoldierValidation = makeDeleteSoldierValidation({
   _,
+  ErrorText,
   ValidatorHelper,
   Builder,
   ObjectId
@@ -46,6 +49,7 @@ module.exports.deleteSoldierValidation = makeDeleteSoldierValidation({
 
 module.exports.hideSoldierValidation = makeHideSoldierValidation({
   _,
+  ErrorText,
   ValidatorHelper,
   Builder,
   ObjectId
@@ -53,6 +57,7 @@ module.exports.hideSoldierValidation = makeHideSoldierValidation({
 
 module.exports.unhideSoldierValidation = makeUnhideSoldierValidation({
   _,
+  ErrorText,
   ValidatorHelper,
   Builder,
   ObjectId
@@ -60,6 +65,7 @@ module.exports.unhideSoldierValidation = makeUnhideSoldierValidation({
 
 module.exports.editSoldierValidation = makeEditSoldierValidation({
   _,
+  ErrorText,
   ValidatorHelper,
   Builder,
   ObjectId,
@@ -74,6 +80,7 @@ module.exports.editSoldierValidation = makeEditSoldierValidation({
 
 module.exports.getSoldierValidation = makeGetValidation({
   _,
+  ErrorText,
   ValidatorHelper,
   Builder,
   ObjectId,
@@ -83,6 +90,7 @@ module.exports.getSoldierValidation = makeGetValidation({
 
 module.exports.getSoldiersValidation = makeGetSoldiersValidation({
   _,
+  ErrorText,
   ValidatorHelper,
   Builder,
   ObjectId,

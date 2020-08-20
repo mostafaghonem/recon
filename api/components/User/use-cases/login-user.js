@@ -26,7 +26,7 @@ module.exports = ({ ApplicationError, logger }) => async ({
     logger.info(`"${username}" just Logged in from ${agent}`);
 
     const token = user.generateToken();
-    return token;
+    return { ...user, token };
   }
   throw new ApplicationError(
     '.نأسف ، لا يمكننا العثور على حساب بهذا الاسم المستخدم',

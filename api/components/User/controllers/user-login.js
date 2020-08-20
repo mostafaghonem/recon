@@ -11,19 +11,19 @@ module.exports = ({ GetBaseDomain }) => {
       const domain = GetBaseDomain();
       const maxAge = 365 * 24 * 60 * 60 * 1000;
       const result = await loginUser({ ...req.body, agent });
-      res.cookie('reconToken', result, {
+      res.cookie('reconToken', result.token, {
         domain,
         maxAge
       });
 
-      res.cookie('reconAppToken', result, {
+      res.cookie('reconAppToken', result.token, {
         domain,
         maxAge
       });
 
       return res
         .status(200)
-        .json({ message: 'User logged in successfully!', token: result });
+        .json({ message: 'User logged in successfully!', ...result });
     } catch (e) {
       return next(e);
     }

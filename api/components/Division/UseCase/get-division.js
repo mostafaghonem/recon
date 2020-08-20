@@ -95,21 +95,6 @@ module.exports = ({
   const avaialableExistance =
     divisionsAvailability[checkExistence._id.toString()];
   checkExistence.available = !!avaialableExistance;
-  if (userId) {
-    divisionsFavorability = await getDivisionsFavorability({
-      userId,
-      divisionsIds: ids
-    });
-    const favoriteExistance =
-      divisionsFavorability[checkExistence._id.toString()];
-    checkExistence.favorite = !!favoriteExistance;
-    checkExistence.displayFavorite = true;
-    checkExistence.similarDivisions = checkExistence.similarDivisions.map(o => {
-      const division = JSON.parse(JSON.stringify(o));
-      division.favorite = !!divisionsFavorability[o._id.toString()];
-      division.displayFavorite = true;
-      return division;
-    });
-  }
+
   return checkExistence;
 };

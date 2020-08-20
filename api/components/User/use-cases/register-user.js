@@ -9,7 +9,10 @@ const Models = require('../models');
 module.exports = ({ ApplicationError, logger }) => async ({
   fullName,
   username,
-  password
+  password,
+  rank,
+  branch,
+  permissions
 }) => {
   const isDuplicate = await Models.checkExistenceBy({ username });
 
@@ -18,7 +21,10 @@ module.exports = ({ ApplicationError, logger }) => async ({
 
   const newUser = new UserEntity({
     fullName,
-    username
+    username,
+    rank,
+    branch,
+    permissions: typeof permissions === 'string' ? [permissions] : permissions
   });
 
   newUser.setPassword(password);

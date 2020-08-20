@@ -30,7 +30,7 @@ router.post(
   [
     validateMiddleware(addSoldierValidation),
     authenticateMiddleware,
-    authorizeMiddleware([PERMISSIONS.ADMIN])
+    authorizeMiddleware({ branches: ['recon_force_people'] })
   ],
   controllers.addSoldier
 );
@@ -44,7 +44,7 @@ router.get(
   [
     validateMiddleware(getSoldierValidation),
     authenticateMiddleware,
-    authorizeMiddleware([PERMISSIONS.ADMIN])
+    authorizeMiddleware({ branches: ['recon_force_people'] })
   ],
   controllers.getSoldier
 );
@@ -54,7 +54,7 @@ router.put(
   [
     validateMiddleware(hideSoldierValidation),
     authenticateMiddleware,
-    authorizeMiddleware([PERMISSIONS.ADMIN])
+    authorizeMiddleware({ branches: ['recon_force_people'] })
   ],
   controllers.hideSoldier
 );
@@ -64,7 +64,7 @@ router.put(
   [
     validateMiddleware(unhideSoldierValidation),
     authenticateMiddleware,
-    authorizeMiddleware([PERMISSIONS.ADMIN])
+    authorizeMiddleware({ branches: ['recon_force_people'] })
   ],
   controllers.unhideSoldier
 );
@@ -74,7 +74,7 @@ router.delete(
   [
     validateMiddleware(deleteSoldierValidation),
     authenticateMiddleware,
-    authorizeMiddleware([PERMISSIONS.ADMIN])
+    authorizeMiddleware({ branches: ['recon_force_people'] })
   ],
   controllers.deleteSoldier
 );
@@ -88,7 +88,7 @@ router.put(
   [
     validateMiddleware(editSoldierValidation),
     authenticateMiddleware,
-    authorizeMiddleware([PERMISSIONS.ADMIN])
+    authorizeMiddleware({ branches: ['recon_force_people'] })
   ],
   controllers.editSoldier
 );
@@ -97,7 +97,7 @@ router.put(
 // @ GET api/soldiers/
 // Description: Get Soldiers for Renter
 // !access  anonymous
-router.get('/constants', controllers.getConstants);
+router.get('/constants', authenticateMiddleware, controllers.getConstants);
 
 // @route
 // @ GET api/soldiers/
@@ -108,7 +108,7 @@ router.get(
   [
     validateMiddleware(getSoldiersValidation),
     authenticateMiddleware,
-    authorizeMiddleware([PERMISSIONS.ADMIN])
+    authorizeMiddleware({ branches: ['recon_force_people'] })
   ],
   controllers.getSoldiers
 );

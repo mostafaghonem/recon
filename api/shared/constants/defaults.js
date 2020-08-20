@@ -1,6 +1,10 @@
 const FORCES_LIST = require('./forces');
+const { Permissions, Ranks, Branches } = require('./permissions-ranks');
 
 module.exports = {
+  PERMISSIONS: Permissions,
+  RANKS: Ranks,
+  BRANCHES: Branches,
   ObjectIdPattern: /^[0-9a-fA-F]{24}$/,
   PAGINATION: {
     LIMIT: 10,
@@ -39,7 +43,7 @@ module.exports = {
     ABOVE_AVERAGE: 'above_average',
     HIGH: 'high'
   },
-  PERMISSIONS: {
+  PERMISSIONS_KEYS: {
     SOLDIER: 'sodlier',
     STAFF_SEARGENT: 'staff_seargent',
     OFFICER: 'officer',
@@ -74,6 +78,13 @@ module.exports = {
     INT_TRANSFERRED: 'int_transferred',
     PHYSICAL: 'physical',
     REMOVED: 'removed'
+  },
+  TREATMENTS_KEYS: {
+    WITHOUT_EXTRA_YEAR: 'without_extra_uear',
+    WITH_EXTRA_YEAR_APPLICABLE_FOR_REMOVAL:
+      'with_extra_year_applicable_for_removal',
+    WITH_EXTRA_YEAR_NOT_APPLICABLE_FOR_REMOVAL:
+      'with_extra_year_not_applicable_for_removal'
   },
   DIVISION_TYPES: {
     DIVISION: 'division',
@@ -170,9 +181,15 @@ module.exports = {
   ],
   EDUCATION_RANKS: [
     {
-      value: 'normal',
-      ar: 'عادة',
-      code: '0'
+      value: 'high',
+      ar: 'عليا',
+      code: '2'
+    },
+
+    {
+      value: 'above_average',
+      ar: 'فوق متوسطة',
+      code: '8'
     },
     {
       value: 'average',
@@ -180,14 +197,9 @@ module.exports = {
       code: '1'
     },
     {
-      value: 'above_average',
-      ar: 'فوق متوسطة',
-      code: '8'
-    },
-    {
-      value: 'high',
-      ar: 'عليا',
-      code: '2'
+      value: 'normal',
+      ar: 'عادة',
+      code: '0'
     }
   ],
   EDUCATION_RANKS_ALL: [

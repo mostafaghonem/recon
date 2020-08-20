@@ -7,7 +7,7 @@ module.exports = ({ ApplicationError, logger }) => async userId => {
     _id: userId,
     isArchived: false
   };
-  const select = 'fullName username permissions';
+  const select = 'fullName username permissions rank branch';
   const user = await model.getOne({ query, select });
   if (user) {
     logger.info(`"${user.fullName}" just got his profile data.`);

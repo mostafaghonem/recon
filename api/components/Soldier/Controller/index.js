@@ -1,4 +1,5 @@
 const { defaultConstants, locations } = require('../../../shared/constants');
+const { computeAppDrawer } = require('../../../shared/constants/methods');
 
 const pagination = Object.freeze(defaultConstants.PAGINATION);
 
@@ -18,7 +19,11 @@ const hideSoldier = makeHideSoldierCtrl({});
 const unhideSoldier = makeUnhideSoldierCtrl({});
 const editSoldier = makeEditSoldierCtrl({});
 const getSoldier = makeGetSoldier({});
-const getConstants = makeGetConstants({ locations, defaultConstants });
+const getConstants = makeGetConstants({
+  locations,
+  defaultConstants,
+  computeAppDrawer
+});
 const soldiersCtrl = Object.freeze({
   addSoldier,
   deleteSoldier,

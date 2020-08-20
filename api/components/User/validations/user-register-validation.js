@@ -17,7 +17,7 @@ module.exports = ({ _, ValidatorHelper, Builder }) => ({ body }) => {
     },
     username: {
       value: body.username,
-      rules: new Builder().required('يجب ادخال username').rules
+      rules: new Builder().required('يجب ادخال إسم المستخدم').rules
     },
     password: {
       value: body.password,
@@ -25,6 +25,18 @@ module.exports = ({ _, ValidatorHelper, Builder }) => ({ body }) => {
         .required()
         .minLength(5)
         .maxLength(60).rules
+    },
+    rank: {
+      value: body.username,
+      rules: new Builder().required('يجب ادخال درجة/رتبة المستخدم').rules
+    },
+    branch: {
+      value: body.username,
+      rules: new Builder().required('يجب ادخال فرع المستخدم').rules
+    },
+    permissions: {
+      value: body.username,
+      rules: new Builder().required('يجب ادخال صلاحيات المستخدم').rules
     }
     // TODO: Edit error messages
   };

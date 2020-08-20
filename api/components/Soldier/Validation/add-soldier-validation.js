@@ -3,6 +3,7 @@
 
 module.exports = ({
   _,
+  ErrorText,
   ValidatorHelper,
   Builder,
   armyList,
@@ -17,72 +18,68 @@ module.exports = ({
   const scheme = {
     militaryId: {
       value: body.militaryId,
-      rules: new Builder().required('يجب ادخال الرقم العسكرى').rules
+      rules: new Builder().required(ErrorText.MILITARYID_REQUIRED).rules
     },
     recordId: {
       value: body.recordId,
-      rules: new Builder().required('يجب ادخال رقم السجل').rules
+      rules: new Builder().required(ErrorText.RECORDID_REQUIRED).rules
+    },
+    nationalId: {
+      value: body.nationalId,
+      rules: new Builder().required(ErrorText.NATIONALID_REQUIRED).rules
     },
     tripleNumber: {
       value: body.tripleNumber,
-      rules: new Builder().required('يجب ادخال الرقم المجند').rules
+      rules: new Builder().required(ErrorText.TRIPLENUMBER_REQUIRED).rules
     },
     joinDate: {
       value: body.joinDate,
-      rules: new Builder().required('يجب ادخال تاريخ الالتحاق').rules
+      rules: new Builder().required(ErrorText.JOINDATE_REQUIRED).rules
     },
     birthDate: {
       value: body.birthDate,
-      rules: new Builder().required('يجب ادخال تاريخ ميلاد المجند').rules
+      rules: new Builder().required(ErrorText.BIRTHDATE_REQUIRED).rules
     },
 
     force: {
       value: body.force,
       rules: new Builder()
-        .required('يجب ادخال سلاح المجند')
-        .isMember(forcesList).rules
+        .required(ErrorText.FORCE_REQUIRED)
+        .isMember(forcesList, ErrorText.FORCE_INVALID).rules
     },
     army: {
       value: body.army,
       rules: new Builder()
-        .required('يجب ادخال الجيش الموزع به المجند')
-        .isMember(armyList).rules
+        .required(ErrorText.ARMY_REQUIRED)
+        .isMember(armyList, ErrorText.ARMY_INVALID).rules
     },
     recruitmentLevel: {
       value: body.recruitmentLevel,
       rules: new Builder()
-        .required('يجب ادخال مرحلة تجنيد المجند')
-        .isMember(recruitmentLevels).rules
+        .required(ErrorText.RECRUITMENT_LEVEL_REQUIRED)
+        .isMember(recruitmentLevels, ErrorText.RECRUITMENT_LEVEL_INVALID).rules
     },
     educationRank: {
       value: body.educationRank,
       rules: new Builder()
-        .required('يجب ادخال مؤهل المجند')
-        .isMember(educationRanks).rules
-    },
-    educationRanks: {
-      value: body.educationRank,
-      rules: new Builder()
-        .required('يجب ادخال مؤهل المجند')
-        .isMember(educationRanks).rules
+        .required(ErrorText.EDUCATION_RANK_REQUIRED)
+        .isMember(educationRanks, ErrorText.EDUCATION_RANK_INVALID).rules
     },
     situation: {
       value: body.situation,
-      rules: new Builder().isMember(
-        situations,
-        'عذرا ولكن لم اتعرف على حالة المجند هذه'
-      ).rules
+      rules: new Builder().isMember(situations, ErrorText.SITUATION_INVALID)
+        .rules
     },
     recruitmentArea: {
       value: body.recruitmentArea,
       rules: new Builder().isMember(
         recruitmentAreas,
-        'الرجاء التأكد من صحة منطقة التجنيد'
+        ErrorText.RECRUITMENT_AREA_INVALID
       ).rules
     },
     unitId: {
       value: body.unitId,
-      rules: new Builder().required('يجب إدخال وحدة المجند').rules
+      rules: new Builder().required(ErrorText.UNIT_REQUIRED).rules
     },
     divisionId: {
       value: body.unitId,
@@ -91,19 +88,16 @@ module.exports = ({
     'address.governate': {
       value: body.address ? body.address.governate : undefined,
       rules: new Builder()
-        .required('يجب ادخال المحافظة')
-        .isMember(
-          governates,
-          'عذرا ولكن لا نستطيع إيجاد هذه المحافظة تأكد من صحتها'
-        ).rules
+        .required(ErrorText.GOVERNATE_REQUIRED)
+        .isMember(governates, ErrorText.GOVERNATE_INVALID).rules
     },
     'address.centre': {
       value: body.address ? body.address.centre : undefined,
-      rules: new Builder().required('يجب ادخال المركز').rules
+      rules: new Builder().required(ErrorText.CENTRE_REQUIRED).rules
     },
     'address.village': {
       value: body.address ? body.address.village : undefined,
-      rules: new Builder().required('يجب ادخال القرية').rules
+      rules: new Builder().required(ErrorText.VILLAGE_REQUIRED).rules
     }
   };
 
