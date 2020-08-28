@@ -1,4 +1,4 @@
-const { getUploadedChangesOfUnit } = require('../use-cases');
+const { getChangesOfUnit } = require('../use-cases');
 
 module.exports = ({ pagination, pending }) => {
   return async (req, res, next) => {
@@ -8,7 +8,7 @@ module.exports = ({ pagination, pending }) => {
       const lastId = req.query.lastId || String(pagination.LAST_ID);
       const unitId = req.query.unitId;
       const key = req.query.key || '';
-      const { requests, hasNext, total } = await getUploadedChangesOfUnit({
+      const { changes, hasNext, total } = await getChangesOfUnit({
         status,
         key,
         limit,
@@ -23,7 +23,7 @@ module.exports = ({ pagination, pending }) => {
 
       return res.status(200).json({
         success: true,
-        requests: requests || [],
+        changes: changes || [],
         total: total || 0,
         hasNext: hasNext || false
       });

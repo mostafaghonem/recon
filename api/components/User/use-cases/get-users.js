@@ -12,6 +12,7 @@ const model = require('../models');
 module.exports = ({ GetSortObj }) => async ({
   key,
   limit,
+  user,
   sortIndex,
   sortKey,
   sortValue
@@ -23,7 +24,6 @@ module.exports = ({ GetSortObj }) => async ({
   });
   const query = {
     ...sortObj.query,
-    isHidden: false,
     isArchived: false
   };
   if (key && key !== '') {
@@ -37,7 +37,17 @@ module.exports = ({ GetSortObj }) => async ({
     ];
   }
 
-  const select = 'fullName username permissions isFull createdAt updatedAt';
+  if (
+    user &&
+    user.permissions &&
+    !user.permissions.includes('admin') &&
+    user.permissions.includes('branch_head')
+  ) {
+    query.branch = user.branch;
+  }
+
+  const select =
+    'fullName username permissions rank branch isFull createdAt updatedAt';
   const sort = sortObj.sort;
   const { users, total, hasNext } = await model.getUsers({
     query,

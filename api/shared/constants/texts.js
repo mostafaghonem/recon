@@ -14,6 +14,8 @@ module.exports = {
     Add_User: 'إضافة مستخدم',
     Add_Soldier: 'إضافة مجند',
     Soldiers: 'المجندين',
-    List_Soldier: 'عرض المجندين'
+    List_Soldier: 'عرض المجندين',
+    List_Users: 'عرض المستخدمين',
+    List_Change_Of_Units: 'تعديلات توزيع المجندين'
   }
 };

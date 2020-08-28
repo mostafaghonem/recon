@@ -17,7 +17,9 @@ const router = express.Router();
 const authenticateMiddleware = require('../../../middlewares/authenticateMiddleware');
 const authorizeMiddleware = require('../../../middlewares/authorizeMiddleware');
 const visaMiddleware = require('../../../middlewares/visaMiddleware');
-const { PERMISSIONS } = require('../../../shared/constants/defaults');
+const {
+  PERMISSIONS_KEYS: PERMISSIONS
+} = require('../../../shared/constants/defaults');
 
 const validateMiddleware = require('../../../middlewares/validateMiddleware');
 const controllers = require('../Controller');
@@ -31,7 +33,7 @@ router.post(
   [
     validateMiddleware(addDivisionValidation),
     authenticateMiddleware,
-    authorizeMiddleware([PERMISSIONS.ADMIN])
+    authorizeMiddleware({ permissions: [PERMISSIONS.ADMIN] })
   ],
   controllers.addDivision
 );
@@ -51,7 +53,7 @@ router.put(
   [
     validateMiddleware(hideDivisionValidation),
     authenticateMiddleware,
-    authorizeMiddleware([PERMISSIONS.ADMIN])
+    authorizeMiddleware({ permissions: [PERMISSIONS.ADMIN] })
   ],
   controllers.hideDivision
 );
@@ -61,7 +63,7 @@ router.put(
   [
     validateMiddleware(unhideDivisionValidation),
     authenticateMiddleware,
-    authorizeMiddleware([PERMISSIONS.ADMIN])
+    authorizeMiddleware({ permissions: [PERMISSIONS.ADMIN] })
   ],
   controllers.unhideDivision
 );
@@ -85,7 +87,7 @@ router.put(
   [
     validateMiddleware(editDivisionValidation),
     authenticateMiddleware,
-    authorizeMiddleware([PERMISSIONS.ADMIN])
+    authorizeMiddleware({ permissions: [PERMISSIONS.ADMIN] })
   ],
   controllers.editDivision
 );

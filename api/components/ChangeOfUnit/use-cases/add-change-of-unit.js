@@ -31,7 +31,7 @@ module.exports = ({
   const document = {
     soldierId,
     unitId,
-    userId: user._id,
+    userId: user.id,
     pastUnit: soldier.unit,
     confirmationNumber
   };

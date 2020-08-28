@@ -3,16 +3,16 @@ const express = require('express');
 const {
   userRegisterValidation,
   userLoginValidation,
-  changePasswordValidation,
-  updateUserPasswordValidation,
-  updateProfile
+  changePasswordValidation
 } = require('../validations');
 
 const router = express.Router();
 
 const authenticateMiddleware = require('../../../middlewares/authenticateMiddleware');
 const authorizeMiddleware = require('../../../middlewares/authorizeMiddleware');
-const { PERMISSIONS } = require('../../../shared/constants/defaults');
+const {
+  PERMISSIONS_KEYS: PERMISSIONS
+} = require('../../../shared/constants/defaults');
 
 const validateMiddleware = require('../../../middlewares/validateMiddleware');
 const controllers = require('../controllers');
@@ -25,7 +25,9 @@ router.post(
   [
     validateMiddleware(userRegisterValidation),
     authenticateMiddleware,
-    authorizeMiddleware([PERMISSIONS.ADMIN])
+    authorizeMiddleware({
+      permissions: [PERMISSIONS.ADMIN, PERMISSIONS.BRANCH_HEAD]
+    })
   ],
   controllers.registerUser
 );
@@ -35,7 +37,12 @@ router.post(
 // !access  ADMIN
 router.get(
   '/hasAdminAuthority',
-  [authenticateMiddleware, authorizeMiddleware([PERMISSIONS.ADMIN])],
+  [
+    authenticateMiddleware,
+    authorizeMiddleware({
+      permissions: [PERMISSIONS.ADMIN]
+    })
+  ],
   (req, res) => res.status(200).json({ ok: true })
 );
 
@@ -51,7 +58,7 @@ router.post(
 // @route
 // @ POST api/users/logout
 // !access  anonymous
-router.get('/logout', [authenticateMiddleware], controllers.logOutUser);
+router.get('/logout', controllers.logOutUser);
 
 router.put(
   '/password/change',
@@ -69,7 +76,12 @@ router.get('/profile', [authenticateMiddleware], controllers.getUserProfile);
 // !access  ADMIN
 router.get(
   '/',
-  [authenticateMiddleware, authorizeMiddleware([PERMISSIONS.ADMIN])],
+  [
+    authenticateMiddleware,
+    authorizeMiddleware({
+      permissions: [PERMISSIONS.ADMIN, PERMISSIONS.BRANCH_HEAD]
+    })
+  ],
   controllers.getUsers
 );
 

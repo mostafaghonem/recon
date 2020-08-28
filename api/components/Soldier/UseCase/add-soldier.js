@@ -47,8 +47,14 @@ module.exports = ({
   const soldier = {
     userId,
     tripleNumber: {
-      year: tripleNumber.substr(0, 4),
-      value: tripleNumber
+      year: tripleNumber.first,
+      value: Object.keys(tripleNumber)
+        .map(o => tripleNumber[o])
+        .join('/')
+    },
+    unit: {
+      unitId,
+      divisionId
     },
     address,
     militaryId,
@@ -63,10 +69,6 @@ module.exports = ({
     recruitmentLevel,
     educationRank,
     influences,
-    unit: {
-      unitId,
-      divisionId
-    },
     units,
     treatment,
     situation,

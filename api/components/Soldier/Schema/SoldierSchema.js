@@ -31,12 +31,12 @@ module.exports = ({
         maxlength: 13
       },
       recordId: {
-        type: Number,
+        type: String,
         index: true,
         unique: true
       },
       nationalId: {
-        type: Number,
+        type: String,
         minlength: 14,
         maxlength: 14
       },

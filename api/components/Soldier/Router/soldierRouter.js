@@ -16,8 +16,9 @@ const router = express.Router();
 
 const authenticateMiddleware = require('../../../middlewares/authenticateMiddleware');
 const authorizeMiddleware = require('../../../middlewares/authorizeMiddleware');
-const { PERMISSIONS } = require('../../../shared/constants/defaults');
-
+const {
+  PERMISSIONS_KEYS: PERMISSIONS
+} = require('../../../shared/constants/defaults');
 const validateMiddleware = require('../../../middlewares/validateMiddleware');
 const controllers = require('../Controller');
 

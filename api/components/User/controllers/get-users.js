@@ -8,6 +8,7 @@ module.exports = ({ pagination }) => {
       const key = req.query.key || '';
       const result = await getUsers({
         ...req.query,
+        user: req.user,
         key,
         limit,
         lastId

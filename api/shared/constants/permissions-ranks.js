@@ -136,10 +136,16 @@ module.exports = {
           to: '/add-user',
           icon: 'mdi-account-plus',
           text: DRAWER.Add_User,
-          permissions: ['admin']
+          permissions: ['admin', 'branch_head']
+        },
+        {
+          to: '/users',
+          icon: 'mdi-account',
+          text: DRAWER.List_Users,
+          permissions: ['admin', 'branch_head']
         }
       ],
-      permissions: ['admin']
+      permissions: ['admin', 'branch_head']
     },
     {
       actions: 'mdi-loyalty',
@@ -156,6 +162,12 @@ module.exports = {
           to: '/soldiers',
           icon: 'mdi-clipboard-outline',
           text: DRAWER.List_Soldier,
+          branches: ['recon_force_people']
+        },
+        {
+          to: '/change-of-units',
+          icon: 'mdi-clipboard-outline',
+          text: DRAWER.List_Change_Of_Units,
           branches: ['recon_force_people']
         }
       ],

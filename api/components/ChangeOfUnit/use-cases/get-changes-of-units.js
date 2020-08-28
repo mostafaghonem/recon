@@ -37,7 +37,7 @@ module.exports = ({
     isArchived: false
   };
 
-  const select = 'userId status unitId createdAt updatedAt';
+  const select = 'userId status unitId date createdAt updatedAt';
 
   if (lastTimestamp) {
     query.createdAt = { $gt: moment(lastTimestamp) };
@@ -55,13 +55,22 @@ module.exports = ({
     {
       path: 'userId',
       match: { isArchived: false, fullName: { $regex: key, $options: 'i' } },
-      select: '_id fullName gender job birthDateTs createdAt'
+      select: '_id username branch permissions'
     },
     {
       path: 'unitId',
       match: unitQuery,
-      select:
-        '_id type description userId image currency rentersType numberOfPeople numberOfRooms hasFurniture availableCountNow pricePerPerson dailyOrMonthly highlight availability available gallery address isEditing isFull isHidden services conditions status rate totalUsersRated'
+      select: '_id name'
+    },
+    {
+      path: 'pastUnit.unitId',
+      match: unitQuery,
+      select: '_id name'
+    },
+    {
+      path: 'soldierId',
+      match: unitQuery,
+      select: '_id militaryId fullName'
     }
   ];
 
@@ -87,11 +96,11 @@ module.exports = ({
     params.select += ` update`;
   }
   // eslint-disable-next-line prefer-const
-  let { requests, total, hasNext } = await model.getChanges(params);
-  requests = requests.filter(request => request.userId && request.unitId);
+  let { changes, total, hasNext } = await model.getChanges(params);
+  changes = changes.filter(request => request.userId && request.unitId);
 
   return {
-    requests,
+    changes,
     total,
     hasNext
   };
