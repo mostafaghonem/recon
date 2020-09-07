@@ -9,5 +9,7 @@ module.exports = ({ permissions, branches }) => (req, res, next) => {
   }
 
   logger.error(`access denied! ${originalUrl}`);
-  return res.status(403).json({ message: 'unAuthorized to access this api ' });
+  return res
+    .status(403)
+    .json({ message: 'ليس لديك الصلاحيات لعمل هذه العملية' });
 };

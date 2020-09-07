@@ -1,7 +1,9 @@
 /* eslint-disable no-unused-vars */
 //! only require Entity/model
 const { UserEntity } = require('../Entity');
-const { PERMISSIONS } = require('../../../shared/constants/defaults');
+const {
+  PERMISSIONS_KEYS: PERMISSIONS
+} = require('../../../shared/constants/defaults');
 
 // should have no implementation for any specific orm
 module.exports = ({ logger }) => async ({ username, password, fullName }) => {
@@ -12,6 +14,8 @@ module.exports = ({ logger }) => async ({ username, password, fullName }) => {
     if (!user) {
       user = new UserEntity({
         permissions: [PERMISSIONS.ADMIN],
+        branch: 'information_systems',
+        rank: 'senior_warrant_officer',
         fullName,
         username
       });
@@ -36,6 +40,6 @@ module.exports = ({ logger }) => async ({ username, password, fullName }) => {
       `ADMIN User created with username:password => ${username}:${password}`
     );
   } catch (error) {
-    logger.info('### ERROR ### while creating ADMIN USER');
+    logger.info(`### ERROR ### while creating ADMIN USER => ${error.message}`);
   }
 };

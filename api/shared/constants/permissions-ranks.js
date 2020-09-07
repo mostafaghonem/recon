@@ -57,11 +57,12 @@ module.exports = {
     {
       ar: 'لواء',
       value: 'major_general'
-    },
-    {
-      ar: 'لواء أح',
-      value: 'staff_of_war_major_general'
     }
+    // ,
+    // {
+    //   ar: 'لواء أح',
+    //   value: 'staff_of_war_major_general'
+    // }
   ],
   Branches: [
     {

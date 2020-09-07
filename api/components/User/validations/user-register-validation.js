@@ -27,15 +27,15 @@ module.exports = ({ _, ValidatorHelper, Builder }) => ({ body }) => {
         .maxLength(60).rules
     },
     rank: {
-      value: body.username,
+      value: body.rank,
       rules: new Builder().required('يجب ادخال درجة/رتبة المستخدم').rules
     },
     branch: {
-      value: body.username,
+      value: body.branch,
       rules: new Builder().required('يجب ادخال فرع المستخدم').rules
     },
     permissions: {
-      value: body.username,
+      value: body.permissions,
       rules: new Builder().required('يجب ادخال صلاحيات المستخدم').rules
     }
     // TODO: Edit error messages
