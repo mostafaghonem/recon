@@ -1,76 +1,59 @@
+const fs = require('fs');
+const path = require('path');
 const express = require('express');
-
-const aws = require('aws-sdk');
-const uuidv4 = require('uuid/v4');
+const multer = require('multer');
 const mime = require('mime-types');
 
-const { signValidation } = require('../validations');
-const authenticateMiddleware = require('../../../middlewares/authenticateMiddleware');
+const DocxConverter = require('../../../shared/services/convertrer');
+
+const storage = multer.diskStorage({
+  destination(req, file, cb) {
+    cb(null, path.resolve('./uploads'));
+  },
+  filename(req, file, cb) {
+    cb(null, file.originalname);
+  }
+});
+const upload = multer({ storage });
 const logger = require('../../../startup/logger');
 
 const router = express.Router();
 
-const validateMiddleware = require('../../../middlewares/validateMiddleware');
-// const controllers = require('../controllers');
-
-const { region, awsKey, secret, bucket } = process.env;
-
-const s3 = new aws.S3({
-  accessKeyId: awsKey,
-  secretAccessKey: secret,
-  region
-});
-
-// @route
 // @ GET api/uploader/sign
 // !access  USER
-router.get(
-  '/sign',
-  [authenticateMiddleware, validateMiddleware(signValidation)],
-
+router.post(
+  '/',
+  upload.single('file'),
   /**
    * @params: {query: {'file-name': String, 'file-ext': String}}
    * @Returns: {presignedURL: 'url to use to upload your file',
    * @                   url: 'the url your file will be uploaded to'}
    */
-  (req, res) => {
-    const filename = req.query['file-name'];
-    const fileExt = req.query['default-ext'];
-
-    const defaultExt = fileExt;
-    let extension = filename.match(/\.(\w+$)/);
-
-    extension =
-      extension && extension.length > 1 && mime.contentType(extension[1])
-        ? extension[1]
-        : defaultExt;
-
-    const { contentStorageKey, contentStorageBucketName, contentType } = {
-      contentStorageKey: `${uuidv4()}-${filename}`,
-      contentStorageBucketName: bucket,
-      contentType: mime.contentType(extension)
-    };
-
-    const params = {
-      Bucket: contentStorageBucketName,
-      Key: contentStorageKey,
-      Expires: 60,
-      ContentType: contentType,
-      ACL: 'public-read'
-    };
-
-    try {
-      const presignedURL = s3.getSignedUrl('putObject', params);
-      return res.status(200).send({
-        url: `https://${bucket}.s3.${region}.amazonaws.com/${contentStorageKey}`,
-        presignedURL,
-        contentType
-      });
-    } catch (ex) {
-      logger.info(
-        `image-upload-failed ==>>>> ${JSON.stringify(ex, undefined, 4)}`
-      );
-      return res.status(500).send({ error: 'something wrong!!' });
+  async (req, res) => {
+    if (req.file) {
+      const file = req.file;
+      try {
+        const outputFile = file.filename.replace('docx', 'pdf');
+        const inputPath = path.join(path.resolve('./uploads/'), file.filename);
+        const outputPath = path.join(path.resolve('./uploads/'), outputFile);
+        const outputUrl = `/uploads/${outputFile}`;
+        const response = await DocxConverter.convert(inputPath, outputPath);
+        if (response) {
+          fs.unlink(inputPath, () => {});
+        }
+        return res.status(200).json({
+          data: response,
+          converted: true,
+          uploaded: true,
+          fileName: outputFile,
+          path: outputUrl
+        });
+      } catch (ex) {
+        logger.info(
+          `file-upload-failed ==>>>> ${JSON.stringify(ex, undefined, 4)}`
+        );
+        return res.status(500).send({ error: 'something wrong!!' });
+      }
     }
   }
 );

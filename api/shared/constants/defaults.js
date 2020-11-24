@@ -92,6 +92,7 @@ module.exports = {
     BATTALION: 'battalion',
     COMPANY: 'company'
   },
+  Influence_TYPES: [{}],
   RECRUITMENT_LEVELS: [
     {
       value: 'first',
