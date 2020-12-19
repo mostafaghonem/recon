@@ -16,6 +16,18 @@ module.exports = {
     Soldiers: 'المجندين',
     List_Soldier: 'عرض المجندين',
     List_Users: 'عرض المستخدمين',
-    List_Change_Of_Units: 'تعديلات توزيع المجندين'
+    List_Change_Of_Units: 'تعديلات توزيع المجندين',
+    Mail: 'المكاتبات',
+    Inbox: 'المكاتبات الواردة',
+    Outbox: 'المكاتبات الصادرة',
+    Add_Inbox: 'إضافة مكاتبة واردة',
+    Add_Outbox: 'إضافة مكاتبة صادرة',
+    Add_Followup_Codes: 'إضافة اكواد',
+    Addd_Admin_Codes: 'إضافة أكواد',
+    Add_Directions: 'إضافة جهات إتصال',
+    Add_Word_Mules: 'إضافة مستلمين',
+    Add_Branches: 'إضافة أفرع',
+    Show_Undistributed_Inbox: 'المكاتبات الغير موزعة',
+    Show_Undistributed_Outbox: 'المكاتبات الغير موزعة'
   }
 };

@@ -28,5 +28,13 @@ module.exports = {
   GOVERNATE_REQUIRED: 'يجب إختيار المحافظة',
   GOVERNATE_INVALID: 'عذرا ولكن لا نستطيع إيجاد هذه المحافظة تأكد من صحتها',
   CENTRE_REQUIRED: 'يجب إختيار المركز',
-  VILLAGE_REQUIRED: 'يجب إدخال القرية'
+  VILLAGE_REQUIRED: 'يجب إدخال القرية',
+
+  MAIL_NUMBER_REQUIRED: 'يجب إدخال رقم المكاتبة',
+  MAIL_DATE_REQUIRED: 'يجب إدخال تاريخ المكاتبة',
+  MAIL_SENDER_REQUIRED: 'يجب إدخال جهة المكاتبة',
+  MAIL_SUBJECT_REQUIRED: 'يجب إدخال موضوع المكاتبة',
+  MAIL_RECEIVER_REQUIRED: 'يجب إدخال اسم المستلم',
+  MAIL_TYPE_REQUIRED: 'يجب إدخال نوع المكاتبة',
+  MAIL_ATTACHMENTS_REQUIRED: 'يجب  إرفاق ملف المكاتبة'
 };

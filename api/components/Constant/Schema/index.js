@@ -1,0 +1,8 @@
+const makeconstantScheme = require('./constantSchemaSchema');
+const { defaultConstants } = require('../../../shared/constants');
+
+const constantTypes = defaultConstants.CONSTANT_TYPES;
+
+module.exports = makeconstantScheme({
+  constantTypes
+});

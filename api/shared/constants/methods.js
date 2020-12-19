@@ -3,7 +3,6 @@ const moment = require('moment');
 const _ = require('lodash');
 const cities = require('./cities');
 const locations = require('./locations');
-
 const { Permissions, Branches, Links } = require('./permissions-ranks');
 const {
   EDUCATION_RANKS: EducationRanks,
@@ -213,6 +212,22 @@ const computeAppDrawer = ({ user }) => {
   return secondLevel;
 };
 
+const processConstants = ({ data, constantTypes }) => {
+  const result = {};
+  constantTypes.map(type => {
+    data.map(item => {
+      if (item.type === type) {
+        const key = type.toUpperCase();
+        if (result[key] && result[key].length) {
+          result[key].push(item);
+        } else {
+          result[key] = [item];
+        }
+      }
+    });
+  });
+  return result;
+};
 module.exports = {
   GetBaseDomain,
   GetSortObj,
@@ -220,5 +235,6 @@ module.exports = {
   GetRecruitmentAreaFromAddress,
   CalculateReleaseDate,
   isAuthorized,
-  computeAppDrawer
+  computeAppDrawer,
+  processConstants
 };

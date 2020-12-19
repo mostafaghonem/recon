@@ -3,8 +3,23 @@ const path = require('path');
 const express = require('express');
 const multer = require('multer');
 const mime = require('mime-types');
-
+const uuidv4 = require('uuid');
+const Promise = require('bluebird');
+const Minio = require('minio');
 const DocxConverter = require('../../../shared/services/convertrer');
+const { ApplicationError } = require('../../../shared/errors');
+
+const minioClient = new Minio.Client({
+  endPoint: process.env.Minio_URL,
+  port: 9000,
+  useSSL: false,
+  accessKey: 'minioadmin',
+  secretKey: 'minioadmin'
+});
+
+const presignedPutObject = Promise.promisify(
+  minioClient.presignedPutObject
+).bind(minioClient);
 
 const storage = multer.diskStorage({
   destination(req, file, cb) {
@@ -17,9 +32,12 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 const logger = require('../../../startup/logger');
 
+const mailBucket = 'mail';
 const router = express.Router();
 
-// @ GET api/uploader/sign
+initiateMinio();
+
+// @ GET api/uploader/
 // !access  USER
 router.post(
   '/',
@@ -57,5 +75,101 @@ router.post(
     }
   }
 );
+
+// @ GET api/uploader/sign
+// !access  USER
+router.get(
+  '/sign',
+
+  /**
+   * @params: {query: {'file-name': String, 'file-ext': String}}
+   * @Returns: {presignedURL: 'url to use to upload your file',
+   * @                   url: 'the url your file will be uploaded to'}
+   */
+  async (req, res) => {
+    const filename = req.query['file-name'];
+    const fileExt = req.query['default-ext'];
+
+    const defaultExt = fileExt;
+    let extension = filename.match(/\.(\w+$)/);
+
+    extension =
+      extension && extension.length > 1 && mime.contentType(extension[1])
+        ? extension[1]
+        : defaultExt;
+
+    const contentStorageKey = `${Date.now()}-${filename}`;
+
+    const { contentType } = {
+      contentType: mime.contentType(extension)
+    };
+
+    try {
+      const policy = minioClient.newPostPolicy();
+      policy.setContentType(contentType);
+      policy.setBucket(mailBucket);
+      const presignedURL = await minioClient.presignedPutObject(
+        mailBucket,
+        contentStorageKey,
+        7 * 24 * 60 * 60
+      );
+      const postPolicy = await minioClient.presignedPostPolicy(policy);
+      const imageLink = `http://${process.env.Minio_URL}:${process.env.Minio_PORT}/mail/${contentStorageKey}`;
+      return res.status(200).send({
+        imageLink,
+        formData: postPolicy.formData,
+        postURL: postPolicy.postURL,
+        presignedURL,
+        contentType
+      });
+    } catch (ex) {
+      logger.info(
+        `image-upload-failed ==>>>> ${JSON.stringify(ex.message, undefined, 4)}`
+      );
+      return res.status(500).send({ error: 'something wrong!!' });
+    }
+  }
+);
+
+async function initiateMinio() {
+  try {
+    const policy = {
+      Version: '2012-10-17',
+      Statement: [
+        {
+          Action: ['s3:ListBucket'],
+          Effect: 'Allow',
+          Principal: {
+            AWS: ['*']
+          },
+          Resource: [`arn:aws:s3:::${mailBucket}`],
+          Sid: 'Public'
+        },
+        {
+          Action: ['s3:GetObject', 's3:PutObject'],
+          Effect: 'Allow',
+          Principal: {
+            AWS: ['*']
+          },
+          Resource: [`arn:aws:s3:::${mailBucket}/*`],
+          Sid: 'Public'
+        }
+      ]
+    };
+    const mailBucketExists = await minioClient.bucketExists(mailBucket);
+
+    if (mailBucketExists) {
+      await minioClient.setBucketPolicy(mailBucket, JSON.stringify(policy));
+      return true;
+    }
+    await minioClient.makeBucket(mailBucket, 'us-east-1');
+    return true;
+  } catch (err) {
+    console.log('\x1b[31m', '%c unable to initiate minio ======>', err.message);
+    throw new ApplicationError(
+      `unable to initiate minio ======> ${err.message}`
+    );
+  }
+}
 
 module.exports = router;

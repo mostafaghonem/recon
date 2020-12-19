@@ -1,5 +1,12 @@
 const { defaultConstants, locations } = require('../../../shared/constants');
-const { computeAppDrawer } = require('../../../shared/constants/methods');
+const {
+  computeAppDrawer,
+  processConstants
+} = require('../../../shared/constants/methods');
+
+const {
+  getConstantsFromModel
+} = require('../../Constant/Constant-external-use-cases');
 
 const pagination = Object.freeze(defaultConstants.PAGINATION);
 
@@ -22,8 +29,13 @@ const getSoldier = makeGetSoldier({});
 const getConstants = makeGetConstants({
   locations,
   defaultConstants,
-  computeAppDrawer
+  computeAppDrawer,
+  processConstants,
+
+  constantTypes: defaultConstants.CONSTANT_TYPES,
+  getConstantsFromModel
 });
+
 const soldiersCtrl = Object.freeze({
   addSoldier,
   deleteSoldier,

@@ -1,10 +1,16 @@
 const FORCES_LIST = require('./forces');
-const { Permissions, Ranks, Branches } = require('./permissions-ranks');
+const {
+  Permissions,
+  Ranks,
+  Branches,
+  Directions
+} = require('./permissions-ranks');
 
 module.exports = {
   PERMISSIONS: Permissions,
   RANKS: Ranks,
   BRANCHES: Branches,
+  DIRECTIONS: Directions,
   ObjectIdPattern: /^[0-9a-fA-F]{24}$/,
   PAGINATION: {
     LIMIT: 10,
@@ -92,7 +98,13 @@ module.exports = {
     BATTALION: 'battalion',
     COMPANY: 'company'
   },
+  MAILTYPES: [
+    { value: 'mail', ar: 'بريد' },
+    { value: 'email', ar: 'تراسل' },
+    { value: 'fax', ar: 'فاكس' }
+  ],
   Influence_TYPES: [{}],
+  CONSTANT_TYPES: ['branches', 'directions', 'word_mules'],
   RECRUITMENT_LEVELS: [
     {
       value: 'first',

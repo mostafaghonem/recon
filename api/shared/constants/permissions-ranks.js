@@ -66,18 +66,6 @@ module.exports = {
   ],
   Branches: [
     {
-      value: 'information_systems',
-      ar: 'نظم المعلومات'
-    },
-    {
-      value: 'recon_force_people',
-      ar: 'أفراد الجهاز'
-    },
-    {
-      value: 'officer_affairs',
-      ar: 'شئون ضباط'
-    },
-    {
       value: 'operations',
       ar: 'العمليات'
     },
@@ -86,8 +74,48 @@ module.exports = {
       ar: 'التدريب'
     },
     {
+      value: 'officer_affairs',
+      ar: 'شئون ضباط'
+    },
+    {
+      value: 'recon_force_people',
+      ar: 'أفراد الجهاز'
+    },
+    {
+      value: 'Research',
+      ar: 'بحوث'
+    },
+    {
       value: 'signal_corps',
       ar: 'الإشارة'
+    },
+    {
+      value: 'secretary',
+      ar: 'سكرتارية وإدارة محلية'
+    },
+    {
+      value: 'information_systems',
+      ar: 'نظم المعلومات'
+    },
+    {
+      value: 'vehicles',
+      ar: 'المركبات'
+    },
+    {
+      value: 'financial',
+      ar: 'ماليات'
+    },
+    {
+      value: 'private-financial',
+      ar: 'مالى خاص'
+    },
+    {
+      value: 'followup',
+      ar: 'سكرتارية ومتابعة'
+    },
+    {
+      value: 'safety',
+      ar: 'امن'
     }
   ],
   Permissions: [
@@ -173,6 +201,73 @@ module.exports = {
         }
       ],
       branches: ['recon_force_people']
+    },
+    {
+      actions: 'mdi-inbox-arrow-down',
+      icon: 'mdi-human',
+      title: DRAWER.Inbox,
+      items: [
+        {
+          to: '/followup/inbox/add',
+          icon: 'mdi-human-male',
+          text: DRAWER.Add_Inbox
+        },
+        {
+          to: '/followup/inbox/pending-mails',
+          icon: 'mdi-human-male',
+          text: DRAWER.Show_Undistributed_Inbox
+        }
+      ],
+      branches: ['followup']
+    },
+    {
+      actions: 'mdi-loyalty',
+      icon: 'mdi-human',
+      title: DRAWER.Outbox,
+      items: [
+        {
+          to: '/followup/outbox/add',
+          icon: 'mdi-human-male',
+          text: DRAWER.Add_Outbox
+        },
+        {
+          to: '/followup/outbox/pending-mails',
+          icon: 'mdi-human-male',
+          text: DRAWER.Show_Undistributed_Outbox
+        }
+      ],
+      branches: ['followup']
+    },
+    {
+      actions: 'mdi-inbox-arrow-down',
+      icon: 'mdi-human',
+      title: DRAWER.Add_Followup_Codes,
+      items: [
+        {
+          to: '/followup/codes/add-directions',
+          icon: 'mdi-human-male',
+          text: DRAWER.Add_Directions
+        },
+        {
+          to: '/followup/codes/add-word-mules',
+          icon: 'mdi-human-male',
+          text: DRAWER.Add_Word_Mules
+        },
+        {
+          to: '/followup/codes/add-branches',
+          icon: 'mdi-human-male',
+          text: DRAWER.Add_Branches
+        }
+      ],
+      branches: ['followup']
+    },
+    {
+      actions: 'mdi-inbox-arrow-down',
+      icon: 'mdi-human',
+      title: DRAWER.Addd_Admin_Codes,
+      items: [],
+      permissions: ['admin']
     }
-  ]
+  ],
+  Directions: [{ ar: 'قيادة المنطقة المركزية العسكرية', value: 'c.m.c' }]
 };
