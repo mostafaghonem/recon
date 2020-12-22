@@ -34,6 +34,10 @@ module.exports = ({
       value: body.type,
       rules: new Builder().required(ErrorText.MAIL_TYPE_REQUIRED).rules
     },
+    mailType: {
+      value: body.mailType,
+      rules: new Builder().required(ErrorText.MAIL_TYPE_REQUIRED).rules
+    },
     summary: {
       value: body.summary,
       rules: new Builder().rules
@@ -53,13 +57,13 @@ module.exports = ({
     }
   };
 
-  if (body.branches) {
-    const processed = body.branches.filter(o =>
-      branchesList.find(m => m.value === o)
-    );
-    // eslint-disable-next-line no-param-reassign
-    body.branches = processed;
-  }
+  // if (body.branches) {
+  //   const processed = body.branches.filter(o =>
+  //     branchesList.find(m => m.value === o)
+  //   );
+  //   // eslint-disable-next-line no-param-reassign
+  //   body.branches = processed;
+  // }
 
   Object.keys(scheme).forEach(key => {
     const ele = scheme[key];

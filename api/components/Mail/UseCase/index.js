@@ -25,6 +25,7 @@ const makeGetMails = require('./get-mails');
 const makeHideMail = require('./hide-mail');
 const makeUnhideMail = require('./unhide-mail');
 const makeEditMail = require('./edit-mail');
+const makeDistributeMail = require('./distribute-mail');
 
 const addMail = makeAddMail({
   ApplicationError,
@@ -71,12 +72,19 @@ const editMail = makeEditMail({
   pending: REQUEST_STATUS.PENDING
 });
 
+const distributeMail = makeDistributeMail({
+  ApplicationError,
+  logger,
+  events: EVENTS_TYPES,
+  pending: REQUEST_STATUS.PENDING
+});
 const mailsUseCases = {
   addMail,
   deleteMail,
   hideMail,
   unhideMail,
   editMail,
+  distributeMail,
   getMail,
   getMails
 };

@@ -9,6 +9,8 @@ const makeHideMailCtrl = require('./hide-mail');
 const makeUnhideMailCtrl = require('./unhide-mail');
 const makeEditMailCtrl = require('./edit-mail');
 const makeGetMail = require('./get-mail');
+const makeDistributeMail = require('./distribute-mail');
+
 // ->
 const addMail = makeAddMailCtrl({});
 const deleteMail = makeDeleteMailCtrl({});
@@ -17,6 +19,7 @@ const hideMail = makeHideMailCtrl({});
 const unhideMail = makeUnhideMailCtrl({});
 const editMail = makeEditMailCtrl({});
 const getMail = makeGetMail({});
+const distributeMail = makeDistributeMail({});
 
 const mailsCtrl = Object.freeze({
   addMail,
@@ -25,7 +28,8 @@ const mailsCtrl = Object.freeze({
   unhideMail,
   editMail,
   getMail,
-  getMails
+  getMails,
+  distributeMail
 });
 
 module.exports = mailsCtrl;

@@ -216,6 +216,11 @@ module.exports = {
           to: '/followup/inbox/pending-mails',
           icon: 'mdi-human-male',
           text: DRAWER.Show_Undistributed_Inbox
+        },
+        {
+          to: '/followup/inbox/mails',
+          icon: 'mdi-human-male',
+          text: DRAWER.Show_Distributed_Inbox
         }
       ],
       branches: ['followup']
@@ -231,9 +236,9 @@ module.exports = {
           text: DRAWER.Add_Outbox
         },
         {
-          to: '/followup/outbox/pending-mails',
+          to: '/followup/outbox/mails',
           icon: 'mdi-human-male',
-          text: DRAWER.Show_Undistributed_Outbox
+          text: DRAWER.Show_Distributed_Outbox
         }
       ],
       branches: ['followup']
@@ -257,6 +262,11 @@ module.exports = {
           to: '/followup/codes/add-branches',
           icon: 'mdi-human-male',
           text: DRAWER.Add_Branches
+        },
+        {
+          to: '/followup/codes/add-categories',
+          icon: 'mdi-human-male',
+          text: DRAWER.Add_Categories
         }
       ],
       branches: ['followup']

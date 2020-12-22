@@ -5,6 +5,14 @@ const autoIncrement = require('mongoose-auto-increment');
 autoIncrement.initialize(mongoose.connection);
 const { Schema } = mongoose;
 module.exports = ({ requestStatus, pendingStatus, branchesList }) => {
+  const CounterSchema = Schema({
+    _id: { type: String, required: true },
+    inboxSeq: { type: Number, default: 0 },
+    outboxSeq: { type: Number, default: 0 }
+  });
+
+  const Counter = mongoose.model('Counter', CounterSchema);
+
   const Mail = new Schema(
     {
       userId: {
@@ -15,6 +23,9 @@ module.exports = ({ requestStatus, pendingStatus, branchesList }) => {
         type: String,
         enum: ['inbox', 'outbox'],
         default: 'inbox'
+      },
+      category: {
+        type: String
       },
       mailType: {
         type: String
@@ -39,16 +50,21 @@ module.exports = ({ requestStatus, pendingStatus, branchesList }) => {
       subject: {
         type: String
       },
-      summary: {
+      decision: {
         type: String
       },
       branches: [
         {
-          type: String,
-          enum: branchesList.map(o => o.value)
+          type: String
         }
       ],
+      branch: {
+        type: String
+      },
       wordMule: {
+        type: String
+      },
+      directionWordMule: {
         type: String
       },
       folder: {
@@ -64,6 +80,7 @@ module.exports = ({ requestStatus, pendingStatus, branchesList }) => {
       },
       actions: [],
       history: [],
+      mailActions: Schema.Types.Mixed,
       attachments: [
         {
           link: String,
@@ -102,8 +119,23 @@ module.exports = ({ requestStatus, pendingStatus, branchesList }) => {
     }
   );
 
+  Mail.pre('save', function(next) {
+    const doc = this;
+    const updateKey = `${doc.type}Seq`;
+    const obj = { [updateKey]: 1 };
+    Counter.findByIdAndUpdate(
+      { _id: 'entityId' },
+      { $inc: obj },
+      { upsert: true, new: true },
+      (error, counter) => {
+        if (error) return next(error);
+        doc.seq = counter[updateKey];
+        next();
+      }
+    );
+  });
+
   Mail.index({ number: 1, date: 1 }, { required: true, unique: true });
   Mail.plugin(mongoosePaginate);
-  Mail.plugin(autoIncrement.plugin, { model: 'Mail', field: 'seq' });
   return mongoose.model('Mail', Mail);
 };

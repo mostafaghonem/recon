@@ -27,7 +27,10 @@ module.exports = {
     Add_Directions: 'إضافة جهات إتصال',
     Add_Word_Mules: 'إضافة مستلمين',
     Add_Branches: 'إضافة أفرع',
+    Add_Categories: 'إضافة تصنيفات',
     Show_Undistributed_Inbox: 'المكاتبات الغير موزعة',
-    Show_Undistributed_Outbox: 'المكاتبات الغير موزعة'
+    Show_Undistributed_Outbox: 'المكاتبات الغير موزعة',
+    Show_Distributed_Inbox: 'المكاتبات الموزعة',
+    Show_Distributed_Outbox: 'المكاتبات الموزعة'
   }
 };

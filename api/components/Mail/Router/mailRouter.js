@@ -93,6 +93,16 @@ router.put(
 );
 
 // @route
+// @ POST api/mails/distribute
+// Description: Distribute Mails for Renter
+// !access  anonymous
+router.post(
+  '/distribute',
+  [authenticateMiddleware, authorizeMiddleware({ branches: ['followup'] })],
+  controllers.distributeMail
+);
+
+// @route
 // @ GET api/mails/
 // Description: Get Mails for Renter
 // !access  anonymous

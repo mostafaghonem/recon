@@ -12,6 +12,8 @@ module.exports = ({
   events
 }) => async ({
   user,
+  type,
+  category,
   number,
   date,
   adminNo,
@@ -21,6 +23,7 @@ module.exports = ({
   mailType,
   branches,
   wordMule,
+  directionWordMule,
   folder,
   attachments,
   answer,
@@ -31,6 +34,8 @@ module.exports = ({
   const userId = user.id;
 
   const mail = {
+    type,
+    category,
     userId,
     number,
     date,
@@ -41,6 +46,7 @@ module.exports = ({
     branches,
     mailType,
     wordMule,
+    directionWordMule,
     folder,
     attachments,
     answer,
@@ -48,6 +54,10 @@ module.exports = ({
     isHidden,
     isArchived
   };
+
+  if (type === 'outbox') {
+    mail.status = 'accepted';
+  }
 
   try {
     const newMail = await model.createOne({ document: mail });

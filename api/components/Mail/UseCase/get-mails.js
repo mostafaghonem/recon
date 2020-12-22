@@ -10,20 +10,19 @@ const { recruitmentAreas } = require('../../../shared/constants/locations');
  */
 
 // should have no implementation for any specific orm
-module.exports = ({
-  ApplicationError,
-  logger,
-  moment,
-  GetSortObj,
-  getMailsFavorability,
-  GetMailsAvailbility,
-  accepted
-}) => async ({
+module.exports = ({ ApplicationError, GetSortObj }) => async ({
   type,
   seq,
-  number,
   date,
+  adminNo,
   direction,
+  subject,
+  mailType,
+  branches,
+  wordMule,
+  folder,
+  number,
+  status,
   key,
   limit,
   sortIndex,
@@ -54,30 +53,23 @@ module.exports = ({
   if (number) query.number = { $regex: number, $options: 'i' };
   if (date) query.date = date;
   if (direction) query.direction = direction;
+  if (status) query.status = status;
+  if (adminNo) query.adminNo = adminNo;
+  if (subject) query.subject = subject;
+  if (mailType) query.mailType = mailType;
+  if (branches) query.branches = branches;
+  if (wordMule) query.wordMule = wordMule;
+  if (folder) query.folder = folder;
   // #! Added for the poc case
   limit = 10000000000;
-  const unitMatch = { isHidden: false, isArchived: false };
-  const unitSelct = 'name force army type';
-  const populate = [
-    {
-      path: 'unit.unitId',
-      match: unitMatch,
-      select: unitSelct
-    },
-    {
-      path: 'unit.divisionId',
-      match: unitMatch,
-      select: unitSelct
-    }
-  ];
+
   const select = '';
   const sort = sortObj.sort;
   const { mails, total, hasNext } = await model.getMails({
     query,
     select,
     sort,
-    limit,
-    populate
+    limit
   });
   if (mails && mails.length !== 0) {
     return { total, hasNext, mails };

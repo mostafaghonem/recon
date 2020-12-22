@@ -80,6 +80,12 @@ module.exports = {
     Millitary_College: 'millitary_colleg',
     SWAT: 'swat'
   },
+  MAIL_ACTIONS_KEYS: {
+    execution: 'execution',
+    show: 'show',
+    knowledge: 'knowledge',
+    answer: 'answer'
+  },
   SITUATIONS_KEYS: {
     INT_TRANSFERRED: 'int_transferred',
     PHYSICAL: 'physical',
@@ -104,7 +110,25 @@ module.exports = {
     { value: 'fax', ar: 'فاكس' }
   ],
   Influence_TYPES: [{}],
-  CONSTANT_TYPES: ['branches', 'directions', 'word_mules'],
+  CONSTANT_TYPES: ['branches', 'directions', 'word_mules', 'categories'],
+  MAIL_ACTIONS: [
+    {
+      ar: 'تنفيذ',
+      value: 'execution'
+    },
+    {
+      ar: 'عرض',
+      value: 'show'
+    },
+    {
+      ar: 'للعلم',
+      value: 'knowledge'
+    },
+    {
+      ar: 'واجب الرد',
+      value: 'answer'
+    }
+  ],
   RECRUITMENT_LEVELS: [
     {
       value: 'first',
