@@ -6,14 +6,21 @@ const model = require('../Models');
 
 module.exports = ({ ApplicationError, logger }) => async ({
   mailId,
-  mailActions
+  branch,
+  branches,
+  decision
 }) => {
   const filter = { _id: mailId, isArchived: false };
   const checkExistence = await model.exists({ filter });
   if (!checkExistence)
-    throw new ApplicationError('.نأسف ، لا يمكننا العثور على هذا المجند', 403);
+    throw new ApplicationError(
+      '.نأسف ، لا يمكننا العثور على هذه المكاتبة',
+      403
+    );
   const update = {
-    mailActions,
+    branch,
+    branches,
+    decision,
     status: 'accepted'
   };
   await model.updateOneById({
