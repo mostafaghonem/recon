@@ -9,14 +9,17 @@ const Minio = require('minio');
 const DocxConverter = require('../../../shared/services/convertrer');
 const { ApplicationError } = require('../../../shared/errors');
 
-const minioClient = new Minio.Client({
+const minioOptions = {
   endPoint: process.env.Minio_URL,
   port: 9000,
   useSSL: false,
   accessKey: 'minioadmin',
   secretKey: 'minioadmin'
-});
+};
 
+let minioClient = new Minio.Client(minioOptions);
+
+let retries = 0;
 const presignedPutObject = Promise.promisify(
   minioClient.presignedPutObject
 ).bind(minioClient);
@@ -131,8 +134,13 @@ router.get(
   }
 );
 
+// eslint-disable-next-line consistent-return
 async function initiateMinio() {
   try {
+    if (retries >= 1) {
+      minioOptions.endPoint = 'localhost';
+      minioClient = new Minio.Client(minioOptions);
+    }
     const policy = {
       Version: '2012-10-17',
       Statement: [
@@ -165,10 +173,23 @@ async function initiateMinio() {
     await minioClient.makeBucket(mailBucket, 'us-east-1');
     return true;
   } catch (err) {
-    console.log('\x1b[31m', '%c unable to initiate minio ======>', err.message);
-    throw new ApplicationError(
-      `unable to initiate minio ======> ${err.message}`
+    if (retries >= 1) {
+      console.log(
+        '\x1b[31m',
+        '%c unable to initiate minio throwing error ======>',
+        err.message
+      );
+      throw new ApplicationError(
+        `unable to initiate minio ======> ${err.message}`
+      );
+    }
+
+    console.log(
+      '\x1b[31m',
+      '%c unable to initiate minio ======> Retrying with localhost'
     );
+    retries += 1;
+    initiateMinio();
   }
 }
 

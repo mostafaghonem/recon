@@ -84,7 +84,8 @@ module.exports = ({ requestStatus, pendingStatus, branchesList }) => {
       attachments: [
         {
           link: String,
-          name: String
+          name: String,
+          path: String
         }
       ],
       seen: {
