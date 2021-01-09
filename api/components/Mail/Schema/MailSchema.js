@@ -85,17 +85,12 @@ module.exports = ({ requestStatus, pendingStatus, branchesList }) => {
         {
           link: String,
           name: String,
-          path: String
+          path: String,
+          size: String
         }
       ],
-      seen: {
-        type: Boolean,
-        default: false
-      },
-      delievered: {
-        type: Boolean,
-        default: false
-      },
+      seen: [String],
+      delievered: [String],
       status: {
         type: String,
         enum: requestStatus,

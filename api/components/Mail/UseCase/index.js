@@ -26,6 +26,11 @@ const makeHideMail = require('./hide-mail');
 const makeUnhideMail = require('./unhide-mail');
 const makeEditMail = require('./edit-mail');
 const makeDistributeMail = require('./distribute-mail');
+const makeMarkDelievered = require('./mark-delievered');
+const makeMarkSeen = require('./mark-seen');
+
+const markDelievered = makeMarkDelievered({ ApplicationError, logger });
+const markSeen = makeMarkSeen({ ApplicationError, logger });
 
 const addMail = makeAddMail({
   ApplicationError,
@@ -52,7 +57,8 @@ const getMails = makeGetMails({
   ApplicationError,
   logger,
   accepted: REQUEST_RESPONSE.ACCEPTED,
-  GetSortObj
+  GetSortObj,
+  markDelievered
 });
 
 const hideMail = makeHideMail({
@@ -78,6 +84,7 @@ const distributeMail = makeDistributeMail({
   events: EVENTS_TYPES,
   pending: REQUEST_STATUS.PENDING
 });
+
 const mailsUseCases = {
   addMail,
   deleteMail,
@@ -86,7 +93,9 @@ const mailsUseCases = {
   editMail,
   distributeMail,
   getMail,
-  getMails
+  getMails,
+  markDelievered,
+  markSeen
 };
 
 module.exports = mailsUseCases;

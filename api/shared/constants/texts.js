@@ -31,6 +31,12 @@ module.exports = {
     Show_Undistributed_Inbox: 'المكاتبات الغير موزعة',
     Show_Undistributed_Outbox: 'المكاتبات الغير موزعة',
     Show_Distributed_Inbox: 'المكاتبات الموزعة',
-    Show_Distributed_Outbox: 'المكاتبات الموزعة'
+    Show_Distributed_Outbox: 'المكاتبات الصادرة',
+    Show_New_Inbox: 'المكاتبات الجديدة',
+    Show_Seen_Inbox: 'المكاتبات المرئية',
+    Show_Inbox: 'جميع المكاتبات',
+    Show_Outbox: 'جميع المكاتبات',
+    Inbox_Only: 'الوارد',
+    Outbox_Only: 'الصادر'
   }
 };

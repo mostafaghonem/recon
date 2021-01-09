@@ -1,11 +1,11 @@
-const { editMailRequest } = require('../UseCase');
+const { editMail } = require('../UseCase');
 
 module.exports = () => {
   return async (req, res, next) => {
     try {
       const userId = req.user.id;
       const mailId = req.params.id;
-      await editMailRequest({ userId, mailId, ...req.body });
+      await editMail({ userId, mailId, ...req.body });
 
       return res
         .status(200)

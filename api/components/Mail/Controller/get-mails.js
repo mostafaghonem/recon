@@ -5,6 +5,8 @@ module.exports = () => {
     try {
       const mailDetails = await getMails({
         userId: req.user ? req.user.id : undefined,
+        user: req.user,
+        view: req.view,
         ...req.query
       });
 

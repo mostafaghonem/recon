@@ -18,6 +18,7 @@ const authenticateMiddleware = require('../../../middlewares/authenticateMiddlew
 const authorizeMiddleware = require('../../../middlewares/authorizeMiddleware');
 
 const validateMiddleware = require('../../../middlewares/validateMiddleware');
+const mailViewMiddleware = require('../../../middlewares/mailViewMiddleware');
 const controllers = require('../Controller');
 
 // @route
@@ -45,6 +46,16 @@ router.get(
     authenticateMiddleware,
     authorizeMiddleware({ branches: ['followup'] })
   ],
+  controllers.getMail
+);
+
+// @route
+// @ GET api/mails/mail/:id
+// Description: Get mail details for renter
+// !access  anonymous
+router.get(
+  '/data/:id',
+  [validateMiddleware(getMailValidation)],
   controllers.getMail
 );
 
@@ -82,7 +93,7 @@ router.delete(
 // @ PUT api/mails/edit/:id
 // Description: Edit mail by Admin or House Owner
 // !access  anonymous
-router.put(
+router.post(
   '/edit/:id',
   [
     validateMiddleware(editMailValidation),
@@ -100,6 +111,20 @@ router.post(
   '/distribute',
   [authenticateMiddleware, authorizeMiddleware({ branches: ['followup'] })],
   controllers.distributeMail
+);
+
+// @route
+// @ GET api/mails/view
+// Description: Get Mails for Branch User
+// !access  anonymous
+router.get(
+  '/view',
+  [
+    validateMiddleware(getMailsValidation),
+    authenticateMiddleware,
+    mailViewMiddleware()
+  ],
+  controllers.getMails
 );
 
 // @route

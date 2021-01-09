@@ -1,18 +1,11 @@
-const { getMails } = require('../UseCase');
+const { getMail } = require('../UseCase');
 
-module.exports = ({ pagination }) => {
+module.exports = ({}) => {
   return async (req, res, next) => {
     try {
-      const limit = Number(req.query.limit) || Number(pagination.LIMIT);
-      const lastId = req.query.lastId || String(pagination.LAST_ID);
-      const userId = req.user ? req.user.id : undefined;
-      const key = req.query.key || '';
-      const result = await getMails({
-        ...req.query,
-        userId,
-        key,
-        limit,
-        lastId
+      const mailId = req.params.id;
+      const result = await getMail({
+        mailId
       });
 
       return res.status(200).json({

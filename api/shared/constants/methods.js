@@ -157,7 +157,7 @@ const CalculateReleaseDate = ({
   return releaseDate;
 };
 
-const isAuthorized = ({ user, branches, permissions }) => {
+const isAuthorized = ({ user, followup, branches, permissions }) => {
   let validPermissions = true;
   let validBranches = true;
   const userPermissions = user.permissions;
@@ -165,6 +165,9 @@ const isAuthorized = ({ user, branches, permissions }) => {
     return true;
   }
 
+  if (followup && user.branch === 'followup') {
+    return false;
+  }
   const permissionAuthority =
     permissions &&
     permissions.length > 0 &&
@@ -194,7 +197,8 @@ const computeAppDrawer = ({ user }) => {
     const authorized = isAuthorized({
       user,
       branches: o.branches,
-      permissions: o.permissions
+      permissions: o.permissions,
+      followup: o.followup
     });
     return authorized;
   });

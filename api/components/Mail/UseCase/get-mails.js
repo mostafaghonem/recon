@@ -10,7 +10,9 @@ const { recruitmentAreas } = require('../../../shared/constants/locations');
  */
 
 // should have no implementation for any specific orm
-module.exports = ({ ApplicationError, GetSortObj }) => async ({
+module.exports = ({ ApplicationError, GetSortObj, markDelievered }) => async ({
+  view,
+  user,
   type,
   seq,
   date,
@@ -60,6 +62,9 @@ module.exports = ({ ApplicationError, GetSortObj }) => async ({
   if (branches) query.branches = branches;
   if (wordMule) query.wordMule = wordMule;
   if (folder) query.folder = folder;
+  if (view) {
+    query.$or = [{ branch: user.branch }, { 'branches.$': user.branch }];
+  }
   // #! Added for the poc case
   limit = 10000000000;
 
@@ -72,6 +77,12 @@ module.exports = ({ ApplicationError, GetSortObj }) => async ({
     limit
   });
   if (mails && mails.length !== 0) {
+    const ids = mails
+      .filter(o => !o.delievered.includes(user.branch))
+      .map(o => o._id);
+    if (ids.length) {
+      markDelievered({ ids, user });
+    }
     return { total, hasNext, mails };
   }
   return { total: 0, hasNext: false, mails: [] };

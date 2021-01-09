@@ -204,22 +204,22 @@ module.exports = {
     },
     {
       actions: 'mdi-inbox-arrow-down',
-      icon: 'mdi-human',
+      icon: 'mdi-email-box',
       title: DRAWER.Inbox,
       items: [
         {
           to: '/followup/inbox/add',
-          icon: 'mdi-human-male',
+          icon: 'mdi-email-edit-outline',
           text: DRAWER.Add_Inbox
         },
         {
           to: '/followup/inbox/pending-mails',
-          icon: 'mdi-human-male',
+          icon: 'mdi-email-multiple-outline',
           text: DRAWER.Show_Undistributed_Inbox
         },
         {
           to: '/followup/inbox/mails',
-          icon: 'mdi-human-male',
+          icon: 'mdi-email-open-multiple-outline',
           text: DRAWER.Show_Distributed_Inbox
         }
       ],
@@ -227,17 +227,17 @@ module.exports = {
     },
     {
       actions: 'mdi-loyalty',
-      icon: 'mdi-human',
+      icon: 'mdi-email-outline',
       title: DRAWER.Outbox,
       items: [
         {
           to: '/followup/outbox/add',
-          icon: 'mdi-human-male',
+          icon: 'mdi-email-edit-outline',
           text: DRAWER.Add_Outbox
         },
         {
           to: '/followup/outbox/mails',
-          icon: 'mdi-human-male',
+          icon: 'mdi-email-open-multiple-outline',
           text: DRAWER.Show_Distributed_Outbox
         }
       ],
@@ -270,6 +270,42 @@ module.exports = {
         }
       ],
       branches: ['followup']
+    },
+    {
+      actions: 'mdi-inbox-arrow-down',
+      icon: 'mdi-human',
+      title: DRAWER.Inbox_Only,
+      items: [
+        {
+          to: '/inbox/unseen-mails',
+          icon: 'mdi-human-male',
+          text: DRAWER.Show_New_Inbox
+        },
+        {
+          to: '/inbox/seen-mails',
+          icon: 'mdi-human-male',
+          text: DRAWER.Show_Seen_Inbox
+        },
+        {
+          to: '/inbox/mails',
+          icon: 'mdi-human-male',
+          text: DRAWER.Show_Inbox
+        }
+      ],
+      followup: true
+    },
+    {
+      actions: 'mdi-loyalty',
+      icon: 'mdi-human',
+      title: DRAWER.Outbox_Only,
+      items: [
+        {
+          to: '/outbox/mails',
+          icon: 'mdi-human-male',
+          text: DRAWER.Show_Outbox
+        }
+      ],
+      followup: true
     },
     {
       actions: 'mdi-inbox-arrow-down',
