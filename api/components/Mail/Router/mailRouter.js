@@ -128,6 +128,16 @@ router.get(
 );
 
 // @route
+// @ GET api/mails/mail/:id
+// Description: Get mail details for renter
+// !access  anonymous
+router.get(
+  '/mark-seen/:id',
+  [validateMiddleware(getMailValidation), authenticateMiddleware],
+  controllers.markSeen
+);
+
+// @route
 // @ GET api/mails/
 // Description: Get Mails for Renter
 // !access  anonymous

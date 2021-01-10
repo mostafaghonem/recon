@@ -7,7 +7,7 @@ const model = require('../Models');
 module.exports = ({ ApplicationError, logger }) => async ({ ids, user }) => {
   const filter = {
     _id: { $in: ids },
-    'seen.$': { $not: { $regex: user.branch } }
+    seen: { $nin: [user.branch] }
   };
   const update = {
     $push: {

@@ -25,6 +25,7 @@ module.exports = ({ ApplicationError, GetSortObj, markDelievered }) => async ({
   folder,
   number,
   status,
+  seen,
   key,
   limit,
   sortIndex,
@@ -63,7 +64,15 @@ module.exports = ({ ApplicationError, GetSortObj, markDelievered }) => async ({
   if (wordMule) query.wordMule = wordMule;
   if (folder) query.folder = folder;
   if (view) {
-    query.$or = [{ branch: user.branch }, { 'branches.$': user.branch }];
+    query.$or = [{ branch: user.branch }, { branches: user.branch }];
+  }
+
+  if (typeof seen !== 'undefined' && seen === 'true') {
+    query.seen = user.branch;
+  }
+
+  if (typeof seen !== 'undefined' && seen === 'false') {
+    query.seen = { $nin: [user.branch] };
   }
   // #! Added for the poc case
   limit = 10000000000;
