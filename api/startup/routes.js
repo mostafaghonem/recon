@@ -30,7 +30,6 @@ module.exports = async app => {
   app.use('/sw.js', staticFile(path.resolve('./public/sw.js')));
   // ! nuxt config
   await nuxtConfig(app);
-
   app.use(ErrorHandler.catch404Errors);
   app.use(ErrorHandler.handleUnexpectedErrors);
 };

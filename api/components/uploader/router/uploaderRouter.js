@@ -165,7 +165,7 @@ async function initiateMinio() {
       ]
     };
     const mailBucketExists = await minioClient.bucketExists(mailBucket);
-
+    console.log('Minio Started Successfuly ===>');
     if (mailBucketExists) {
       await minioClient.setBucketPolicy(mailBucket, JSON.stringify(policy));
       return true;
