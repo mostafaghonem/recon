@@ -10,15 +10,7 @@ const { recruitmentAreas } = require('../../../shared/constants/locations');
  */
 
 // should have no implementation for any specific orm
-module.exports = ({
-  ApplicationError,
-  logger,
-  moment,
-  GetSortObj,
-  getconstantsFavorability,
-  GetconstantsAvailbility,
-  accepted
-}) => async ({
+module.exports = ({ getUnAnsweredMails, GetSortObj }) => async ({
   type,
   seq,
   number,
@@ -79,6 +71,8 @@ module.exports = ({
     limit,
     populate
   });
+
+  constants.UNANSWERED = await getUnAnsweredMails({});
   if (constants && constants.length !== 0) {
     return { total, hasNext, constants };
   }

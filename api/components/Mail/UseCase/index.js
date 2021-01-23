@@ -22,6 +22,7 @@ const makeAddMail = require('./add-mail');
 const makeDeleteMail = require('./delete-mail');
 const makeGetMail = require('./get-mail');
 const makeGetMails = require('./get-mails');
+const makeGetUnAnsweredMails = require('./get-unanswered-mails');
 const makeHideMail = require('./hide-mail');
 const makeUnhideMail = require('./unhide-mail');
 const makeEditMail = require('./edit-mail');
@@ -85,6 +86,7 @@ const distributeMail = makeDistributeMail({
   pending: REQUEST_STATUS.PENDING
 });
 
+const getUnAnsweredMails = makeGetUnAnsweredMails({});
 const mailsUseCases = {
   addMail,
   deleteMail,
@@ -94,6 +96,7 @@ const mailsUseCases = {
   distributeMail,
   getMail,
   getMails,
+  getUnAnsweredMails,
   markDelievered,
   markSeen
 };

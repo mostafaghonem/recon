@@ -14,6 +14,7 @@ const {
   CalculateReleaseDate
 } = require('../../../shared/constants/methods');
 
+const { getUnAnsweredMails } = require('../../Mail/Mail-external-use-cases');
 const makeAddConstant = require('./add-constant');
 const makeDeleteConstant = require('./delete-constant');
 const makeGetConstants = require('./get-constants');
@@ -36,7 +37,8 @@ const getConstants = makeGetConstants({
   moment,
   ApplicationError,
   logger,
-  GetSortObj
+  GetSortObj,
+  getUnAnsweredMails
 });
 
 const hideConstant = makeHideConstant({

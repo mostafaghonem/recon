@@ -11,6 +11,7 @@ const { ApplicationError } = require('../../../shared/errors');
 
 const makeGetMailById = require('./get-mail-by-id');
 const makeChangeMailUnit = require('./change-mail-unit');
+const makeGetUnAnsweredMails = require('../UseCase/get-unanswered-mails');
 
 const getMailById = makeGetMailById({
   ApplicationError,
@@ -22,8 +23,11 @@ const changeMailUnit = makeChangeMailUnit({
   logger
 });
 
+const getUnAnsweredMails = makeGetUnAnsweredMails({});
+
 const MailExternalService = Object.freeze({
   getMailById,
+  getUnAnsweredMails,
   changeMailUnit
 });
 

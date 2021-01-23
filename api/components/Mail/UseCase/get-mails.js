@@ -79,11 +79,20 @@ module.exports = ({ ApplicationError, GetSortObj, markDelievered }) => async ({
 
   const select = '';
   const sort = sortObj.sort;
+  const populate = [
+    {
+      path: 'answerId',
+      select: {
+        attachments: true
+      }
+    }
+  ];
   const { mails, total, hasNext } = await model.getMails({
     query,
     select,
     sort,
-    limit
+    limit,
+    populate
   });
   if (mails && mails.length !== 0) {
     const ids = mails

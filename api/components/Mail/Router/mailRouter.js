@@ -59,6 +59,12 @@ router.get(
   controllers.getMail
 );
 
+// @route
+// @ GET api/mails/mail/:id
+// Description: Get mail details for renter
+// !access  anonymous
+router.get('/unanswered', controllers.getUnAnsweredMails);
+
 router.put(
   '/hide/:id',
   [

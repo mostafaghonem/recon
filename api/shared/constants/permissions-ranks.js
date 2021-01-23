@@ -221,6 +221,11 @@ module.exports = {
           to: '/followup/inbox/mails',
           icon: 'mdi-email-open-multiple-outline',
           text: DRAWER.Show_Distributed_Inbox
+        },
+        {
+          to: '/followup/inbox/follow-mails?follow=true',
+          icon: 'mdi-email-alert',
+          text: DRAWER.Show_Followup_Inbox
         }
       ],
       branches: ['followup']

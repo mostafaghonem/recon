@@ -5,6 +5,7 @@ const pagination = Object.freeze(defaultConstants.PAGINATION);
 const makeAddMailCtrl = require('./add-mail');
 const makeDeleteMailCtrl = require('./delete-mail');
 const makeGetMailsCtrl = require('./get-mails');
+const makeGetUnAnsweredMails = require('./get-unanswered-mails');
 const makeHideMailCtrl = require('./hide-mail');
 const makeUnhideMailCtrl = require('./unhide-mail');
 const makeEditMailCtrl = require('./edit-mail');
@@ -22,6 +23,7 @@ const getMail = makeGetMail({});
 const distributeMail = makeDistributeMail({});
 const markSeen = makMarkSeen({});
 
+const getUnAnsweredMails = makeGetUnAnsweredMails({});
 const mailsCtrl = Object.freeze({
   addMail,
   deleteMail,
@@ -30,6 +32,7 @@ const mailsCtrl = Object.freeze({
   editMail,
   getMail,
   getMails,
+  getUnAnsweredMails,
   distributeMail,
   markSeen
 });

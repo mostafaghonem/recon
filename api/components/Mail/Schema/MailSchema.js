@@ -78,6 +78,14 @@ module.exports = ({ requestStatus, pendingStatus, branchesList }) => {
       answerDate: {
         type: Date
       },
+      answerForId: {
+        type: Schema.Types.ObjectId,
+        ref: 'Mail'
+      },
+      answerId: {
+        type: Schema.Types.ObjectId,
+        ref: 'Mail'
+      },
       actions: [],
       history: [],
       mailActions: Schema.Types.Mixed,

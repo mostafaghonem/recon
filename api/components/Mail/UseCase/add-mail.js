@@ -27,6 +27,8 @@ module.exports = ({
   directionWordMule,
   folder,
   attachments,
+  answerForId,
+  answerId,
   answer,
   answerDate,
   isHidden,
@@ -51,6 +53,8 @@ module.exports = ({
     directionWordMule,
     folder,
     attachments,
+    answerForId,
+    answerId,
     answer,
     answerDate,
     isHidden,
@@ -63,7 +67,19 @@ module.exports = ({
 
   try {
     const newMail = await model.createOne({ document: mail });
-
+    if (mail.answerForId) {
+      const answerObj = await model.updateOneById({
+        id: mail.answerForId,
+        update: { $set: { answerId: newMail.id } }
+      });
+      logger.info(
+        `The new is a reply for ${mail.answerForId}  => \n${JSON.stringify(
+          answerObj,
+          undefined,
+          6
+        )}`
+      );
+    }
     logger.info(
       `new Mail just been added with data => \n${JSON.stringify(
         newMail,

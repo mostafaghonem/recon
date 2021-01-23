@@ -17,6 +17,8 @@ module.exports = ({ ApplicationError, logger }) => async ({
       '.نأسف ، لا يمكننا العثور على هذه المكاتبة',
       403
     );
+  // eslint-disable-next-line no-param-reassign
+  branches = branches || [];
   const update = {
     branch,
     branches,
