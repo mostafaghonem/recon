@@ -1,195 +1,259 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import { interopDefault } from './utils'
-import scrollBehavior from './router.scrollBehavior.js'
 
-const _272329bc = () => interopDefault(import('../pages/dashboard.vue' /* webpackChunkName: "pages/dashboard" */))
-const _95733a76 = () => interopDefault(import('../pages/enterNewPassword.vue' /* webpackChunkName: "pages/enterNewPassword" */))
-const _b5de97ec = () => interopDefault(import('../pages/forgetPassword.vue' /* webpackChunkName: "pages/forgetPassword" */))
-const _42852a45 = () => interopDefault(import('../pages/hotel/index.vue' /* webpackChunkName: "pages/hotel/index" */))
-const _1bc96853 = () => interopDefault(import('../pages/hotelDetails/index.vue' /* webpackChunkName: "pages/hotelDetails/index" */))
-const _197787b9 = () => interopDefault(import('../pages/hotelGroups/index.vue' /* webpackChunkName: "pages/hotelGroups/index" */))
-const _1a5155e4 = () => interopDefault(import('../pages/hotels/index.vue' /* webpackChunkName: "pages/hotels/index" */))
-const _2f912f12 = () => interopDefault(import('../pages/login.vue' /* webpackChunkName: "pages/login" */))
-const _0a5de310 = () => interopDefault(import('../pages/notification/index.vue' /* webpackChunkName: "pages/notification/index" */))
-const _4170320a = () => interopDefault(import('../pages/passwordCode.vue' /* webpackChunkName: "pages/passwordCode" */))
-const _99a80592 = () => interopDefault(import('../pages/profile.vue' /* webpackChunkName: "pages/profile" */))
-const _4959d31b = () => interopDefault(import('../pages/registration.vue' /* webpackChunkName: "pages/registration" */))
-const _ec13a5b0 = () => interopDefault(import('../pages/registrationCode.vue' /* webpackChunkName: "pages/registrationCode" */))
-const _02e7d03d = () => interopDefault(import('../pages/registrationDone.vue' /* webpackChunkName: "pages/registrationDone" */))
-const _4f44b630 = () => interopDefault(import('../pages/rents.vue' /* webpackChunkName: "pages/rents" */))
-const _795e90b3 = () => interopDefault(import('../pages/search-results.vue' /* webpackChunkName: "pages/search-results" */))
-const _36d41240 = () => interopDefault(import('../pages/units/index.vue' /* webpackChunkName: "pages/units/index" */))
-const _f6919558 = () => interopDefault(import('../pages/hotel/add.vue' /* webpackChunkName: "pages/hotel/add" */))
-const _70c5727e = () => interopDefault(import('../pages/hotel/addGroup/index.vue' /* webpackChunkName: "pages/hotel/addGroup/index" */))
-const _785f79aa = () => interopDefault(import('../pages/hotel/edit/index.vue' /* webpackChunkName: "pages/hotel/edit/index" */))
-const _f9a11cea = () => interopDefault(import('../pages/hotel/editGroup/index.vue' /* webpackChunkName: "pages/hotel/editGroup/index" */))
-const _48422f84 = () => interopDefault(import('../pages/hotel/vs-upload.vue' /* webpackChunkName: "pages/hotel/vs-upload" */))
-const _48cf7ff4 = () => interopDefault(import('../pages/hotels/search.vue' /* webpackChunkName: "pages/hotels/search" */))
-const _19793678 = () => interopDefault(import('../pages/unit/add.vue' /* webpackChunkName: "pages/unit/add" */))
-const _6b57144d = () => interopDefault(import('../pages/unitDetails/reservationForm.vue' /* webpackChunkName: "pages/unitDetails/reservationForm" */))
-const _4f6d0f2a = () => interopDefault(import('../pages/units/search.vue' /* webpackChunkName: "pages/units/search" */))
-const _58566868 = () => interopDefault(import('../pages/hotel/requests/_id.vue' /* webpackChunkName: "pages/hotel/requests/_id" */))
-const _068e1824 = () => interopDefault(import('../pages/unit/edit/_id.vue' /* webpackChunkName: "pages/unit/edit/_id" */))
-const _1d17d328 = () => interopDefault(import('../pages/unit/requests/_id.vue' /* webpackChunkName: "pages/unit/requests/_id" */))
-const _bc253fb4 = () => interopDefault(import('../pages/checkouts/_id.vue' /* webpackChunkName: "pages/checkouts/_id" */))
-const _19fedc52 = () => interopDefault(import('../pages/unitDetails/_id.vue' /* webpackChunkName: "pages/unitDetails/_id" */))
-const _30c1a4a8 = () => interopDefault(import('../pages/units/_id.vue' /* webpackChunkName: "pages/units/_id" */))
-const _1e8fc560 = () => interopDefault(import('../pages/index.vue' /* webpackChunkName: "pages/index" */))
-
-// TODO: remove in Nuxt 3
-const emptyFn = () => {}
-const originalPush = Router.prototype.push
-Router.prototype.push = function push (location, onComplete = emptyFn, onAbort) {
-  return originalPush.call(this, location, onComplete, onAbort)
-}
+const _68fb8a65 = () => interopDefault(import('..\\pages\\add-soldier.vue' /* webpackChunkName: "pages_add-soldier" */))
+const _3bf21578 = () => interopDefault(import('..\\pages\\add-user.vue' /* webpackChunkName: "pages_add-user" */))
+const _fac367f6 = () => interopDefault(import('..\\pages\\change-of-units.vue' /* webpackChunkName: "pages_change-of-units" */))
+const _e882a93a = () => interopDefault(import('..\\pages\\dashboard.vue' /* webpackChunkName: "pages_dashboard" */))
+const _4f111469 = () => interopDefault(import('..\\pages\\icons.vue' /* webpackChunkName: "pages_icons" */))
+const _3a6bf138 = () => interopDefault(import('..\\pages\\login.vue' /* webpackChunkName: "pages_login" */))
+const _60233e4b = () => interopDefault(import('..\\pages\\logout.vue' /* webpackChunkName: "pages_logout" */))
+const _2060d1d0 = () => interopDefault(import('..\\pages\\maps.vue' /* webpackChunkName: "pages_maps" */))
+const _4e5fcf92 = () => interopDefault(import('..\\pages\\notifications.vue' /* webpackChunkName: "pages_notifications" */))
+const _074af39c = () => interopDefault(import('..\\pages\\soldiers.vue' /* webpackChunkName: "pages_soldiers" */))
+const _35d921fe = () => interopDefault(import('..\\pages\\table-list.vue' /* webpackChunkName: "pages_table-list" */))
+const _f6a8f220 = () => interopDefault(import('..\\pages\\typography.vue' /* webpackChunkName: "pages_typography" */))
+const _7944f9f5 = () => interopDefault(import('..\\pages\\unauthorized.vue' /* webpackChunkName: "pages_unauthorized" */))
+const _270325b0 = () => interopDefault(import('..\\pages\\user-profile.vue' /* webpackChunkName: "pages_user-profile" */))
+const _93a3af52 = () => interopDefault(import('..\\pages\\users.vue' /* webpackChunkName: "pages_users" */))
+const _ce1e5e52 = () => interopDefault(import('..\\pages\\inbox\\mails.vue' /* webpackChunkName: "pages_inbox_mails" */))
+const _a1de46c2 = () => interopDefault(import('..\\pages\\inbox\\seen-mails.vue' /* webpackChunkName: "pages_inbox_seen-mails" */))
+const _2d29df90 = () => interopDefault(import('..\\pages\\inbox\\unseen-mails.vue' /* webpackChunkName: "pages_inbox_unseen-mails" */))
+const _931e18e4 = () => interopDefault(import('..\\pages\\outbox\\mails.vue' /* webpackChunkName: "pages_outbox_mails" */))
+const _14d19270 = () => interopDefault(import('..\\pages\\followup\\codes\\add.vue' /* webpackChunkName: "pages_followup_codes_add" */))
+const _95d21a36 = () => interopDefault(import('..\\pages\\followup\\codes\\add-branches.vue' /* webpackChunkName: "pages_followup_codes_add-branches" */))
+const _c309941e = () => interopDefault(import('..\\pages\\followup\\codes\\add-categories.vue' /* webpackChunkName: "pages_followup_codes_add-categories" */))
+const _c1d686ae = () => interopDefault(import('..\\pages\\followup\\codes\\add-directions.vue' /* webpackChunkName: "pages_followup_codes_add-directions" */))
+const _0049e578 = () => interopDefault(import('..\\pages\\followup\\codes\\add-word-mules.vue' /* webpackChunkName: "pages_followup_codes_add-word-mules" */))
+const _4d7c5f30 = () => interopDefault(import('..\\pages\\followup\\inbox\\add.vue' /* webpackChunkName: "pages_followup_inbox_add" */))
+const _73064249 = () => interopDefault(import('..\\pages\\followup\\inbox\\follow-mails.vue' /* webpackChunkName: "pages_followup_inbox_follow-mails" */))
+const _84bb37ba = () => interopDefault(import('..\\pages\\followup\\inbox\\mails.vue' /* webpackChunkName: "pages_followup_inbox_mails" */))
+const _785ebf26 = () => interopDefault(import('..\\pages\\followup\\inbox\\pending-mails.vue' /* webpackChunkName: "pages_followup_inbox_pending-mails" */))
+const _5dc7dc72 = () => interopDefault(import('..\\pages\\followup\\outbox\\add.vue' /* webpackChunkName: "pages_followup_outbox_add" */))
+const _27f1c9c2 = () => interopDefault(import('..\\pages\\followup\\outbox\\mails.vue' /* webpackChunkName: "pages_followup_outbox_mails" */))
+const _f52811e8 = () => interopDefault(import('..\\pages\\followup\\outbox\\pending-mails.vue' /* webpackChunkName: "pages_followup_outbox_pending-mails" */))
+const _567ae2b4 = () => interopDefault(import('..\\pages\\followup\\inbox\\edit\\_index.vue' /* webpackChunkName: "pages_followup_inbox_edit__index" */))
+const _5f226827 = () => interopDefault(import('..\\pages\\followup\\outbox\\edit\\_index.vue' /* webpackChunkName: "pages_followup_outbox_edit__index" */))
+const _b7e1542e = () => interopDefault(import('..\\pages\\uploads\\_id.vue' /* webpackChunkName: "pages_uploads__id" */))
+const _70c44e21 = () => interopDefault(import('..\\pages\\index.vue' /* webpackChunkName: "pages_index" */))
 
 Vue.use(Router)
 
-export const routerOptions = {
-  mode: 'history',
-  base: decodeURI('/'),
-  linkActiveClass: 'nuxt-link-active',
-  linkExactActiveClass: 'nuxt-link-exact-active',
-  scrollBehavior,
+if (process.client) {
+  if ('scrollRestoration' in window.history) {
+    window.history.scrollRestoration = 'manual'
 
-  routes: [{
-    path: "/dashboard",
-    component: _272329bc,
-    name: "dashboard"
-  }, {
-    path: "/enterNewPassword",
-    component: _95733a76,
-    name: "enterNewPassword"
-  }, {
-    path: "/forgetPassword",
-    component: _b5de97ec,
-    name: "forgetPassword"
-  }, {
-    path: "/hotel",
-    component: _42852a45,
-    name: "hotel"
-  }, {
-    path: "/hotelDetails",
-    component: _1bc96853,
-    name: "hotelDetails"
-  }, {
-    path: "/hotelGroups",
-    component: _197787b9,
-    name: "hotelGroups"
-  }, {
-    path: "/hotels",
-    component: _1a5155e4,
-    name: "hotels"
-  }, {
-    path: "/login",
-    component: _2f912f12,
-    name: "login"
-  }, {
-    path: "/notification",
-    component: _0a5de310,
-    name: "notification"
-  }, {
-    path: "/passwordCode",
-    component: _4170320a,
-    name: "passwordCode"
-  }, {
-    path: "/profile",
-    component: _99a80592,
-    name: "profile"
-  }, {
-    path: "/registration",
-    component: _4959d31b,
-    name: "registration"
-  }, {
-    path: "/registrationCode",
-    component: _ec13a5b0,
-    name: "registrationCode"
-  }, {
-    path: "/registrationDone",
-    component: _02e7d03d,
-    name: "registrationDone"
-  }, {
-    path: "/rents",
-    component: _4f44b630,
-    name: "rents"
-  }, {
-    path: "/search-results",
-    component: _795e90b3,
-    name: "search-results"
-  }, {
-    path: "/units",
-    component: _36d41240,
-    name: "units"
-  }, {
-    path: "/hotel/add",
-    component: _f6919558,
-    name: "hotel-add"
-  }, {
-    path: "/hotel/addGroup",
-    component: _70c5727e,
-    name: "hotel-addGroup"
-  }, {
-    path: "/hotel/edit",
-    component: _785f79aa,
-    name: "hotel-edit"
-  }, {
-    path: "/hotel/editGroup",
-    component: _f9a11cea,
-    name: "hotel-editGroup"
-  }, {
-    path: "/hotel/vs-upload",
-    component: _48422f84,
-    name: "hotel-vs-upload"
-  }, {
-    path: "/hotels/search",
-    component: _48cf7ff4,
-    name: "hotels-search"
-  }, {
-    path: "/unit/add",
-    component: _19793678,
-    name: "unit-add"
-  }, {
-    path: "/unitDetails/reservationForm",
-    component: _6b57144d,
-    name: "unitDetails-reservationForm"
-  }, {
-    path: "/units/search",
-    component: _4f6d0f2a,
-    name: "units-search"
-  }, {
-    path: "/hotel/requests/:id?",
-    component: _58566868,
-    name: "hotel-requests-id"
-  }, {
-    path: "/unit/edit/:id?",
-    component: _068e1824,
-    name: "unit-edit-id"
-  }, {
-    path: "/unit/requests/:id?",
-    component: _1d17d328,
-    name: "unit-requests-id"
-  }, {
-    path: "/checkouts/:id?",
-    component: _bc253fb4,
-    name: "checkouts-id"
-  }, {
-    path: "/unitDetails/:id?",
-    component: _19fedc52,
-    name: "unitDetails-id"
-  }, {
-    path: "/units/:id",
-    component: _30c1a4a8,
-    name: "units-id"
-  }, {
-    path: "/",
-    component: _1e8fc560,
-    name: "index"
-  }],
+    // reset scrollRestoration to auto when leaving page, allowing page reload
+    // and back-navigation from other pages to use the browser to restore the
+    // scrolling position.
+    window.addEventListener('beforeunload', () => {
+      window.history.scrollRestoration = 'auto'
+    })
 
-  fallback: false
+    // Setting scrollRestoration to manual again when returning to this page.
+    window.addEventListener('load', () => {
+      window.history.scrollRestoration = 'manual'
+    })
+  }
+}
+const scrollBehavior = function (to, from, savedPosition) {
+  // if the returned position is falsy or an empty object,
+  // will retain current scroll position.
+  let position = false
+
+  // if no children detected and scrollToTop is not explicitly disabled
+  if (
+    to.matched.length < 2 &&
+    to.matched.every(r => r.components.default.options.scrollToTop !== false)
+  ) {
+    // scroll to the top of the page
+    position = { x: 0, y: 0 }
+  } else if (to.matched.some(r => r.components.default.options.scrollToTop)) {
+    // if one of the children has scrollToTop option set to true
+    position = { x: 0, y: 0 }
+  }
+
+  // savedPosition is only available for popstate navigations (back button)
+  if (savedPosition) {
+    position = savedPosition
+  }
+
+  return new Promise((resolve) => {
+    // wait for the out transition to complete (if necessary)
+    window.$nuxt.$once('triggerScroll', () => {
+      // coords will be used if no selector is provided,
+      // or if the selector didn't match any element.
+      if (to.hash) {
+        let hash = to.hash
+        // CSS.escape() is not supported with IE and Edge.
+        if (typeof window.CSS !== 'undefined' && typeof window.CSS.escape !== 'undefined') {
+          hash = '#' + window.CSS.escape(hash.substr(1))
+        }
+        try {
+          if (document.querySelector(hash)) {
+            // scroll to anchor by returning the selector
+            position = { selector: hash }
+          }
+        } catch (e) {
+          console.warn('Failed to save scroll position. Please add CSS.escape() polyfill (https://github.com/mathiasbynens/CSS.escape).')
+        }
+      }
+      resolve(position)
+    })
+  })
 }
 
-export function createRouter () {
-  return new Router(routerOptions)
+export function createRouter() {
+  return new Router({
+    mode: 'history',
+    base: decodeURI('/'),
+    linkActiveClass: 'nuxt-link-active',
+    linkExactActiveClass: 'nuxt-link-exact-active',
+    scrollBehavior,
+
+    routes: [{
+      path: "/add-soldier",
+      component: _68fb8a65,
+      name: "add-soldier___ar"
+    }, {
+      path: "/add-user",
+      component: _3bf21578,
+      name: "add-user___ar"
+    }, {
+      path: "/change-of-units",
+      component: _fac367f6,
+      name: "change-of-units___ar"
+    }, {
+      path: "/dashboard",
+      component: _e882a93a,
+      name: "dashboard___ar"
+    }, {
+      path: "/icons",
+      component: _4f111469,
+      name: "icons___ar"
+    }, {
+      path: "/login",
+      component: _3a6bf138,
+      name: "login___ar"
+    }, {
+      path: "/logout",
+      component: _60233e4b,
+      name: "logout___ar"
+    }, {
+      path: "/maps",
+      component: _2060d1d0,
+      name: "maps___ar"
+    }, {
+      path: "/notifications",
+      component: _4e5fcf92,
+      name: "notifications___ar"
+    }, {
+      path: "/soldiers",
+      component: _074af39c,
+      name: "soldiers___ar"
+    }, {
+      path: "/table-list",
+      component: _35d921fe,
+      name: "table-list___ar"
+    }, {
+      path: "/typography",
+      component: _f6a8f220,
+      name: "typography___ar"
+    }, {
+      path: "/unauthorized",
+      component: _7944f9f5,
+      name: "unauthorized___ar"
+    }, {
+      path: "/user-profile",
+      component: _270325b0,
+      name: "user-profile___ar"
+    }, {
+      path: "/users",
+      component: _93a3af52,
+      name: "users___ar"
+    }, {
+      path: "/inbox/mails",
+      component: _ce1e5e52,
+      name: "inbox-mails___ar"
+    }, {
+      path: "/inbox/seen-mails",
+      component: _a1de46c2,
+      name: "inbox-seen-mails___ar"
+    }, {
+      path: "/inbox/unseen-mails",
+      component: _2d29df90,
+      name: "inbox-unseen-mails___ar"
+    }, {
+      path: "/outbox/mails",
+      component: _931e18e4,
+      name: "outbox-mails___ar"
+    }, {
+      path: "/followup/codes/add",
+      component: _14d19270,
+      name: "followup-codes-add___ar"
+    }, {
+      path: "/followup/codes/add-branches",
+      component: _95d21a36,
+      name: "followup-codes-add-branches___ar"
+    }, {
+      path: "/followup/codes/add-categories",
+      component: _c309941e,
+      name: "followup-codes-add-categories___ar"
+    }, {
+      path: "/followup/codes/add-directions",
+      component: _c1d686ae,
+      name: "followup-codes-add-directions___ar"
+    }, {
+      path: "/followup/codes/add-word-mules",
+      component: _0049e578,
+      name: "followup-codes-add-word-mules___ar"
+    }, {
+      path: "/followup/inbox/add",
+      component: _4d7c5f30,
+      name: "followup-inbox-add___ar"
+    }, {
+      path: "/followup/inbox/follow-mails",
+      component: _73064249,
+      name: "followup-inbox-follow-mails___ar"
+    }, {
+      path: "/followup/inbox/mails",
+      component: _84bb37ba,
+      name: "followup-inbox-mails___ar"
+    }, {
+      path: "/followup/inbox/pending-mails",
+      component: _785ebf26,
+      name: "followup-inbox-pending-mails___ar"
+    }, {
+      path: "/followup/outbox/add",
+      component: _5dc7dc72,
+      name: "followup-outbox-add___ar"
+    }, {
+      path: "/followup/outbox/mails",
+      component: _27f1c9c2,
+      name: "followup-outbox-mails___ar"
+    }, {
+      path: "/followup/outbox/pending-mails",
+      component: _f52811e8,
+      name: "followup-outbox-pending-mails___ar"
+    }, {
+      path: "/followup/inbox/edit/:index",
+      component: _567ae2b4,
+      name: "followup-inbox-edit___ar"
+    }, {
+      path: "/followup/outbox/edit/:index",
+      component: _5f226827,
+      name: "followup-outbox-edit___ar"
+    }, {
+      path: "/uploads/:id?",
+      component: _b7e1542e,
+      name: "uploads-id___ar"
+    }, {
+      path: "/",
+      component: _70c44e21,
+      name: "index___ar"
+    }],
+
+    fallback: false
+  })
 }
