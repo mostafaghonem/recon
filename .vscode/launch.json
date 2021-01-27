@@ -15,7 +15,8 @@
       "internalConsoleOptions": "neverOpen",
       "env": {
         "NODE_ENV": "local",
-        "PORT": "5050"
+        "PORT": "5050",
+        "NUXT_TELEMETRY_DISABLED": "1"
       },
       "outputCapture": "std",
       "skipFiles": ["<node_internals>/**"]

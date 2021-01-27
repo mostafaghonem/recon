@@ -5,22 +5,6 @@
 //! moment.js language configuration
 
 /*!
- * vue-filepond v6.0.2
- * A handy FilePond adapter component for Vue
- * 
- * Copyright (c) 2020 PQINA
- * https://pqina.nl/filepond
- * 
- * Licensed under the MIT license.
- */
-
-/*!
- * FilePond 4.23.1
- * Licensed under MIT, https://opensource.org/licenses/MIT/
- * Please visit https://pqina.nl/filepond/ for details.
- */
-
-/*!
  * Vue.js v2.6.10
  * (c) 2014-2019 Evan You
  * Released under the MIT License.
