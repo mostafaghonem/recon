@@ -60,9 +60,9 @@ router.post(
 // !access  anonymous
 router.get('/logout', controllers.logOutUser);
 
-router.put(
+router.post(
   '/password/change',
-  [validateMiddleware(changePasswordValidation)],
+  [validateMiddleware(changePasswordValidation), authenticateMiddleware],
   controllers.changePassword
 );
 

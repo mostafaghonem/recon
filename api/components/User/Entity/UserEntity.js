@@ -131,6 +131,7 @@ const buildUserEntity = (
       return jwt.sign(
         {
           id: this.id,
+          username: this.username,
           exp: Math.floor(new Date().getTime() / 1000) + 7 * 24 * 60 * 60 * 30, // Note: in seconds!
           permissions,
           branch: this.branch

@@ -146,16 +146,28 @@ module.exports = {
   ],
   Links: [
     {
-      icon: 'mdi-view-dashboard',
-      title: DRAWER.Dashboard,
+      actions: 'user',
+      icon: 'mdi-account',
+      title: DRAWER.My_Account,
       items: [
         {
-          to: '/dashboard',
-          icon: 'mdi-newspaper',
-          text: DRAWER.News
+          to: '/account/reset-password',
+          icon: 'mdi-account-plus',
+          text: DRAWER.Reset_Password
         }
       ]
     },
+    // {
+    //   icon: 'mdi-view-dashboard',
+    //   title: DRAWER.Dashboard,
+    //   items: [
+    //     {
+    //       to: '/dashboard',
+    //       icon: 'mdi-newspaper',
+    //       text: DRAWER.News
+    //     }
+    //   ]
+    // },
     {
       actions: 'user',
       icon: 'mdi-account',

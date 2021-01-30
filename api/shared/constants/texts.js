@@ -8,6 +8,8 @@ module.exports = {
     SOLDIER_CHANGE_OF_UNIT_FAILURE: 'فشل تغيير الوحدة'
   },
   DRAWER: {
+    My_Account: 'حسابي',
+    Reset_Password: 'إعادة تعيين كلمة السر',
     Dashboard: 'الصفحة الرئيسية',
     News: 'الأخبار',
     Users: 'المستخدمين',

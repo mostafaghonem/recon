@@ -2,10 +2,10 @@ module.exports = ({ _, Builder, ValidatorHelper }) => ({ body }) => {
   const error = {};
 
   const scheme = {
-    username: {
-      value: body.username,
-      rules: new Builder().required('يجب ادخال اسم المستخدم').rules
-    },
+    // username: {
+    //   value: body.username,
+    //   rules: new Builder().required('يجب ادخال اسم المستخدم').rules
+    // },
     password: {
       value: body.password,
       rules: new Builder()
