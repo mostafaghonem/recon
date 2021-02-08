@@ -7,11 +7,11 @@ const model = require('../Models');
 module.exports = ({ ApplicationError, logger }) => async ({ ids, user }) => {
   const filter = {
     _id: { $in: ids },
-    delievered: { $not: { $regex: user.branch } }
+    delievered: { $not: { $regex: user.id } }
   };
   const update = {
     $push: {
-      delievered: user.branch
+      delievered: user.id
     }
   };
   await model.updateManyByFilter({ filter, update });

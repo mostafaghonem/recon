@@ -68,11 +68,11 @@ module.exports = ({ ApplicationError, GetSortObj, markDelievered }) => async ({
   }
 
   if (typeof seen !== 'undefined' && seen === 'true') {
-    query.seen = user.branch;
+    query.seen = user.id;
   }
 
   if (typeof seen !== 'undefined' && seen === 'false') {
-    query.seen = { $nin: [user.branch] };
+    query.seen = { $nin: [user.id] };
   }
   // #! Added for the poc case
   limit = 10000000000;
@@ -96,7 +96,7 @@ module.exports = ({ ApplicationError, GetSortObj, markDelievered }) => async ({
   });
   if (mails && mails.length !== 0) {
     const ids = mails
-      .filter(o => !o.delievered.includes(user.branch))
+      .filter(o => !o.delievered.includes(user.id))
       .map(o => o._id);
     if (ids.length) {
       markDelievered({ ids, user });

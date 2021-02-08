@@ -177,16 +177,16 @@ module.exports = {
           to: '/add-user',
           icon: 'mdi-account-plus',
           text: DRAWER.Add_User,
-          permissions: ['admin', 'branch_head']
+          permissions: ['admin']
         },
         {
           to: '/users',
           icon: 'mdi-account',
           text: DRAWER.List_Users,
-          permissions: ['admin', 'branch_head']
+          permissions: ['admin']
         }
       ],
-      permissions: ['admin', 'branch_head']
+      permissions: ['admin']
     },
     {
       actions: 'mdi-loyalty',
