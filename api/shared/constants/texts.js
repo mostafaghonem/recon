@@ -27,7 +27,7 @@ module.exports = {
     Add_Followup_Codes: 'إضافة اكواد',
     Addd_Admin_Codes: 'إضافة أكواد',
     Add_Directions: 'إضافة جهات إتصال',
-    Add_Word_Mules: 'إضافة مستلمين',
+    Add_Word_Mules: 'إضافة قائم بالتسجيل',
     Add_Branches: 'إضافة أفرع',
     Add_Categories: 'إضافة تصنيفات',
     Show_Undistributed_Inbox: 'المكاتبات الغير موزعة',

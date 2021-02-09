@@ -34,7 +34,7 @@ module.exports = {
   MAIL_DATE_REQUIRED: 'يجب إدخال تاريخ المكاتبة',
   MAIL_SENDER_REQUIRED: 'يجب إدخال جهة المكاتبة',
   MAIL_SUBJECT_REQUIRED: 'يجب إدخال موضوع المكاتبة',
-  MAIL_RECEIVER_REQUIRED: 'يجب إدخال اسم المستلم',
+  MAIL_RECEIVER_REQUIRED: 'يجب إدخال اسم القائم بالتسجيل',
   MAIL_TYPE_REQUIRED: 'يجب إدخال نوع المكاتبة',
   MAIL_ATTACHMENTS_REQUIRED: 'يجب  إرفاق ملف المكاتبة'
 };

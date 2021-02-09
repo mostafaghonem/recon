@@ -17,6 +17,8 @@ const _f6a8f220 = () => interopDefault(import('..\\pages\\typography.vue' /* web
 const _7944f9f5 = () => interopDefault(import('..\\pages\\unauthorized.vue' /* webpackChunkName: "pages_unauthorized" */))
 const _270325b0 = () => interopDefault(import('..\\pages\\user-profile.vue' /* webpackChunkName: "pages_user-profile" */))
 const _93a3af52 = () => interopDefault(import('..\\pages\\users.vue' /* webpackChunkName: "pages_users" */))
+const _f6939ed6 = () => interopDefault(import('..\\pages\\account\\reset-password.vue' /* webpackChunkName: "pages_account_reset-password" */))
+const _258c39d6 = () => interopDefault(import('..\\pages\\inbox\\follow-mails.vue' /* webpackChunkName: "pages_inbox_follow-mails" */))
 const _ce1e5e52 = () => interopDefault(import('..\\pages\\inbox\\mails.vue' /* webpackChunkName: "pages_inbox_mails" */))
 const _a1de46c2 = () => interopDefault(import('..\\pages\\inbox\\seen-mails.vue' /* webpackChunkName: "pages_inbox_seen-mails" */))
 const _2d29df90 = () => interopDefault(import('..\\pages\\inbox\\unseen-mails.vue' /* webpackChunkName: "pages_inbox_unseen-mails" */))
@@ -172,6 +174,14 @@ export function createRouter() {
       path: "/users",
       component: _93a3af52,
       name: "users___ar"
+    }, {
+      path: "/account/reset-password",
+      component: _f6939ed6,
+      name: "account-reset-password___ar"
+    }, {
+      path: "/inbox/follow-mails",
+      component: _258c39d6,
+      name: "inbox-follow-mails___ar"
     }, {
       path: "/inbox/mails",
       component: _ce1e5e52,
