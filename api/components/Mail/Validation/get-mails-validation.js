@@ -17,9 +17,9 @@ module.exports = ({
   sortValues
 }) => ({ query }) => {
   const error = {};
-  if (query.services) {
+  if (typeof query.number !== 'undefined') {
     // eslint-disable-next-line no-param-reassign
-    query.services = String(query.services).split(',');
+    query.number = parseInt(query.number, 10);
   }
 
   const scheme = {

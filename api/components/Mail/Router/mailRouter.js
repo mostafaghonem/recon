@@ -19,6 +19,7 @@ const authorizeMiddleware = require('../../../middlewares/authorizeMiddleware');
 
 const validateMiddleware = require('../../../middlewares/validateMiddleware');
 const mailViewMiddleware = require('../../../middlewares/mailViewMiddleware');
+const visaMiddleware = require('../../../middlewares/visaMiddleware');
 const controllers = require('../Controller');
 
 // @route
@@ -63,7 +64,7 @@ router.get(
 // @ GET api/mails/mail/:id
 // Description: Get mail details for renter
 // !access  anonymous
-router.get('/unanswered', controllers.getUnAnsweredMails);
+router.get('/unanswered', [visaMiddleware], controllers.getUnAnsweredMails);
 
 router.put(
   '/hide/:id',

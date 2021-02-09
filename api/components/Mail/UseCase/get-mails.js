@@ -53,7 +53,7 @@ module.exports = ({ ApplicationError, GetSortObj, markDelievered }) => async ({
   }
   if (type) query.type = type;
   if (seq) query.seq = { $regex: seq, $options: 'i' };
-  if (number) query.number = { $regex: number, $options: 'i' };
+  if (number) query.number = number;
   if (date) query.date = date;
   if (direction) query.direction = direction;
   if (status) query.status = status;

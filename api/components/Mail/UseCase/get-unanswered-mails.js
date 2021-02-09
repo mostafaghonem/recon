@@ -1,23 +1,34 @@
 const model = require('../Models');
 // should have no implementation for any specific orm
-module.exports = () => async ({}) => {
+module.exports = () => async ({ destroy, branch, user }) => {
   const query = {
-    answer: true,
+    // answer: true,
     type: 'inbox',
     number: {
       $nin: '0'
     },
-    $or: [
+    isArchived: false,
+    isHidden: false
+  };
+  if (destroy) {
+    query.$or = [{ answerId: null }];
+  } else {
+    query.answer = true;
+    query.$or = [
       {
         answerId: {
           $exists: false
         }
       },
       { answerId: null }
-    ],
-    isArchived: false,
-    isHidden: false
-  };
+    ];
+  }
+
+  if (user && branch) {
+    query.$and = [
+      { $or: [{ branch: user.branch }, { branches: user.branch }] }
+    ];
+  }
   const mails = await model.DbAccess.find(query);
   return { total: mails.length, hasNext: false, mails };
 };

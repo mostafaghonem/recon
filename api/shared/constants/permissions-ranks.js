@@ -304,9 +304,9 @@ module.exports = {
           text: DRAWER.Show_Seen_Inbox
         },
         {
-          to: '/inbox/mails',
-          icon: 'mdi-human-male',
-          text: DRAWER.Show_Inbox
+          to: '/inbox/follow-mails?follow=true',
+          icon: 'mdi-email-alert',
+          text: DRAWER.Show_Followup_Inbox
         }
       ],
       followup: true
