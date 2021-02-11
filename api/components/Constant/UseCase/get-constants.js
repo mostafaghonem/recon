@@ -12,10 +12,6 @@ const { recruitmentAreas } = require('../../../shared/constants/locations');
 // should have no implementation for any specific orm
 module.exports = ({ getUnAnsweredMails, GetSortObj }) => async ({
   type,
-  seq,
-  number,
-  date,
-  direction,
   key,
   limit,
   sortIndex,
@@ -42,34 +38,16 @@ module.exports = ({ getUnAnsweredMails, GetSortObj }) => async ({
     ];
   }
   if (type) query.type = type;
-  if (seq) query.seq = { $regex: seq, $options: 'i' };
-  if (number) query.number = { $regex: number, $options: 'i' };
-  if (date) query.date = date;
-  if (direction) query.direction = direction;
   // #! Added for the poc case
   limit = 10000000000;
-  const unitMatch = { isHidden: false, isArchived: false };
-  const unitSelct = 'name force army type';
-  const populate = [
-    {
-      path: 'unit.unitId',
-      match: unitMatch,
-      select: unitSelct
-    },
-    {
-      path: 'unit.divisionId',
-      match: unitMatch,
-      select: unitSelct
-    }
-  ];
+
   const select = '';
   const sort = sortObj.sort;
   const { constants, total, hasNext } = await model.getconstants({
     query,
     select,
     sort,
-    limit,
-    populate
+    limit
   });
 
   constants.UNANSWERED = await getUnAnsweredMails({});

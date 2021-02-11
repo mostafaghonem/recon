@@ -111,7 +111,7 @@ module.exports = {
     },
     {
       value: 'followup',
-      ar: 'سكرتارية ومتابعة'
+      ar: 'الارشيف العام'
     },
     {
       value: 'safety',
@@ -265,6 +265,11 @@ module.exports = {
       icon: 'mdi-human',
       title: DRAWER.Add_Followup_Codes,
       items: [
+        {
+          to: '/followup/codes/show',
+          icon: 'mdi-human-male',
+          text: DRAWER.Show_Codes
+        },
         {
           to: '/followup/codes/add-directions',
           icon: 'mdi-human-male',

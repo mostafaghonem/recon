@@ -230,6 +230,13 @@ const processConstants = ({ data, constantTypes }) => {
       }
     });
   });
+
+  // Sorting Each Array in Constants
+  Object.keys(result).map(key => {
+    if (result[key].length) {
+      result[key] = _.orderBy(result[key], ['ar'], ['asc']);
+    }
+  });
   return result;
 };
 module.exports = {

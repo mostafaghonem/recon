@@ -39,6 +39,7 @@ module.exports = {
     Show_Seen_Inbox: 'المكاتبات المرئية',
     Show_Inbox: 'جميع المكاتبات',
     Show_Outbox: 'جميع المكاتبات',
+    Show_Codes: 'عرض الاكواد',
     Inbox_Only: 'الوارد',
     Outbox_Only: 'الصادر'
   }
