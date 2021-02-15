@@ -28,6 +28,7 @@ const _95d21a36 = () => interopDefault(import('..\\pages\\followup\\codes\\add-b
 const _c309941e = () => interopDefault(import('..\\pages\\followup\\codes\\add-categories.vue' /* webpackChunkName: "pages_followup_codes_add-categories" */))
 const _c1d686ae = () => interopDefault(import('..\\pages\\followup\\codes\\add-directions.vue' /* webpackChunkName: "pages_followup_codes_add-directions" */))
 const _0049e578 = () => interopDefault(import('..\\pages\\followup\\codes\\add-word-mules.vue' /* webpackChunkName: "pages_followup_codes_add-word-mules" */))
+const _1531f634 = () => interopDefault(import('..\\pages\\followup\\codes\\show.vue' /* webpackChunkName: "pages_followup_codes_show" */))
 const _4d7c5f30 = () => interopDefault(import('..\\pages\\followup\\inbox\\add.vue' /* webpackChunkName: "pages_followup_inbox_add" */))
 const _73064249 = () => interopDefault(import('..\\pages\\followup\\inbox\\follow-mails.vue' /* webpackChunkName: "pages_followup_inbox_follow-mails" */))
 const _84bb37ba = () => interopDefault(import('..\\pages\\followup\\inbox\\mails.vue' /* webpackChunkName: "pages_followup_inbox_mails" */))
@@ -218,6 +219,10 @@ export function createRouter() {
       path: "/followup/codes/add-word-mules",
       component: _0049e578,
       name: "followup-codes-add-word-mules___ar"
+    }, {
+      path: "/followup/codes/show",
+      component: _1531f634,
+      name: "followup-codes-show___ar"
     }, {
       path: "/followup/inbox/add",
       component: _4d7c5f30,
