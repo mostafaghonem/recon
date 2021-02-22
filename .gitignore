@@ -1,4 +1,8 @@
-node_modules/*
-logs/*
-local.env
+node_modules
+.env
+logs/
+mongo-volume/
+
 package-lock.json
+*.env*
+tmp.json
