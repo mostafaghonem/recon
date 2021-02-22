@@ -17,6 +17,8 @@ const minioOptions = {
   secretKey: 'minioadmin'
 };
 
+console.log('db', process.env.Minio_URL);
+
 let minioClient = new Minio.Client(minioOptions);
 
 let retries = 0;

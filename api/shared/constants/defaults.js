@@ -309,5 +309,95 @@ module.exports = {
       value: 'with_extra_year_not_applicable_for_removal',
       ar: 'بسنة زيادة غير قابلة للرفع'
     }
+  ],
+  INFLUENCES_CATEGORIES: [
+    {
+      ar: 'ترقي / عزل',
+      value: 'ranking'
+    },
+    {
+      ar: 'التأهيل',
+      value: 'training'
+    },
+    {
+      ar: 'السفر والمأموريات',
+      value: 'travelling'
+    },
+    {
+      ar: 'رخصة السواقة',
+      value: 'drivers_license',
+      vehiclesOnly: true
+    },
+    {
+      ar: 'إخطار عودة / هروب',
+      value: 'fugitives'
+    },
+    {
+      ar: 'التعليم',
+      value: 'literacy'
+    }
+  ],
+  INFLUENCES_TYPES: [
+    {
+      ar: 'ترقي',
+      value: 'promotion',
+      category: 'ranking'
+    },
+    {
+      ar: 'إلغاء ترقي',
+      value: 'demotion',
+      category: 'ranking'
+    },
+    {
+      ar: 'عزل',
+      value: 'executiton',
+      category: 'ranking'
+    },
+    {
+      ar: 'ترقي إستثنائى',
+      value: 'executiton',
+      category: 'ranking'
+    },
+    {
+      ar: 'التأهيل',
+      value: 'training',
+      category: 'training'
+    },
+    {
+      ar: 'السفر',
+      value: 'travelling',
+      category: 'travelling'
+    },
+    {
+      ar: 'رخصة السواقة',
+      value: 'drivers_license',
+      category: 'drivers_license',
+      vehiclesOnly: true
+    },
+    {
+      ar: 'إخطار هروب',
+      value: 'flee',
+      category: 'fugitives'
+    },
+    {
+      ar: 'إخطار عودة',
+      value: 'comeback',
+      category: 'fugitives'
+    },
+    {
+      ar: 'إخطار عودة',
+      value: 'comeback',
+      category: 'fugitives'
+    },
+    {
+      ar: 'عقوبات',
+      value: 'punishments',
+      category: 'punishments'
+    },
+    {
+      ar: 'التعليم',
+      value: 'literacy',
+      category: 'literacy'
+    }
   ]
 };
