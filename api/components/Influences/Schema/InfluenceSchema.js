@@ -3,7 +3,7 @@ const mongoosePaginate = require('mongoose-paginate-v2');
 
 const { Schema } = mongoose;
 const { ObjectId } = mongoose.Types;
-module.exports = ({ influenceTypes, crimeTitles, forcesList, armyList }) => {
+module.exports = ({ influenceTypes, crimeTitles }) => {
   const Influence = new Schema(
     {
       userId: {

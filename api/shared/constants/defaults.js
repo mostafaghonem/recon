@@ -325,7 +325,7 @@ module.exports = {
     },
     {
       ar: 'رخصة السواقة',
-      value: 'drivers_license',
+      value: 'driversLicense',
       vehiclesOnly: true
     },
     {
@@ -370,8 +370,8 @@ module.exports = {
     },
     {
       ar: 'رخصة السواقة',
-      value: 'drivers_license',
-      category: 'drivers_license',
+      value: 'driversLicense',
+      category: 'driversLicense',
       vehiclesOnly: true
     },
     {
