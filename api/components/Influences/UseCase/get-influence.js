@@ -11,8 +11,6 @@ module.exports = ({
   GetInfluencesAvailbility,
   accepted
 }) => async ({ influenceId, userId, getSimilar }) => {
-  let influencesFavorability = {};
-  let influencesAvailability = {};
   const availableFrom = moment().toDate();
   const availableTo = moment();
   const query = { _id: influenceId, status: accepted, isArchived: false };

@@ -1,9 +1,10 @@
+/* eslint-disable import/no-dynamic-require */
 const mongoose = require('mongoose');
 const mongoosePaginate = require('mongoose-paginate-v2');
 
 const { Schema } = mongoose;
 const { ObjectId } = mongoose.Types;
-module.exports = ({ influenceTypes, crimeTitles }) => {
+module.exports = ({ embeddedSchemas, influenceTypes, influenceCategories }) => {
   const Influence = new Schema(
     {
       userId: {
@@ -14,41 +15,28 @@ module.exports = ({ influenceTypes, crimeTitles }) => {
         type: ObjectId,
         ref: 'Soldier'
       },
+      staffId: {
+        type: ObjectId,
+        ref: 'Staff'
+      },
       type: {
         type: String,
         required: true,
         enum: influenceTypes.map(o => o.value)
       },
-      crime: {
-        title: crimeTitles.map(o => o.value),
-        startDate: {
-          type: Date,
-          default: Date.now()
-        },
-        endDate: {
-          type: Date,
-          default: Date.now()
-        },
-        orderNumber: {
-          type: String
-        },
-        orderDate: {
-          type: Date,
-          default: Date.now()
-        },
-        absencePeriod: {
-          from: Date,
-          to: Date
-        },
-        text: {
-          type: String
-        }
+      category: {
+        type: String,
+        required: true,
+        enum: influenceCategories.map(o => o.value)
       },
-      deduction: {},
       date: {
         type: Date,
         default: Date.now()
       },
+      notes: {
+        type: String
+      },
+      ...embeddedSchemas,
       isEditing: {
         type: Boolean,
         default: false

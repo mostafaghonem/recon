@@ -1,71 +1,56 @@
-// const { Builder } = require('validation-helpers');
-// const { defaultConstants } = require('../../../shared/constants');
-
 module.exports = ({
   _,
   ValidatorHelper,
   Builder,
   ObjectId,
   influenceTypes,
-  forcesList,
-  armyList
+  typesValidation
 }) => ({ body }) => {
   const error = {};
-  const scheme = {
-    name: {
-      value: body.name,
-      rules: new Builder().required('يجب ادخال إسم الوحدة').rules
-    },
+  let scheme = {
     type: {
       value: body.type,
       rules: new Builder()
-        .required('يجب ادخال نوع الوحدة')
+        .required('يجب ادخال نوع المؤثر')
         .isMember(influenceTypes.map(o => o.value)).rules
     },
-    influenceId: {
-      value: body.influenceId,
+    soldierId: {
+      value: body.soldierId,
+      rules: new Builder().isMongoObjectId().rules
+    },
+    staffId: {
+      value: body.staffId,
+      rules: new Builder().isMongoObjectId().rules
+    },
+    userId: {
+      value: body.userId,
+      rules: new Builder().isMongoObjectId().rules
+    },
+    date: {
+      value: body.date,
       rules: new Builder().rules
-    },
-    brigadeId: {
-      value: body.brigadeId,
-      rules: new Builder().rules
-    },
-    battalionId: {
-      value: body.battalionId,
-      rules: new Builder().rules
-    },
-    companyId: {
-      value: body.companyId,
-      rules: new Builder().rules
-    },
-    force: {
-      value: body.force,
-      rules: new Builder()
-        .required('يجب إدخال سلاح الوحدة')
-        .isMember(forcesList).rules
-    },
-    army: {
-      value: body.army,
-      rules: new Builder().required('يجب إدخال جيش الوحدة').isMember(armyList)
-        .rules
     }
   };
 
-  Object.keys(scheme).forEach(key => {
+  const extras = typesValidation[`${body.type}Validation`]({
+    body: body[body.type] || {},
+    method: 'add'
+  });
+
+  Object.assign(scheme, extras);
+
+  scheme = Object.keys(scheme).forEach(key => {
     const ele = scheme[key];
     const { errors, isValid } = ValidatorHelper(ele.value, ele.rules);
 
-    if (key === 'influenceId' && ele.value && !ObjectId.isValid(ele.value))
-      error[key] = ['influenceId should be a valid ObjectId'];
+    if (key === 'soldierId' && ele.value && !ObjectId.isValid(ele.value))
+      error[key] = ['soldierId should be a valid ObjectId'];
 
-    if (key === 'brigadeId' && ele.value && !ObjectId.isValid(ele.value))
-      error[key] = ['brigadeId should be a valid ObjectId'];
+    if (key === 'staffId' && ele.value && !ObjectId.isValid(ele.value))
+      error[key] = ['staffId should be a valid ObjectId'];
 
-    if (key === 'battalionId' && ele.value && !ObjectId.isValid(ele.value))
-      error[key] = ['battalionId should be a valid ObjectId'];
-
-    if (key === 'companyId' && ele.value && !ObjectId.isValid(ele.value))
-      error[key] = ['companyId should be a valid ObjectId'];
+    if (key === 'userId' && ele.value && !ObjectId.isValid(ele.value))
+      error[key] = [' userId should be a valid ObjectId'];
 
     if (!isValid) error[key] = errors;
   });

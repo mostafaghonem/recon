@@ -11,6 +11,7 @@ const { ApplicationError } = require('../../../shared/errors');
 
 const makeGetSoldierById = require('./get-soldier-by-id');
 const makeChangeSoldierUnit = require('./change-soldier-unit');
+const makeAddSoldierInfluence = require('./add-solider-influence');
 
 const getSoldierById = makeGetSoldierById({
   ApplicationError,
@@ -22,9 +23,14 @@ const changeSoldierUnit = makeChangeSoldierUnit({
   logger
 });
 
+const addSoldierInfluence = makeAddSoldierInfluence({
+  ApplicationError,
+  logger
+});
 const SoldierExternalService = Object.freeze({
   getSoldierById,
-  changeSoldierUnit
+  changeSoldierUnit,
+  addSoldierInfluence
 });
 
 module.exports = SoldierExternalService;

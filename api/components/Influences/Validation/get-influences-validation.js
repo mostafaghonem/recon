@@ -6,8 +6,6 @@ module.exports = ({
   ValidatorHelper,
   ObjectId,
   influenceTypes,
-  forcesList,
-  armyList,
   sortKeys,
   sortValues
 }) => ({ query }) => {
@@ -26,25 +24,17 @@ module.exports = ({
       value: query.influenceId,
       rules: new Builder().rules
     },
-    brigadeId: {
-      value: query.brigadeId,
+    userId: {
+      value: query.userId,
+      rules: new Builder().isMongoObjectId().rules
+    },
+    soldierId: {
+      value: query.soldierId,
+      rules: new Builder().isMongoObjectId().rules
+    },
+    date: {
+      value: query.date,
       rules: new Builder().rules
-    },
-    battalionId: {
-      value: query.battalionId,
-      rules: new Builder().rules
-    },
-    companyId: {
-      value: query.companyId,
-      rules: new Builder().rules
-    },
-    force: {
-      value: query.force,
-      rules: new Builder().isMember(forcesList).rules
-    },
-    army: {
-      value: query.army,
-      rules: new Builder().isMember(armyList).rules
     },
     sortKey: {
       value: query.sortKey,

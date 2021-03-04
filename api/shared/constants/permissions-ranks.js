@@ -215,6 +215,26 @@ module.exports = {
       branches: ['recon_force_people']
     },
     {
+      actions: 'mdi-loyalty',
+      icon: 'mdi-chart-line',
+      title: DRAWER.Influences,
+      items: [
+        {
+          to: '/influences/add',
+          icon: 'mdi-shape-plus',
+          text: DRAWER.Add_Influences,
+          branches: ['recon_force_people']
+        },
+        {
+          to: '/influences/view',
+          icon: 'mdi-format-list-bulleted-type',
+          text: DRAWER.Show_Influences,
+          branches: ['recon_force_people']
+        }
+      ],
+      branches: ['recon_force_people']
+    },
+    {
       actions: 'mdi-inbox-arrow-down',
       icon: 'mdi-email-box',
       title: DRAWER.Inbox,

@@ -41,6 +41,12 @@ module.exports = {
     Show_Outbox: 'جميع المكاتبات',
     Show_Codes: 'عرض الاكواد',
     Inbox_Only: 'الوارد',
-    Outbox_Only: 'الصادر'
+    Outbox_Only: 'الصادر',
+
+    Influences: 'المؤثرات',
+    Add_Influences: 'إضافة مؤثرات',
+    Show_Influences: 'عرض المؤثرات',
+    Add_Soldier_Influences: 'إضافة مؤثرات جنود',
+    Show_Soldier_Influences: 'عرض مؤثرات جنود'
   }
 };

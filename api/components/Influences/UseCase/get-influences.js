@@ -12,12 +12,9 @@ const model = require('../Models');
 module.exports = ({ GetSortObj }) => async ({
   userId,
   influenceId,
-  brigadeId,
-  battalionId,
-  companyId,
+  soldierId,
   type,
-  army,
-  force,
+  date,
   key,
   limit,
   sortIndex,
@@ -41,43 +38,17 @@ module.exports = ({ GetSortObj }) => async ({
       }
     ];
   }
-  if (army) query.army = String(army);
-  if (force) query.force = String(force);
-  if (type) query.type = String(force);
+  if (userId) query.userId = userId;
+  if (influenceId) query.force = influenceId;
+  if (soldierId) query.soldierId = soldierId;
+  if (date) query.date = date;
+  if (type) query.type = String(type);
   // if (userId) query.userId = userId;
-  if (influenceId) query.influenceId = influenceId;
-  if (battalionId) query.battalionId = battalionId;
-  if (companyId) query.influenceId = companyId;
-  if (brigadeId) query.brigadeId = brigadeId;
-
   // #! Added for the poc case
   limit = 1000000000;
-  const influenceMatch = { isHidden: false, isArchived: false };
-  const influenceSelct = 'name force army type';
   const select = '';
   const sort = sortObj.sort;
-  const populate = [
-    {
-      path: 'influenceId',
-      match: influenceMatch,
-      select: influenceSelct
-    },
-    {
-      path: 'brigadeId',
-      match: influenceMatch,
-      select: influenceSelct
-    },
-    {
-      path: 'battalionId',
-      match: influenceMatch,
-      select: influenceSelct
-    },
-    {
-      path: 'companyId',
-      match: influenceMatch,
-      select: influenceSelct
-    }
-  ];
+  const populate = [];
   const { influences, total, hasNext } = await model.getInfluences({
     query,
     select,

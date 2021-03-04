@@ -36,5 +36,7 @@ module.exports = {
   MAIL_SUBJECT_REQUIRED: 'يجب إدخال موضوع المكاتبة',
   MAIL_RECEIVER_REQUIRED: 'يجب إدخال اسم القائم بالتسجيل',
   MAIL_TYPE_REQUIRED: 'يجب إدخال نوع المكاتبة',
-  MAIL_ATTACHMENTS_REQUIRED: 'يجب  إرفاق ملف المكاتبة'
+  MAIL_ATTACHMENTS_REQUIRED: 'يجب  إرفاق ملف المكاتبة',
+
+  CANT_DEMOTE_SOLDIER: 'لا يمكن الغاء ترقي درجة جندي'
 };

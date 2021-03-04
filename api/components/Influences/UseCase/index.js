@@ -6,7 +6,7 @@
 
 const moment = require('moment');
 const logger = require('../../../startup/logger');
-const { ApplicationError } = require('../../../shared/errors');
+const { ApplicationError, ErrorText } = require('../../../shared/errors');
 const {
   REQUEST_RESPONSE,
   EVENTS_TYPES,
@@ -14,6 +14,10 @@ const {
 } = require('../../../shared/constants/defaults');
 const { GetSortObj } = require('../../../shared/constants/methods');
 
+const {
+  getSoldierById,
+  addSoldierInfluence
+} = require('../../Soldier/Soldier-external-use-cases');
 const makeAddInfluence = require('./add-influence');
 const makeDeleteInfluence = require('./delete-influence');
 const makeGetInfluence = require('./get-influence');
@@ -23,17 +27,22 @@ const makeUnhideInfluence = require('./unhide-influence');
 const makeEditInfluence = require('./edit-influence');
 
 const addInfluence = makeAddInfluence({
+  getSoldierById,
+  addSoldierInfluence,
+  ErrorText,
   ApplicationError,
   logger,
   events: EVENTS_TYPES
 });
 
 const deleteInfluence = makeDeleteInfluence({
+  ErrorText,
   ApplicationError,
   logger
 });
 
 const getInfluence = makeGetInfluence({
+  ErrorText,
   moment,
   ApplicationError,
   logger,
@@ -41,6 +50,7 @@ const getInfluence = makeGetInfluence({
 });
 
 const getInfluences = makeGetInfluences({
+  ErrorText,
   moment,
   ApplicationError,
   logger,
@@ -49,16 +59,19 @@ const getInfluences = makeGetInfluences({
 });
 
 const hideInfluence = makeHideInfluence({
+  ErrorText,
   ApplicationError,
   logger
 });
 
 const unhideInfluence = makeUnhideInfluence({
+  ErrorText,
   ApplicationError,
   logger
 });
 
 const editInfluence = makeEditInfluence({
+  ErrorText,
   ApplicationError,
   logger,
   events: EVENTS_TYPES,

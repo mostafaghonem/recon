@@ -3,16 +3,26 @@
 const ConstantsModel = require('../Models');
 const { BRANCHES } = require('../../../shared/constants/defaults');
 
+const influences = require('../../../shared/constants/influences');
+
 // should have no implementation for any specific orm
 module.exports = ({ logger }) => async () => {
   try {
-    const promises = [];
+    const items = influences;
     BRANCHES.map(branch => {
-      promises.push(checkOrCreateBranch(branch));
+      items.push({
+        value: branch.value,
+        ar: branch.ar,
+        type: 'branches'
+      });
+      // promises.push(checkOrCreateBranch(branch));
     });
-    const response = await Promise.all(promises);
+    console.log('pushing default items', items.length);
+    const response = await bulkUpsertInfluences(items);
   } catch (error) {
-    logger.info(`### ERROR ### while creating ADMIN USER => ${error.message}`);
+    logger.info(
+      `### ERROR ### while creating Default Branches => ${error.message}`
+    );
   }
 
   async function checkOrCreateBranch(item) {
@@ -38,6 +48,19 @@ module.exports = ({ logger }) => async () => {
     } catch (error) {
       logger.info(
         `### ERROR ### while creating DEFAULT BRANCHE => ${error.message}`
+      );
+    }
+  }
+
+  async function bulkUpsertInfluences(items) {
+    try {
+      const response = await ConstantsModel.DbAccess.upsertMany(items);
+      logger.info(
+        `Default influences upserted successfully => upserted: ${response.nUpserted}, modified: ${response.nModified}`
+      );
+    } catch (error) {
+      logger.info(
+        `### ERROR ### while upserting Default influences => ${error.message}`
       );
     }
   }

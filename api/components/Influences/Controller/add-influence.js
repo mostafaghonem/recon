@@ -5,7 +5,8 @@ module.exports = () => {
     try {
       const addedInfluence = await addInfluence({
         ...req.body,
-        user: req.user
+        user: req.user,
+        data: req.body
       });
       return res.status(200).json({
         message: 'Influence has been added successfully!',

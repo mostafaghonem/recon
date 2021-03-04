@@ -13,7 +13,7 @@ module.exports = {
   DIRECTIONS: Directions,
   ObjectIdPattern: /^[0-9a-fA-F]{24}$/,
   PAGINATION: {
-    LIMIT: 10,
+    LIMIT: 10000000000,
     LAST_ID: '000000000000'
   },
   REQUEST_STATUS: {
@@ -109,8 +109,40 @@ module.exports = {
     { value: 'email', ar: 'تراسل' },
     { value: 'fax', ar: 'فاكس' }
   ],
-  Influence_TYPES: [{}],
-  CONSTANT_TYPES: ['branches', 'directions', 'word_mules', 'categories'],
+  CONSTANT_TYPES: [
+    'branches',
+    'directions',
+    'word_mules',
+    'categories',
+    'colleges',
+    'courseTypes',
+    'crimeMajorLaws',
+    'orderMakers',
+    'punishments',
+    'travelTypes',
+    'countries'
+  ],
+  GRADUATION_LEVELS: [
+    {
+      ar: 'دور أول',
+      value: 'first'
+    },
+    { ar: 'دور ثان', value: 'second' }
+  ],
+  DEGREES: [
+    {
+      ar: 'مصدقة محو أمية',
+      value: 'literacy'
+    },
+    { ar: 'إعدادية', value: 'secondary' },
+    { ar: 'راسب إعدادية', value: 'secondary_fail' },
+    {
+      ar: 'إبتدائية',
+      value: 'primary'
+    },
+    { ar: 'إبتدائية أزهرية', value: 'primary_religious' },
+    { ar: 'كشف نجاح', value: 'success_statement' }
+  ],
   MAIL_ACTIONS: [
     {
       ar: 'تنفيذ',
@@ -312,29 +344,34 @@ module.exports = {
   ],
   INFLUENCES_CATEGORIES: [
     {
+      ar: 'عقوبات',
+      value: 'punishments'
+    },
+    {
       ar: 'ترقي / عزل',
       value: 'ranking'
-    },
-    {
-      ar: 'التأهيل',
-      value: 'training'
-    },
-    {
-      ar: 'السفر والمأموريات',
-      value: 'travelling'
-    },
-    {
-      ar: 'رخصة السواقة',
-      value: 'driversLicense',
-      vehiclesOnly: true
     },
     {
       ar: 'إخطار عودة / هروب',
       value: 'fugitives'
     },
     {
-      ar: 'التعليم',
+      ar: 'التأهيل',
+      value: 'training'
+    },
+
+    {
+      ar: 'رخصة السواقة',
+      value: 'driversLicense',
+      vehiclesOnly: true
+    },
+    {
+      ar: 'التعليم (محو الأمية)',
       value: 'literacy'
+    },
+    {
+      ar: 'السفر والمأموريات',
+      value: 'travelling'
     }
   ],
   INFLUENCES_TYPES: [
@@ -350,12 +387,7 @@ module.exports = {
     },
     {
       ar: 'عزل',
-      value: 'executiton',
-      category: 'ranking'
-    },
-    {
-      ar: 'ترقي إستثنائى',
-      value: 'executiton',
+      value: 'execution',
       category: 'ranking'
     },
     {
@@ -399,5 +431,23 @@ module.exports = {
       value: 'literacy',
       category: 'literacy'
     }
+  ],
+  DISHONORED: [
+    { ar: 'مخلة', value: true },
+    { ar: 'غير مخلة', value: false }
+  ],
+  PERIOD_TYPES: [
+    { ar: 'يوم', value: 'day' },
+    { ar: 'شهر', value: 'month' },
+    { ar: 'سنة', value: 'year' }
+  ],
+  COURTS: [
+    { ar: 'محكمة عسكرية', value: 'military_court' },
+    { ar: 'محكمة مدنية', value: 'citizens_court' }
+  ],
+  ANSWER_DIRECTIONS: [
+    { ar: 'قائد الوحدة', value: 'unit_leader' },
+    { ar: 'قائد التشكيل', value: 'formation_leader' },
+    { ar: 'النيابة العسكرية', value: 'military' }
   ]
 };

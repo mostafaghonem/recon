@@ -1,18 +1,28 @@
+/* eslint-disable import/no-dynamic-require */
 const makeInfluenceScheme = require('./InfluenceSchema');
-const { defaultConstants } = require('../../../shared/constants');
+const { defaultConstants, locations } = require('../../../shared/constants');
 
-const armyList = defaultConstants.ARMY_LIST;
-const forcesList = defaultConstants.FORCES_LIST;
-const influenceTypes = defaultConstants.Influence_TYPES;
+const influenceTypes = defaultConstants.INFLUENCES_TYPES;
+const influenceCategories = defaultConstants.INFLUENCES_CATEGORIES;
+const governates = locations.governates;
 
 const requestStatus = Object.values(defaultConstants.REQUEST_STATUS);
+const ranks = defaultConstants.RANKS;
 const pendingStatus = require('../../../shared/constants/defaults')
   .REQUEST_STATUS;
 
+const embeddedSchemas = {};
+influenceTypes.map(o => {
+  const filePath = `./types/${o.value}Schema`;
+  // eslint-disable-next-line global-require
+  embeddedSchemas[o.value] = require(filePath)({ ranks, governates });
+});
+
 module.exports = makeInfluenceScheme({
   requestStatus,
-  armyList,
-  forcesList,
+  ranks,
+  influenceCategories,
   influenceTypes,
+  embeddedSchemas,
   pendingStatus: pendingStatus.PENDING
 });

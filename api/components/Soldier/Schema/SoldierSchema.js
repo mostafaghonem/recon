@@ -6,6 +6,7 @@ const { ObjectId } = mongoose.Types;
 
 module.exports = ({
   divSchema,
+  influenceSchema,
   requestStatus,
   pendingStatus,
   recruitmentAreas,
@@ -15,7 +16,8 @@ module.exports = ({
   recruitmentLevels,
   educationRanks,
   situations,
-  treatments
+  treatments,
+  ranks
 }) => {
   const Soldier = new Schema(
     {
@@ -110,7 +112,12 @@ module.exports = ({
         type: String,
         enum: educationRanks.map(o => o.value)
       },
-      influences: [],
+      rank: {
+        type: String,
+        enum: ranks.map(o => o.value),
+        default: 'soldier'
+      },
+      influences: [influenceSchema],
       unit: {
         type: divSchema
       },

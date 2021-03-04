@@ -34,6 +34,21 @@ const divSchema = new Schema(
   }
 );
 
+const influenceSchema = new Schema(
+  {
+    influenceId: {
+      type: ObjectId,
+      ref: 'Influence',
+      required: true
+    }
+  },
+  {
+    _id: false,
+    timestamps: true
+  }
+);
+
 module.exports = {
-  divSchema
+  divSchema,
+  influenceSchema
 };

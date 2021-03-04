@@ -77,6 +77,9 @@ module.exports = ({
   limit = 10000000000;
   const unitMatch = { isHidden: false, isArchived: false };
   const unitSelct = 'name force army type';
+
+  const influenceSelect = '';
+
   const populate = [
     {
       path: 'unit.unitId',
@@ -87,6 +90,10 @@ module.exports = ({
       path: 'unit.divisionId',
       match: unitMatch,
       select: unitSelct
+    },
+    {
+      path: 'influences.influenceId',
+      select: influenceSelect
     }
   ];
   const select = '';

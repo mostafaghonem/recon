@@ -17,9 +17,6 @@ const router = express.Router();
 const authenticateMiddleware = require('../../../middlewares/authenticateMiddleware');
 const authorizeMiddleware = require('../../../middlewares/authorizeMiddleware');
 const visaMiddleware = require('../../../middlewares/visaMiddleware');
-const {
-  PERMISSIONS_KEYS: PERMISSIONS
-} = require('../../../shared/constants/defaults');
 
 const validateMiddleware = require('../../../middlewares/validateMiddleware');
 const controllers = require('../Controller');
@@ -33,7 +30,7 @@ router.post(
   [
     validateMiddleware(addInfluenceValidation),
     authenticateMiddleware,
-    authorizeMiddleware({ permissions: [PERMISSIONS.ADMIN] })
+    authorizeMiddleware({ branches: ['recon_force_people'] })
   ],
   controllers.addInfluence
 );
@@ -43,27 +40,31 @@ router.post(
 // Description: Get influence details for renter
 // !access  anonymous
 router.get(
-  '/influence/:id',
-  [validateMiddleware(getInfluenceValidation), visaMiddleware],
+  '/data/:id',
+  [
+    validateMiddleware(getInfluenceValidation),
+    authenticateMiddleware,
+    authorizeMiddleware({ branches: ['recon_force_people'] })
+  ],
   controllers.getInfluence
 );
 
-router.put(
+router.post(
   '/hide/:id',
   [
     validateMiddleware(hideInfluenceValidation),
     authenticateMiddleware,
-    authorizeMiddleware({ permissions: [PERMISSIONS.ADMIN] })
+    authorizeMiddleware({ branches: ['recon_force_people'] })
   ],
   controllers.hideInfluence
 );
 
-router.put(
+router.post(
   '/unhide/:id',
   [
     validateMiddleware(unhideInfluenceValidation),
     authenticateMiddleware,
-    authorizeMiddleware({ permissions: [PERMISSIONS.ADMIN] })
+    authorizeMiddleware({ branches: ['recon_force_people'] })
   ],
   controllers.unhideInfluence
 );
@@ -73,7 +74,7 @@ router.delete(
   [
     validateMiddleware(deleteInfluenceValidation),
     authenticateMiddleware,
-    authorizeMiddleware([PERMISSIONS.ADMIN])
+    authorizeMiddleware({ branches: ['recon_force_people'] })
   ],
   controllers.deleteInfluence
 );
@@ -82,12 +83,12 @@ router.delete(
 // @ PUT api/influences/edit/:id
 // Description: Edit influence by Admin or House Owner
 // !access  anonymous
-router.put(
+router.post(
   '/edit/:id',
   [
     validateMiddleware(editInfluenceValidation),
     authenticateMiddleware,
-    authorizeMiddleware({ permissions: [PERMISSIONS.ADMIN] })
+    authorizeMiddleware({ branches: ['recon_force_people'] })
   ],
   controllers.editInfluence
 );
@@ -98,7 +99,10 @@ router.put(
 // !access  anonymous
 router.get(
   '/',
-  [validateMiddleware(getInfluencesValidation), visaMiddleware],
+  [
+    validateMiddleware(getInfluencesValidation),
+    authorizeMiddleware({ branches: ['recon_force_people'] })
+  ],
   controllers.getInfluences
 );
 

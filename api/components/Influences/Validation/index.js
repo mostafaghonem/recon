@@ -13,9 +13,9 @@ const makeUnhideInfluenceValidation = require('./unhide-influence-validation');
 const makeGetValidation = require('./get-influence-validation');
 const makeGetInfluencesValidation = require('./get-influences-validation');
 
-const influenceTypes = defaultConstants.Influence_TYPES;
-const forcesList = defaultConstants.FORCES_LIST.map(o => o.value);
-const armyList = defaultConstants.ARMY_LIST.map(o => o.value);
+const typesValidation = require('./types');
+
+const influenceTypes = defaultConstants.INFLUENCES_TYPES;
 
 const sortValues = Object.values(defaultConstants.SORT_VALUES);
 const sortKeys = Object.values(defaultConstants.SORT_KEYS);
@@ -26,8 +26,7 @@ module.exports.addInfluenceValidation = makeAddInfluenceValidation({
   Builder,
   ObjectId,
   influenceTypes,
-  forcesList,
-  armyList
+  typesValidation
 });
 
 module.exports.deleteInfluenceValidation = makeDeleteInfluenceValidation({
@@ -54,6 +53,8 @@ module.exports.unhideInfluenceValidation = makeUnhideInfluenceValidation({
 module.exports.editInfluenceValidation = makeEditInfluenceValidation({
   _,
   ValidatorHelper,
+  influenceTypes,
+  typesValidation,
   Builder,
   ObjectId
 });
@@ -63,6 +64,8 @@ module.exports.getInfluenceValidation = makeGetValidation({
   ValidatorHelper,
   Builder,
   ObjectId,
+  influenceTypes,
+  typesValidation,
   sortValues,
   sortKeys
 });
@@ -72,6 +75,8 @@ module.exports.getInfluencesValidation = makeGetInfluencesValidation({
   ValidatorHelper,
   Builder,
   ObjectId,
+  influenceTypes,
+  typesValidation,
   sortValues,
   sortKeys
 });

@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const mongoosePaginate = require('mongoose-paginate-v2');
+const upsertMany = require('@meanie/mongoose-upsert-many');
 
 const { Schema } = mongoose;
 module.exports = ({ constantTypes }) => {
@@ -23,7 +24,12 @@ module.exports = ({ constantTypes }) => {
         unique: true,
         required: true
       },
-
+      major: {
+        type: String
+      },
+      crimeMajorCode: {
+        type: String
+      },
       isHidden: {
         type: Boolean,
         default: false
@@ -34,11 +40,17 @@ module.exports = ({ constantTypes }) => {
       }
     },
     {
+      upsertMany: {
+        matchFields: ['value'],
+        type: 'replaceOne',
+        ensureModel: true
+      },
       timestamps: true,
       autoIndex: true
     }
   );
 
   constant.plugin(mongoosePaginate);
+  mongoose.plugin(upsertMany);
   return mongoose.model('constant', constant);
 };
