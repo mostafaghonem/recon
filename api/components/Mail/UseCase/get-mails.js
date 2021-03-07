@@ -26,6 +26,7 @@ module.exports = ({ ApplicationError, GetSortObj, markDelievered }) => async ({
   number,
   status,
   seen,
+  answer,
   key,
   limit,
   sortIndex,
@@ -65,6 +66,10 @@ module.exports = ({ ApplicationError, GetSortObj, markDelievered }) => async ({
   if (folder) query.folder = folder;
   if (view) {
     query.$or = [{ branch: user.branch }, { branches: user.branch }];
+  }
+
+  if (typeof answer !== 'undefined') {
+    query.answer = answer === 'true';
   }
 
   if (typeof seen !== 'undefined' && seen === 'true') {

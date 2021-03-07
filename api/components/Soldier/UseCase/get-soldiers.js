@@ -10,16 +10,8 @@ const { recruitmentAreas } = require('../../../shared/constants/locations');
  */
 
 // should have no implementation for any specific orm
-module.exports = ({
-  ApplicationError,
-  logger,
-  moment,
-  GetSortObj,
-  getSoldiersFavorability,
-  GetSoldiersAvailbility,
-  accepted
-}) => async ({
-  userId,
+module.exports = ({ GetSortObj }) => async ({
+  queryObj = '{}',
   militaryId,
   recordId,
   unitId,
@@ -37,15 +29,16 @@ module.exports = ({
   limit,
   sortIndex,
   sortKey,
-  sortValue,
-  exportFile
+  sortValue
 }) => {
+  queryObj = JSON.parse(queryObj);
   const sortObj = GetSortObj({
     sortIndex,
     sortKey,
     sortValue
   });
   const query = {
+    ...queryObj,
     ...sortObj.query,
     isHidden: false,
     isArchived: false

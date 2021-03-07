@@ -4,6 +4,7 @@
  * ! if you need to throw Error use throw new ApplicationError() and will handle the rest in express catcher
  */
 
+const _ = require('lodash');
 const moment = require('moment');
 const logger = require('../../../startup/logger');
 const { ApplicationError } = require('../../../shared/errors');
@@ -47,6 +48,7 @@ const getSoldier = makeGetSoldier({
 });
 
 const getSoldiers = makeGetSoldiers({
+  _,
   moment,
   ApplicationError,
   logger,
