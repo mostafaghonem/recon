@@ -6,7 +6,6 @@ const { ObjectId } = mongoose.Types;
 
 module.exports = ({
   divSchema,
-  clearnceSchema,
   influenceSchema,
   requestStatus,
   pendingStatus,
@@ -20,7 +19,7 @@ module.exports = ({
   treatments,
   ranks
 }) => {
-  const Soldier = new Schema(
+  const Staff = new Schema(
     {
       userId: {
         type: String,
@@ -116,10 +115,9 @@ module.exports = ({
       rank: {
         type: String,
         enum: ranks.map(o => o.value),
-        default: 'soldier'
+        default: 'staff'
       },
       influences: [influenceSchema],
-      clearance: clearnceSchema,
       unit: {
         type: divSchema
       },
@@ -162,8 +160,8 @@ module.exports = ({
     }
   );
 
-  Soldier.path('address').required(true);
-  Soldier.index({ militaryId: 1 }, { required: true, unique: true });
-  Soldier.plugin(mongoosePaginate);
-  return mongoose.model('Soldier', Soldier);
+  Staff.path('address').required(true);
+  Staff.index({ militaryId: 1 }, { required: true, unique: true });
+  Staff.plugin(mongoosePaginate);
+  return mongoose.model('Staff', Staff);
 };

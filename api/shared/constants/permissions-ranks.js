@@ -212,7 +212,7 @@ module.exports = {
           branches: ['recon_force_people']
         }
       ],
-      branches: ['recon_force_people']
+      permissions: ['officer']
     },
     {
       actions: 'mdi-loyalty',
@@ -232,7 +232,27 @@ module.exports = {
           branches: ['recon_force_people']
         }
       ],
-      branches: ['recon_force_people']
+      permissions: ['officer']
+    },
+    {
+      actions: 'mdi-loyalty',
+      icon: 'mdi-security',
+      title: DRAWER.Clearnces,
+      items: [
+        {
+          to: '/clearances/add',
+          icon: 'mdi-lock-plus',
+          text: DRAWER.Add_Clearances,
+          branches: ['recon_force_people']
+        },
+        {
+          to: '/clearances/view',
+          icon: 'mdi-format-list-bulleted-type',
+          text: DRAWER.Show_Clearances,
+          branches: ['recon_force_people']
+        }
+      ],
+      permissions: ['officer']
     },
     {
       actions: 'mdi-inbox-arrow-down',

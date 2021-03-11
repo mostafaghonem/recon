@@ -48,7 +48,18 @@ const influenceSchema = new Schema(
   }
 );
 
+const clearnceSchema = new Schema(
+  {
+    clearanceId: { type: ObjectId }
+  },
+  {
+    _id: false,
+    timestamps: true
+  }
+);
+
 module.exports = {
   divSchema,
-  influenceSchema
+  influenceSchema,
+  clearnceSchema
 };

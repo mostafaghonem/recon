@@ -47,6 +47,10 @@ module.exports = {
     Add_Influences: 'إضافة مؤثرات',
     Show_Influences: 'عرض المؤثرات',
     Add_Soldier_Influences: 'إضافة مؤثرات جنود',
-    Show_Soldier_Influences: 'عرض مؤثرات جنود'
+    Show_Soldier_Influences: 'عرض مؤثرات جنود',
+
+    Clearnces: 'المسح الأمني',
+    Add_Clearances: 'إضافة مسح أمني',
+    Show_Clearances: 'عرض المسح الأمني'
   }
 };

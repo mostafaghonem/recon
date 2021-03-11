@@ -25,7 +25,6 @@ module.exports = ({ GetSortObj }) => async ({
   recruitmentLevel,
   situation,
   treatment,
-  noClearance,
   key,
   limit,
   sortIndex,
@@ -45,13 +44,11 @@ module.exports = ({ GetSortObj }) => async ({
     isArchived: false
   };
   if (key && key !== '') {
-    query.$and = [
+    query.$or = [
       {
-        $or: {
-          fullName: { $regex: key, $options: 'i' },
-          millitaryId: { $regex: key, $options: 'i' },
-          'tripleNumber.value': { $regex: key, $options: 'i' }
-        }
+        fullName: { $regex: key, $options: 'i' },
+        millitaryId: { $regex: key, $options: 'i' },
+        'tripleNumber.value': { $regex: key, $options: 'i' }
       }
     ];
   }
@@ -68,16 +65,13 @@ module.exports = ({ GetSortObj }) => async ({
   if (recruitmentLevel) query.recruitmentLevel = recruitmentLevel;
   if (militaryId) query.militaryId = { $regex: militaryId, $options: 'i' };
   if (recordId) query.recordId = { $regex: recordId, $options: 'i' };
-  if (noClearance) {
-    query.clearance = { $exists: false };
-  }
+
   // #! Added for the poc case
   limit = 10000000000;
   const unitMatch = { isHidden: false, isArchived: false };
   const unitSelct = 'name force army type';
 
   const influenceSelect = '';
-  const clearanceSelect = '';
 
   const populate = [
     {
@@ -93,23 +87,19 @@ module.exports = ({ GetSortObj }) => async ({
     {
       path: 'influences.influenceId',
       select: influenceSelect
-    },
-    {
-      path: 'clearances.clearanceId',
-      select: clearanceSelect
     }
   ];
   const select = '';
   const sort = sortObj.sort;
-  const { soldiers, total, hasNext } = await model.getSoldiers({
+  const { staffs, total, hasNext } = await model.getStaffs({
     query,
     select,
     sort,
     limit,
     populate
   });
-  if (soldiers && soldiers.length !== 0) {
-    return { total, hasNext, soldiers };
+  if (staffs && staffs.length !== 0) {
+    return { total, hasNext, staffs };
   }
-  return { total: 0, hasNext: false, soldiers: [] };
+  return { total: 0, hasNext: false, staffs: [] };
 };

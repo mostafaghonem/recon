@@ -4,11 +4,12 @@ const ConstantsModel = require('../Models');
 const { BRANCHES } = require('../../../shared/constants/defaults');
 
 const influences = require('../../../shared/constants/influences');
+const clearances = require('../../../shared/constants/clearances');
 
 // should have no implementation for any specific orm
 module.exports = ({ logger }) => async () => {
   try {
-    const items = influences;
+    const items = [...influences, ...clearances];
     BRANCHES.map(branch => {
       items.push({
         value: branch.value,

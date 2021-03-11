@@ -14,6 +14,6 @@
 
 Importance Order
 1- Select/Unselect All
-2- Colorizing Answered Mails
+2- Colorizing Answered Mails (check)
 3- Footer Text Indentation
-4- Yes Or No in Advanced Search
+4- Yes Or No in Advanced Search (check)

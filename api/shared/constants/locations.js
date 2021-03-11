@@ -108,7 +108,7 @@ const governates = [
     code: '23'
   },
   {
-    recruitment_area: 'tanta',
+    recruitment_area: recruitmentAreas.find(o => o.value === 'tanta'),
     value: 'gharbia',
     ar: 'الغربية',
     code: '16'
@@ -213,6 +213,12 @@ const governates = [
     value: 'luxor',
     ar: 'الأقصر',
     code: '29'
+  },
+  {
+    recruitment_area: recruitmentAreas,
+    value: 'outside_egypt',
+    ar: 'خارج الجمهورية',
+    code: '88'
   }
 ];
 

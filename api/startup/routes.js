@@ -12,6 +12,7 @@ const Division = require('../components/Division');
 const Mail = require('../components/Mail');
 const Constant = require('../components/Constant');
 const Influences = require('../components/Influences');
+const Clearance = require('../components/Clearance');
 const ChangeOfUnit = require('../components/ChangeOfUnit');
 const Upload = require('../components/uploader');
 
@@ -25,6 +26,7 @@ module.exports = async app => {
   app.use('/api/mail', Mail.Router);
   app.use('/api/constant', Constant.Router);
   app.use('/api/influence', Influences.Router);
+  app.use('/api/Clearance', Clearance.Router);
   app.use('/api/change-of-unit', ChangeOfUnit.Router);
   app.use('/api/upload', Upload.Router);
   app.use('/api/minio', MinioHandler);

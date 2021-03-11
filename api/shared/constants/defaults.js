@@ -120,7 +120,8 @@ module.exports = {
     'orderMakers',
     'punishments',
     'travelTypes',
-    'countries'
+    'countries',
+    'joinPlaces'
   ],
   GRADUATION_LEVELS: [
     {
@@ -335,11 +336,11 @@ module.exports = {
     },
     {
       value: 'with_extra_year_applicable_for_removal',
-      ar: 'بسنة زيادة قابلة للرفع'
+      ar: 'سنة زيادة قابلة للرفع'
     },
     {
       value: 'with_extra_year_not_applicable_for_removal',
-      ar: 'بسنة زيادة غير قابلة للرفع'
+      ar: 'سنة زيادة غير قابلة للرفع'
     }
   ],
   INFLUENCES_CATEGORIES: [
@@ -449,5 +450,16 @@ module.exports = {
     { ar: 'قائد الوحدة', value: 'unit_leader' },
     { ar: 'قائد التشكيل', value: 'formation_leader' },
     { ar: 'النيابة العسكرية', value: 'military' }
+  ],
+  CLEARANCE_STATUSES: [
+    { ar: 'لم يتم عمل وثيقة تعارف', value: 'initial' },
+    { ar: 'تم عمل وثيقة تعارف', value: 'created' },
+    { ar: 'تم الرد بعدم الموافقة', value: 'rejected' },
+    { ar: 'تم الرد بالموافقة', value: 'accepted' },
+    { ar: 'تم الرد بالإنتظار', value: 'waiting' }
+  ],
+  SOLDIER_STATUSES: [
+    { ar: 'فى الوحدة', value: 'in_unit' },
+    { ar: 'تم الترحيل', value: 'departed' }
   ]
 };

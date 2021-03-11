@@ -1,4 +1,4 @@
-const makeSoldierScheme = require('./SoldierSchema');
+const makeStaffScheme = require('./StaffSchema');
 const { defaultConstants, locations } = require('../../../shared/constants');
 
 const armyList = defaultConstants.ARMY_LIST;
@@ -16,14 +16,12 @@ const pendingStatus = require('../../../shared/constants/defaults')
 
 const {
   divSchema,
-  clearnceSchema,
   influenceSchema
 } = require('../../../shared/constants/schemas');
 
-module.exports = makeSoldierScheme({
+module.exports = makeStaffScheme({
   divSchema,
   influenceSchema,
-  clearnceSchema,
   requestStatus,
   armyList,
   forcesList,

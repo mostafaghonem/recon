@@ -13,7 +13,7 @@ const data = {
   crimeMajorLaws,
   orderMakers,
   punishments,
-  travelTypes,
+  travelTypes,  
   countries
 };
 const items = [];
