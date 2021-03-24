@@ -212,7 +212,7 @@ module.exports = {
           branches: ['recon_force_people']
         }
       ],
-      permissions: ['officer']
+      branches: ['recon_force_people']
     },
     {
       actions: 'mdi-loyalty',
@@ -232,7 +232,7 @@ module.exports = {
           branches: ['recon_force_people']
         }
       ],
-      permissions: ['officer']
+      branches: ['recon_force_people']
     },
     {
       actions: 'mdi-loyalty',
@@ -252,7 +252,7 @@ module.exports = {
           branches: ['recon_force_people']
         }
       ],
-      permissions: ['officer']
+      branches: ['recon_force_people']
     },
     {
       actions: 'mdi-inbox-arrow-down',

@@ -92,7 +92,7 @@ module.exports = {
     REMOVED: 'removed'
   },
   TREATMENTS_KEYS: {
-    WITHOUT_EXTRA_YEAR: 'without_extra_uear',
+    WITHOUT_EXTRA_YEAR: 'without_extra_year',
     WITH_EXTRA_YEAR_APPLICABLE_FOR_REMOVAL:
       'with_extra_year_applicable_for_removal',
     WITH_EXTRA_YEAR_NOT_APPLICABLE_FOR_REMOVAL:

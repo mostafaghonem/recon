@@ -52,10 +52,7 @@ module.exports = ({
         .map(o => tripleNumber[o])
         .join('/')
     },
-    unit: {
-      unitId,
-      divisionId
-    },
+
     address,
     militaryId,
     recordId,
@@ -76,6 +73,13 @@ module.exports = ({
     isHidden,
     isArchived
   };
+
+  if (unitId) {
+    soldier.unit = {
+      unitId,
+      divisionId
+    };
+  }
 
   if (!recruitmentArea) {
     soldier.recruitmentArea = GetRecruitmentAreaFromAddress({ address });

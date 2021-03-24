@@ -1,6 +1,12 @@
-/* eslint-disable no-param-reassign */
+const moment = require('moment');
 const model = require('../Models');
-const { recruitmentAreas } = require('../../../shared/constants/locations');
+
+// setTimeout(() => insert(), 10000);
+// async function insert() {
+//   const results = require('C://Users/nozom-dev/Downloads/result (1)/result.json');
+//   console.log('started migration ===========================>');
+//   const users = await model.DbAccess.insertMany(results);
+// }
 
 /**
  * @description check user login data and return login token if user is exist and verified

@@ -49,9 +49,7 @@ module.exports = ({
     },
     army: {
       value: body.army,
-      rules: new Builder()
-        .required(ErrorText.ARMY_REQUIRED)
-        .isMember(armyList, ErrorText.ARMY_INVALID).rules
+      rules: new Builder().isMember(armyList, ErrorText.ARMY_INVALID).rules
     },
     recruitmentLevel: {
       value: body.recruitmentLevel,
@@ -79,7 +77,7 @@ module.exports = ({
     },
     unitId: {
       value: body.unitId,
-      rules: new Builder().required(ErrorText.UNIT_REQUIRED).rules
+      rules: new Builder().rules
     },
     divisionId: {
       value: body.unitId,

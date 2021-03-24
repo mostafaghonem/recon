@@ -18,10 +18,14 @@ const _7944f9f5 = () => interopDefault(import('..\\pages\\unauthorized.vue' /* w
 const _270325b0 = () => interopDefault(import('..\\pages\\user-profile.vue' /* webpackChunkName: "pages_user-profile" */))
 const _93a3af52 = () => interopDefault(import('..\\pages\\users.vue' /* webpackChunkName: "pages_users" */))
 const _f6939ed6 = () => interopDefault(import('..\\pages\\account\\reset-password.vue' /* webpackChunkName: "pages_account_reset-password" */))
+const _d3345d8e = () => interopDefault(import('..\\pages\\clearances\\add.vue' /* webpackChunkName: "pages_clearances_add" */))
+const _6c35f786 = () => interopDefault(import('..\\pages\\clearances\\view.vue' /* webpackChunkName: "pages_clearances_view" */))
 const _258c39d6 = () => interopDefault(import('..\\pages\\inbox\\follow-mails.vue' /* webpackChunkName: "pages_inbox_follow-mails" */))
 const _ce1e5e52 = () => interopDefault(import('..\\pages\\inbox\\mails.vue' /* webpackChunkName: "pages_inbox_mails" */))
 const _a1de46c2 = () => interopDefault(import('..\\pages\\inbox\\seen-mails.vue' /* webpackChunkName: "pages_inbox_seen-mails" */))
 const _2d29df90 = () => interopDefault(import('..\\pages\\inbox\\unseen-mails.vue' /* webpackChunkName: "pages_inbox_unseen-mails" */))
+const _ef00a85c = () => interopDefault(import('..\\pages\\influences\\add.vue' /* webpackChunkName: "pages_influences_add" */))
+const _1b067cc4 = () => interopDefault(import('..\\pages\\influences\\view.vue' /* webpackChunkName: "pages_influences_view" */))
 const _931e18e4 = () => interopDefault(import('..\\pages\\outbox\\mails.vue' /* webpackChunkName: "pages_outbox_mails" */))
 const _14d19270 = () => interopDefault(import('..\\pages\\followup\\codes\\add.vue' /* webpackChunkName: "pages_followup_codes_add" */))
 const _95d21a36 = () => interopDefault(import('..\\pages\\followup\\codes\\add-branches.vue' /* webpackChunkName: "pages_followup_codes_add-branches" */))
@@ -180,6 +184,14 @@ export function createRouter() {
       component: _f6939ed6,
       name: "account-reset-password___ar"
     }, {
+      path: "/clearances/add",
+      component: _d3345d8e,
+      name: "clearances-add___ar"
+    }, {
+      path: "/clearances/view",
+      component: _6c35f786,
+      name: "clearances-view___ar"
+    }, {
       path: "/inbox/follow-mails",
       component: _258c39d6,
       name: "inbox-follow-mails___ar"
@@ -195,6 +207,14 @@ export function createRouter() {
       path: "/inbox/unseen-mails",
       component: _2d29df90,
       name: "inbox-unseen-mails___ar"
+    }, {
+      path: "/influences/add",
+      component: _ef00a85c,
+      name: "influences-add___ar"
+    }, {
+      path: "/influences/view",
+      component: _1b067cc4,
+      name: "influences-view___ar"
     }, {
       path: "/outbox/mails",
       component: _931e18e4,
