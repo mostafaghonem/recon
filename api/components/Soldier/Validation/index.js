@@ -13,6 +13,7 @@ const makeHideSoldierValidation = require('./hide-soldier-validation');
 const makeUnhideSoldierValidation = require('./unhide-soldier-validation');
 const makeGetValidation = require('./get-soldier-validation');
 const makeGetSoldiersValidation = require('./get-soldiers-validation');
+const makeIsDuplicateValidation = require('./is-duplicate-validation');
 
 const armyList = defaultConstants.ARMY_LIST.map(o => o.value);
 const forcesList = defaultConstants.FORCES_LIST.map(o => o.value);
@@ -86,6 +87,13 @@ module.exports.getSoldierValidation = makeGetValidation({
   ObjectId,
   sortValues,
   sortKeys
+});
+
+module.exports.isDuplicateValidation = makeIsDuplicateValidation({
+  _,
+  ErrorText,
+  ValidatorHelper,
+  Builder
 });
 
 module.exports.getSoldiersValidation = makeGetSoldiersValidation({

@@ -32,6 +32,10 @@ module.exports = ({ divSchema }) => {
         type: String,
         default: ''
       },
+      initial: {
+        type: Boolean,
+        default: false
+      },
       isArchived: {
         type: Boolean,
         default: false

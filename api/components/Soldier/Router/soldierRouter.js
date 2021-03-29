@@ -6,7 +6,8 @@ const {
   unhideSoldierValidation,
   editSoldierValidation,
   getSoldierValidation,
-  getSoldiersValidation
+  getSoldiersValidation,
+  isDuplicateValidation
 } = require('../Validation');
 // const {
 //   PaginationValidtion
@@ -99,6 +100,20 @@ router.put(
 // Description: Get Soldiers for Renter
 // !access  anonymous
 router.get('/constants', authenticateMiddleware, controllers.getConstants);
+
+// @route
+// @ GET api/soldiers/is-duplicate
+// Description: Gheck if key and value exists
+// !access  anonymous
+router.get(
+  '/is-duplicate',
+  [
+    validateMiddleware(isDuplicateValidation),
+    authenticateMiddleware,
+    authorizeMiddleware({ branches: ['recon_force_people'] })
+  ],
+  controllers.isDuplicate
+);
 
 // @route
 // @ GET api/soldiers/

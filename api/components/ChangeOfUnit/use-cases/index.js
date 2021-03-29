@@ -12,9 +12,11 @@ const makeAddChangeOfUnit = require('./add-change-of-unit');
 const makeGetChangesOfUnit = require('./get-changes-of-units');
 const makeUpdateUploadedUnitChange = require('./update-uploaded-unit-request');
 const makeSetChangesProcessedStatus = require('./set-requests-processed-status');
+const makeAddBulkChangeOfUnit = require('./add-bulk-change-of-unit');
 
 const {
   getSoldierById,
+  getSoldiersByIds,
   changeSoldierUnit
 } = require('../../Soldier/Soldier-external-use-cases');
 const {
@@ -26,6 +28,7 @@ const addChangeOfUnit = makeAddChangeOfUnit({
   ErrorText,
   logger,
   getSoldierById,
+  getSoldiersByIds,
   getDivisionById,
   changeSoldierUnit
 });
@@ -49,11 +52,21 @@ const updateChangeOfUnit = makeUpdateUploadedUnitChange({
   accepted: REQUEST_STATUS.ACCEPTED
 });
 
+const addBulkChangeOfUnit = makeAddBulkChangeOfUnit({
+  ApplicationError,
+  ErrorText,
+  logger,
+  getSoldiersByIds,
+  getDivisionById,
+  addChangeOfUnit
+});
+
 const ChangeOfUnitUseCases = {
   addChangeOfUnit,
   getChangesOfUnit,
   updateChangeOfUnit,
-  setChangesProcessedStatus
+  setChangesProcessedStatus,
+  addBulkChangeOfUnit
 };
 
 module.exports = ChangeOfUnitUseCases;

@@ -10,11 +10,17 @@ const logger = require('../../../startup/logger');
 const { ApplicationError } = require('../../../shared/errors');
 
 const makeGetSoldierById = require('./get-soldier-by-id');
+const makeGetSoldiersByIds = require('./get-soldiers-by-ids');
 const makeChangeSoldierUnit = require('./change-soldier-unit');
 const makeAddSoldierInfluence = require('./add-solider-influence');
 const makeAddSoldierClearance = require('./add-soldier-clearance');
 
 const getSoldierById = makeGetSoldierById({
+  ApplicationError,
+  logger
+});
+
+const getSoldiersByIds = makeGetSoldiersByIds({
   ApplicationError,
   logger
 });
@@ -35,6 +41,7 @@ const addSoldierClearance = makeAddSoldierClearance({
 });
 const SoldierExternalService = Object.freeze({
   getSoldierById,
+  getSoldiersByIds,
   changeSoldierUnit,
   addSoldierInfluence,
   addSoldierClearance

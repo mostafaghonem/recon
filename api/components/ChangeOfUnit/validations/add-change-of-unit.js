@@ -3,13 +3,24 @@ module.exports = ({ _, ValidatorHelper, Builder, ObjectId }) => ({ body }) => {
   const scheme = {
     soldierId: {
       value: body.soldierId,
-      rules: new Builder().required().rules
+      rules: new Builder().rules
+    },
+    soldiersIds: {
+      value: body.soldiersIds,
+      rules: new Builder().rules
     },
     unitId: {
       value: body.unitId,
       rules: new Builder().required().rules
     }
   };
+
+  if (
+    (!body.soldierId && !body.soldiersIds) ||
+    (body.soldiersIds && !body.soldiersIds.length)
+  ) {
+    error.soldierId = 'لم يتم إختيار مجندين يجب إختيار مجند واحد على الأقل';
+  }
 
   Object.keys(scheme).forEach(key => {
     const ele = scheme[key];

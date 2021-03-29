@@ -17,6 +17,14 @@ module.exports = ({ GenericModel = _GenericModel }) => {
       return true;
     }
 
+    checkExistenceBy(data = {}) {
+      const orOp = Object.keys(data)
+        .filter(k => typeof data[k] !== 'undefined')
+        .map(k => ({ [k]: data[k] }));
+
+      return this.exists({ filter: { $or: orOp } });
+    }
+
     async getSoldiers(
       params = {
         query: {},

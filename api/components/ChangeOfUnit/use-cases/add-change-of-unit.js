@@ -4,47 +4,58 @@ module.exports = ({
   ApplicationError,
   ErrorText,
   logger,
-  getSoldierById,
-  getDivisionById,
   changeSoldierUnit
-}) => async ({ soldierId, unitId, confirmationNumber, user }) => {
-  const soldier = await getSoldierById({ id: soldierId });
-  if (!soldier) {
-    throw new ApplicationError(ErrorText.CANT_FIND_SOLDIER, 403);
-  }
+}) => async ({ soldier, unit, unitId, confirmationNumber, user }) => {
+  try {
+    let initial = false;
+    if (!soldier) {
+      throw new ApplicationError(ErrorText.CANT_FIND_SOLDIER, 403);
+    }
 
-  const unit = await getDivisionById({ id: unitId });
-  if (!unit) {
-    throw new ApplicationError(ErrorText.CANT_FIND_UNIT, 403);
-  }
+    if (!unit) {
+      throw new ApplicationError(ErrorText.CANT_FIND_DIVISION, 403);
+    }
 
-  if (soldier.unit.unitId.toString() === unitId) {
-    throw new ApplicationError(ErrorText.CANT_CHANGE_SAME_UNIT, 403);
-  }
+    if (!soldier.unit) {
+      initial = true;
+    }
 
-  const unitDoc = {
-    unitId,
-    confirmationNumber,
-    divisionId: unit.divisionId,
-    isChangeOfUnit: true
-  };
-  const document = {
-    soldierId,
-    unitId,
-    userId: user.id,
-    pastUnit: soldier.unit,
-    confirmationNumber
-  };
-  const newUnitChange = await model.createOne({ document });
+    if (soldier.unit && soldier.unit.unitId.toString() === unitId) {
+      throw new ApplicationError(ErrorText.CANT_CHANGE_SAME_UNIT, 403);
+    }
 
-  if (newUnitChange) {
-    const update = await changeSoldierUnit({ id: soldierId, unit: unitDoc });
-    logger.info(
-      `new change of added with data => \n${JSON.stringify(
-        document,
-        undefined,
-        6
-      )}`
-    );
+    const unitDoc = {
+      unitId,
+      confirmationNumber,
+      divisionId: unit.divisionId,
+      isChangeOfUnit: !initial
+    };
+    const document = {
+      soldierId: soldier._id,
+      initial,
+      unitId,
+      userId: user.id,
+      pastUnit: soldier.unit,
+      confirmationNumber
+    };
+    const newUnitChange = await model.createOne({ document });
+
+    if (newUnitChange) {
+      const update = await changeSoldierUnit({
+        id: soldier._id,
+        unit: unitDoc
+      });
+      logger.info(
+        `new change of added with data => \n${JSON.stringify(
+          document,
+          undefined,
+          6
+        )}`
+      );
+      return update;
+    }
+    return { error: `Couldnt update unit for ${soldier.militaryId}` };
+  } catch (e) {
+    return { error: e.message };
   }
 };

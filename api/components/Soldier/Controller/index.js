@@ -18,6 +18,7 @@ const makeUnhideSoldierCtrl = require('./unhide-soldier');
 const makeEditSoldierCtrl = require('./edit-soldier');
 const makeGetSoldier = require('./get-soldier');
 const makeGetConstants = require('./get-constants');
+const makeIsDuplicate = require('./is-duplicate');
 // ->
 const addSoldier = makeAddSoldierCtrl({});
 const deleteSoldier = makeDeleteSoldierCtrl({});
@@ -35,7 +36,7 @@ const getConstants = makeGetConstants({
   constantTypes: defaultConstants.CONSTANT_TYPES,
   getConstantsFromModel
 });
-
+const isDuplicate = makeIsDuplicate({});
 const soldiersCtrl = Object.freeze({
   addSoldier,
   deleteSoldier,
@@ -44,7 +45,8 @@ const soldiersCtrl = Object.freeze({
   editSoldier,
   getSoldier,
   getSoldiers,
-  getConstants
+  getConstants,
+  isDuplicate
 });
 
 module.exports = soldiersCtrl;

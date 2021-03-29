@@ -26,6 +26,7 @@ const makeGetSoldiers = require('./get-soldiers');
 const makeHideSoldier = require('./hide-soldier');
 const makeUnhideSoldier = require('./unhide-soldier');
 const makeEditSoldier = require('./edit-soldier');
+const makeIsDuplicate = require('./is-duplicate');
 
 const addSoldier = makeAddSoldier({
   ApplicationError,
@@ -73,6 +74,10 @@ const editSoldier = makeEditSoldier({
   pending: REQUEST_STATUS.PENDING
 });
 
+const isDuplicate = makeIsDuplicate({
+  ApplicationError,
+  logger
+});
 const soldiersUseCases = {
   addSoldier,
   deleteSoldier,
@@ -80,7 +85,8 @@ const soldiersUseCases = {
   unhideSoldier,
   editSoldier,
   getSoldier,
-  getSoldiers
+  getSoldiers,
+  isDuplicate
 };
 
 module.exports = soldiersUseCases;
