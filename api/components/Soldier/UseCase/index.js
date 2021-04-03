@@ -15,6 +15,7 @@ const {
 } = require('../../../shared/constants/defaults');
 const {
   GetSortObj,
+  GetDateSplitObj,
   GetRecruitmentAreaFromAddress,
   CalculateReleaseDate
 } = require('../../../shared/constants/methods');
@@ -54,7 +55,8 @@ const getSoldiers = makeGetSoldiers({
   ApplicationError,
   logger,
   accepted: REQUEST_RESPONSE.ACCEPTED,
-  GetSortObj
+  GetSortObj,
+  GetDateSplitObj
 });
 
 const hideSoldier = makeHideSoldier({

@@ -82,6 +82,29 @@ const GetSortObj = ({ sortValue, sortKey, sortIndex }) => {
   return { query, sort };
 };
 
+const GetDateSplitObj = ({ keys, years, months }) => {
+  const query = {};
+  keys.map(key => {
+    if (months[key]) {
+      query[key] = {
+        $gte: moment(months[key], 'YYYY-MM').startOf('month'),
+        $lte: moment(months[key], 'YYYY-MM').endOf('month')
+      };
+    }
+    if (years[key]) {
+      query[key] = {
+        $gte: moment()
+          .year(years[key])
+          .startOf('year'),
+        $lte: moment()
+          .year(years[key])
+          .endOf('year')
+      };
+    }
+  });
+  return { query };
+};
+
 const GetSearchObj = ({ key }) => {
   if (key && key !== '') {
     const city = GetCityFromKey(key);
@@ -243,6 +266,7 @@ module.exports = {
   GetBaseDomain,
   GetSortObj,
   GetSearchObj,
+  GetDateSplitObj,
   GetRecruitmentAreaFromAddress,
   CalculateReleaseDate,
   isAuthorized,

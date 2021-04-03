@@ -16,7 +16,7 @@ const model = require('../Models');
  */
 
 // should have no implementation for any specific orm
-module.exports = ({ GetSortObj }) => async ({
+module.exports = ({ GetSortObj, GetDateSplitObj }) => async ({
   queryObj = '{}',
   militaryId,
   recordId,
@@ -32,6 +32,10 @@ module.exports = ({ GetSortObj }) => async ({
   situation,
   treatment,
   noClearance,
+  joinMonth,
+  joinYear,
+  releaseMonth,
+  releaseYear,
   key,
   limit,
   sortIndex,
@@ -44,9 +48,18 @@ module.exports = ({ GetSortObj }) => async ({
     sortKey,
     sortValue
   });
+
+  const dateSplitObj = GetDateSplitObj({
+    keys: ['joinDate', 'releaseDate'],
+    years: { joinDate: joinYear, releaseDate: releaseYear },
+    months: { joinDate: joinMonth, releaseDate: releaseMonth }
+  });
+
+  console.log('get split obj', dateSplitObj);
   const query = {
     ...queryObj,
     ...sortObj.query,
+    ...dateSplitObj.query,
     isHidden: false,
     isArchived: false
   };
@@ -77,6 +90,9 @@ module.exports = ({ GetSortObj }) => async ({
   if (noClearance) {
     query.clearance = { $exists: false };
   }
+  // if (joinYear) {
+  //   query.joinDate =
+  // }
   // #! Added for the poc case
   limit = 10000000000;
   const unitMatch = { isHidden: false, isArchived: false };

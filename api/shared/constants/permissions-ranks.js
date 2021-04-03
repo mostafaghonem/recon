@@ -206,6 +206,12 @@ module.exports = {
           branches: ['recon_force_people']
         },
         {
+          to: '/soldiers/update-unit',
+          icon: 'mdi-clipboard-outline',
+          text: DRAWER.Soldiers_Update_Unit,
+          branches: ['recon_force_people']
+        },
+        {
           to: '/change-of-units',
           icon: 'mdi-clipboard-outline',
           text: DRAWER.List_Change_Of_Units,
@@ -302,7 +308,7 @@ module.exports = {
     },
     {
       actions: 'mdi-inbox-arrow-down',
-      icon: 'mdi-human',
+      icon: 'mdi-assistant',
       title: DRAWER.Add_Followup_Codes,
       items: [
         {
@@ -334,18 +340,18 @@ module.exports = {
       branches: ['followup']
     },
     {
-      actions: 'mdi-inbox-arrow-down',
-      icon: 'mdi-human',
+      actions: 'mdi-inbox',
+      icon: 'mdi-inbox-arrow-down',
       title: DRAWER.Inbox_Only,
       items: [
         {
           to: '/inbox/unseen-mails',
-          icon: 'mdi-human-male',
+          icon: 'mdi-new-box',
           text: DRAWER.Show_New_Inbox
         },
         {
           to: '/inbox/seen-mails',
-          icon: 'mdi-human-male',
+          icon: 'mdi-comment-eye',
           text: DRAWER.Show_Seen_Inbox
         },
         {
@@ -358,16 +364,29 @@ module.exports = {
     },
     {
       actions: 'mdi-loyalty',
-      icon: 'mdi-human',
+      icon: 'mdi-arrow-up-bold-box-outline',
       title: DRAWER.Outbox_Only,
       items: [
         {
           to: '/outbox/mails',
-          icon: 'mdi-human-male',
+          icon: 'mdi-email-variant',
           text: DRAWER.Show_Outbox
         }
       ],
       followup: true
+    },
+    {
+      actions: 'mdi-inbox-arrow-down',
+      icon: 'mdi-assistant',
+      title: DRAWER.Add_Followup_Codes,
+      items: [
+        {
+          to: '/individuals/codes/show',
+          icon: 'mdi-human-male',
+          text: DRAWER.Show_Codes
+        }
+      ],
+      branches: ['recon_force_people']
     },
     {
       actions: 'mdi-inbox-arrow-down',

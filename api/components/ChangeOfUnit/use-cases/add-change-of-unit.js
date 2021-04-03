@@ -21,7 +21,10 @@ module.exports = ({
     }
 
     if (soldier.unit && soldier.unit.unitId.toString() === unitId) {
-      throw new ApplicationError(ErrorText.CANT_CHANGE_SAME_UNIT, 403);
+      throw new ApplicationError(
+        ErrorText.CANT_CHANGE_SAME_UNIT.replace('{s}', soldier.fullName),
+        403
+      );
     }
 
     const unitDoc = {

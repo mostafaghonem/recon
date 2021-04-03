@@ -9,9 +9,6 @@ const router = express.Router();
 
 const authenticateMiddleware = require('../../../middlewares/authenticateMiddleware');
 const authorizeMiddleware = require('../../../middlewares/authorizeMiddleware');
-const {
-  PERMISSIONS_KEYS: PERMISSIONS
-} = require('../../../shared/constants/defaults');
 
 const validateMiddleware = require('../../../middlewares/validateMiddleware');
 const controllers = require('../controllers');
@@ -25,9 +22,7 @@ router.post(
   [
     validateMiddleware(addChangeOfUnitValidation),
     authenticateMiddleware,
-    authorizeMiddleware({
-      permissions: [PERMISSIONS.ADMIN, PERMISSIONS.BRANCH_HEAD]
-    })
+    authorizeMiddleware({ branches: ['recon_force_people'] })
   ],
   controllers.addChangeOfUnit
 );
@@ -40,9 +35,7 @@ router.get(
   [
     validateMiddleware(getChangesOfUnit),
     authenticateMiddleware,
-    authorizeMiddleware({
-      permissions: [PERMISSIONS.ADMIN, PERMISSIONS.BRANCH_HEAD]
-    })
+    authorizeMiddleware({ branches: ['recon_force_people'] })
   ],
   controllers.getChangesOfUnit
 );
@@ -56,7 +49,7 @@ router.put(
     validateMiddleware(updateUploadedUnitChange),
     authenticateMiddleware,
     authorizeMiddleware({
-      permissions: [PERMISSIONS.ADMIN, PERMISSIONS.BRANCH_HEAD]
+      branches: ['recon_force_people']
     })
   ],
   controllers.updateUploadedUnitChange
