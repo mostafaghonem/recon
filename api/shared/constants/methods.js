@@ -5,11 +5,17 @@ const cities = require('./cities');
 const locations = require('./locations');
 const { Permissions, Branches, Links } = require('./permissions-ranks');
 const {
-  EDUCATION_RANKS: EducationRanks,
-  RECRUITMENT_LEVELS: RecruitmentLevels,
-  TREATMENTS_KEYS: Treatments,
-  EDUCATION_RANKS_KEYS: EducationRanksKeys
+  EDUCATION_RANKS,
+  RECRUITMENT_LEVELS,
+  TREATMENTS_KEYS,
+  EDUCATION_RANKS_KEYS
 } = require('./defaults');
+
+const EducationRanks = JSON.parse(JSON.stringify(EDUCATION_RANKS));
+const RecruitmentLevels = JSON.parse(JSON.stringify(RECRUITMENT_LEVELS));
+const EducationRanksKeys = JSON.parse(JSON.stringify(EDUCATION_RANKS_KEYS));
+const Treatments = JSON.parse(JSON.stringify(TREATMENTS_KEYS));
+
 const { ObjectId } = mongoose.Types;
 
 const GetCityFromKey = key => {

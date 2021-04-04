@@ -32,6 +32,10 @@ module.exports = async app => {
   app.use('/api/minio', MinioHandler);
   app.use(favicon(path.resolve('./public/favicon.ico')));
   app.use('/sw.js', staticFile(path.resolve('./public/sw.js')));
+  app.use(
+    '/template.docx',
+    express.static(path.resolve('./public/template.docx'))
+  );
   // ! nuxt config
   await nuxtConfig(app);
   app.use(ErrorHandler.catch404Errors);
