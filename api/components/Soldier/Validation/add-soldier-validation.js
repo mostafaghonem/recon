@@ -26,7 +26,7 @@ module.exports = ({
     },
     nationalId: {
       value: body.nationalId,
-      rules: new Builder().required(ErrorText.NATIONALID_REQUIRED).rules
+      rules: new Builder().rules
     },
     tripleNumber: {
       value: body.tripleNumber,
