@@ -8,7 +8,7 @@ module.exports = () => {
         userId: req.user ? req.user.id : undefined
       });
 
-      return res.status(200).json({ success: true, soldier: soldierDetails });
+      return res.status(200).json(soldierDetails);
     } catch (e) {
       return next(e);
     }

@@ -6,6 +6,15 @@ const {
   Directions
 } = require('./permissions-ranks');
 
+const BRANCHES_KEYS = {};
+const PERMISSIONS_KEYS = {};
+Branches.map(o => {
+  BRANCHES_KEYS[o.value.toUpperCase()] = o.value;
+});
+Permissions.map(o => {
+  PERMISSIONS_KEYS[o.value.toUpperCase()] = o.value;
+});
+
 module.exports = {
   PERMISSIONS: Permissions,
   RANKS: Ranks,
@@ -49,14 +58,8 @@ module.exports = {
     ABOVE_AVERAGE: 'above_average',
     HIGH: 'high'
   },
-  PERMISSIONS_KEYS: {
-    SOLDIER: 'sodlier',
-    STAFF_SEARGENT: 'staff_seargent',
-    OFFICER: 'officer',
-    BRANCH_HEAD: 'branch_head',
-    MASTER_HEAD: 'master_head',
-    ADMIN: 'admin'
-  },
+  PERMISSIONS_KEYS,
+  BRANCHES_KEYS,
   RECRUITMENT_LEVELS_KEYS: {
     FIRST: 'first',
     SECOND: 'second',
@@ -461,5 +464,35 @@ module.exports = {
   SOLDIER_STATUSES: [
     { ar: 'فى الوحدة', value: 'in_unit' },
     { ar: 'تم الترحيل', value: 'departed' }
-  ]
+  ],
+  UNIT_TYPES: [
+    {
+      value: 'division',
+      ar: 'فرقة'
+    },
+    {
+      value: 'brigade',
+      ar: 'لواء'
+    },
+    {
+      value: 'battalion',
+      ar: 'كتيبة'
+    },
+    {
+      value: 'company',
+      ar: 'سرية'
+    }
+  ],
+  ETHICS_DEGREES: [
+    { value: 'good_example', ar: 'قدوة حسنة' },
+    { value: 'very_good', ar: 'جيدة جداً' },
+    { value: 'good', ar: 'جيدة' },
+    { value: 'bad', ar: 'رديئة' }
+  ],
+  ETHICS_DEGREES_KEYS: {
+    GOOD_EXAMPLE: 'good_example',
+    VERY_GOOD: 'very_good',
+    GOOD: 'good',
+    BAD: 'bad'
+  }
 };

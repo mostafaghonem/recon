@@ -1,3 +1,5 @@
+const { populate } = require('../../Influences/Schema');
+
 module.exports = class GenericModel {
   constructor(DbAccess) {
     this.DbAccess = DbAccess;
@@ -11,6 +13,18 @@ module.exports = class GenericModel {
   getOneById(params = { id: undefined, select: '' }) {
     const { id, select } = params;
     return this.DbAccess.findById(id, select).lean();
+  }
+
+  getOneByIdObj(params = { id: undefined, select: '' }) {
+    const { id, select } = params;
+    return this.DbAccess.findById(id, select);
+  }
+
+  getOneByIdObjWithPopulation(
+    params = { id: undefined, populate: {}, select: '' }
+  ) {
+    const { id, select } = params;
+    return this.DbAccess.findById(id, select).populate(populate);
   }
 
   createOne(params = { document: {} }) {

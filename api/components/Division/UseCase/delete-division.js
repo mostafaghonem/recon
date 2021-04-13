@@ -4,25 +4,29 @@ const model = require('../Models');
 
 // should have no implementation for any specific orm
 
-module.exports = ({ ApplicationError, logger }) => async id => {
+module.exports = ({
+  ApplicationError,
+  logger,
+  getSoldiersByUnitId
+}) => async id => {
   const query = { _id: id, isArchived: false };
-  const select = 'availableCountNow';
-  const checkExistence = await model.getOne({ query, select });
+  const checkExistence = await model.getOne({ query });
   if (!checkExistence)
     throw new ApplicationError('.نأسف ، لا يمكننا العثور على هذه الوحدة', 403);
   else {
-    const checkAvailability = checkExistence.availableCountNow;
-    if (checkAvailability && checkAvailability === 0) {
+    const checkAvailability = await getSoldiersByUnitId({ unitId: id });
+    if (checkAvailability && checkAvailability.length) {
       throw new ApplicationError(
-        '.لا يمكنك حذف الوحدة بينما يوجد أشخاص بحجزونها',
+        '.لا يمكنك حذف الوحدة بينما يوجد مجندين بها',
         403
       );
     }
 
-    const update = {
-      isArchived: true
-    };
-    await model.updateOneById({ id, update });
+    // const update = {
+    //   isArchived: true
+    // };
+    // await model.updateOneById({ id, update });
+    await model.deleteOneById({ id });
 
     logger.info(`${id} Division just got deleted now`);
   }

@@ -8,7 +8,9 @@ const {
   EDUCATION_RANKS,
   RECRUITMENT_LEVELS,
   TREATMENTS_KEYS,
-  EDUCATION_RANKS_KEYS
+  EDUCATION_RANKS_KEYS,
+  BRANCHES_KEYS: BRANCHES,
+  PERMISSIONS_KEYS: PERMISSIONS
 } = require('./defaults');
 
 const EducationRanks = JSON.parse(JSON.stringify(EDUCATION_RANKS));
@@ -190,21 +192,43 @@ const isAuthorized = ({ user, followup, branches, permissions }) => {
   let validPermissions = true;
   let validBranches = true;
   const userPermissions = user.permissions;
-  if (user.permissions.includes('admin')) {
+  const branchMasterPermission = [
+    PERMISSIONS.BRANCH_HEAD,
+    PERMISSIONS.MASTER_HEAD
+  ];
+
+  // Show Everything to Admin
+  if (user.permissions.includes(PERMISSIONS.ADMIN)) {
     return true;
   }
 
+  // Don't show this for any one in followup branch
   if (followup && user.branch === 'followup') {
     return false;
   }
+
   const permissionAuthority =
     permissions &&
     permissions.length > 0 &&
     !_.some(userPermissions, o => permissions.includes(o));
+
   const branchAuthority =
     branches &&
     branches.length > 0 &&
     !_.some([user.branch], o => branches.includes(o));
+
+  const branchMasterPermissionAuthority = !_.some(userPermissions, o =>
+    branchMasterPermission.includes(o)
+  );
+
+  if (
+    branches &&
+    branches.length &&
+    !branchMasterPermissionAuthority &&
+    !branchAuthority
+  ) {
+    return true;
+  }
 
   if (permissions && permissions.length && permissionAuthority) {
     validPermissions = false;

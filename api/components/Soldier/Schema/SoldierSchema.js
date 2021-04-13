@@ -14,6 +14,7 @@ module.exports = ({
   governates,
   armyList,
   forcesList,
+  ethicsDegrees,
   recruitmentLevels,
   educationRanks,
   situations,
@@ -124,6 +125,12 @@ module.exports = ({
         type: divSchema
       },
       units: [divSchema],
+      unitId: {
+        type: String
+      },
+      divisionId: {
+        type: String
+      },
       situation: {
         type: String,
         default: situations[0].value,
@@ -134,6 +141,18 @@ module.exports = ({
         default: treatments[0].value,
         enum: treatments.map(o => o.value)
       },
+      ethics: {
+        value: {
+          type: String,
+          default: 'good_example',
+          enum: ethicsDegrees.map(o => o.value)
+        },
+        date: {
+          type: Date,
+          default: Date.now()
+        }
+      },
+      ethicsHistory: [],
       totalRate: {
         type: Number,
         default: 0

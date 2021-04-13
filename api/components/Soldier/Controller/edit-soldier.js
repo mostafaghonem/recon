@@ -1,11 +1,11 @@
-const { editSoldierRequest } = require('../UseCase');
+const { editSoldier } = require('../UseCase');
 
 module.exports = () => {
   return async (req, res, next) => {
     try {
       const userId = req.user.id;
       const soldierId = req.params.id;
-      await editSoldierRequest({ userId, soldierId, ...req.body });
+      await editSoldier({ userId, soldierId, ...req.body });
 
       return res
         .status(200)

@@ -5,11 +5,10 @@ module.exports = () => {
     try {
       const divisionDetails = await getDivision({
         divisionId: req.params.id,
-        userId: req.user ? req.user.id : undefined,
-        getSimilar: true
+        userId: req.user ? req.user.id : undefined
       });
 
-      return res.status(200).json({ success: true, division: divisionDetails });
+      return res.status(200).json(divisionDetails);
     } catch (e) {
       return next(e);
     }

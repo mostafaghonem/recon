@@ -124,12 +124,28 @@ module.exports = {
       ar: 'مجند'
     },
     {
-      value: 'staff_seargent',
-      ar: 'صف ضابط'
+      value: 'recon_people_creator',
+      ar: 'مضيف للمجندين'
     },
     {
-      value: 'officer',
-      ar: 'ضابط'
+      value: 'recon_people_editor',
+      ar: 'معدل ومدير للمجندين'
+    },
+    {
+      value: 'recon_influences_creator',
+      ar: 'مضيف للمؤثرات'
+    },
+    {
+      value: 'recon_influences_editor',
+      ar: 'معدل ومضيف للمؤثرات'
+    },
+    {
+      value: 'recon_clearance_creator',
+      ar: 'مضيف للمسح الأمنى'
+    },
+    {
+      value: 'recon_clearance_editor',
+      ar: 'معدل ومضيف للمسح الأمنى'
     },
     {
       value: 'branch_head',
@@ -197,25 +213,50 @@ module.exports = {
           to: '/add-soldier',
           icon: 'mdi-human-male',
           text: DRAWER.Add_Soldier,
-          branches: ['recon_force_people']
+          branches: ['recon_force_people'],
+          permissions: ['recon_people_creator']
         },
         {
-          to: '/soldiers',
+          to: '/soldiers/',
           icon: 'mdi-clipboard-outline',
           text: DRAWER.List_Soldier,
           branches: ['recon_force_people']
         },
         {
-          to: '/soldiers/update-unit',
+          to: '/update-soldiers-unit/',
           icon: 'mdi-clipboard-outline',
           text: DRAWER.Soldiers_Update_Unit,
-          branches: ['recon_force_people']
+          branches: ['recon_force_people'],
+          permissions: ['recon_people_creator']
         },
         {
           to: '/change-of-units',
           icon: 'mdi-clipboard-outline',
           text: DRAWER.List_Change_Of_Units,
-          branches: ['recon_force_people']
+          branches: ['recon_force_people'],
+          permissions: ['recon_people_creator']
+        }
+      ],
+      branches: ['recon_force_people']
+    },
+    {
+      actions: 'mdi-loyalty',
+      icon: 'mdi-map',
+      title: DRAWER.Units,
+      items: [
+        {
+          to: '/add-unit',
+          icon: 'mdi-map-marker-plus',
+          text: DRAWER.Add_Unit,
+          branches: ['recon_force_people'],
+          permissions: ['recon_people_creator']
+        },
+        {
+          to: '/units',
+          icon: 'mdi-map-search',
+          text: DRAWER.List_Units,
+          branches: ['recon_force_people'],
+          permissions: ['recon_people_creator']
         }
       ],
       branches: ['recon_force_people']
@@ -229,16 +270,19 @@ module.exports = {
           to: '/influences/add',
           icon: 'mdi-shape-plus',
           text: DRAWER.Add_Influences,
-          branches: ['recon_force_people']
+          branches: ['recon_force_people'],
+          permissions: ['recon_influences_creator']
         },
         {
           to: '/influences/view',
           icon: 'mdi-format-list-bulleted-type',
           text: DRAWER.Show_Influences,
-          branches: ['recon_force_people']
+          branches: ['recon_force_people'],
+          permissions: ['recon_influences_creator', 'recon_influences_editor']
         }
       ],
-      branches: ['recon_force_people']
+      branches: ['recon_force_people'],
+      permissions: ['recon_influences_creator', 'recon_influences_editor']
     },
     {
       actions: 'mdi-loyalty',
@@ -249,16 +293,19 @@ module.exports = {
           to: '/clearances/add',
           icon: 'mdi-lock-plus',
           text: DRAWER.Add_Clearances,
-          branches: ['recon_force_people']
+          branches: ['recon_force_people'],
+          permissions: ['recon_clearance_creator']
         },
         {
           to: '/clearances/view',
           icon: 'mdi-format-list-bulleted-type',
           text: DRAWER.Show_Clearances,
-          branches: ['recon_force_people']
+          branches: ['recon_force_people'],
+          permissions: ['recon_clearance_creator', 'recon_clearance_editor']
         }
       ],
-      branches: ['recon_force_people']
+      branches: ['recon_force_people'],
+      permissions: ['recon_clearance_creator', 'recon_clearance_editor']
     },
     {
       actions: 'mdi-inbox-arrow-down',

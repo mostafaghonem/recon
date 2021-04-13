@@ -6,47 +6,29 @@ const model = require('../Models');
 
 module.exports = ({ ApplicationError, logger }) => async ({
   userId,
-  divisionId,
+  id,
   type,
-  description,
-  image,
-  gallery,
-  currency,
-  address,
-  rentersType,
-  numberOfPeople,
-  numberOfRooms,
-  hasFurniture,
-  availableCountNow,
-  pricePerPerson,
-  dailyOrMonthly,
-  highlight,
-  availability,
-  services,
-  conditions
+  name,
+  divisionId,
+  brigadeId,
+  battalionId,
+  companyId,
+  force,
+  army
 }) => {
-  const filter = { _id: divisionId, userId, isArchived: false };
+  const filter = { _id: id };
   const checkExistence = await model.exists({ filter });
   if (!checkExistence)
     throw new ApplicationError('.نأسف ، لا يمكننا العثور على هذه الوحدة', 403);
   const update = {
-    description,
-    currency,
-    address,
-    image,
+    brigadeId,
+    battalionId,
+    companyId,
+    divisionId,
     type,
-    rentersType,
-    numberOfPeople,
-    numberOfRooms,
-    hasFurniture,
-    availableCountNow,
-    pricePerPerson,
-    dailyOrMonthly,
-    highlight,
-    availability,
-    services,
-    conditions,
-    gallery
+    name,
+    force,
+    army
   };
   await model.updateOneById({
     id: divisionId,

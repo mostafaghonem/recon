@@ -3,6 +3,7 @@ const { defaultConstants, locations } = require('../../../shared/constants');
 
 const armyList = defaultConstants.ARMY_LIST;
 const forcesList = defaultConstants.FORCES_LIST;
+const ethicsDegrees = defaultConstants.ETHICS_DEGREES;
 const recruitmentLevels = defaultConstants.RECRUITMENT_LEVELS;
 const educationRanks = defaultConstants.EDUCATION_RANKS;
 const situations = defaultConstants.SITUATIONS;
@@ -27,6 +28,7 @@ module.exports = makeSoldierScheme({
   requestStatus,
   armyList,
   forcesList,
+  ethicsDegrees,
   recruitmentLevels,
   educationRanks,
   recruitmentAreas,

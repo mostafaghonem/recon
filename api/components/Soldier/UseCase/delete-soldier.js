@@ -11,11 +11,11 @@ module.exports = ({ ApplicationError, logger }) => async id => {
   if (!checkExistence)
     throw new ApplicationError('.نأسف ، لا يمكننا العثور على هذ المجند', 403);
   else {
-    const update = {
-      isArchived: true
-    };
-    await model.updateOneById({ id, update });
-
+    // const update = {
+    //   isArchived: true,
+    // };
+    // await model.updateOneById({ id, update });
+    await model.deleteOneById({ id });
     logger.info(`${id} Soldier just got deleted now`);
   }
 };

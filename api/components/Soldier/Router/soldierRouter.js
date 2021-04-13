@@ -18,7 +18,8 @@ const router = express.Router();
 const authenticateMiddleware = require('../../../middlewares/authenticateMiddleware');
 const authorizeMiddleware = require('../../../middlewares/authorizeMiddleware');
 const {
-  PERMISSIONS_KEYS: PERMISSIONS
+  PERMISSIONS_KEYS: PERMISSIONS,
+  BRANCHES_KEYS: BRANCHES
 } = require('../../../shared/constants/defaults');
 const validateMiddleware = require('../../../middlewares/validateMiddleware');
 const controllers = require('../Controller');
@@ -32,7 +33,10 @@ router.post(
   [
     validateMiddleware(addSoldierValidation),
     authenticateMiddleware,
-    authorizeMiddleware({ branches: ['recon_force_people'] })
+    authorizeMiddleware({
+      branches: [BRANCHES.RECON_FORCE_PEOPLE],
+      permissions: [PERMISSIONS.RECON_PEOPLE_CREATOR]
+    })
   ],
   controllers.addSoldier
 );
@@ -42,12 +46,8 @@ router.post(
 // Description: Get soldier details for renter
 // !access  anonymous
 router.get(
-  '/soldier/:id',
-  [
-    validateMiddleware(getSoldierValidation),
-    authenticateMiddleware,
-    authorizeMiddleware({ branches: ['recon_force_people'] })
-  ],
+  '/data/:id',
+  [validateMiddleware(getSoldierValidation)],
   controllers.getSoldier
 );
 
@@ -56,7 +56,9 @@ router.put(
   [
     validateMiddleware(hideSoldierValidation),
     authenticateMiddleware,
-    authorizeMiddleware({ branches: ['recon_force_people'] })
+    authorizeMiddleware({
+      branches: [BRANCHES.RECON_FORCE_PEOPLE]
+    })
   ],
   controllers.hideSoldier
 );
@@ -66,17 +68,22 @@ router.put(
   [
     validateMiddleware(unhideSoldierValidation),
     authenticateMiddleware,
-    authorizeMiddleware({ branches: ['recon_force_people'] })
+    authorizeMiddleware({
+      branches: [BRANCHES.RECON_FORCE_PEOPLE]
+    })
   ],
   controllers.unhideSoldier
 );
 
-router.delete(
-  '/:id',
+router.post(
+  '/delete/:id',
   [
     validateMiddleware(deleteSoldierValidation),
     authenticateMiddleware,
-    authorizeMiddleware({ branches: ['recon_force_people'] })
+    authorizeMiddleware({
+      branches: [BRANCHES.RECON_FORCE_PEOPLE],
+      permissions: [PERMISSIONS.RECON_PEOPLE_EDITOR]
+    })
   ],
   controllers.deleteSoldier
 );
@@ -85,12 +92,15 @@ router.delete(
 // @ PUT api/soldiers/edit/:id
 // Description: Edit soldier by Admin or House Owner
 // !access  anonymous
-router.put(
+router.post(
   '/edit/:id',
   [
     validateMiddleware(editSoldierValidation),
     authenticateMiddleware,
-    authorizeMiddleware({ branches: ['recon_force_people'] })
+    authorizeMiddleware({
+      branches: [BRANCHES.RECON_FORCE_PEOPLE],
+      permissions: [PERMISSIONS.RECON_PEOPLE_EDITOR]
+    })
   ],
   controllers.editSoldier
 );
@@ -110,7 +120,9 @@ router.get(
   [
     validateMiddleware(isDuplicateValidation),
     authenticateMiddleware,
-    authorizeMiddleware({ branches: ['recon_force_people'] })
+    authorizeMiddleware({
+      branches: [BRANCHES.RECON_FORCE_PEOPLE]
+    })
   ],
   controllers.isDuplicate
 );
@@ -124,7 +136,9 @@ router.get(
   [
     validateMiddleware(getSoldiersValidation),
     authenticateMiddleware,
-    authorizeMiddleware({ branches: ['recon_force_people'] })
+    authorizeMiddleware({
+      branches: [BRANCHES.RECON_FORCE_PEOPLE]
+    })
   ],
   controllers.getSoldiers
 );

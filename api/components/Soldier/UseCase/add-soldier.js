@@ -25,6 +25,7 @@ module.exports = ({
   force,
   army,
   joinDate,
+  releaseDate,
   birthDate,
   recruitmentLevel,
   educationRank,
@@ -38,12 +39,12 @@ module.exports = ({
   isArchived
 }) => {
   const userId = user.id;
-  const releaseDate = CalculateReleaseDate({
-    joinDate,
-    recruitmentLevel,
-    educationRank,
-    treatment
-  });
+  // const releaseDate = CalculateReleaseDate({
+  //   joinDate,
+  //   recruitmentLevel,
+  //   educationRank,
+  //   treatment
+  // });
   const soldier = {
     userId,
     tripleNumber: {
@@ -52,7 +53,6 @@ module.exports = ({
         .map(o => tripleNumber[o])
         .join('/')
     },
-
     address,
     militaryId,
     recordId,

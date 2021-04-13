@@ -18,7 +18,8 @@ const authenticateMiddleware = require('../../../middlewares/authenticateMiddlew
 const authorizeMiddleware = require('../../../middlewares/authorizeMiddleware');
 const visaMiddleware = require('../../../middlewares/visaMiddleware');
 const {
-  PERMISSIONS_KEYS: PERMISSIONS
+  PERMISSIONS_KEYS: PERMISSIONS,
+  BRANCHES_KEYS: BRANCHES
 } = require('../../../shared/constants/defaults');
 
 const validateMiddleware = require('../../../middlewares/validateMiddleware');
@@ -33,17 +34,20 @@ router.post(
   [
     validateMiddleware(addDivisionValidation),
     authenticateMiddleware,
-    authorizeMiddleware({ permissions: [PERMISSIONS.ADMIN] })
+    authorizeMiddleware({
+      permissions: [PERMISSIONS.ADMIN, PERMISSIONS.RECON_PEOPLE_CREATOR],
+      branches: [BRANCHES.RECON_FORCE_PEOPLE]
+    })
   ],
   controllers.addDivision
 );
 
 // @route
 // @ GET api/divisions/division/:id
-// Description: Get division details for renter
+// Description: Get division details for
 // !access  anonymous
 router.get(
-  '/division/:id',
+  '/data/:id',
   [validateMiddleware(getDivisionValidation), visaMiddleware],
   controllers.getDivision
 );
@@ -53,7 +57,10 @@ router.put(
   [
     validateMiddleware(hideDivisionValidation),
     authenticateMiddleware,
-    authorizeMiddleware({ permissions: [PERMISSIONS.ADMIN] })
+    authorizeMiddleware({
+      permissions: [PERMISSIONS.ADMIN, PERMISSIONS.RECON_PEOPLE_EDITOR],
+      branches: [BRANCHES.RECON_FORCE_PEOPLE]
+    })
   ],
   controllers.hideDivision
 );
@@ -63,31 +70,48 @@ router.put(
   [
     validateMiddleware(unhideDivisionValidation),
     authenticateMiddleware,
-    authorizeMiddleware({ permissions: [PERMISSIONS.ADMIN] })
+    authorizeMiddleware({
+      permissions: [PERMISSIONS.ADMIN, PERMISSIONS.RECON_PEOPLE_EDITOR],
+      branches: [BRANCHES.RECON_FORCE_PEOPLE]
+    })
   ],
   controllers.unhideDivision
 );
 
-router.delete(
-  '/:id',
+router.post(
+  '/delete/:id',
   [
     validateMiddleware(deleteDivisionValidation),
     authenticateMiddleware,
-    authorizeMiddleware([PERMISSIONS.ADMIN])
+    authorizeMiddleware({
+      permissions: [
+        PERMISSIONS.ADMIN,
+        PERMISSIONS.RECON_PEOPLE_CREATOR,
+        PERMISSIONS.RECON_PEOPLE_EDITOR
+      ],
+      branches: [BRANCHES.RECON_FORCE_PEOPLE]
+    })
   ],
   controllers.deleteDivision
 );
 
 // @route
-// @ PUT api/divisions/edit/:id
-// Description: Edit division by Admin or House Owner
+// @ POST api/divisions/edit/:id
+// Description: Edit division by Admin
 // !access  anonymous
-router.put(
+router.post(
   '/edit/:id',
   [
     validateMiddleware(editDivisionValidation),
     authenticateMiddleware,
-    authorizeMiddleware({ permissions: [PERMISSIONS.ADMIN] })
+    authorizeMiddleware({
+      permissions: [
+        PERMISSIONS.ADMIN,
+        PERMISSIONS.RECON_PEOPLE_CREATOR,
+        PERMISSIONS.RECON_PEOPLE_EDITOR
+      ],
+      branches: [BRANCHES.RECON_FORCE_PEOPLE]
+    })
   ],
   controllers.editDivision
 );

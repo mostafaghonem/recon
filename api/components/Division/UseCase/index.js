@@ -13,7 +13,7 @@ const {
   REQUEST_STATUS
 } = require('../../../shared/constants/defaults');
 const { GetSortObj } = require('../../../shared/constants/methods');
-
+const { getSoldiersByUnitId } = require('../../Soldier/Soldier-external-use-cases');
 const makeAddDivision = require('./add-division');
 const makeDeleteDivision = require('./delete-division');
 const makeGetDivision = require('./get-division');
@@ -29,6 +29,7 @@ const addDivision = makeAddDivision({
 });
 
 const deleteDivision = makeDeleteDivision({
+  getSoldiersByUnitId,
   ApplicationError,
   logger
 });

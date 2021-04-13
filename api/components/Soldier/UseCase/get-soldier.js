@@ -11,7 +11,7 @@ module.exports = ({
   GetSoldiersAvailbility,
   accepted
 }) => async ({ soldierId, userId }) => {
-  const query = { _id: soldierId, status: accepted, isArchived: false };
+  const query = { _id: soldierId, isArchived: false };
   const select = '';
   const checkExistence = await model.getOne({ query, select });
   if (!checkExistence) {

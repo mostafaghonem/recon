@@ -120,6 +120,7 @@ const governates = [
     code: '21'
   },
   {
+    recruitment_area: recruitmentAreas.find(o => o.value === 'zakazik'),
     value: 'ismailia',
     ar: 'الإسماعيلية',
     code: '19'

@@ -55,7 +55,6 @@ module.exports = ({ GetSortObj, GetDateSplitObj }) => async ({
     months: { joinDate: joinMonth, releaseDate: releaseMonth }
   });
 
-  console.log('get split obj', dateSplitObj);
   const query = {
     ...queryObj,
     ...sortObj.query,
@@ -85,11 +84,13 @@ module.exports = ({ GetSortObj, GetDateSplitObj }) => async ({
   if (situation) query.situation = situation;
   if (treatment) query.treatment = treatment;
   if (recruitmentLevel) query.recruitmentLevel = recruitmentLevel;
-  if (militaryId) query.militaryId = { $regex: militaryId, $options: 'i' };
-  if (recordId) query.recordId = { $regex: recordId, $options: 'i' };
+  if (militaryId) query.militaryId = militaryId;
+  if (recordId) query.recordId = recordId;
   if (noClearance) {
     query.clearance = { $exists: false };
   }
+  // if (militaryId) query.militaryId = { $regex: militaryId, $options: 'i' };
+  // if (recordId) query.recordId = { $regex: recordId, $options: 'i' };
   // if (joinYear) {
   //   query.joinDate =
   // }

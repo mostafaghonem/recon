@@ -63,6 +63,9 @@ module.exports.getDivisionValidation = makeGetValidation({
   ValidatorHelper,
   Builder,
   ObjectId,
+  divisionTypes,
+  forcesList,
+  armyList,
   sortValues,
   sortKeys
 });
@@ -72,6 +75,9 @@ module.exports.getDivisionsValidation = makeGetDivisionsValidation({
   ValidatorHelper,
   Builder,
   ObjectId,
+  divisionTypes,
+  forcesList,
+  armyList,
   sortValues,
   sortKeys
 });
