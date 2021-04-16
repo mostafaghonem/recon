@@ -1,7 +1,10 @@
 const FORCES_LIST = require('./forces');
+const STAFF_CATEGORIES = require('./categories');
+
 const {
   Permissions,
   Ranks,
+  StaffRanks,
   Branches,
   Directions
 } = require('./permissions-ranks');
@@ -18,6 +21,7 @@ Permissions.map(o => {
 module.exports = {
   PERMISSIONS: Permissions,
   RANKS: Ranks,
+  STAFF_RANKS: StaffRanks,
   BRANCHES: Branches,
   DIRECTIONS: Directions,
   ObjectIdPattern: /^[0-9a-fA-F]{24}$/,
@@ -93,6 +97,11 @@ module.exports = {
     INT_TRANSFERRED: 'int_transferred',
     PHYSICAL: 'physical',
     REMOVED: 'removed'
+  },
+  MEDICAL_SITUATIONS_KEYS: {
+    FIT: 'fit',
+    UNFIT: 'unfit',
+    LOW: 'low'
   },
   TREATMENTS_KEYS: {
     WITHOUT_EXTRA_YEAR: 'without_extra_year',
@@ -184,6 +193,7 @@ module.exports = {
     }
   ],
   FORCES_LIST,
+  STAFF_CATEGORIES,
   ARMY_LIST: [
     {
       ar: 'الرئاسة العامة',
@@ -250,6 +260,20 @@ module.exports = {
     {
       ar: 'خارج السلاح',
       value: 'outside_of_force'
+    }
+  ],
+  MEDICAL_SITUATIONS: [
+    {
+      value: 'fit',
+      ar: 'لائق'
+    },
+    {
+      value: 'unfit',
+      ar: 'غير لائق'
+    },
+    {
+      value: 'low',
+      ar: 'مستوى أدنى'
     }
   ],
   EDUCATION_RANKS: [
@@ -494,5 +518,23 @@ module.exports = {
     VERY_GOOD: 'very_good',
     GOOD: 'good',
     BAD: 'bad'
-  }
+  },
+  BLOOD_TYPES: [
+    { ar: 'B-', value: 'B-' },
+    { ar: 'AB-', value: 'AB-' },
+    { ar: 'AB+', value: 'AB+' },
+    { ar: 'A+', value: 'A+' },
+    { ar: 'O+', value: 'O+' },
+    { ar: 'O-', value: 'O-' },
+    { ar: 'A−', value: 'A−' },
+    { ar: 'B+', value: 'B+' }
+  ],
+  RELIGIONS: [
+    { ar: 'مسلم', value: 'مسلم' },
+    { ar: 'مسيحي', value: 'مسيحي' }
+  ],
+  MEDICAL_CARDS: [
+    { ar: 'موجود', value: true },
+    { ar: 'غير موجود', value: false }
+  ]
 };

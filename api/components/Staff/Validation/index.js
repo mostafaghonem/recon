@@ -16,10 +16,9 @@ const makeGetStaffsValidation = require('./get-staffs-validation');
 
 const armyList = defaultConstants.ARMY_LIST.map(o => o.value);
 const forcesList = defaultConstants.FORCES_LIST.map(o => o.value);
-const recruitmentLevels = defaultConstants.RECRUITMENT_LEVELS.map(o => o.value);
-const educationRanks = defaultConstants.EDUCATION_RANKS.map(o => o.value);
-const situations = defaultConstants.SITUATIONS.map(o => o.value);
-const recruitmentAreas = locations.recruitmentAreas.map(o => o.value);
+const categories = defaultConstants.STAFF_CATEGORIES.map(o => o.value);
+const staffRanks = defaultConstants.STAFF_RANKS.map(o => o.value);
+const medicalSituations = defaultConstants.MEDICAL_SITUATIONS.map(o => o.value);
 const governates = locations.governates.map(o => o.value);
 const sortValues = Object.values(defaultConstants.SORT_VALUES);
 const sortKeys = Object.values(defaultConstants.SORT_KEYS);
@@ -32,11 +31,10 @@ module.exports.addStaffValidation = makeAddstaffValidation({
   ObjectId,
   armyList,
   forcesList,
-  recruitmentLevels,
-  educationRanks,
-  situations,
-  recruitmentAreas,
-  governates
+  governates,
+  categories,
+  staffRanks,
+  medicalSituations
 });
 
 module.exports.deleteStaffValidation = makeDeleteStaffValidation({
@@ -71,11 +69,10 @@ module.exports.editStaffValidation = makeEditStaffValidation({
   ObjectId,
   armyList,
   forcesList,
-  recruitmentLevels,
-  educationRanks,
-  situations,
-  recruitmentAreas,
-  governates
+  governates,
+  categories,
+  staffRanks,
+  medicalSituations
 });
 
 module.exports.getStaffValidation = makeGetValidation({
@@ -98,9 +95,8 @@ module.exports.getStaffsValidation = makeGetStaffsValidation({
   sortKeys,
   armyList,
   forcesList,
-  recruitmentLevels,
-  educationRanks,
-  situations,
-  recruitmentAreas,
-  governates
+  governates,
+  categories,
+  staffRanks,
+  medicalSituations
 });

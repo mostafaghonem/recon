@@ -64,6 +64,44 @@ module.exports = {
     //   value: 'staff_of_war_major_general'
     // }
   ],
+  StaffRanks: [
+    {
+      ar: 'ملاحظ',
+      value: 'noticed'
+    },
+    {
+      ar: 'صانع دقيق',
+      value: 'accurate_creator'
+    },
+    {
+      ar: 'صانع ماهر',
+      value: 'skilled_creator'
+    },
+    {
+      ar: 'صانع',
+      value: 'creator'
+    },
+    {
+      ar: 'عريف',
+      value: 'corporal'
+    },
+    {
+      ar: 'رقيب',
+      value: 'seargent'
+    },
+    {
+      ar: 'رقيب أول',
+      value: 'staff_sergeant'
+    },
+    {
+      ar: 'مساعد',
+      value: 'sergeant_major'
+    },
+    {
+      ar: 'مساعد أول',
+      value: 'senior_warrant_officer'
+    }
+  ],
   Branches: [
     {
       value: 'operations',
@@ -235,6 +273,41 @@ module.exports = {
           text: DRAWER.List_Change_Of_Units,
           branches: ['recon_force_people'],
           permissions: ['recon_people_creator']
+        }
+      ],
+      branches: ['recon_force_people']
+    },
+    {
+      actions: 'mdi-loyalty',
+      icon: 'mdi-human',
+      title: DRAWER.Staff,
+      items: [
+        {
+          to: '/add-staff',
+          icon: 'mdi-human-male',
+          text: DRAWER.Add_Staff,
+          branches: ['recon_force_people'],
+          permissions: ['recon_staff_creator']
+        },
+        {
+          to: '/staffs',
+          icon: 'mdi-clipboard-outline',
+          text: DRAWER.List_Staff,
+          branches: ['recon_force_people']
+        },
+        {
+          to: '/update-staffs-unit/',
+          icon: 'mdi-clipboard-outline',
+          text: DRAWER.Staff_Update_Unit,
+          branches: ['recon_force_people'],
+          permissions: ['recon_staff_creator']
+        },
+        {
+          to: '/staff-change-of-units',
+          icon: 'mdi-clipboard-outline',
+          text: DRAWER.List__Staff_Change_Of_Units,
+          branches: ['recon_force_people'],
+          permissions: ['recon_staff_creator']
         }
       ],
       branches: ['recon_force_people']

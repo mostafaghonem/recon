@@ -98,12 +98,6 @@ router.put(
 // @ GET api/staffs/
 // Description: Get Staffs for Renter
 // !access  anonymous
-router.get('/constants', authenticateMiddleware, controllers.getConstants);
-
-// @route
-// @ GET api/staffs/
-// Description: Get Staffs for Renter
-// !access  anonymous
 router.get(
   '/',
   [

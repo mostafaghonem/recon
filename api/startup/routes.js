@@ -8,6 +8,7 @@ const ErrorHandler = require('../middlewares/errorHandlerMiddleware');
 const MinioHandler = require('../middlewares/minioMiddlware');
 const User = require('../components/User');
 const Soldier = require('../components/Soldier');
+const Staff = require('../components/Staff');
 const Division = require('../components/Division');
 const Mail = require('../components/Mail');
 const Constant = require('../components/Constant');
@@ -22,6 +23,7 @@ module.exports = async app => {
 
   app.use('/api/users', User.Router);
   app.use('/api/soldiers', Soldier.Router);
+  app.use('/api/staffs', Staff.Router);
   app.use('/api/divisions', Division.Router);
   app.use('/api/mail', Mail.Router);
   app.use('/api/constant', Constant.Router);

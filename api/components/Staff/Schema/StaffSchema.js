@@ -2,22 +2,18 @@ const mongoose = require('mongoose');
 const mongoosePaginate = require('mongoose-paginate-v2');
 
 const { Schema } = mongoose;
-const { ObjectId } = mongoose.Types;
 
 module.exports = ({
   divSchema,
   influenceSchema,
+  ranks,
   requestStatus,
-  pendingStatus,
-  recruitmentAreas,
   governates,
   armyList,
   forcesList,
-  recruitmentLevels,
-  educationRanks,
-  situations,
-  treatments,
-  ranks
+  categoriesList,
+  medicalSituations,
+  pendingStatus
 }) => {
   const Staff = new Schema(
     {
@@ -32,15 +28,19 @@ module.exports = ({
         minlength: 13,
         maxlength: 13
       },
-      recordId: {
-        type: String,
-        index: true,
-        unique: true
+      individualId: {
+        type: String
+      },
+      batchId: {
+        type: String
       },
       nationalId: {
         type: String,
         minlength: 14,
         maxlength: 14
+      },
+      education: {
+        type: String
       },
       name: {
         firstName: String,
@@ -52,23 +52,6 @@ module.exports = ({
         type: String,
         required: true
       },
-      recruitmentArea: {
-        type: String,
-        enum: recruitmentAreas.map(o => o.value)
-      },
-      tripleNumber: new Schema(
-        {
-          year: {
-            type: Number
-          },
-          value: {
-            type: String
-          }
-        },
-        {
-          _id: false
-        }
-      ),
       address: new Schema(
         {
           governate: {
@@ -86,6 +69,10 @@ module.exports = ({
           _id: false
         }
       ),
+      category: {
+        type: String,
+        enum: categoriesList.map(o => o.value)
+      },
       force: {
         type: String,
         enum: forcesList.map(o => o.value)
@@ -101,16 +88,9 @@ module.exports = ({
         type: Date,
         required: true
       },
-      releaseDate: {
-        type: Date
-      },
-      recruitmentLevel: {
-        type: String,
-        enum: recruitmentLevels.map(o => o.value)
-      },
-      educationRank: {
-        type: String,
-        enum: educationRanks.map(o => o.value)
+      rankingDate: {
+        type: Date,
+        required: true
       },
       rank: {
         type: String,
@@ -122,19 +102,26 @@ module.exports = ({
         type: divSchema
       },
       units: [divSchema],
-      situation: {
+      medicalSituation: {
         type: String,
-        default: situations[0].value,
-        enum: situations.map(o => o.value)
+        default: medicalSituations[0].value,
+        enum: medicalSituations.map(o => o.value)
       },
-      treatment: {
+      phoneNumber: {
+        type: String
+      },
+      medicalCard: {
+        type: Boolean
+      },
+      religion: {
         type: String,
-        default: treatments[0].value,
-        enum: treatments.map(o => o.value)
+        default: 'مسلم'
       },
-      totalRate: {
-        type: Number,
-        default: 0
+      weight: {
+        type: String
+      },
+      height: {
+        type: String
       },
       status: {
         type: String,
