@@ -17,3 +17,11 @@ Importance Order
 2- Colorizing Answered Mails (check)
 3- Footer Text Indentation
 4- Yes Or No in Advanced Search (check)
+
+April 21:
+1- Decrease transperancy in App Drawer
+2- On Mouse Out Removed ErrorMessage from Input
+2- Fix Divisions in
+3- Double Confirm on Deleting
+4- Soldier/Staff Card
+هل تريد حذف المجند أسمه ورقم العسكرى

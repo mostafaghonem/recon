@@ -40,9 +40,7 @@ module.exports = ({
         unique: true
       },
       nationalId: {
-        type: String,
-        minlength: 14,
-        maxlength: 14
+        type: String
       },
       name: {
         firstName: String,
