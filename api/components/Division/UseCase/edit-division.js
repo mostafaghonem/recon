@@ -19,7 +19,8 @@ module.exports = ({ ApplicationError, logger }) => async ({
   const filter = { _id: id };
   const checkExistence = await model.exists({ filter });
   if (!checkExistence)
-    throw new ApplicationError('.نأسف ، لا يمكننا العثور على هذه الوحدة', 403);
+    throw new ApplicationError('.نأسف، لا يمكننا العثور على هذه الوحدة', 403);
+
   const update = {
     brigadeId,
     battalionId,
@@ -31,7 +32,7 @@ module.exports = ({ ApplicationError, logger }) => async ({
     army
   };
   await model.updateOneById({
-    id: divisionId,
+    id,
     update
   });
 
