@@ -246,7 +246,8 @@ const isAuthorized = ({ user, followup, branches, permissions }) => {
 };
 
 const computeAppDrawer = ({ user }) => {
-  const firstLevel = Links.filter(o => {
+  const FilterLinks = _.cloneDeep(Links);
+  const firstLevel = FilterLinks.filter(o => {
     const authorized = isAuthorized({
       user,
       branches: o.branches,

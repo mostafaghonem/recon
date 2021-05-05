@@ -3,6 +3,8 @@ import Router from 'vue-router'
 import { interopDefault } from './utils'
 
 const _68fb8a65 = () => interopDefault(import('..\\pages\\add-soldier.vue' /* webpackChunkName: "pages_add-soldier" */))
+const _c6eb78fa = () => interopDefault(import('..\\pages\\add-staff.vue' /* webpackChunkName: "pages_add-staff" */))
+const _3a627eb1 = () => interopDefault(import('..\\pages\\add-unit.vue' /* webpackChunkName: "pages_add-unit" */))
 const _3bf21578 = () => interopDefault(import('..\\pages\\add-user.vue' /* webpackChunkName: "pages_add-user" */))
 const _fac367f6 = () => interopDefault(import('..\\pages\\change-of-units.vue' /* webpackChunkName: "pages_change-of-units" */))
 const _e882a93a = () => interopDefault(import('..\\pages\\dashboard.vue' /* webpackChunkName: "pages_dashboard" */))
@@ -11,10 +13,14 @@ const _3a6bf138 = () => interopDefault(import('..\\pages\\login.vue' /* webpackC
 const _60233e4b = () => interopDefault(import('..\\pages\\logout.vue' /* webpackChunkName: "pages_logout" */))
 const _2060d1d0 = () => interopDefault(import('..\\pages\\maps.vue' /* webpackChunkName: "pages_maps" */))
 const _4e5fcf92 = () => interopDefault(import('..\\pages\\notifications.vue' /* webpackChunkName: "pages_notifications" */))
-const _074af39c = () => interopDefault(import('..\\pages\\soldiers.vue' /* webpackChunkName: "pages_soldiers" */))
+const _742fd210 = () => interopDefault(import('..\\pages\\soldiers\\index.vue' /* webpackChunkName: "pages_soldiers_index" */))
+const _4bd4482e = () => interopDefault(import('..\\pages\\staffs\\index.vue' /* webpackChunkName: "pages_staffs_index" */))
 const _35d921fe = () => interopDefault(import('..\\pages\\table-list.vue' /* webpackChunkName: "pages_table-list" */))
 const _f6a8f220 = () => interopDefault(import('..\\pages\\typography.vue' /* webpackChunkName: "pages_typography" */))
 const _7944f9f5 = () => interopDefault(import('..\\pages\\unauthorized.vue' /* webpackChunkName: "pages_unauthorized" */))
+const _87bce6f8 = () => interopDefault(import('..\\pages\\units\\index.vue' /* webpackChunkName: "pages_units_index" */))
+const _3d1f66c6 = () => interopDefault(import('..\\pages\\update-soldiers-unit.vue' /* webpackChunkName: "pages_update-soldiers-unit" */))
+const _72f6f48a = () => interopDefault(import('..\\pages\\update-staffs-unit.vue' /* webpackChunkName: "pages_update-staffs-unit" */))
 const _270325b0 = () => interopDefault(import('..\\pages\\user-profile.vue' /* webpackChunkName: "pages_user-profile" */))
 const _93a3af52 = () => interopDefault(import('..\\pages\\users.vue' /* webpackChunkName: "pages_users" */))
 const _f6939ed6 = () => interopDefault(import('..\\pages\\account\\reset-password.vue' /* webpackChunkName: "pages_account_reset-password" */))
@@ -40,8 +46,12 @@ const _785ebf26 = () => interopDefault(import('..\\pages\\followup\\inbox\\pendi
 const _5dc7dc72 = () => interopDefault(import('..\\pages\\followup\\outbox\\add.vue' /* webpackChunkName: "pages_followup_outbox_add" */))
 const _27f1c9c2 = () => interopDefault(import('..\\pages\\followup\\outbox\\mails.vue' /* webpackChunkName: "pages_followup_outbox_mails" */))
 const _f52811e8 = () => interopDefault(import('..\\pages\\followup\\outbox\\pending-mails.vue' /* webpackChunkName: "pages_followup_outbox_pending-mails" */))
+const _4470762c = () => interopDefault(import('..\\pages\\individuals\\codes\\show.vue' /* webpackChunkName: "pages_individuals_codes_show" */))
 const _567ae2b4 = () => interopDefault(import('..\\pages\\followup\\inbox\\edit\\_index.vue' /* webpackChunkName: "pages_followup_inbox_edit__index" */))
 const _5f226827 = () => interopDefault(import('..\\pages\\followup\\outbox\\edit\\_index.vue' /* webpackChunkName: "pages_followup_outbox_edit__index" */))
+const _4087fde2 = () => interopDefault(import('..\\pages\\soldiers\\edit\\_index.vue' /* webpackChunkName: "pages_soldiers_edit__index" */))
+const _42abe59e = () => interopDefault(import('..\\pages\\staffs\\edit\\_index.vue' /* webpackChunkName: "pages_staffs_edit__index" */))
+const _b96547ca = () => interopDefault(import('..\\pages\\units\\edit\\_index.vue' /* webpackChunkName: "pages_units_edit__index" */))
 const _b7e1542e = () => interopDefault(import('..\\pages\\uploads\\_id.vue' /* webpackChunkName: "pages_uploads__id" */))
 const _70c44e21 = () => interopDefault(import('..\\pages\\index.vue' /* webpackChunkName: "pages_index" */))
 
@@ -124,6 +134,14 @@ export function createRouter() {
       component: _68fb8a65,
       name: "add-soldier___ar"
     }, {
+      path: "/add-staff",
+      component: _c6eb78fa,
+      name: "add-staff___ar"
+    }, {
+      path: "/add-unit",
+      component: _3a627eb1,
+      name: "add-unit___ar"
+    }, {
       path: "/add-user",
       component: _3bf21578,
       name: "add-user___ar"
@@ -157,8 +175,12 @@ export function createRouter() {
       name: "notifications___ar"
     }, {
       path: "/soldiers",
-      component: _074af39c,
+      component: _742fd210,
       name: "soldiers___ar"
+    }, {
+      path: "/staffs",
+      component: _4bd4482e,
+      name: "staffs___ar"
     }, {
       path: "/table-list",
       component: _35d921fe,
@@ -171,6 +193,18 @@ export function createRouter() {
       path: "/unauthorized",
       component: _7944f9f5,
       name: "unauthorized___ar"
+    }, {
+      path: "/units",
+      component: _87bce6f8,
+      name: "units___ar"
+    }, {
+      path: "/update-soldiers-unit",
+      component: _3d1f66c6,
+      name: "update-soldiers-unit___ar"
+    }, {
+      path: "/update-staffs-unit",
+      component: _72f6f48a,
+      name: "update-staffs-unit___ar"
     }, {
       path: "/user-profile",
       component: _270325b0,
@@ -272,6 +306,10 @@ export function createRouter() {
       component: _f52811e8,
       name: "followup-outbox-pending-mails___ar"
     }, {
+      path: "/individuals/codes/show",
+      component: _4470762c,
+      name: "individuals-codes-show___ar"
+    }, {
       path: "/followup/inbox/edit/:index",
       component: _567ae2b4,
       name: "followup-inbox-edit___ar"
@@ -279,6 +317,18 @@ export function createRouter() {
       path: "/followup/outbox/edit/:index",
       component: _5f226827,
       name: "followup-outbox-edit___ar"
+    }, {
+      path: "/soldiers/edit/:index",
+      component: _4087fde2,
+      name: "soldiers-edit___ar"
+    }, {
+      path: "/staffs/edit/:index",
+      component: _42abe59e,
+      name: "staffs-edit___ar"
+    }, {
+      path: "/units/edit/:index",
+      component: _b96547ca,
+      name: "units-edit___ar"
     }, {
       path: "/uploads/:id?",
       component: _b7e1542e,
