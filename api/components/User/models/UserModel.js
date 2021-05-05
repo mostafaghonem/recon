@@ -9,14 +9,6 @@ module.exports = ({ GenericModel = _GenericModel }) => {
     //   super(DbAccess);
     // }
 
-    checkExistenceBy(data = { email: String, username: String }) {
-      const orOp = Object.keys(data)
-        .filter(k => data[k])
-        .map(k => ({ [k]: data[k] }));
-
-      return this.exists({ filter: { $or: orOp } });
-    }
-
     getUsersWithIds(usersIds) {
       return this.getMany({
         query: { _id: { $in: usersIds } }

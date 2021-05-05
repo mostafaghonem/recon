@@ -13,6 +13,7 @@ const makeHideStaffValidation = require('./hide-staff-validation');
 const makeUnhideStaffValidation = require('./unhide-staff-validation');
 const makeGetValidation = require('./get-staff-validation');
 const makeGetStaffsValidation = require('./get-staffs-validation');
+const makeIsDuplicateValidation = require('./is-duplicate-validation');
 
 const armyList = defaultConstants.ARMY_LIST.map(o => o.value);
 const forcesList = defaultConstants.FORCES_LIST.map(o => o.value);
@@ -83,6 +84,13 @@ module.exports.getStaffValidation = makeGetValidation({
   ObjectId,
   sortValues,
   sortKeys
+});
+
+module.exports.isDuplicateValidation = makeIsDuplicateValidation({
+  _,
+  ErrorText,
+  ValidatorHelper,
+  Builder
 });
 
 module.exports.getStaffsValidation = makeGetStaffsValidation({

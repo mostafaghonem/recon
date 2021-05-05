@@ -20,6 +20,10 @@ const {
   changeSoldierUnit
 } = require('../../Soldier/Soldier-external-use-cases');
 const {
+  getStaffsByIds,
+  changeStaffUnit
+} = require('../../Staff/Staff-external-use-cases');
+const {
   getDivisionById
 } = require('../../Division/Division-external-use-cases');
 
@@ -29,8 +33,10 @@ const addChangeOfUnit = makeAddChangeOfUnit({
   logger,
   getSoldierById,
   getSoldiersByIds,
+  getStaffsByIds,
   getDivisionById,
-  changeSoldierUnit
+  changeSoldierUnit,
+  changeStaffUnit
 });
 
 const setChangesProcessedStatus = makeSetChangesProcessedStatus();
@@ -57,6 +63,7 @@ const addBulkChangeOfUnit = makeAddBulkChangeOfUnit({
   ErrorText,
   logger,
   getSoldiersByIds,
+  getStaffsByIds,
   getDivisionById,
   addChangeOfUnit
 });

@@ -170,6 +170,14 @@ module.exports = {
       ar: 'معدل ومدير للمجندين'
     },
     {
+      value: 'recon_staff_creator',
+      ar: 'مضيف لضباط الصف'
+    },
+    {
+      value: 'recon_staff_editor',
+      ar: 'معدل ومدير لضباط الصف'
+    },
+    {
       value: 'recon_influences_creator',
       ar: 'مضيف للمؤثرات'
     },

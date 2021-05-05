@@ -8,10 +8,6 @@ const _GenericModel = require('../../shared/models/GenericModel');
 
 module.exports = ({ GenericModel = _GenericModel }) => {
   class ChangeOfUnitModel extends GenericModel {
-    checkExistenceBy(data = { _id: String }) {
-      return this.exists({ filter: data });
-    }
-
     async getChanges(
       params = {
         query: {},

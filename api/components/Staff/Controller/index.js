@@ -17,6 +17,7 @@ const makeHideStaffCtrl = require('./hide-staff');
 const makeUnhideStaffCtrl = require('./unhide-staff');
 const makeEditStaffCtrl = require('./edit-staff');
 const makeGetStaff = require('./get-staff');
+const makeIsDuplicate = require('./is-duplicate');
 // ->
 const addStaff = makeAddStaffCtrl({});
 const deleteStaff = makeDeleteStaffCtrl({});
@@ -25,6 +26,7 @@ const hideStaff = makeHideStaffCtrl({});
 const unhideStaff = makeUnhideStaffCtrl({});
 const editStaff = makeEditStaffCtrl({});
 const getStaff = makeGetStaff({});
+const isDuplicate = makeIsDuplicate({});
 const staffsCtrl = Object.freeze({
   addStaff,
   deleteStaff,
@@ -32,7 +34,8 @@ const staffsCtrl = Object.freeze({
   unhideStaff,
   editStaff,
   getStaff,
-  getStaffs
+  getStaffs,
+  isDuplicate
 });
 
 module.exports = staffsCtrl;

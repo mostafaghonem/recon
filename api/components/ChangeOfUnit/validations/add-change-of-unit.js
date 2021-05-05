@@ -14,12 +14,18 @@ module.exports = ({ _, ValidatorHelper, Builder, ObjectId }) => ({ body }) => {
       rules: new Builder().required().rules
     }
   };
+  let noSoldiers = false;
+  let noStaffs = false;
+  if (body.soldiersIds && !body.soldiersIds.length) {
+    noSoldiers = true;
+  }
 
-  if (
-    (!body.soldierId && !body.soldiersIds) ||
-    (body.soldiersIds && !body.soldiersIds.length)
-  ) {
-    error.soldierId = 'لم يتم إختيار مجندين يجب إختيار مجند واحد على الأقل';
+  if (body.staffsIds && !body.staffsIds.length) {
+    noStaffs = true;
+  }
+
+  if (noSoldiers && noStaffs) {
+    error.soldierId = 'لم يتم إختيار اشخاص يجب إختيار شخص واحد على الأقل';
   }
 
   Object.keys(scheme).forEach(key => {

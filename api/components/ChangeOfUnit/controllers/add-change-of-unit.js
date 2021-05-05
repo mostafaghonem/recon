@@ -4,7 +4,7 @@ module.exports = () => {
   return async (req, res, next) => {
     try {
       let addedChange = {};
-      if (req.body.soldiersIds) {
+      if (req.body.soldiersIds || req.body.staffsIds) {
         addedChange = await addBulkChangeOfUnit({
           ...req.body,
           user: req.user

@@ -6,7 +6,8 @@ const {
   unhideStaffValidation,
   editStaffValidation,
   getStaffValidation,
-  getStaffsValidation
+  getStaffsValidation,
+  isDuplicateValidation
 } = require('../Validation');
 // const {
 //   PaginationValidtion
@@ -17,7 +18,8 @@ const router = express.Router();
 const authenticateMiddleware = require('../../../middlewares/authenticateMiddleware');
 const authorizeMiddleware = require('../../../middlewares/authorizeMiddleware');
 const {
-  PERMISSIONS_KEYS: PERMISSIONS
+  PERMISSIONS_KEYS: PERMISSIONS,
+  BRANCHES_KEYS: BRANCHES
 } = require('../../../shared/constants/defaults');
 const validateMiddleware = require('../../../middlewares/validateMiddleware');
 const controllers = require('../Controller');
@@ -31,22 +33,21 @@ router.post(
   [
     validateMiddleware(addStaffValidation),
     authenticateMiddleware,
-    authorizeMiddleware({ branches: ['recon_force_people'] })
+    authorizeMiddleware({
+      branches: [BRANCHES.RECON_FORCE_PEOPLE],
+      permissions: [PERMISSIONS.RECON_STAFF_CREATOR]
+    })
   ],
   controllers.addStaff
 );
 
 // @route
-// @ GET api/staffs/staff/:id
-// Description: Get staff details for renter
+// @ GET api/soldiers/soldier/:id
+// Description: Get soldier details for renter
 // !access  anonymous
 router.get(
-  '/staff/:id',
-  [
-    validateMiddleware(getStaffValidation),
-    authenticateMiddleware,
-    authorizeMiddleware({ branches: ['recon_force_people'] })
-  ],
+  '/data/:id',
+  [validateMiddleware(getStaffValidation)],
   controllers.getStaff
 );
 
@@ -55,7 +56,9 @@ router.put(
   [
     validateMiddleware(hideStaffValidation),
     authenticateMiddleware,
-    authorizeMiddleware({ branches: ['recon_force_people'] })
+    authorizeMiddleware({
+      branches: [BRANCHES.RECON_FORCE_PEOPLE]
+    })
   ],
   controllers.hideStaff
 );
@@ -65,33 +68,57 @@ router.put(
   [
     validateMiddleware(unhideStaffValidation),
     authenticateMiddleware,
-    authorizeMiddleware({ branches: ['recon_force_people'] })
+    authorizeMiddleware({
+      branches: [BRANCHES.RECON_FORCE_PEOPLE]
+    })
   ],
   controllers.unhideStaff
 );
 
-router.delete(
-  '/:id',
+router.post(
+  '/delete/:id',
   [
     validateMiddleware(deleteStaffValidation),
     authenticateMiddleware,
-    authorizeMiddleware({ branches: ['recon_force_people'] })
+    authorizeMiddleware({
+      branches: [BRANCHES.RECON_FORCE_PEOPLE],
+      permissions: [PERMISSIONS.RECON_STAFF_EDITOR]
+    })
   ],
   controllers.deleteStaff
 );
 
 // @route
-// @ PUT api/staffs/edit/:id
+// @ POST api/staffs/edit/:id
 // Description: Edit staff by Admin or House Owner
 // !access  anonymous
-router.put(
+router.post(
   '/edit/:id',
   [
     validateMiddleware(editStaffValidation),
     authenticateMiddleware,
-    authorizeMiddleware({ branches: ['recon_force_people'] })
+    authorizeMiddleware({
+      branches: [BRANCHES.RECON_FORCE_PEOPLE],
+      permissions: [PERMISSIONS.RECON_STAFF_EDITOR]
+    })
   ],
   controllers.editStaff
+);
+
+// @route
+// @ GET api/soldiers/is-duplicate
+// Description: Gheck if key and value exists
+// !access  anonymous
+router.get(
+  '/is-duplicate',
+  [
+    validateMiddleware(isDuplicateValidation),
+    authenticateMiddleware,
+    authorizeMiddleware({
+      branches: [BRANCHES.RECON_FORCE_PEOPLE]
+    })
+  ],
+  controllers.isDuplicate
 );
 
 // @route
@@ -103,7 +130,9 @@ router.get(
   [
     validateMiddleware(getStaffsValidation),
     authenticateMiddleware,
-    authorizeMiddleware({ branches: ['recon_force_people'] })
+    authorizeMiddleware({
+      branches: [BRANCHES.RECON_FORCE_PEOPLE]
+    })
   ],
   controllers.getStaffs
 );

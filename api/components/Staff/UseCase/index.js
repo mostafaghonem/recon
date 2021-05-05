@@ -26,6 +26,7 @@ const makeGetStaffs = require('./get-staffs');
 const makeHideStaff = require('./hide-staff');
 const makeUnhideStaff = require('./unhide-staff');
 const makeEditStaff = require('./edit-staff');
+const makeIsDuplicate = require('./is-duplicate');
 
 const addStaff = makeAddStaff({
   ApplicationError,
@@ -73,6 +74,11 @@ const editStaff = makeEditStaff({
   pending: REQUEST_STATUS.PENDING
 });
 
+const isDuplicate = makeIsDuplicate({
+  ApplicationError,
+  logger
+});
+
 const staffsUseCases = {
   addStaff,
   deleteStaff,
@@ -80,7 +86,8 @@ const staffsUseCases = {
   unhideStaff,
   editStaff,
   getStaff,
-  getStaffs
+  getStaffs,
+  isDuplicate
 };
 
 module.exports = staffsUseCases;

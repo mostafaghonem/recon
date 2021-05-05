@@ -7,47 +7,83 @@ const model = require('../Models');
 module.exports = ({ ApplicationError, logger }) => async ({
   userId,
   staffId,
-  tripleNumber,
-  address,
   militaryId,
-  recordId,
+  individualId,
+  nationalId,
+  batchId,
+  fullName,
+  medicalSituation,
+  rank,
+  category,
   force,
   army,
+  address,
+  education,
   joinDate,
   birthDate,
-  releaseDate,
-  recruitmentLevel,
-  educationRank,
+  rankingDate,
+  phoneNumber,
+  medicalCard,
+  religion,
+  weight,
+  height,
   influences,
-  unit,
-  units,
+  unitId,
+  divisionId,
+  treatment,
   situation,
   isHidden,
   isArchived
 }) => {
+  let unit;
   const filter = { _id: staffId, userId, isArchived: false };
   const checkExistence = await model.exists({ filter });
   if (!checkExistence)
     throw new ApplicationError('.نأسف ، لا يمكننا العثور على هذا المجند', 403);
+
+  if (unitId) {
+    unit = {
+      unitId,
+      divisionId: divisionId || undefined
+    };
+  }
+
   const update = {
-    tripleNumber,
-    address,
     militaryId,
-    recordId,
+    individualId,
+    nationalId,
+    batchId,
+    fullName,
+    medicalSituation,
+    rank,
+    category,
     force,
     army,
+    address,
+    education,
     joinDate,
     birthDate,
-    releaseDate,
-    recruitmentLevel,
-    educationRank,
+    rankingDate,
+    phoneNumber,
+    medicalCard,
+    religion,
+    weight,
+    height,
     influences,
+    unitId,
     unit,
-    units,
+    divisionId,
+    treatment,
     situation,
     isHidden,
     isArchived
   };
+  Object.keys(update).map(key => {
+    if (update[key] === null) {
+      update[key] = undefined;
+    }
+  });
+
   await model.updateOneById({
     id: staffId,
     update

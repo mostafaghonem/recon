@@ -9,13 +9,13 @@ module.exports = ({ ApplicationError, logger }) => async id => {
   const select = 'name';
   const checkExistence = await model.getOne({ query, select });
   if (!checkExistence)
-    throw new ApplicationError('.نأسف ، لا يمكننا العثور على هذ المجند', 403);
+    throw new ApplicationError('.نأسف ، لا يمكننا العثور على هذ الصف', 403);
   else {
-    const update = {
-      isArchived: true
-    };
-    await model.updateOneById({ id, update });
-
+    // const update = {
+    //   isArchived: true
+    // };
+    // await model.updateOneById({ id, update });
+    await model.deleteOneById({ id });
     logger.info(`${id} Staff just got deleted now`);
   }
 };

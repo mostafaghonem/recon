@@ -1,24 +1,14 @@
-module.exports = ({
-  locations,
-  defaultConstants,
-  getConstantsFromModel,
-  computeAppDrawer,
-  processConstants,
-  constantTypes
-}) => {
+const { getStaff } = require('../UseCase');
+
+module.exports = () => {
   return async (req, res, next) => {
     try {
-      const modelResults = await getConstantsFromModel({});
-      const result = processConstants({
-        data: modelResults.constants,
-        constantTypes
+      const staffDetails = await getStaff({
+        staffId: req.params.id,
+        userId: req.user ? req.user.id : undefined
       });
-      const defaults = Object.assign(defaultConstants, result);
-      return res.status(200).json({
-        locations,
-        defaultConstants: defaults,
-        links: computeAppDrawer({ user: req.user })
-      });
+
+      return res.status(200).json(staffDetails);
     } catch (e) {
       return next(e);
     }

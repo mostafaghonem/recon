@@ -16,6 +16,14 @@ module.exports = ({ divSchema }) => {
         type: ObjectId,
         ref: 'Soldier'
       },
+      staffId: {
+        type: ObjectId,
+        ref: 'Staff'
+      },
+      type: {
+        type: String,
+        enum: ['staff', 'soldier']
+      },
       unitId: {
         type: ObjectId,
         ref: 'Division'

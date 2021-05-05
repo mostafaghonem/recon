@@ -10,8 +10,14 @@ const logger = require('../../../startup/logger');
 const { ApplicationError } = require('../../../shared/errors');
 
 const makeGetStaffById = require('./get-staff-by-id');
+const makeGetStaffsByIds = require('./get-staffs-by-ids');
 const makeChangeStaffUnit = require('./change-staff-unit');
 const makeAddStaffInfluence = require('./add-staff-influence');
+
+const getStaffsByIds = makeGetStaffsByIds({
+  ApplicationError,
+  logger
+});
 
 const getStaffById = makeGetStaffById({
   ApplicationError,
@@ -29,6 +35,7 @@ const addStaffInfluence = makeAddStaffInfluence({
 });
 const StaffExternalService = Object.freeze({
   getStaffById,
+  getStaffsByIds,
   changeStaffUnit,
   addStaffInfluence
 });

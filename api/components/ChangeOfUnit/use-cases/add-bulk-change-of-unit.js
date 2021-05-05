@@ -8,43 +8,52 @@ module.exports = ({
   ApplicationError,
   logger,
   getSoldiersByIds,
+  getStaffsByIds,
   getDivisionById,
   addChangeOfUnit
-}) => async ({ user, soldiersIds, unitId }) => {
+}) => async ({ user, soldiersIds, staffsIds, unitId }) => {
   const userId = user.id;
   try {
     const updateObj = {};
-
-    const soldiers = await getSoldiersByIds({ ids: soldiersIds });
+    let individuals = [];
+    let type = 'soldier';
+    if (soldiersIds && soldiersIds.length) {
+      individuals = await getSoldiersByIds({ ids: soldiersIds });
+    } else if (staffsIds && staffsIds.length) {
+      individuals = await getStaffsByIds({ ids: staffsIds });
+      type = 'staff';
+    }
     const unit = await getDivisionById({ id: unitId });
-    const promises = soldiers.map(async soldier => {
+    const promises = individuals.map(async data => {
       return addChangeOfUnit({
         user,
         userId,
-        soldier,
+        data,
+        type,
         unit,
         unitId,
         updateObj
       });
     });
 
-    const responses = await Promise.all(promises);
-    const errors = responses
-      .filter(o => o.error)
-      .map(o => o.error)
-      .join('\n');
-    if (errors.length) {
-      throw new ApplicationError(errors, 403);
-    }
-    logger.info(
-      `new Clearance just been added with data => \n${JSON.stringify(
-        responses,
-        undefined,
-        6
-      )}`
-    );
+    Promise.all(promises).then(responses => {
+      const errors = responses
+        .filter(o => o.error)
+        .map(o => o.error)
+        .join('\n');
+      if (errors.length) {
+        throw new ApplicationError(errors, 403);
+      }
+      logger.info(
+        `new Clearance just been added with data => \n${JSON.stringify(
+          responses,
+          undefined,
+          6
+        )}`
+      );
+    });
 
-    return responses.id;
+    return unit.id;
   } catch (err) {
     if (err.message && err.message.includes('duplicate')) {
       throw new ApplicationError(
