@@ -11,6 +11,7 @@ module.exports = [
   { value: '21', code: '21', ar: 'شئون معنوية' },
   { value: '66', code: '66', ar: 'سائق' },
   { value: '47', code: '47', ar: 'تدريب مهنى' },
+  { value: '14', code: '14', ar: 'مهندسين' },
   { value: '24', code: '24', ar: 'تعيبنات' },
   { value: '25', code: '25', ar: 'وقود' },
   { value: '26', code: '26', ar: 'مهمات' },
