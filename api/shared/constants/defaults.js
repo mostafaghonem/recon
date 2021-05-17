@@ -536,5 +536,11 @@ module.exports = {
   MEDICAL_CARDS: [
     { ar: 'موجود', value: true },
     { ar: 'غير موجود', value: false }
+  ],
+  RECOMMENDATION_TYPES: [
+    { value: 'weapons', ar: 'اسلحة' },
+    { vaLue: 'officers', ar: 'ضباط احتياط' },
+    { value: 'unit', ar: 'وحدات' },
+    { value: 'distributed', ar: 'محولين' }
   ]
 };
