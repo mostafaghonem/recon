@@ -281,6 +281,12 @@ module.exports = {
           text: DRAWER.List_Change_Of_Units,
           branches: ['recon_force_people'],
           permissions: ['recon_people_creator']
+        },
+        {
+          to: '/soldiers-archive',
+          icon: 'mdi-clipboard-outline',
+          text: DRAWER.Archive,
+          branches: ['recon_force_people']
         }
       ],
       branches: ['recon_force_people']
@@ -308,14 +314,14 @@ module.exports = {
           icon: 'mdi-clipboard-outline',
           text: DRAWER.Staff_Update_Unit,
           branches: ['recon_force_people'],
-          permissions: ['recon_staff_creator']
+          permissions: ['recon_staff_creator', 'recon_staff_editor']
         },
         {
           to: '/staff-change-of-units',
           icon: 'mdi-clipboard-outline',
           text: DRAWER.List__Staff_Change_Of_Units,
           branches: ['recon_force_people'],
-          permissions: ['recon_staff_creator']
+          permissions: ['recon_staff_creator', 'recon_staff_editor']
         }
       ],
       branches: ['recon_force_people']

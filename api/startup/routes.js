@@ -38,6 +38,11 @@ module.exports = async app => {
     '/template.docx',
     express.static(path.resolve('./public/template.docx'))
   );
+  app.use(
+    '/soldiers.docx',
+    express.static(path.resolve('./public/soldiers.docx'))
+  );
+  app.use('/staffs.docx', express.static(path.resolve('./public/staffs.docx')));
   // ! nuxt config
   await nuxtConfig(app);
   app.use(ErrorHandler.catch404Errors);

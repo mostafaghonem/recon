@@ -18,9 +18,14 @@ const model = require('../Models');
 // should have no implementation for any specific orm
 module.exports = ({ GetSortObj, GetDateSplitObj }) => async ({
   queryObj = '{}',
+  fullName,
+  birthDate,
+  joinDate,
+  releaseDate,
   militaryId,
   recordId,
   unitId,
+  divisionId,
   centre,
   governate,
   village,
@@ -32,6 +37,7 @@ module.exports = ({ GetSortObj, GetDateSplitObj }) => async ({
   situation,
   treatment,
   noClearance,
+  clearance,
   joinMonth,
   joinYear,
   releaseMonth,
@@ -72,7 +78,9 @@ module.exports = ({ GetSortObj, GetDateSplitObj }) => async ({
     ];
   }
   if (governate) query['address.governate'] = String(governate);
+  if (fullName) query.fullName = fullName;
   if (unitId) query['unit.unitId'] = unitId;
+  if (divisionId && !unitId) query['unit.divisionId'] = divisionId;
   if (centre) query['address.centre'] = { $regex: centre, $options: 'i' };
   if (village) query['address.village'] = { $regex: village, $options: 'i' };
   if (force) query.force = force;
@@ -84,8 +92,13 @@ module.exports = ({ GetSortObj, GetDateSplitObj }) => async ({
   if (recruitmentLevel) query.recruitmentLevel = recruitmentLevel;
   if (militaryId) query.militaryId = militaryId;
   if (recordId) query.recordId = recordId;
+  if (birthDate) query.birthDate = birthDate;
+  if (joinDate) query.joinDate = joinDate;
+  if (releaseDate) query.releaseDate = releaseDate;
   if (noClearance) {
     query.clearance = { $exists: false };
+  } else if (clearance) {
+    query.clearance = { $exists: true };
   }
   // if (militaryId) query.militaryId = { $regex: militaryId, $options: 'i' };
   // if (recordId) query.recordId = { $regex: recordId, $options: 'i' };

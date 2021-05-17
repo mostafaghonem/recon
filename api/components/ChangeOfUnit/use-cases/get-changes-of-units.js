@@ -25,6 +25,8 @@ module.exports = ({
   sortKey,
   sortValue
 }) => {
+  // eslint-disable-next-line no-param-reassign
+  type = type || 'soldier';
   const sortObj = GetSortObj({
     sortIndex,
     sortKey,
@@ -37,14 +39,17 @@ module.exports = ({
     isArchived: false
   };
 
-  const select = 'userId status unitId date createdAt updatedAt';
+  const select =
+    'userId status type unitId soldierId staffId date createdAt updatedAt';
 
   if (lastTimestamp) {
     query.createdAt = { $gt: moment(lastTimestamp) };
   }
 
-  if (type) {
-    query.type = type;
+  if (type === 'staff') {
+    query.staffId = { $exists: true };
+  } else {
+    query.soldierId = { $exists: true };
   }
   const unitQuery = { isArchived: false };
   const searchObj = GetSearchObj({ key });
@@ -54,7 +59,6 @@ module.exports = ({
   const populate = [
     {
       path: 'userId',
-      match: { isArchived: false, fullName: { $regex: key, $options: 'i' } },
       select: '_id username branch permissions'
     },
     {
@@ -69,6 +73,11 @@ module.exports = ({
     },
     {
       path: 'soldierId',
+      match: unitQuery,
+      select: '_id militaryId fullName'
+    },
+    {
+      path: 'staffId',
       match: unitQuery,
       select: '_id militaryId fullName'
     }
@@ -97,7 +106,11 @@ module.exports = ({
   }
   // eslint-disable-next-line prefer-const
   let { changes, total, hasNext } = await model.getChanges(params);
-  changes = changes.filter(request => request.userId && request.unitId);
+  changes = changes.filter(request => {
+    const unit = request.userId && request.unitId;
+    const individual = !!request[`${type}Id`];
+    return unit && individual;
+  });
 
   return {
     changes,

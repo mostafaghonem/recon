@@ -28,6 +28,7 @@ module.exports = {
     List_Users: 'عرض المستخدمين',
     List_Units: 'عرض الوحدات',
     List_Change_Of_Units: 'تعديلات توزيع المجندين',
+    Archive: 'ارشيف المجندين',
     Mail: 'المكاتبات',
     Inbox: 'المكاتبات الواردة',
     Outbox: 'المكاتبات الصادرة',

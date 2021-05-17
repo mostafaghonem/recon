@@ -18,7 +18,7 @@ module.exports = ({
     },
     type: {
       value: query.type,
-      rules: new Builder().isMember(requestTypes).rules
+      rules: new Builder().rules
     },
     limit: {
       value: query.limit,

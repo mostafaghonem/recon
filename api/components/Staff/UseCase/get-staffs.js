@@ -15,6 +15,7 @@ module.exports = ({ GetSortObj }) => async ({
   militaryId,
   recordId,
   unitId,
+  divisionId,
   centre,
   governate,
   village,
@@ -25,6 +26,11 @@ module.exports = ({ GetSortObj }) => async ({
   recruitmentLevel,
   situation,
   treatment,
+  fullName,
+
+  joinDate,
+  birthDate,
+  rankingDate,
   key,
   limit,
   sortIndex,
@@ -53,7 +59,9 @@ module.exports = ({ GetSortObj }) => async ({
     ];
   }
   if (governate) query['address.governate'] = String(governate);
+  if (fullName) query.fullName = fullName;
   if (unitId) query['unit.unitId'] = unitId;
+  if (divisionId && !unitId) query['unit.divisionId'] = divisionId;
   if (centre) query['address.centre'] = { $regex: centre, $options: 'i' };
   if (village) query['address.village'] = { $regex: village, $options: 'i' };
   if (force) query.force = force;
@@ -65,7 +73,9 @@ module.exports = ({ GetSortObj }) => async ({
   if (recruitmentLevel) query.recruitmentLevel = recruitmentLevel;
   if (militaryId) query.militaryId = { $regex: militaryId, $options: 'i' };
   if (recordId) query.recordId = { $regex: recordId, $options: 'i' };
-
+  if (birthDate) query.birthDate = birthDate;
+  if (joinDate) query.joinDate = joinDate;
+  if (rankingDate) query.rankingDate = rankingDate;
   // #! Added for the poc case
   limit = 10000000000;
   const unitMatch = { isHidden: false, isArchived: false };
