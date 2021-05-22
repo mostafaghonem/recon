@@ -6,23 +6,22 @@ module.exports = ({
   ErrorText,
   ValidatorHelper,
   Builder,
-  armyList,
-  forcesList,
   recruitmentLevels,
-  educationRanks,
-  situations,
-  recruitmentAreas,
-  governates
+  recruitmentAreas
 }) => ({ body }) => {
   const error = {};
   const scheme = {
+    type: {
+      value: body.type,
+      rules: new Builder().required().rules
+    },
     militaryId: {
       value: body.militaryId,
-      rules: new Builder().required(ErrorText.MILITARYID_REQUIRED).rules
+      rules: new Builder().rules
     },
     recordId: {
       value: body.recordId,
-      rules: new Builder().required(ErrorText.RECORDID_REQUIRED).rules
+      rules: new Builder().rules
     },
     nationalId: {
       value: body.nationalId,
@@ -30,26 +29,11 @@ module.exports = ({
     },
     tripleNumber: {
       value: body.tripleNumber,
-      rules: new Builder().required(ErrorText.TRIPLENUMBER_REQUIRED).rules
+      rules: new Builder().rules
     },
-    joinDate: {
-      value: body.joinDate,
-      rules: new Builder().required(ErrorText.JOINDATE_REQUIRED).rules
-    },
-    birthDate: {
-      value: body.birthDate,
-      rules: new Builder().required(ErrorText.BIRTHDATE_REQUIRED).rules
-    },
-
     force: {
       value: body.force,
-      rules: new Builder()
-        .required(ErrorText.FORCE_REQUIRED)
-        .isMember(forcesList, ErrorText.FORCE_INVALID).rules
-    },
-    army: {
-      value: body.army,
-      rules: new Builder().isMember(armyList, ErrorText.ARMY_INVALID).rules
+      rules: new Builder().required(ErrorText.FORCE_REQUIRED).rules
     },
     recruitmentLevel: {
       value: body.recruitmentLevel,
@@ -57,16 +41,9 @@ module.exports = ({
         .required(ErrorText.RECRUITMENT_LEVEL_REQUIRED)
         .isMember(recruitmentLevels, ErrorText.RECRUITMENT_LEVEL_INVALID).rules
     },
-    educationRank: {
-      value: body.educationRank,
-      rules: new Builder()
-        .required(ErrorText.EDUCATION_RANK_REQUIRED)
-        .isMember(educationRanks, ErrorText.EDUCATION_RANK_INVALID).rules
-    },
-    situation: {
-      value: body.situation,
-      rules: new Builder().isMember(situations, ErrorText.SITUATION_INVALID)
-        .rules
+    education: {
+      value: body.education,
+      rules: new Builder().required(ErrorText.EDUCATION_RANK_REQUIRED).rules
     },
     recruitmentArea: {
       value: body.recruitmentArea,
@@ -74,28 +51,6 @@ module.exports = ({
         recruitmentAreas,
         ErrorText.RECRUITMENT_AREA_INVALID
       ).rules
-    },
-    unitId: {
-      value: body.unitId,
-      rules: new Builder().rules
-    },
-    divisionId: {
-      value: body.unitId,
-      rules: new Builder().rules
-    },
-    'address.governate': {
-      value: body.address ? body.address.governate : undefined,
-      rules: new Builder()
-        .required(ErrorText.GOVERNATE_REQUIRED)
-        .isMember(governates, ErrorText.GOVERNATE_INVALID).rules
-    },
-    'address.centre': {
-      value: body.address ? body.address.centre : undefined,
-      rules: new Builder().required(ErrorText.CENTRE_REQUIRED).rules
-    },
-    'address.village': {
-      value: body.address ? body.address.village : undefined,
-      rules: new Builder().required(ErrorText.VILLAGE_REQUIRED).rules
     }
   };
 
@@ -109,8 +64,3 @@ module.exports = ({
     error: _.isEmpty(error) ? undefined : error
   };
 };
-
-// /  releaseDate: {
-//       value: body.releaseDate,
-//       rules: new Builder().required('يجب ادخال تاريخ إنهاء الخدمة').rules
-//     },

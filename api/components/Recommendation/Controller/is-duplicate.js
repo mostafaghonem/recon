@@ -5,7 +5,9 @@ module.exports = () => {
     try {
       const response = await isDuplicate({
         key: req.query.key,
-        value: req.query.value
+        value: req.query.value,
+        keys: req.query.keys,
+        values: req.query.values
       });
 
       return res.status(200).json({ success: true, isDuplicate: response });

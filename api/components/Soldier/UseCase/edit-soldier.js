@@ -32,7 +32,7 @@ module.exports = ({ ApplicationError, logger }) => async ({
   isArchived
 }) => {
   let unit;
-  const filter = { _id: soldierId, userId, isArchived: false };
+  const filter = { _id: soldierId, isArchived: false };
   const checkExistence = await model.exists({ filter });
   if (!checkExistence)
     throw new ApplicationError('.نأسف ، لا يمكننا العثور على هذا المجند', 403);

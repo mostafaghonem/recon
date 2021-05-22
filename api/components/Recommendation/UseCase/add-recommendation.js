@@ -14,73 +14,38 @@ module.exports = ({
   events
 }) => async ({
   user,
+  type,
   tripleNumber,
   recruitmentArea,
-  address,
   militaryId,
   recordId,
-  nationalId,
-  name,
   fullName,
   force,
-  army,
-  joinDate,
-  releaseDate,
-  birthDate,
   recruitmentLevel,
-  educationRank,
-  influences,
-  unitId,
-  divisionId,
-  treatment,
-  units,
-  situation,
+  education,
+  recommender,
+  unit,
+  notes,
   isHidden,
   isArchived
 }) => {
   const userId = user.id;
-  // const releaseDate = CalculateReleaseDate({
-  //   joinDate,
-  //   recruitmentLevel,
-  //   educationRank,
-  //   treatment
-  // });
   const recommendation = {
     userId,
+    type,
     tripleNumber,
-    address,
+    recruitmentArea,
     militaryId,
     recordId,
-    nationalId,
     fullName,
-    name,
     force,
-    army,
-    joinDate,
-    birthDate,
     recruitmentLevel,
-    educationRank,
-    influences,
-    units,
-    treatment,
-    situation,
-    releaseDate,
-    isHidden,
-    isArchived
+    education,
+    recommender,
+    unit,
+    notes
   };
-
-  if (unitId) {
-    recommendation.unit = {
-      unitId,
-      divisionId
-    };
-  }
-
-  if (!recruitmentArea) {
-    recommendation.recruitmentArea = GetRecruitmentAreaFromAddress({ address });
-  } else {
-    recommendation.recruitmentArea = recruitmentArea;
-  }
+  const params = { militaryId, recordId, tripleNumber };
 
   if (!recommendation.recruitmentArea) {
     throw new ApplicationError(
@@ -88,11 +53,22 @@ module.exports = ({
       401
     );
   }
-  if (user && user.permissions && user.permissions.includes('admin')) {
-    recommendation.status = 'accepted';
-  }
+
+  recommendation.status = 'accepted';
 
   try {
+    const checkObj = {};
+    const keys = ['militaryId', 'recordId', 'tripleNumber'];
+    keys.map(o => {
+      if (typeof params[o] !== 'undefined' && params[o] !== '') {
+        checkObj[o] = params[o];
+      }
+    });
+
+    const isDuplicate = await model.checkExistenceByAnd({ type, ...checkObj });
+
+    if (isDuplicate) throw new ApplicationError('duplicate', 400);
+
     const newRecommendation = await model.createOne({
       document: recommendation
     });
@@ -107,8 +83,9 @@ module.exports = ({
     return newRecommendation.id;
   } catch (err) {
     if (err.message && err.message.includes('duplicate')) {
+      console.log('Duplication Error Message', err.message);
       throw new ApplicationError(
-        'عذراً ولكن هذا التوصية مسجل بالفعل فى قاعدة البيانات',
+        'عذراً ولكن هذا التوصية مسجلة بالفعل فى قاعدة البيانات',
         401
       );
     } else {

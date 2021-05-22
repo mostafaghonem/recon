@@ -131,6 +131,10 @@ module.exports = ({ GetSortObj, GetDateSplitObj }) => async ({
     {
       path: 'clearances.clearanceId',
       select: clearanceSelect
+    },
+    {
+      path: 'clearance.clearanceId',
+      select: clearanceSelect
     }
   ];
   const select = '';

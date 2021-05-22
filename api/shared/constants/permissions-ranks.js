@@ -194,6 +194,10 @@ module.exports = {
       ar: 'معدل ومضيف للمسح الأمنى'
     },
     {
+      value: 'recon_recommendations_manager',
+      ar: 'مدير للتوصيات'
+    },
+    {
       value: 'branch_head',
       ar: 'رئيس فرع'
     },
@@ -344,6 +348,28 @@ module.exports = {
           text: DRAWER.List_Units,
           branches: ['recon_force_people'],
           permissions: ['recon_people_creator']
+        }
+      ],
+      branches: ['recon_force_people']
+    },
+    {
+      actions: 'mdi-loyalty',
+      icon: 'mdi-map',
+      title: DRAWER.Recommendations,
+      items: [
+        {
+          to: '/add-recommendation',
+          icon: 'mdi-map-marker-plus',
+          text: DRAWER.Add_Recommendation,
+          branches: ['recon_force_people'],
+          permissions: ['recon_recommendations_manager']
+        },
+        {
+          to: '/recommendations',
+          icon: 'mdi-map-search',
+          text: DRAWER.List_Recommendations,
+          branches: ['recon_force_people'],
+          permissions: ['recon_recommendations_manager']
         }
       ],
       branches: ['recon_force_people']

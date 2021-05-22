@@ -85,7 +85,7 @@ module.exports = ({ GetSortObj }) => async ({
       select: unitSelct
     },
     {
-      path: 'influences.influenceId',
+      path: 'soldierId',
       select: influenceSelect
     }
   ];

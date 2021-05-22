@@ -56,7 +56,7 @@ const buildRecommendationEntity = (
         joinDate: Date,
         releaseDate: Date,
         recruitmentLevel: String,
-        educationRank: String,
+        education: String,
         influences: Array,
         unit: Object,
         units: Array,
@@ -75,7 +75,7 @@ const buildRecommendationEntity = (
       this.releaseDate = data.releaseDate;
       this.recruitmentLevel = data.recruitmentLevel;
       this.recruitmentArea = data.recruitmentArea;
-      this.educationRank = data.educationRank;
+      this.education = data.education;
       this.influences = data.influences || [];
       this.unit = data.unit || {};
       this.units = data.units || [];
@@ -128,7 +128,7 @@ const buildRecommendationEntity = (
         releaseDate: this.releaseDate,
         recruitmentLevel: this.recruitmentLevel,
         recruitmentArea: this.recruitmentArea,
-        educationRank: this.educationRank,
+        education: this.education,
         influences: this.influences,
         unit: this.unit,
         units: this.units,
@@ -153,7 +153,7 @@ const buildRecommendationEntity = (
         releaseDate: this.releaseDate,
         recruitmentLevel: this.recruitmentLevel,
         recruitmentArea: this.recruitmentArea,
-        educationRank: this.educationRank,
+        education: this.education,
         influences: this.influences,
         unit: this.unit,
         units: this.units,

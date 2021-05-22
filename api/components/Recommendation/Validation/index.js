@@ -18,7 +18,7 @@ const makeIsDuplicateValidation = require('./is-duplicate-validation');
 const armyList = defaultConstants.ARMY_LIST.map(o => o.value);
 const forcesList = defaultConstants.FORCES_LIST.map(o => o.value);
 const recruitmentLevels = defaultConstants.RECRUITMENT_LEVELS.map(o => o.value);
-const educationRanks = defaultConstants.EDUCATION_RANKS.map(o => o.value);
+const educations = defaultConstants.EDUCATION_RANKS.map(o => o.value);
 const situations = defaultConstants.SITUATIONS.map(o => o.value);
 const recruitmentAreas = locations.recruitmentAreas.map(o => o.value);
 const governates = locations.governates.map(o => o.value);
@@ -34,7 +34,7 @@ module.exports.addRecommendationValidation = makeAddrecommendationValidation({
   armyList,
   forcesList,
   recruitmentLevels,
-  educationRanks,
+  educations,
   situations,
   recruitmentAreas,
   governates
@@ -77,7 +77,7 @@ module.exports.editRecommendationValidation = makeEditRecommendationValidation({
   armyList,
   forcesList,
   recruitmentLevels,
-  educationRanks,
+  educations,
   situations,
   recruitmentAreas,
   governates
@@ -111,7 +111,7 @@ module.exports.getRecommendationsValidation = makeGetRecommendationsValidation({
   armyList,
   forcesList,
   recruitmentLevels,
-  educationRanks,
+  educations,
   situations,
   recruitmentAreas,
   governates

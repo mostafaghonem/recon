@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import { interopDefault } from './utils'
 
+const _dbb267b4 = () => interopDefault(import('..\\pages\\add-recommendation.vue' /* webpackChunkName: "pages_add-recommendation" */))
 const _68fb8a65 = () => interopDefault(import('..\\pages\\add-soldier.vue' /* webpackChunkName: "pages_add-soldier" */))
 const _c6eb78fa = () => interopDefault(import('..\\pages\\add-staff.vue' /* webpackChunkName: "pages_add-staff" */))
 const _3a627eb1 = () => interopDefault(import('..\\pages\\add-unit.vue' /* webpackChunkName: "pages_add-unit" */))
@@ -13,7 +14,10 @@ const _3a6bf138 = () => interopDefault(import('..\\pages\\login.vue' /* webpackC
 const _60233e4b = () => interopDefault(import('..\\pages\\logout.vue' /* webpackChunkName: "pages_logout" */))
 const _2060d1d0 = () => interopDefault(import('..\\pages\\maps.vue' /* webpackChunkName: "pages_maps" */))
 const _4e5fcf92 = () => interopDefault(import('..\\pages\\notifications.vue' /* webpackChunkName: "pages_notifications" */))
+const _0f54c80e = () => interopDefault(import('..\\pages\\recommendations\\index.vue' /* webpackChunkName: "pages_recommendations_index" */))
 const _742fd210 = () => interopDefault(import('..\\pages\\soldiers\\index.vue' /* webpackChunkName: "pages_soldiers_index" */))
+const _3ae30da7 = () => interopDefault(import('..\\pages\\soldiers-archive.vue' /* webpackChunkName: "pages_soldiers-archive" */))
+const _cb198f50 = () => interopDefault(import('..\\pages\\staff-change-of-units.vue' /* webpackChunkName: "pages_staff-change-of-units" */))
 const _4bd4482e = () => interopDefault(import('..\\pages\\staffs\\index.vue' /* webpackChunkName: "pages_staffs_index" */))
 const _35d921fe = () => interopDefault(import('..\\pages\\table-list.vue' /* webpackChunkName: "pages_table-list" */))
 const _f6a8f220 = () => interopDefault(import('..\\pages\\typography.vue' /* webpackChunkName: "pages_typography" */))
@@ -49,6 +53,7 @@ const _f52811e8 = () => interopDefault(import('..\\pages\\followup\\outbox\\pend
 const _4470762c = () => interopDefault(import('..\\pages\\individuals\\codes\\show.vue' /* webpackChunkName: "pages_individuals_codes_show" */))
 const _567ae2b4 = () => interopDefault(import('..\\pages\\followup\\inbox\\edit\\_index.vue' /* webpackChunkName: "pages_followup_inbox_edit__index" */))
 const _5f226827 = () => interopDefault(import('..\\pages\\followup\\outbox\\edit\\_index.vue' /* webpackChunkName: "pages_followup_outbox_edit__index" */))
+const _9fb821f4 = () => interopDefault(import('..\\pages\\recommendations\\edit\\_index.vue' /* webpackChunkName: "pages_recommendations_edit__index" */))
 const _4087fde2 = () => interopDefault(import('..\\pages\\soldiers\\edit\\_index.vue' /* webpackChunkName: "pages_soldiers_edit__index" */))
 const _42abe59e = () => interopDefault(import('..\\pages\\staffs\\edit\\_index.vue' /* webpackChunkName: "pages_staffs_edit__index" */))
 const _b96547ca = () => interopDefault(import('..\\pages\\units\\edit\\_index.vue' /* webpackChunkName: "pages_units_edit__index" */))
@@ -130,6 +135,10 @@ export function createRouter() {
     scrollBehavior,
 
     routes: [{
+      path: "/add-recommendation",
+      component: _dbb267b4,
+      name: "add-recommendation___ar"
+    }, {
       path: "/add-soldier",
       component: _68fb8a65,
       name: "add-soldier___ar"
@@ -174,9 +183,21 @@ export function createRouter() {
       component: _4e5fcf92,
       name: "notifications___ar"
     }, {
+      path: "/recommendations",
+      component: _0f54c80e,
+      name: "recommendations___ar"
+    }, {
       path: "/soldiers",
       component: _742fd210,
       name: "soldiers___ar"
+    }, {
+      path: "/soldiers-archive",
+      component: _3ae30da7,
+      name: "soldiers-archive___ar"
+    }, {
+      path: "/staff-change-of-units",
+      component: _cb198f50,
+      name: "staff-change-of-units___ar"
     }, {
       path: "/staffs",
       component: _4bd4482e,
@@ -317,6 +338,10 @@ export function createRouter() {
       path: "/followup/outbox/edit/:index",
       component: _5f226827,
       name: "followup-outbox-edit___ar"
+    }, {
+      path: "/recommendations/edit/:index",
+      component: _9fb821f4,
+      name: "recommendations-edit___ar"
     }, {
       path: "/soldiers/edit/:index",
       component: _4087fde2,

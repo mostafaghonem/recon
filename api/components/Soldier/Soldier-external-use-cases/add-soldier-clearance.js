@@ -11,6 +11,11 @@ module.exports = ({ ApplicationError, logger }) => async ({
         clearance: {
           clearanceId
         }
+      },
+      $push: {
+        clearances: {
+          clearanceId
+        }
       }
     }
   });

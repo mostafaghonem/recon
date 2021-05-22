@@ -9,7 +9,7 @@ module.exports = ({
   armyList,
   forcesList,
   recruitmentLevels,
-  educationRanks,
+  educations,
   situations,
   recruitmentAreas,
   governates,
@@ -66,10 +66,10 @@ module.exports = ({
         ErrorText.RECRUITMENT_LEVEL_INVALID
       ).rules
     },
-    educationRank: {
-      value: query.educationRank,
+    education: {
+      value: query.education,
       rules: new Builder().isMember(
-        educationRanks,
+        educations,
         ErrorText.EDUCATION_RANK_INVALID
       ).rules
     },

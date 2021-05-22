@@ -13,6 +13,14 @@ module.exports = class GenericModel {
     return this.DbAccess.exists({ $or: orOp });
   }
 
+  checkExistenceByAnd(data = {}) {
+    const orOp = Object.keys(data)
+      .filter(k => typeof data[k] !== 'undefined')
+      .map(k => ({ [k]: data[k] }));
+
+    return this.DbAccess.exists({ $and: orOp });
+  }
+
   getOne(params = { query: {}, select: '' }) {
     const { query, select } = params;
     return this.DbAccess.findOne(query, select).lean();

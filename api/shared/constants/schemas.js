@@ -50,7 +50,7 @@ const influenceSchema = new Schema(
 
 const clearnceSchema = new Schema(
   {
-    clearanceId: { type: ObjectId }
+    clearanceId: { type: ObjectId, ref: 'Clearance' }
   },
   {
     _id: false,

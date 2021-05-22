@@ -119,6 +119,7 @@ module.exports = ({
       },
       influences: [influenceSchema],
       clearance: clearnceSchema,
+      clearances: [clearnceSchema],
       unit: {
         type: divSchema
       },

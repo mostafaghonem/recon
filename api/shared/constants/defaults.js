@@ -539,7 +539,7 @@ module.exports = {
   ],
   RECOMMENDATION_TYPES: [
     { value: 'weapons', ar: 'اسلحة' },
-    { vaLue: 'officers', ar: 'ضباط احتياط' },
+    { value: 'officers', ar: 'ضباط احتياط' },
     { value: 'unit', ar: 'وحدات' },
     { value: 'distributed', ar: 'محولين' }
   ]
