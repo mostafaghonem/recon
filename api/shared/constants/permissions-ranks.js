@@ -372,7 +372,8 @@ module.exports = {
           permissions: ['recon_recommendations_manager']
         }
       ],
-      branches: ['recon_force_people']
+      branches: ['recon_force_people'],
+      permissions: ['recon_recommendations_manager']
     },
     {
       actions: 'mdi-loyalty',
