@@ -203,7 +203,7 @@ const isAuthorized = ({ user, followup, branches, permissions }) => {
   }
 
   // Don't show this for any one in followup branch
-  if (followup && user.branch === 'followup') {
+  if (followup && ['followup', 'presidents'].includes(user.branch)) {
     return false;
   }
 

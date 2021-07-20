@@ -152,6 +152,10 @@ module.exports = {
       ar: 'الارشيف العام'
     },
     {
+      value: 'presidents',
+      ar: 'الرؤساء'
+    },
+    {
       value: 'safety',
       ar: 'امن'
     }
@@ -429,12 +433,14 @@ module.exports = {
         {
           to: '/followup/inbox/add',
           icon: 'mdi-email-edit-outline',
-          text: DRAWER.Add_Inbox
+          text: DRAWER.Add_Inbox,
+          branches: ['followup']
         },
         {
           to: '/followup/inbox/pending-mails',
           icon: 'mdi-email-multiple-outline',
-          text: DRAWER.Show_Undistributed_Inbox
+          text: DRAWER.Show_Undistributed_Inbox,
+          branches: ['followup']
         },
         {
           to: '/followup/inbox/mails',
@@ -447,7 +453,7 @@ module.exports = {
           text: DRAWER.Show_Followup_Inbox
         }
       ],
-      branches: ['followup']
+      branches: ['followup', 'presidents']
     },
     {
       actions: 'mdi-loyalty',
@@ -457,7 +463,8 @@ module.exports = {
         {
           to: '/followup/outbox/add',
           icon: 'mdi-email-edit-outline',
-          text: DRAWER.Add_Outbox
+          text: DRAWER.Add_Outbox,
+          branches: ['followup']
         },
         {
           to: '/followup/outbox/mails',
@@ -465,7 +472,7 @@ module.exports = {
           text: DRAWER.Show_Distributed_Outbox
         }
       ],
-      branches: ['followup']
+      branches: ['followup', 'presidents']
     },
     {
       actions: 'mdi-inbox-arrow-down',

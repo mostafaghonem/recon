@@ -153,7 +153,7 @@ router.get(
   [
     validateMiddleware(getMailsValidation),
     authenticateMiddleware,
-    authorizeMiddleware({ branches: ['followup'] })
+    authorizeMiddleware({ branches: ['followup', 'presidents'] })
   ],
   controllers.getMails
 );
