@@ -5,7 +5,8 @@ module.exports = ({ ApplicationError, logger }) => async ({ id, unit }) => {
     id,
     update: {
       $set: {
-        unit
+        unit,
+        army: unit.army
       },
       $push: {
         units: unit

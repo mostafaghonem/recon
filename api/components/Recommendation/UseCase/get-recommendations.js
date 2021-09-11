@@ -42,6 +42,7 @@ module.exports = ({ GetSortObj, GetDateSplitObj }) => async ({
   joinYear,
   releaseMonth,
   releaseYear,
+  type,
   key,
   limit,
   sortIndex,
@@ -56,9 +57,9 @@ module.exports = ({ GetSortObj, GetDateSplitObj }) => async ({
   });
 
   const dateSplitObj = GetDateSplitObj({
-    keys: ['joinDate', 'releaseDate'],
-    years: { joinDate: joinYear, releaseDate: releaseYear },
-    months: { joinDate: joinMonth, releaseDate: releaseMonth }
+    keys: ['createdAt'],
+    years: { createdAt: joinYear },
+    months: { createdAt: joinMonth }
   });
 
   const query = {
@@ -95,6 +96,7 @@ module.exports = ({ GetSortObj, GetDateSplitObj }) => async ({
   if (birthDate) query.birthDate = birthDate;
   if (joinDate) query.joinDate = joinDate;
   if (releaseDate) query.releaseDate = releaseDate;
+  if (type) query.type = type;
   if (noClearance) {
     query.clearance = { $exists: false };
   } else if (clearance) {

@@ -32,6 +32,7 @@ module.exports = ({
       unitId,
       confirmationNumber,
       divisionId: unit.divisionId,
+      army: unit.army,
       isChangeOfUnit: !initial
     };
     const idKey = `${type}Id`;
