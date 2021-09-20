@@ -31,9 +31,9 @@ const GetCityFromKey = key => {
 const GetBaseDomain = () => {
   return process.env.BASE_URL
     ? process.env.BASE_URL.substring(
-        process.env.BASE_URL.indexOf('.'),
-        process.env.BASE_URL.length
-      )
+      process.env.BASE_URL.indexOf('.'),
+      process.env.BASE_URL.length
+    )
     : undefined;
 };
 
@@ -203,7 +203,7 @@ const isAuthorized = ({ user, followup, branches, permissions }) => {
   }
 
   // Don't show this for any one in followup branch
-  if (followup && ['followup', 'presidents'].includes(user.branch)) {
+  if (followup && ['followup', 'presidents', 'president_gehaz', 'president_arkan'].includes(user.branch)) {
     return false;
   }
 

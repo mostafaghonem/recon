@@ -156,6 +156,14 @@ module.exports = {
       ar: 'الرؤساء'
     },
     {
+      value: 'president_gehaz',
+      ar: 'السيد / رئيس الجهاز'
+    },
+    {
+      value: 'president_arkan',
+      ar: 'السيد / رئيس أركان الجهاز'
+    },
+    {
       value: 'safety',
       ar: 'امن'
     }
@@ -476,10 +484,10 @@ module.exports = {
           icon: 'mdi-email-open-multiple-outline',
           text: DRAWER.Show_inbox_prisedents
         },
-      ],
-      branches: ['presidents']
-    },
 
+      ],
+      branches: ['presidents', 'president_gehaz', 'president_arkan']
+    },
 
     {
       actions: 'mdi-inbox-arrow-down',
@@ -492,14 +500,8 @@ module.exports = {
           text: DRAWER.Show_outbox_prisedents
         },
       ],
-      branches: ['presidents']
+      branches: ['presidents', 'president_gehaz', 'president_arkan']
     },
-
-
-
-
-
-
     {
       actions: 'mdi-loyalty',
       icon: 'mdi-email-outline',

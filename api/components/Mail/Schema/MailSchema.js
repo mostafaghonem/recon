@@ -34,7 +34,8 @@ module.exports = ({ requestStatus, pendingStatus, branchesList }) => {
         type: Number
       },
       number: {
-        type: Number
+        type: Number,
+        unique: true
       },
       date: {
         type: Date,
@@ -51,6 +52,9 @@ module.exports = ({ requestStatus, pendingStatus, branchesList }) => {
         type: String
       },
       decision: {
+        type: String
+      },
+      arkanDecision: {
         type: String
       },
       branches: [
@@ -123,7 +127,7 @@ module.exports = ({ requestStatus, pendingStatus, branchesList }) => {
     }
   );
 
-  Mail.pre('save', function(next) {
+  Mail.pre('save', function (next) {
     const doc = this;
     const updateKey = `${doc.type}Seq`;
     const obj = { [updateKey]: 1 };

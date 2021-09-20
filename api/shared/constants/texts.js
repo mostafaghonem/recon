@@ -55,6 +55,7 @@ module.exports = {
     Show_Codes: 'عرض الاكواد',
     Inbox_Only: 'الوارد',
     Outbox_Only: 'الصادر',
+    inbox_detailed: 'الوارد مُفَصلْ',
 
     Influences: 'المؤثرات',
     Add_Influences: 'إضافة مؤثرات',

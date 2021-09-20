@@ -20,9 +20,6 @@ module.exports = ({
     } else if (!request.update) {
       params.status = status;
     }
-    console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
-    console.log(params);
-    console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
     const update = {
       status,
       note

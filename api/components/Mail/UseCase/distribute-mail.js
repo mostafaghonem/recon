@@ -8,7 +8,8 @@ module.exports = ({ ApplicationError, logger }) => async ({
   mailId,
   branch,
   branches,
-  decision
+  decision,
+  arkanDecision
 }) => {
   const filter = { _id: mailId, isArchived: false };
   const checkExistence = await model.exists({ filter });
@@ -23,6 +24,7 @@ module.exports = ({ ApplicationError, logger }) => async ({
     branch,
     branches,
     decision,
+    arkanDecision,
     status: 'accepted'
   };
   await model.updateOneById({

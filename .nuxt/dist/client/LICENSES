@@ -1,0 +1,87 @@
+//! moment.js
+
+//! moment.js locale configuration
+
+//! moment.js language configuration
+
+/*!
+ * The buffer module from node.js, for the browser.
+ *
+ * @author   Feross Aboukhadijeh <feross@feross.org> <http://feross.org>
+ * @license  MIT
+ */
+
+/*! http://mths.be/fromcodepoint v0.1.0 by @mathias */
+
+/*!
+ * Vue.js v2.6.10
+ * (c) 2014-2019 Evan You
+ * Released under the MIT License.
+ */
+
+/**
+ * vuex v3.1.1
+ * (c) 2019 Evan You
+ * @license MIT
+ */
+
+/**
+ * vue-meta v1.6.0
+ * (c) 2019 Declan de Wet & Sébastien Chopin (@Atinux)
+ * @license MIT
+ */
+
+/*
+	object-assign
+	(c) Sindre Sorhus
+	@license MIT
+	*/
+
+/*!
+  * vue-router v3.0.6
+  * (c) 2019 Evan You
+  * @license MIT
+  */
+
+/*!
+ * JavaScript Cookie v2.2.1
+ * https://github.com/js-cookie/js-cookie
+ *
+ * Copyright 2006, 2015 Klaus Hartl & Fagner Brack
+ * Released under the MIT license
+ */
+
+/*!
+ * cookie
+ * Copyright(c) 2012-2014 Roman Shtylman
+ * Copyright(c) 2015 Douglas Christopher Wilson
+ * MIT Licensed
+ */
+
+/*!
+ * Determine if an object is a Buffer
+ *
+ * @author   Feross Aboukhadijeh <https://feross.org>
+ * @license  MIT
+ */
+
+/**
+ * @license
+ * Lodash <https://lodash.com/>
+ * Copyright OpenJS Foundation and other contributors <https://openjsf.org/>
+ * Released under MIT license <https://lodash.com/license>
+ * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
+ * Copyright Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
+ */
+
+/*!
+ * vue-i18n v8.18.2 
+ * (c) 2020 kazuya kawaguchi
+ * Released under the MIT License.
+ */
+
+/*!
+ * vue-no-ssr v1.1.1
+ * (c) 2018-present egoist <0x142857@gmail.com>
+ * Released under the MIT License.
+ */

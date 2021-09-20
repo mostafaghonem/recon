@@ -1,0 +1,2 @@
+exports.ids=[59],exports.modules={424:function(e,t,r){"use strict";r.r(t);var d=r(14),o={middleware({route:e,redirect:t}){const path=e.path,base=d.c.defaults.baseURL.replace("/api/","");return t(encodeURI(base+path))}},l=r(10),component=Object(l.a)(o,void 0,void 0,!1,null,null,"551a556f");t.default=component.exports}};
+//# sourceMappingURL=87dff8fcc51f473ad26e.js.map

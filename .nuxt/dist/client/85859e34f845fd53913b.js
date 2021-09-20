@@ -1,0 +1,1 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([[66],{965:function(e,n,r){"use strict";r.r(n);r(41);var t=r(52),o={middleware:function(e){var n=e.route,r=e.redirect,path=n.path,base=t.c.defaults.baseURL.replace("/api/","");return r(encodeURI(base+path))}},c=r(22),component=Object(c.a)(o,void 0,void 0,!1,null,null,null);n.default=component.exports}}]);
