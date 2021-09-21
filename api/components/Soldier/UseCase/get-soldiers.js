@@ -84,7 +84,7 @@ module.exports = ({ GetSortObj, GetDateSplitObj }) => async ({
   if (centre) query['address.centre'] = { $regex: centre, $options: 'i' };
   if (village) query['address.village'] = { $regex: village, $options: 'i' };
   if (force) query.force = force;
-  if (army) query.army = army;
+  if (army && !unitId) query.army = army;
   if (educationRank) query.educationRank = educationRank;
   if (recruitmentArea) query.recruitmentArea = recruitmentArea;
   if (situation) query.situation = situation;
